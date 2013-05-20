@@ -1,0 +1,198 @@
+//
+//  STabBar.m
+//  TestTabBar
+//
+//  Created by fang yuxi on 11-12-23.
+//  Copyright (c) 2011年 Sohu. All rights reserved.
+//
+
+#import "STabBar.h"
+#import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
+@interface STabBar()
+
+
+
+@end
+
+@implementation STabBar
+
+@synthesize backgoundImage;
+@synthesize items = _items;
+@synthesize delegate = _delegate;
+@synthesize selectBGImgV;
+
+#pragma mark init & dealloc
+#pragma ---
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        self.backgroundColor = [UIColor clearColor];
+        self.items = [NSMutableArray arrayWithCapacity:5];
+    }
+    return self;
+}
+
+- (void) dealloc
+{
+    [selectBGImgV release];
+    self.selectBGImgV = nil;
+    self.items = nil;
+    [super dealloc];
+}
+
+- (void) layoutSubviews
+{
+    [super layoutSubviews];
+    
+//    if (_items.count > 0)
+//    {
+//        STabBarItem *newItem = [_items objectAtIndex:0];
+//        newItem.frame = CGRectMake(0, 3, 63, 46);
+//    }
+//    
+//    if (_items.count > 1)
+//    {
+//        STabBarItem *hotItem = [_items objectAtIndex:1];
+//        hotItem.frame = CGRectMake(63, 3, 63, 46);
+//    }
+//    
+//    if (_items.count > 2)
+//    {
+//        STabBarItem *takeItem = [_items objectAtIndex:2];
+////        takeItem.frame = CGRectMake(63 + 63, -12, 68, 61);//中间一个凸出来的
+//        takeItem.frame = CGRectMake(63 + 63, 3, 63, 46);
+//    }
+//    
+//    if (_items.count > 3)
+//    {
+//        STabBarItem *takeItem = [_items objectAtIndex:3];
+//        takeItem.frame = CGRectMake(63 + 63 + 68, 3, 63, 46);
+//    }
+//    
+//    if (_items.count > 4)
+//    {
+//        STabBarItem *takeItem = [_items objectAtIndex:4];
+//        takeItem.frame = CGRectMake(63 + 63 + 68 + 63, 3, 63, 46);
+//    }
+    
+    /////////////--------刘晓龙改的-----/////////////  
+    for (int i = 0; i < _items.count; i ++) {
+        STabBarItem *takeItem = [_items objectAtIndex:i];
+        [takeItem setFrame:CGRectMake(320/_items.count*i, 2, 320/_items.count, 49)];
+    }
+    
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    [super drawRect:rect];
+}
+
+#pragma mark public method
+#pragma ---
+
+- (void) setBackgoundImage:(UIImage *)thebackgoundImage
+{
+    backgoundImage = thebackgoundImage;
+    self.layer.contents = (id)backgoundImage.CGImage;
+}
+
+- (void) addItem:(STabBarItem*)item
+{
+    [self.items addObject:item];
+    [self addSubview:item];
+    item.itemIndex = [self.items count] - 1;
+    item.delegate = self;
+    [self setNeedsLayout];
+}
+
+- (void) setItems:(NSMutableArray *)items
+{
+    if (items == _items)
+    {
+        return;
+    }
+    
+    /** 先把以前的所有items去掉 **/
+    for (STabBarItem* item in _items)
+    {
+        [item removeFromSuperview];
+    }
+    
+    [_items release];
+    _items = nil;
+    _items = [items retain];
+    
+    NSInteger index = 0;
+    
+    /** 将新的加进来 **/
+    for (STabBarItem* item in _items)
+    {
+        item.itemIndex = index;
+        ++index;
+        
+        item.delegate = self;
+        [self addSubview:item];
+    }
+    self.selectBGImgV = [[[UIImageView alloc] initWithFrame:CGRectZero] autorelease];
+    [self addSubview:self.selectBGImgV];
+    [self setNeedsLayout];
+}
+
+- (void) setSelectedItemAtIndex:(NSInteger)index
+{
+    [[self.items objectAtIndex:index] setSelected:YES];
+    
+    for (STabBarItem* theItem in self.items)
+    {
+        STabBarItem *item = [self.items objectAtIndex:index];
+        if (item != theItem)
+        {
+            [theItem setSelected:NO];
+        }
+    }
+
+}
+
+- (void) setSelectedItem:(STabBarItem *)item
+{
+    [item setSelected:YES];
+}
+
+#pragma mark sTabBarItemDelegate
+#pragma ---
+
+- (void) STabBarItemSeletedAtIndex:(NSInteger)index item:(STabBarItem *)item
+{
+    /** 调用系统本身代理 **/
+//    [SHAREAPP.searchVC.navigationController popViewControllerAnimated:YES];
+//    [SHAREAPP.searchViewController.navigationController popViewControllerAnimated:YES];
+    if ([(NSObject*)self.delegate respondsToSelector:@selector(sTabBarItemSelectedAtIndex:)])
+    {
+        [self.delegate sTabBarItemSelectedAtIndex:index];
+    }
+    //继续往上层去放
+//    [item setSelected:YES];
+//    /** 把其他按钮取消选中 **/
+//    for (STabBarItem* theItem in self.items)
+//    {
+//        if (item != theItem)
+//        {
+//            [theItem setSelected:NO];
+//        }
+//    }
+}
+
+
+
+@end
+
+
+
+
+
+

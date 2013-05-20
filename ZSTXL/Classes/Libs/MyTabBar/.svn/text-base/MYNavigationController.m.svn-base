@@ -1,0 +1,95 @@
+//
+//  MYNavigationController.m
+//  Flight
+//
+//  Created by 刘晓龙 on 12-12-2.
+//  Copyright (c) 2012年 AppUFO. All rights reserved.
+//
+
+#import "MYNavigationController.h"
+
+#define CustomImageViewTag 999
+
+@interface MYNavigationController ()
+
+@end
+
+@implementation MYNavigationController
+@synthesize bgView;
+
+- (void)dealloc
+{
+    RELEASE_SAFELY(bgView);
+    [super dealloc];
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"top_dinghuaer.png"] forBarMetrics:UIBarMetricsDefault];
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+	// Do any additional setup after loading the view.
+//    self.bgView = [[[UIImageView alloc] initWithFrame:self.navigationBar.bounds] autorelease];
+//    [self.bgView setImage:[UIImage imageNamed:@"bg_nav_gray.png"]];
+//    self.bgView.tag = CustomImageViewTag;
+//    [self.navigationBar insertSubview:self.bgView atIndex:0];
+}
+
+#pragma mark - self API
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    [super pushViewController:viewController animated:animated];
+    UIImageView *titleBg = (UIImageView *)[self.navigationBar viewWithTag:CustomImageViewTag];
+    [self.navigationBar sendSubviewToBack:titleBg];
+}
+
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated {
+    UIViewController *viewController = [super popViewControllerAnimated:animated];
+    UIImageView *titleBg = (UIImageView *)[self.navigationBar viewWithTag:CustomImageViewTag];
+    [self.navigationBar sendSubviewToBack:titleBg];
+    return viewController;
+}
+
+- (NSArray *)popToRootViewControllerAnimated:(BOOL)animated {
+    NSArray *viewControllers = [super popToRootViewControllerAnimated:animated];
+    UIImageView *titleBg = (UIImageView *)[self.navigationBar viewWithTag:CustomImageViewTag];
+    [self.navigationBar sendSubviewToBack:titleBg];
+    return viewControllers;
+}
+
+- (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    NSArray *viewControllers = [super popToViewController:viewController animated:animated];
+    UIImageView *titleBg = (UIImageView *)[self.navigationBar viewWithTag:CustomImageViewTag];
+    [self.navigationBar sendSubviewToBack:titleBg];
+    return viewControllers;
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldAutorotate
+{
+//    return [self.visibleViewController shouldAutorotate];
+    return NO;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
+@end

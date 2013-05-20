@@ -7,6 +7,16 @@
 //
 
 #import "AppDelegate.h"
+#import "MainViewController.h"
+
+#import "CustomNavigationController.h"
+#import "TheNewMessageViewController.h"
+#import "ContactViewController.h"
+#import "ZhaoshangDailiViewController.h"
+#import "MyProfileViewController.h"
+
+#import "STabBar.h"
+#import "STabBarItem.h"
 
 @implementation AppDelegate
 
@@ -19,8 +29,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+
+    MainViewController *rootVC = [[[MainViewController alloc] init] autorelease];
+    self.window.rootViewController = rootVC;
+    self.window.backgroundColor = [UIColor clearColor];
     [self.window makeKeyAndVisible];
     return YES;
 }
