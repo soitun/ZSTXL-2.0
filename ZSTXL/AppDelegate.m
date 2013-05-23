@@ -7,16 +7,12 @@
 //
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
 
 #import "CustomNavigationController.h"
 #import "TheNewMessageViewController.h"
 #import "ContactViewController.h"
 #import "ZhaoshangDailiViewController.h"
 #import "MyProfileViewController.h"
-
-#import "STabBar.h"
-#import "STabBarItem.h"
 
 @implementation AppDelegate
 
@@ -30,38 +26,135 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
 
-    MainViewController *rootVC = [[[MainViewController alloc] init] autorelease];
-    self.window.rootViewController = rootVC;
-    self.window.backgroundColor = [UIColor clearColor];
+    [MagicalRecord setupCoreDataStack];
+    self.uuid = [[UIDevice currentDevice] uniqueDeviceIdentifier];
+    
+    [self initTabController];
+
+    self.window.rootViewController = self.tabController;
+    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
 }
 
+- (void)initTabController
+{
+    NSArray *controllerNameArray = @[@"TheNewMessageViewController", @"ContactViewController", @"ZhaoshangDailiViewController", @"MyProfileViewController"];
+    NSArray *titleArray = @[@"最新消息", @"通讯录", @"招商代理", @"我的主页"];
+    NSArray *tabBarImageArray = @[@"new_message", @"address_book", @"zsdl", @"my_profile"];
+    NSArray *tabBarSelectedImageArray = @[@"new_message_p", @"address_book_p", @"zsdl_p", @"my_profile_p"];
+    NSMutableArray *imageArray = [NSMutableArray array];
+    
+    NSMutableArray *controllerArray = [[[NSMutableArray alloc] init] autorelease];
+    int index = 0;
+    for (NSString *controllerName in controllerNameArray) {
+        Class controllerClass = NSClassFromString(controllerName);
+        UIViewController *controller = [[[controllerClass alloc] init] autorelease];
+        CustomNavigationController *nav = [[[CustomNavigationController alloc] initWithRootViewController:controller] autorelease];
+        [controllerArray addObject:nav];
+        
+        NSMutableDictionary *imageDict = [NSMutableDictionary dictionary];
+        [imageDict setObject:[UIImage imageNamed:[tabBarImageArray objectAtIndex:index]] forKey:@"Default"];
+        [imageDict setObject:[UIImage imageNamed:[tabBarSelectedImageArray objectAtIndex:index]] forKey:@"Highlighted"];
+        [imageDict setObject:[UIImage imageNamed:[tabBarSelectedImageArray objectAtIndex:index]] forKey:@"Selected"];
+        [imageDict setObject:[UIImage imageNamed:[tabBarSelectedImageArray objectAtIndex:index]] forKey:@"Selected|Highlighted"];
+        
+        [imageArray addObject:imageDict];
+
+        index++;
+    }
+    
+    self.tabController = [[LeveyTabBarController alloc] initWithViewControllers:controllerArray imageArray:imageArray titleArray:titleArray];
+    [self.tabController.tabBar setBackgroundImage:[UIImage imageNamed:@"tabbar"]];
+    self.tabController.tabBarTransparent = YES;
+}
+
+#pragma mark - tab delegate
+
+- (CGSize)tabBarController:(NGTabBarController *)tabBarController
+sizeOfItemForViewController:(UIViewController *)viewController
+                   atIndex:(NSUInteger)index
+                  position:(NGTabBarPosition)position {
+    if (NGTabBarIsVertical(position)) {
+        return CGSizeMake(150.f, 60.f);
+    } else {
+        return CGSizeMake(320/self.tabController.viewControllers.count, 51);
+    }
+}
+
+- (void)tabBarController:(NGTabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController atIndex:(NSUInteger)index
+{
+    
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+
+}
+
+- (NSString *)userId
+{
+    NSString *userIdTmp = [PersistenceHelper dataForKey:kUserId];
+    if (![userIdTmp isValid]) {
+        return @"0";
+    }
+    return userIdTmp;
+}
+
+- (void)showWithCustomAlertViewWithText:(NSString *)text andImageName:(NSString *)image {
+	
+    if (HUD && HUD.superview) {
+        
+        if ([text isEqualToString:kNetworkError]) {
+            //当网络出问题时，不要不停的提示
+            return;
+        }
+        
+        [HUD removeFromSuperview];
+        [HUD release];
+        HUD = nil;
+    }
+    
+    [self doShowAlertWithText:text imageByName:image];
+}
+
+- (void)doShowAlertWithText:(NSString *)text imageByName:(NSString *)image {
+    HUD = [[MBProgressHUD alloc] initWithView:self.window];
+	[self.window addSubview:HUD];
+	
+    if (image && [image length] > 0) {
+        HUD.customView = [[[UIImageView alloc] initWithImage:[UIImage imageByName:image]] autorelease];
+    } else {
+        HUD.customView = nil;
+    }
+	
+    // Set custom view mode
+    HUD.mode = MBProgressHUDModeCustomView;
+	HUD.userInteractionEnabled = NO;
+    HUD.labelText = text ? text : @"出错了";
+	
+    [HUD show:YES];
+	[HUD hide:YES afterDelay:2];
 }
 
 @end

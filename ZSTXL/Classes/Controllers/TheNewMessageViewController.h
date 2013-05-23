@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TheNewMessageViewController : UIViewController
+@interface TheNewMessageViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (retain, nonatomic) IBOutlet UITableView *tableView;
+@property (retain, nonatomic) NSMutableArray *dataSourceArray;
 
 @end

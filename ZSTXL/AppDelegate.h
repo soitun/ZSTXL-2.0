@@ -7,13 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "AKTabBarController.h"
-//#import "TBKTabBarController.h"
-#import "SMainTabViewController.h"
+#import "NGTabBarController.h"
+#import "LeveyTabBarController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@class MBProgressHUD;
+@interface AppDelegate : UIResponder <UIApplicationDelegate, NGTabBarControllerDelegate>
+{
+    MBProgressHUD *HUD;
+}
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) SMainTabViewController *tabController;
+@property (strong, nonatomic) LeveyTabBarController *tabController;
+@property (nonatomic, copy)   NSString *uuid;
+@property (nonatomic, copy)   NSString *userId;
+
+
+- (void)showWithCustomAlertViewWithText:(NSString *)text andImageName:(NSString *)image;
 
 @end

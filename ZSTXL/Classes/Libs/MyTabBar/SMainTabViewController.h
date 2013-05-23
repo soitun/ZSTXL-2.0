@@ -39,18 +39,11 @@ typedef enum _animationShowType
 }
 
 @property (nonatomic, retain) STabBar *sTabBar;
-
-@end
-
-
-@interface SMainTabViewController(PublicMethod)
-
 - (void) hideTabBarWithAnimationType:(TabBarHideAnimationType)type;
 - (void) showTabWithAnimationType:(TabBarShowAnimationType)type;
 
 - (void) setSelectIndex:(NSInteger)index;
 - (void) setSelectController:(UIViewController *)controller;
 
+
 @end
-
-

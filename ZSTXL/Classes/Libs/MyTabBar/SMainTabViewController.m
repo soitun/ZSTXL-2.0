@@ -6,6 +6,7 @@
 //  Copyright (c) 2011年 Sohu All rights reserved.
 //
 
+#define TAB_BAR_HEIGHT 55
 #import "SMainTabViewController.h"
 
 @implementation SMainTabViewController
@@ -15,11 +16,11 @@
 #pragma mark init & dealloc
 #pragma ---
 
-- (void) dealloc///
+- (void)dealloc
 {
     self.sTabBar = nil;
     [super dealloc];
-}///
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -36,14 +37,10 @@
     UITabBar* tabBar = (UITabBar*)[[self.view subviews] objectAtIndex:1];
     tabBar.frame = CGRectZero;
     
-    STabBar* sTabBar = [[STabBar alloc] initWithFrame:CGRectZero];
+    STabBar* sTabBar = [[[STabBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-TAB_BAR_HEIGHT, 320, TAB_BAR_HEIGHT)] autorelease];
     self.sTabBar = sTabBar;
     sTabBar.delegate = self;
-    
-    [sTabBar release];///
-    
     [self.view addSubview:self.sTabBar];
-    self.sTabBar.frame = CGRectMake(0, self.view.frame.size.height - 55, 320, 55);
 }
 
 - (void)viewDidUnload
@@ -135,7 +132,7 @@
         [UIView beginAnimations:@"TabBarHide" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:0.5f];
-        self.sTabBar.frame = CGRectMake(0, self.view.frame.size.height, 320, 51);
+        self.sTabBar.frame = CGRectMake(0, self.view.frame.size.height, 320, TAB_BAR_HEIGHT);
         [UIView commitAnimations];
     }
     else if (type == TabBarHideAnimationFade)
@@ -153,14 +150,14 @@
     if (type == TabBarShowAnimationNone)
     {
         self.sTabBar.hidden = NO;
-        self.sTabBar.frame = CGRectMake(0, self.view.frame.size.height - 51, 320, 51);
+        self.sTabBar.frame = CGRectMake(0, self.view.frame.size.height - TAB_BAR_HEIGHT, 320, TAB_BAR_HEIGHT);
     }
     else if (type == TabBarShowAnimationDown)
     {
         [UIView beginAnimations:@"TabBarShow" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:0.5f];
-        self.sTabBar.frame = CGRectMake(0, self.view.frame.size.height - 51, 320, 51);
+        self.sTabBar.frame = CGRectMake(0, self.view.frame.size.height - TAB_BAR_HEIGHT, 320, TAB_BAR_HEIGHT);
         [UIView commitAnimations];
     }
     else if (type == TabBarShowAnimationFade)

@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SlideMenuView.h"
+#import "Contact.h"
 
-@interface ContactViewController : UIViewController
+@interface ContactViewController : UIViewController <UIScrollViewDelegate, MenuDelegate>
+
+@property (retain, nonatomic) IBOutlet UIScrollView *mScrollView;
+@property (retain, nonatomic) SlideMenuView *mSlideMenu;
+@property (retain, nonatomic) NSMutableArray *controllerArray;
+@property (nonatomic, copy) NSString *cityName;
+@property (nonatomic, retain) UIPickerView *areaPicker;
+@property (nonatomic, assign) BOOL pickerIsOn;
+
+- (void)pushViewController:(UIViewController *)vc;
 
 @end

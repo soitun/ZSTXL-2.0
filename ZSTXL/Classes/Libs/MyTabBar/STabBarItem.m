@@ -38,7 +38,7 @@
         [self addTarget:self action:@selector(notifyDelegate:) forControlEvents:UIControlEventTouchDown];//TouchUpInside
         
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
-        self.titleEdgeInsets = UIEdgeInsetsMake(40, 5, 5, 5);
+        self.titleEdgeInsets = UIEdgeInsetsMake(40, 0, 5, 0);
         
     }
     return self;
@@ -83,7 +83,7 @@
     }
     CGRect rcImage = [STabBarItem GetAptlySize:tmpImage.size frame:rect];
     rcImage.origin.y = + 2;
-    [tmpImage drawInRect:CGRectMake(30, 8, 21, 21)];
+    [tmpImage drawInRect:CGRectMake(29, 8, 21, 21)];
 }
 
 #pragma mark public method

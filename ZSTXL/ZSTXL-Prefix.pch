@@ -11,6 +11,29 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
-    #import "NSString+stringValue.h"
-    #import "UIImage+stretch.h"
+#import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
+#import "NSString+stringValue.h"
+#import "UIImage+stretch.h"
+#import "DreamFactoryClient.h"
+#import "AFNetworking.h"
+#import "MBProgressHUD.h"
+#import "EGOImageView.h"
+#import "JSONKit.h"
+#import "JPinYinUtil.h"
+#import "CityIdProId.h"
+#import "NGTabBarController.h"
+#import "DES3Util.h"
+
+#define MR_SHORTHAND
+#define MR_ENABLE_ACTIVE_RECORD_LOGGING 0
+#import "CoreData+MagicalRecord.h"
+
+
+#import "PersistenceHelper.h"
+#import "Const.h"
+#import "Utility.h"
+#import "ValueForKey.h"
+#import "CustomNavigationController.h"
+#import "UIDevice+IdentifierAddition.h"
 #endif
