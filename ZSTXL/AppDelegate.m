@@ -69,24 +69,6 @@
     self.tabController.tabBarTransparent = YES;
 }
 
-#pragma mark - tab delegate
-
-- (CGSize)tabBarController:(NGTabBarController *)tabBarController
-sizeOfItemForViewController:(UIViewController *)viewController
-                   atIndex:(NSUInteger)index
-                  position:(NGTabBarPosition)position {
-    if (NGTabBarIsVertical(position)) {
-        return CGSizeMake(150.f, 60.f);
-    } else {
-        return CGSizeMake(320/self.tabController.viewControllers.count, 51);
-    }
-}
-
-- (void)tabBarController:(NGTabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController atIndex:(NSUInteger)index
-{
-    
-}
-
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 

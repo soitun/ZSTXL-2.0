@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ZhaoshangDailiViewController : UIViewController
+@interface ZhaoshangDailiViewController : UIViewController <UIScrollViewDelegate>
+@property (retain, nonatomic) IBOutlet UIScrollView *adScrollView;
+@property (retain, nonatomic) IBOutlet UIScrollView *cateScrollView;
+@property (retain, nonatomic) IBOutlet UIPageControl *adScrollPageControl;
+
+@property (nonatomic, retain) NSMutableArray *cateNameArray;
+@property (nonatomic, retain) NSMutableArray *cateImageArray;
 
 @end

@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NGTabBarController.h"
 #import "LeveyTabBarController.h"
 
 @class MBProgressHUD;
-@interface AppDelegate : UIResponder <UIApplicationDelegate, NGTabBarControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
     MBProgressHUD *HUD;
 }

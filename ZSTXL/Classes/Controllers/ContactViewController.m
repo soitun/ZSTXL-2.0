@@ -11,6 +11,7 @@
 #import "AllContactViewController.h"
 #import "CommendContactViewController.h"
 #import "CityTitleView.h"
+#import "SelectViewController.h"
 
 @interface ContactViewController ()
 
@@ -177,6 +178,8 @@
 - (void)sift
 {
     DLog(@"筛选");
+    SelectViewController *selectVC = [[[SelectViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:selectVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

@@ -50,8 +50,8 @@
     
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setBackgroundImage:[UIImage imageNamed:@"login_button"] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"login_button_p"] forState:UIControlStateHighlighted];
+    [button setBackgroundImage:[UIImage imageNamed:@"nav_login_button"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"nav_login_button_p"] forState:UIControlStateHighlighted];
     [button setTitle:@"登录" forState:UIControlStateNormal];
     [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
     [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];

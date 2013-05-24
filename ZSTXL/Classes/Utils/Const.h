@@ -26,8 +26,8 @@
 #define kContentColor   RGBCOLOR(70, 70, 70)
 #define kSubContentColor RGBCOLOR(98, 98, 98)
 
-#define kContentBlueColor RGBCOLOR(20,100,170);
-#define kContentGrayColor RGBCOLOR(200,200,200);
+#define kContentBlueColor RGBCOLOR(39,104,145)
+#define kContentGrayColor RGBCOLOR(200,200,200)
 
 #define kEventShakeHand @"kEventShakeHand"
 #define kNetworkError  @"网络不给力啊"

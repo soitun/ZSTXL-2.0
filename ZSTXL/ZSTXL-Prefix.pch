@@ -22,7 +22,7 @@
 #import "JSONKit.h"
 #import "JPinYinUtil.h"
 #import "CityIdProId.h"
-#import "NGTabBarController.h"
+#import "RegexKitLite.h"
 #import "DES3Util.h"
 
 #define MR_SHORTHAND
