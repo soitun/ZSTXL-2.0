@@ -1,14 +1,14 @@
 //
-//  PersonalInfoCell.m
-//  ZHDLTXL
+//  ZSInfoCell.m
+//  ZSTXL
 //
-//  Created by LiuYue on 13-4-14.
-//  Copyright (c) 2013年 zxcx. All rights reserved.
+//  Created by LiuYue on 13-5-27.
+//  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
-#import "PersonalInfoCell.h"
+#import "ZSInfoCell.h"
 
-@implementation PersonalInfoCell
+@implementation ZSInfoCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -26,11 +26,10 @@
     // Configure the view for the selected state
 }
 
-
-
 - (void)dealloc {
     [_nameLabel release];
-    [_setInfoButton release];
+    [_contentLabel release];
+    [_separator release];
     [super dealloc];
 }
 @end

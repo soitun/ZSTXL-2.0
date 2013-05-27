@@ -7,6 +7,7 @@
 //
 
 #import "ZhaoshangDailiViewController.h"
+#import "ZhaoshangInfoViewController.h"
 
 #define IMAGE_WIDTH (106)
 #define IMAGE_HEIGHT (97)
@@ -26,6 +27,11 @@
     return self;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.view.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-49);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -38,7 +44,9 @@
     
     [self initCategory];
     
+    self.cateScrollView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-49);
     self.cateScrollView.contentSize = CGSizeMake(320, self.adScrollView.frame.size.height + (IMAGE_HEIGHT+1)*4-1);
+    
     
     [self initAdScrollView];
 }
@@ -135,6 +143,8 @@
 - (void)selectCateWithIndex:(UIButton *)sender
 {
     DLog(@"button tag %d", sender.tag);
+    ZhaoshangInfoViewController *zsInfoVC = [[[ZhaoshangInfoViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:zsInfoVC animated:YES];
 }
 
 - (void)initAdScrollView
@@ -150,11 +160,6 @@
     }
     
     [self.adScrollView bringSubviewToFront:self.adScrollPageControl];
-    
-    
-//    self.adScrollPageControl.numberOfPages = 3;
-//    self.adScrollPageControl.currentPage = 1;
-//    self.adScrollPageControl.enabled = YES;
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView

@@ -26,8 +26,10 @@
 #define kContentColor   RGBCOLOR(70, 70, 70)
 #define kSubContentColor RGBCOLOR(98, 98, 98)
 
-#define kContentBlueColor RGBCOLOR(39,104,145)
+#define kContentBlueColor RGBCOLOR(243,244,245)
 #define kContentGrayColor RGBCOLOR(200,200,200)
+#define kCellBorderColor RGBCOLOR(191,191,191)
+#define kCellSelectColor RGBCOLOR(211,239,242)
 
 #define kEventShakeHand @"kEventShakeHand"
 #define kNetworkError  @"网络不给力啊"

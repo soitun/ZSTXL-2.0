@@ -1,25 +1,24 @@
 //
-//  RegistViewController.m
+//  RegistFirstViewController.m
 //  ZSTXL
 //
-//  Created by LiuYue on 13-5-24.
+//  Created by LiuYue on 13-5-27.
 //  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
-#import "RegistViewController.h"
 #import "RegistFirstViewController.h"
+#import "RegistSecondViewController.h"
 
-@interface RegistViewController ()
+@interface RegistFirstViewController ()
 
 @end
 
-@implementation RegistViewController
+@implementation RegistFirstViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = @"注册";
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:)
                                                      name:UIKeyboardWillShowNotification
@@ -29,7 +28,6 @@
                                                  selector:@selector(keyboardWillHide:)
                                                      name:UIKeyboardWillHideNotification
                                                    object:nil];
-        
     }
     return self;
 }
@@ -37,12 +35,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.scrollView.contentSize = CGSizeMake(320, SCREEN_HEIGHT-64);
+    self.title = @"注册";
+    self.tel = @"13800000001";
+    
+    
+    self.telLabel.text = self.tel;
+    self.scrollView.contentSize = CGSizeMake(320, 320);
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyBoard:)];
     [self.scrollView addGestureRecognizer:tap];
-    
-    self.isAllowFriendContact = NO;
-    [self.allowFriendContactButton addTarget:self action:@selector(allowFriendContact:) forControlEvents:UIControlEventTouchUpInside];
     [self initNavBar];
 }
 
@@ -53,24 +53,38 @@
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [_telTextField release];
-    [_authCodeTextField release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [_nameTextField release];
+    [_passwdTextField release];
+    [_inviteTextField release];
     [_scrollView release];
-    [_allowFriendContactButton release];
+    [_telLabel release];
     [super dealloc];
 }
-
 - (void)viewDidUnload {
-    [self setTelTextField:nil];
-    [self setAuthCodeTextField:nil];
+    [self setNameTextField:nil];
+    [self setPasswdTextField:nil];
+    [self setInviteTextField:nil];
     [self setScrollView:nil];
-    [self setAllowFriendContactButton:nil];
+    [self setTelLabel:nil];
     [super viewDidUnload];
 }
+- (IBAction)confirm:(UIButton *)sender {
+    RegistSecondViewController *registSecondVC = [[[RegistSecondViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:registSecondVC animated:YES];
+}
 
-#pragma mark - nav back button
+#pragma mark - tap
+
+- (void)hideKeyBoard:(UITapGestureRecognizer *)tap
+{
+    [self.nameTextField resignFirstResponder];
+    [self.passwdTextField resignFirstResponder];
+    [self.inviteTextField resignFirstResponder];
+}
+
+#pragma mark - nav bar
 
 - (void)initNavBar
 {
@@ -86,14 +100,6 @@
 - (void)popVC:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-#pragma mark - tap
-
-- (void)hideKeyBoard:(UITapGestureRecognizer *)tap
-{
-    [self.authCodeTextField resignFirstResponder];
-    [self.telTextField resignFirstResponder];
 }
 
 #pragma mark - keyboard
@@ -115,7 +121,9 @@
     [UIView setAnimationCurve:[curve intValue]];
     
     CGFloat keyBoardHeight = keyboardBounds.size.height;
+    
     self.scrollView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-keyBoardHeight);
+    
     [UIView commitAnimations];
 }
 
@@ -137,22 +145,4 @@
     [UIView commitAnimations];
 }
 
-- (IBAction)getAuthCode:(UIButton *)sender
-{
-    DLog(@"getAuthcode");
-}
-
-- (void)allowFriendContact:(UIButton *)sender
-{
-    DLog(@"allowFriendContact");
-    self.isAllowFriendContact = !self.isAllowFriendContact;
-    self.allowFriendContactButton.selected = !self.allowFriendContactButton.selected;
-}
-
-- (IBAction)regist:(UIButton *)sender
-{
-    DLog(@"regist");
-    RegistFirstViewController *registFirstVC = [[[RegistFirstViewController alloc] init] autorelease];
-    [self.navigationController pushViewController:registFirstVC animated:YES];
-}
 @end

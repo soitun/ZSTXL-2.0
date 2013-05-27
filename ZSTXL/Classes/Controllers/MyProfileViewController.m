@@ -12,6 +12,7 @@
 #import "Pharmacology.h"
 #import "CityInfo.h"
 #import "CustomBadge.h"
+#import "SettingViewController.h"
 
 @interface MyProfileViewController ()
 
@@ -28,6 +29,11 @@
     return self;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.scrollView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-49);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -37,10 +43,11 @@
     self.leftArray_2 = @[@"他的招商代理信息", @"好友的招商代理信息"];
     [self initTableSelector];
     
-    self.scrollView.contentSize = CGSizeMake(320, 565);
+    self.scrollView.contentSize = CGSizeMake(320, 520);
     
 //    [self getMyInfoFromDB];
     [self showBasicInfo];
+    [self initNavBar];
 }
 
 - (void)initTableSelector
@@ -447,4 +454,23 @@
     [self setScrollView:nil];
     [super viewDidUnload];
 }
+
+#pragma mark - nav bar
+
+- (void)initNavBar
+{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:[UIImage imageNamed:@"setting"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(setting:) forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 25, 25);
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = barButton;
+}
+
+- (void)setting:(UIButton *)sender
+{
+    SettingViewController *setVC = [[[SettingViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:setVC animated:YES];
+}
+
 @end

@@ -1,0 +1,25 @@
+//
+//  PersonBasicInfoSettingViewController.h
+//  ZSTXL
+//
+//  Created by LiuYue on 13-5-27.
+//  Copyright (c) 2013年 com.zxcxco. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "PersonBasicInfoCell.h"
+
+@interface PersonBasicInfoSettingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PersonBasicInfoCellDelegate>
+@property (retain, nonatomic) IBOutlet UITableView *tableView;
+@property (retain, nonatomic) IBOutlet UILabel *useridLabel;
+@property (retain, nonatomic) IBOutlet UILabel *telLabel;
+@property (retain, nonatomic) IBOutlet UIImageView *headIcon;
+
+@property (nonatomic, retain) NSMutableArray *titleArray;
+@property (nonatomic, retain) NSMutableArray *contentArray;
+
+@property (nonatomic, copy) NSString *userid;
+@property (nonatomic, copy) NSString *tel;
+@property (nonatomic, assign) BOOL isMale;
+
+@end
