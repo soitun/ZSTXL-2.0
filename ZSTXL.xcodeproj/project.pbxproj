@@ -78,6 +78,29 @@
 		3595A64A174B77A3000780FE /* getProAndCityData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3595A649174B77A3000780FE /* getProAndCityData.json */; };
 		3595A64D174B993E000780FE /* CityIdProId.m in Sources */ = {isa = PBXBuildFile; fileRef = 3595A64C174B993E000780FE /* CityIdProId.m */; };
 		3595A653174BA937000780FE /* retreat.png in Resources */ = {isa = PBXBuildFile; fileRef = 3595A652174BA937000780FE /* retreat.png */; };
+		35987DB41754786A004E2EF5 /* SettingNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35987DB21754786A004E2EF5 /* SettingNameViewController.m */; };
+		35987DB51754786A004E2EF5 /* SettingNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35987DB31754786A004E2EF5 /* SettingNameViewController.xib */; };
+		35987DBA17547A1F004E2EF5 /* switch_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DB617547A1E004E2EF5 /* switch_off.png */; };
+		35987DBB17547A1F004E2EF5 /* switch_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DB717547A1E004E2EF5 /* switch_off@2x.png */; };
+		35987DBC17547A1F004E2EF5 /* switch_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DB817547A1E004E2EF5 /* switch_on.png */; };
+		35987DBD17547A1F004E2EF5 /* switch_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DB917547A1F004E2EF5 /* switch_on@2x.png */; };
+		35987DC017547C2A004E2EF5 /* setting_textfield_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DBE17547C2A004E2EF5 /* setting_textfield_bg.png */; };
+		35987DC117547C2A004E2EF5 /* setting_textfield_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DBF17547C2A004E2EF5 /* setting_textfield_bg@2x.png */; };
+		35987DC617547CE3004E2EF5 /* setting_confirm_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DC217547CE2004E2EF5 /* setting_confirm_p.png */; };
+		35987DC717547CE3004E2EF5 /* setting_confirm_p@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DC317547CE2004E2EF5 /* setting_confirm_p@2x.png */; };
+		35987DC817547CE3004E2EF5 /* setting_confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DC417547CE3004E2EF5 /* setting_confirm.png */; };
+		35987DC917547CE3004E2EF5 /* setting_confirm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DC517547CE3004E2EF5 /* setting_confirm@2x.png */; };
+		35987DCD175480C9004E2EF5 /* SettingTelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35987DCB175480C8004E2EF5 /* SettingTelViewController.m */; };
+		35987DCE175480C9004E2EF5 /* SettingTelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35987DCC175480C8004E2EF5 /* SettingTelViewController.xib */; };
+		35987DD3175481F6004E2EF5 /* setting_confirm_l_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DCF175481F5004E2EF5 /* setting_confirm_l_p.png */; };
+		35987DD4175481F6004E2EF5 /* setting_confirm_l_p@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DD0175481F5004E2EF5 /* setting_confirm_l_p@2x.png */; };
+		35987DD5175481F6004E2EF5 /* setting_confirm_l.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DD1175481F6004E2EF5 /* setting_confirm_l.png */; };
+		35987DD6175481F6004E2EF5 /* setting_confirm_l@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DD2175481F6004E2EF5 /* setting_confirm_l@2x.png */; };
+		35987E311754B20E004E2EF5 /* SettingWorkTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35987E2F1754B20C004E2EF5 /* SettingWorkTimeViewController.m */; };
+		35987E321754B20E004E2EF5 /* SettingWorkTimeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35987E301754B20D004E2EF5 /* SettingWorkTimeViewController.xib */; };
+		35987E361754BB96004E2EF5 /* SettingDuplicateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35987E341754BB94004E2EF5 /* SettingDuplicateViewController.m */; };
+		35987E371754BB96004E2EF5 /* SettingDuplicateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35987E351754BB95004E2EF5 /* SettingDuplicateViewController.xib */; };
+		35987E3F1754C806004E2EF5 /* UIPopoverListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35987E3E1754C806004E2EF5 /* UIPopoverListView.m */; };
 		359ADF34174F09020032856C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 359ADF32174F09020032856C /* LoginViewController.m */; };
 		359ADF35174F09020032856C /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359ADF33174F09020032856C /* LoginViewController.xib */; };
 		359CA0F0174F0D4900803018 /* login_button_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 359CA0E3174F0D4900803018 /* login_button_p.png */; };
@@ -491,6 +514,34 @@
 		3595A64B174B993E000780FE /* CityIdProId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityIdProId.h; sourceTree = "<group>"; };
 		3595A64C174B993E000780FE /* CityIdProId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityIdProId.m; sourceTree = "<group>"; };
 		3595A652174BA937000780FE /* retreat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retreat.png; sourceTree = "<group>"; };
+		35987DB11754786A004E2EF5 /* SettingNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingNameViewController.h; sourceTree = "<group>"; };
+		35987DB21754786A004E2EF5 /* SettingNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingNameViewController.m; sourceTree = "<group>"; };
+		35987DB31754786A004E2EF5 /* SettingNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingNameViewController.xib; sourceTree = "<group>"; };
+		35987DB617547A1E004E2EF5 /* switch_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switch_off.png; sourceTree = "<group>"; };
+		35987DB717547A1E004E2EF5 /* switch_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switch_off@2x.png"; sourceTree = "<group>"; };
+		35987DB817547A1E004E2EF5 /* switch_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switch_on.png; sourceTree = "<group>"; };
+		35987DB917547A1F004E2EF5 /* switch_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switch_on@2x.png"; sourceTree = "<group>"; };
+		35987DBE17547C2A004E2EF5 /* setting_textfield_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_textfield_bg.png; sourceTree = "<group>"; };
+		35987DBF17547C2A004E2EF5 /* setting_textfield_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_textfield_bg@2x.png"; sourceTree = "<group>"; };
+		35987DC217547CE2004E2EF5 /* setting_confirm_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_confirm_p.png; sourceTree = "<group>"; };
+		35987DC317547CE2004E2EF5 /* setting_confirm_p@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_confirm_p@2x.png"; sourceTree = "<group>"; };
+		35987DC417547CE3004E2EF5 /* setting_confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_confirm.png; sourceTree = "<group>"; };
+		35987DC517547CE3004E2EF5 /* setting_confirm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_confirm@2x.png"; sourceTree = "<group>"; };
+		35987DCA175480C8004E2EF5 /* SettingTelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTelViewController.h; sourceTree = "<group>"; };
+		35987DCB175480C8004E2EF5 /* SettingTelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTelViewController.m; sourceTree = "<group>"; };
+		35987DCC175480C8004E2EF5 /* SettingTelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingTelViewController.xib; sourceTree = "<group>"; };
+		35987DCF175481F5004E2EF5 /* setting_confirm_l_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_confirm_l_p.png; sourceTree = "<group>"; };
+		35987DD0175481F5004E2EF5 /* setting_confirm_l_p@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_confirm_l_p@2x.png"; sourceTree = "<group>"; };
+		35987DD1175481F6004E2EF5 /* setting_confirm_l.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_confirm_l.png; sourceTree = "<group>"; };
+		35987DD2175481F6004E2EF5 /* setting_confirm_l@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_confirm_l@2x.png"; sourceTree = "<group>"; };
+		35987E2E1754B20B004E2EF5 /* SettingWorkTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingWorkTimeViewController.h; sourceTree = "<group>"; };
+		35987E2F1754B20C004E2EF5 /* SettingWorkTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingWorkTimeViewController.m; sourceTree = "<group>"; };
+		35987E301754B20D004E2EF5 /* SettingWorkTimeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingWorkTimeViewController.xib; sourceTree = "<group>"; };
+		35987E331754BB92004E2EF5 /* SettingDuplicateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingDuplicateViewController.h; sourceTree = "<group>"; };
+		35987E341754BB94004E2EF5 /* SettingDuplicateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingDuplicateViewController.m; sourceTree = "<group>"; };
+		35987E351754BB95004E2EF5 /* SettingDuplicateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingDuplicateViewController.xib; sourceTree = "<group>"; };
+		35987E3D1754C806004E2EF5 /* UIPopoverListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPopoverListView.h; sourceTree = "<group>"; };
+		35987E3E1754C806004E2EF5 /* UIPopoverListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPopoverListView.m; sourceTree = "<group>"; };
 		359ADF31174F09020032856C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		359ADF32174F09020032856C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		359ADF33174F09020032856C /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -1072,9 +1123,21 @@
 				359E9B70174B0F7E0018E87F /* SendMessageViewController.h */,
 				359E9B71174B0F7F0018E87F /* SendMessageViewController.m */,
 				359E9B72174B0F810018E87F /* SendMessageViewController.xib */,
+				35987DB11754786A004E2EF5 /* SettingNameViewController.h */,
+				35987DB21754786A004E2EF5 /* SettingNameViewController.m */,
+				35987DB31754786A004E2EF5 /* SettingNameViewController.xib */,
 				359EAC7817533458004D4356 /* SettingViewController.h */,
 				359EAC7917533459004D4356 /* SettingViewController.m */,
 				359EAC7A1753345A004D4356 /* SettingViewController.xib */,
+				35987E331754BB92004E2EF5 /* SettingDuplicateViewController.h */,
+				35987E341754BB94004E2EF5 /* SettingDuplicateViewController.m */,
+				35987E351754BB95004E2EF5 /* SettingDuplicateViewController.xib */,
+				35987DCA175480C8004E2EF5 /* SettingTelViewController.h */,
+				35987DCB175480C8004E2EF5 /* SettingTelViewController.m */,
+				35987DCC175480C8004E2EF5 /* SettingTelViewController.xib */,
+				35987E2E1754B20B004E2EF5 /* SettingWorkTimeViewController.h */,
+				35987E2F1754B20C004E2EF5 /* SettingWorkTimeViewController.m */,
+				35987E301754B20D004E2EF5 /* SettingWorkTimeViewController.xib */,
 				359E9BAA174B17D30018E87F /* TalkViewController.h */,
 				359E9BAB174B17DA0018E87F /* TalkViewController.m */,
 				359E9BAC174B17EB0018E87F /* TalkViewController.xib */,
@@ -1097,6 +1160,7 @@
 		358C1B65174A1BF9006E5A8D /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				35987E3C1754C806004E2EF5 /* UIPopoverListView */,
 				359CA15B174F552E00803018 /* RegexKitLite */,
 				359F877D174C6BC40091F565 /* LeveryTabBar */,
 				3595A62A174B634D000780FE /* MAlertView */,
@@ -1338,8 +1402,22 @@
 				359CA154174F51F200803018 /* textfield_bg@2x.png */,
 				359CA14F174F502700803018 /* textfield_bg_short.png */,
 				359CA150174F502800803018 /* textfield_bg_short@2x.png */,
+				35987DC217547CE2004E2EF5 /* setting_confirm_p.png */,
+				35987DC317547CE2004E2EF5 /* setting_confirm_p@2x.png */,
+				35987DC417547CE3004E2EF5 /* setting_confirm.png */,
+				35987DC517547CE3004E2EF5 /* setting_confirm@2x.png */,
+				35987DBE17547C2A004E2EF5 /* setting_textfield_bg.png */,
+				35987DBF17547C2A004E2EF5 /* setting_textfield_bg@2x.png */,
+				35987DCF175481F5004E2EF5 /* setting_confirm_l_p.png */,
+				35987DD0175481F5004E2EF5 /* setting_confirm_l_p@2x.png */,
+				35987DD1175481F6004E2EF5 /* setting_confirm_l.png */,
+				35987DD2175481F6004E2EF5 /* setting_confirm_l@2x.png */,
 				359EAC7417533230004D4356 /* setting.png */,
 				359EAC7517533231004D4356 /* setting@2x.png */,
+				35987DB617547A1E004E2EF5 /* switch_off.png */,
+				35987DB717547A1E004E2EF5 /* switch_off@2x.png */,
+				35987DB817547A1E004E2EF5 /* switch_on.png */,
+				35987DB917547A1F004E2EF5 /* switch_on@2x.png */,
 				359F87C3174CC5120091F565 /* sift.png */,
 				359F87C4174CC5130091F565 /* sift_p.png */,
 				358C1B92174A1F6C006E5A8D /* separator.png */,
@@ -1395,6 +1473,15 @@
 				3595A62C174B634D000780FE /* MAlertView.m */,
 			);
 			path = MAlertView;
+			sourceTree = "<group>";
+		};
+		35987E3C1754C806004E2EF5 /* UIPopoverListView */ = {
+			isa = PBXGroup;
+			children = (
+				35987E3D1754C806004E2EF5 /* UIPopoverListView.h */,
+				35987E3E1754C806004E2EF5 /* UIPopoverListView.m */,
+			);
+			path = UIPopoverListView;
 			sourceTree = "<group>";
 		};
 		359CA0DF174F0BE600803018 /* login_regist */ = {
@@ -2035,6 +2122,24 @@
 				359EACA3175382EE004D4356 /* avatar_edit.png in Resources */,
 				359EACA4175382EE004D4356 /* avatar_edit@2x.png in Resources */,
 				359EACA91753864E004D4356 /* PersonBasicInfoCell.xib in Resources */,
+				35987DB51754786A004E2EF5 /* SettingNameViewController.xib in Resources */,
+				35987DBA17547A1F004E2EF5 /* switch_off.png in Resources */,
+				35987DBB17547A1F004E2EF5 /* switch_off@2x.png in Resources */,
+				35987DBC17547A1F004E2EF5 /* switch_on.png in Resources */,
+				35987DBD17547A1F004E2EF5 /* switch_on@2x.png in Resources */,
+				35987DC017547C2A004E2EF5 /* setting_textfield_bg.png in Resources */,
+				35987DC117547C2A004E2EF5 /* setting_textfield_bg@2x.png in Resources */,
+				35987DC617547CE3004E2EF5 /* setting_confirm_p.png in Resources */,
+				35987DC717547CE3004E2EF5 /* setting_confirm_p@2x.png in Resources */,
+				35987DC817547CE3004E2EF5 /* setting_confirm.png in Resources */,
+				35987DC917547CE3004E2EF5 /* setting_confirm@2x.png in Resources */,
+				35987DCE175480C9004E2EF5 /* SettingTelViewController.xib in Resources */,
+				35987DD3175481F6004E2EF5 /* setting_confirm_l_p.png in Resources */,
+				35987DD4175481F6004E2EF5 /* setting_confirm_l_p@2x.png in Resources */,
+				35987DD5175481F6004E2EF5 /* setting_confirm_l.png in Resources */,
+				35987DD6175481F6004E2EF5 /* setting_confirm_l@2x.png in Resources */,
+				35987E321754B20E004E2EF5 /* SettingWorkTimeViewController.xib in Resources */,
+				35987E371754BB96004E2EF5 /* SettingDuplicateViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2185,6 +2290,11 @@
 				359EAC96175358AE004D4356 /* CustomCellBackgroundView.m in Sources */,
 				359EAC9F17538187004D4356 /* PersonBasicInfoSettingViewController.m in Sources */,
 				359EACA717538634004D4356 /* PersonBasicInfoCell.m in Sources */,
+				35987DB41754786A004E2EF5 /* SettingNameViewController.m in Sources */,
+				35987DCD175480C9004E2EF5 /* SettingTelViewController.m in Sources */,
+				35987E311754B20E004E2EF5 /* SettingWorkTimeViewController.m in Sources */,
+				35987E361754BB96004E2EF5 /* SettingDuplicateViewController.m in Sources */,
+				35987E3F1754C806004E2EF5 /* UIPopoverListView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

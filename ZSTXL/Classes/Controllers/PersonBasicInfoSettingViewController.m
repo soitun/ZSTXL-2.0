@@ -9,6 +9,8 @@
 #import "PersonBasicInfoSettingViewController.h"
 #import "CustomCellBackgroundView.h"
 #import "PersonBasicInfoCell.h"
+#import "SettingNameViewController.h"
+#import "SettingTelViewController.h"
 
 @interface PersonBasicInfoSettingViewController ()
 
@@ -31,6 +33,11 @@
     self.title = @"个人信息设置";
     self.userid = @"123456";
     self.tel = @"13800000001";
+    
+    self.name = @"张三";
+    self.birth = @"1990-09-09";
+    
+    
     self.isMale = YES;
     
     self.useridLabel.text = self.userid;
@@ -92,6 +99,10 @@
     NSArray *titleArr1 = @[@"姓名", @"手机号码"];
     NSArray *titleArr2 = @[@"性别", @"生日"];
     self.titleArray = [NSMutableArray arrayWithObjects:titleArr1, titleArr2, nil];
+    
+    NSArray *selArr1 = @[@"settingName", @"settingTel"];
+    NSArray *selArr2 = @[@"settingSex", @"settingBirth"];
+    self.selectorArray = [NSMutableArray arrayWithObjects:selArr1, selArr2, nil];
 }
 
 #pragma mark - table view
@@ -139,8 +150,44 @@
         cell.femaleLabel.hidden = NO;
         cell.chooseMaleImage.hidden = NO;
         cell.chooseFemaleImage.hidden = NO;
+    } else if (indexPath.section ==0 && indexPath.row == 0){
+        cell.detailLabel.text = self.name;
+    } else if (indexPath.section == 1 && indexPath.row == 1){
+        cell.detailLabel.text = self.birth;
     }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SEL sel = NSSelectorFromString([[self.selectorArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]);
+    [self performSelector:sel];
+}
+
+#pragma mark - table selector
+
+- (void)settingName
+{
+    DLog(@"settingName");
+    SettingNameViewController *settingNameVC = [[[SettingNameViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:settingNameVC animated:YES];
+}
+
+- (void)settingTel
+{
+    DLog(@"settingTel");
+    SettingTelViewController *settingTelVC = [[[SettingTelViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:settingTelVC animated:YES];
+}
+
+- (void)settingSex
+{
+    DLog(@"settingSex");
+}
+
+- (void)settingBirth
+{
+    DLog(@"settingBirth");
 }
 
 #pragma mark - person cell delegate
@@ -152,7 +199,6 @@
         cell.chooseMaleImage.image = [UIImage imageNamed:@"login_select"];
         cell.chooseFemaleImage.image = [UIImage imageNamed:@"login_noselect"];
     }
-    
 }
 
 - (void)chooseFemale:(PersonBasicInfoCell *)cell

@@ -10,6 +10,7 @@
 #import "SettingCell.h"
 #import "CustomCellBackgroundView.h"
 #import "PersonBasicInfoSettingViewController.h"
+#import "SettingWorkTimeViewController.h"
 
 @interface SettingViewController ()
 
@@ -48,6 +49,7 @@
 {
     [super viewDidLoad];
     self.title = @"设置";
+    self.toneOn = YES;
     [self initNavBar];
     [self initTableViewData];
     
@@ -145,7 +147,7 @@
     static NSString *cellId = @"SettingCell";
     SettingCell *cell = (SettingCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
     if (cell == nil) {
-        cell = [[SettingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"SettingCell" owner:nil options:nil] lastObject];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.frame = CGRectMake(0, 0, 320, 44);
@@ -181,15 +183,23 @@
     [cell.textLabel setFont:[UIFont boldSystemFontOfSize:16]];
     
     if (indexPath.section == 2 && indexPath.row == 3) {
-//        cell.selectImage.hidden = NO;
-//        cell.selectImage.frame = CGRectMake(260, 15, 14, 14);
-//        cell.selectImage.image = [UIImage imageNamed:@"login_select"];
         cell.accessoryType = UITableViewCellAccessoryNone;
-        [cell.contentView bringSubviewToFront:cell.selectImage];
-        UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_select"]];
-        image.frame = CGRectMake(262, 15, 14, 14);
-        cell.selectImage = image;
-        [cell.contentView addSubview:image];
+        cell.delegate = self;
+        cell.switchLabel.hidden = YES;
+    }
+    
+    else if (indexPath.section == 1 && indexPath.row == 0) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.selectImage.hidden = YES;
+        cell.switchImage.hidden = NO;
+        cell.delegate = self;
+        cell.switchLabel.hidden = NO;
+
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.switchImage.hidden = YES;
+        cell.selectImage.hidden = YES;
+        cell.switchLabel.hidden = YES;
     }
     
     return cell;
@@ -203,16 +213,7 @@
     NSString *selName = [[self.selectorArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     SEL sel = NSSelectorFromString(selName);
     [self performSelector:sel];
-
 }
-
-//- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    SettingCell *cell = (SettingCell *)[tableView cellForRowAtIndexPath:indexPath];
-//    ((CustomCellBackgroundView *)(cell.backgroundView)).fillColor = [UIColor whiteColor];
-//    [((CustomCellBackgroundView *)(cell.backgroundView)) setNeedsDisplay];
-//}
-
 
 #pragma mark - tableview selector
 
@@ -237,6 +238,8 @@
 - (void)workTime
 {
     DLog(@"workTime");
+    SettingWorkTimeViewController *settingWorkTimeVC = [[[SettingWorkTimeViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:settingWorkTimeVC animated:YES];
 }
 
 - (void)findMe
@@ -282,5 +285,22 @@
     DLog(@"logoff");
 }
 
+#pragma mark - setting cell delegate
+
+- (void)switchOnOff:(SettingCell *)cell
+{
+    self.toneOn = !self.toneOn;
+    if (self.toneOn) {
+        cell.switchImage.image = [UIImage imageNamed:@"switch_on"];
+    }
+    else{
+        cell.switchImage.image = [UIImage imageNamed:@"switch_off"];
+    }
+}
+
+- (void)select:(SettingCell *)cell
+{
+    DLog(@"select");
+}
 
 @end

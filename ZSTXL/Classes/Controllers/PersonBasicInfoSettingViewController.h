@@ -16,10 +16,12 @@
 @property (retain, nonatomic) IBOutlet UIImageView *headIcon;
 
 @property (nonatomic, retain) NSMutableArray *titleArray;
-@property (nonatomic, retain) NSMutableArray *contentArray;
+@property (nonatomic, retain) NSMutableArray *selectorArray;
 
 @property (nonatomic, copy) NSString *userid;
 @property (nonatomic, copy) NSString *tel;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *birth;
 @property (nonatomic, assign) BOOL isMale;
 
 @end

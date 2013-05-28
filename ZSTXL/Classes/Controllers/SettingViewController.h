@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SettingCell.h"
 
-@interface SettingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface SettingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, SettingCellDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *settingInfo;
 @property (nonatomic, retain) NSMutableArray *selectorArray;
+@property (nonatomic, assign) BOOL toneOn;
 
 @end
