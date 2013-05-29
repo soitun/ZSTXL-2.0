@@ -30,6 +30,9 @@
 - (CGFloat)popoverListView:(UIPopoverListView *)popoverListView
    heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 
+- (void)popoverListconfirmSelect:(NSMutableArray *)array;
+- (void)popoverListcancelSelect:(NSMutableArray *)array;
+
 @end
 
 
@@ -47,7 +50,10 @@
 @property (nonatomic, assign) id<UIPopoverListViewDataSource> datasource;
 @property (nonatomic, assign) id<UIPopoverListViewDelegate>   delegate;
 
+@property (nonatomic, retain) UIButton *cancelButton;
+@property (nonatomic, retain) UIButton *confirmButton;
 @property (nonatomic, retain) UITableView *listView;
+@property (nonatomic, retain) NSMutableArray *selectArray;
 
 - (void)setTitle:(NSString *)title;
 

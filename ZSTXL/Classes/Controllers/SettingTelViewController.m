@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
     self.title = @"手机号码";
+    [self initNavBar];
     
     [self.authCodeButton addTarget:self action:@selector(getAuthCode:) forControlEvents:UIControlEventTouchUpInside];
     [self.saveButton addTarget:self action:@selector(saveTel:) forControlEvents:UIControlEventTouchUpInside];
@@ -52,6 +53,25 @@
     [self setSaveButton:nil];
     [super viewDidUnload];
 }
+
+#pragma mark - nav bar
+
+- (void)initNavBar
+{
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setImage:[UIImage imageNamed:@"retreat.png"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(popVC:) forControlEvents:UIControlEventTouchUpInside];
+    backButton.frame = CGRectMake(0, 0, 30, 30);
+    
+    UIBarButtonItem *lBarButton = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
+    [self.navigationItem setLeftBarButtonItem:lBarButton];
+}
+
+- (void)popVC:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 #pragma mark - button method
 

@@ -363,7 +363,6 @@
 								<string key="NSFrame">{{89, 198}, {211, 21}}</string>
 								<reference key="NSSuperview" ref="559298183"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>

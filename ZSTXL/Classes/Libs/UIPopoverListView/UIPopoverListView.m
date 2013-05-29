@@ -8,6 +8,7 @@
 
 #import "UIPopoverListView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SettingDupCell.h"
 
 //#define FRAME_X_INSET 20.0f
 //#define FRAME_Y_INSET 40.0f
@@ -61,6 +62,34 @@
     _listView = [[UITableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
     _listView.dataSource = self;
     _listView.delegate = self;
+
+    
+    
+    
+    //init table footer
+    self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.confirmButton.frame = CGRectMake(161, 2, 98, 40);
+    [self.confirmButton setBackgroundImage:[UIImage imageNamed:@"setting_confirm"] forState:UIControlStateNormal];
+    [self.confirmButton setBackgroundImage:[UIImage imageNamed:@"setting_confirm_p"] forState:UIControlStateHighlighted];
+    [self.confirmButton setTitle:@"确认" forState:UIControlStateNormal];
+    [self.confirmButton addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
+    [self.confirmButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 2, 0)];
+    
+    
+    self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.cancelButton.frame = CGRectMake(21, 2, 98, 40);
+    [self.cancelButton setBackgroundImage:[UIImage imageNamed:@"setting_confirm"] forState:UIControlStateNormal];
+    [self.cancelButton setBackgroundImage:[UIImage imageNamed:@"setting_confirm_p"] forState:UIControlStateHighlighted];
+    [self.cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+    [self.cancelButton addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
+    [self.cancelButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 2, 0)];
+    
+    UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, xWidth, 52)];
+    [footer addSubview:self.cancelButton];
+    [footer addSubview:self.confirmButton];
+    _listView.tableFooterView = footer;
+    
+    
     [self addSubview:_listView];
     
     _overlayView = [[UIControl alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -69,6 +98,23 @@
                      action:@selector(dismiss)
            forControlEvents:UIControlEventTouchUpInside];
     
+    self.selectArray = [NSMutableArray array];
+    
+}
+
+#pragma mark - button method
+
+- (void)confirm
+{
+    if ([self.delegate respondsToSelector:@selector(popoverListconfirmSelect:)]) {
+        [self.delegate performSelector:@selector(popoverListconfirmSelect:) withObject:self.selectArray];
+    }
+    [self dismiss];
+}
+
+- (void)cancel
+{
+    [self dismiss];
 }
 
 
@@ -121,7 +167,17 @@
         [self.delegate popoverListView:self didSelectIndexPath:indexPath];
     }
     
-    [self dismiss];
+    SettingDupCell *cell = (SettingDupCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *indexStr = [NSString stringWithFormat:@"%d", indexPath.row];
+    if (![self.selectArray containsObject:indexStr]) {
+        [self.selectArray addObject:indexStr];
+        cell.selectImage.image = [UIImage imageNamed:@"login_select"];
+    }
+    else{
+        [self.selectArray removeObject:indexStr];
+        cell.selectImage.image = [UIImage imageNamed:@"login_noselect"];
+    }
+    
 }
 
 

@@ -35,7 +35,7 @@
     self.tel = @"13800000001";
     
     self.name = @"张三";
-    self.birth = @"1990-09-09";
+    self.birth = @"1990-00-00";
     
     
     self.isMale = YES;
@@ -188,6 +188,78 @@
 - (void)settingBirth
 {
     DLog(@"settingBirth");
+    
+    self.pickerViewDate = [[UIActionSheet alloc] initWithTitle:nil
+                                                 delegate:self
+                                        cancelButtonTitle:nil
+                                   destructiveButtonTitle:nil
+                                        otherButtonTitles:nil];
+    
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy MM dd"];
+    
+    NSTimeZone *tz = [NSTimeZone systemTimeZone];
+    [dateFormatter setTimeZone:tz];
+    
+    self.theDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0, 44.0, 0.0, 0.0)];
+    self.theDatePicker.datePickerMode = UIDatePickerModeDate;
+    self.theDatePicker.timeZone = [NSTimeZone localTimeZone];
+    NSDate *maxDate = [NSDate date];
+    NSDate *minDate = [dateFormatter dateFromString:@"1950 01 01"];
+    
+    
+
+    [self.theDatePicker addTarget:self action:@selector(dateChanged) forControlEvents:UIControlEventValueChanged];
+    self.theDatePicker.maximumDate = maxDate;
+    self.theDatePicker.minimumDate = minDate;
+    
+    self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    self.pickerToolbar.barStyle=UIBarStyleBlackTranslucent;
+    [self.pickerToolbar sizeToFit];
+    NSMutableArray *barItems = [[NSMutableArray alloc] init];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                target:self
+                                                                                action:@selector(DatePickerDoneClick)];
+
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                               target:self
+                                                                               action:nil];
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                  target:self
+                                                                                  action:@selector(DatePickerCancelClick)];
+    [barItems addObject:cancelButton];
+    [barItems addObject:flexSpace];
+    [barItems addObject:doneButton];
+    
+    [self.pickerToolbar setItems:barItems animated:YES];
+    [self.pickerViewDate addSubview:self.pickerToolbar];
+    [self.pickerViewDate addSubview:self.theDatePicker];
+    [self.pickerViewDate showInView:self.view];
+    self.pickerViewDate.frame = CGRectMake(0, SCREEN_HEIGHT-64-44-self.theDatePicker.frame.size.height, 320, self.theDatePicker.frame.size.height+44);
+}
+
+- (void)DatePickerDoneClick
+{
+    [self.pickerViewDate dismissWithClickedButtonIndex:0 animated:YES];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    dateFormatter.timeZone = [NSTimeZone localTimeZone];
+    self.birthDate = self.theDatePicker.date;
+    
+    DLog(@"date %@", [dateFormatter stringFromDate:self.theDatePicker.date]);
+}
+
+- (void)DatePickerCancelClick
+{
+    [self.pickerViewDate dismissWithClickedButtonIndex:0 animated:YES];
+}
+
+- (void)dateChanged
+{
+    
 }
 
 #pragma mark - person cell delegate

@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "PersonBasicInfoCell.h"
 
-@interface PersonBasicInfoSettingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PersonBasicInfoCellDelegate>
+@interface PersonBasicInfoSettingViewController : UIViewController
+<UITableViewDataSource, UITableViewDelegate, PersonBasicInfoCellDelegate, UIActionSheetDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) IBOutlet UILabel *useridLabel;
 @property (retain, nonatomic) IBOutlet UILabel *telLabel;
@@ -23,5 +24,11 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *birth;
 @property (nonatomic, assign) BOOL isMale;
+
+
+@property (nonatomic, retain) UIDatePicker *theDatePicker;
+@property (nonatomic, retain) UIToolbar* pickerToolbar;
+@property (nonatomic, retain) UIActionSheet* pickerViewDate;
+@property (nonatomic, retain) NSDate *birthDate;
 
 @end

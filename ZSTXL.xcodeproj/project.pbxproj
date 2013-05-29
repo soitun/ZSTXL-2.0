@@ -47,8 +47,6 @@
 		358C1BCF174A217C006E5A8D /* TheNewMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 358C1BCD174A217C006E5A8D /* TheNewMessageViewController.xib */; };
 		358C1BD3174A21A1006E5A8D /* ContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 358C1BD1174A21A1006E5A8D /* ContactViewController.m */; };
 		358C1BD4174A21A1006E5A8D /* ContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 358C1BD2174A21A1006E5A8D /* ContactViewController.xib */; };
-		358C1BD8174A21B5006E5A8D /* ZhaoshangDailiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 358C1BD6174A21B5006E5A8D /* ZhaoshangDailiViewController.m */; };
-		358C1BD9174A21B5006E5A8D /* ZhaoshangDailiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 358C1BD7174A21B5006E5A8D /* ZhaoshangDailiViewController.xib */; };
 		358C1BDD174A21C7006E5A8D /* MyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 358C1BDB174A21C7006E5A8D /* MyProfileViewController.m */; };
 		358C1BDE174A21C7006E5A8D /* MyProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 358C1BDC174A21C7006E5A8D /* MyProfileViewController.xib */; };
 		358C1BE1174A223F006E5A8D /* UIImage+stretch.m in Sources */ = {isa = PBXBuildFile; fileRef = 358C1BE0174A223F006E5A8D /* UIImage+stretch.m */; };
@@ -361,6 +359,11 @@
 		359F87EC174CDBAC0091F565 /* home_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 359F87EB174CDBA80091F565 /* home_icon.png */; };
 		359F87EE174CDF040091F565 /* middle_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 359F87ED174CDEFF0091F565 /* middle_p.png */; };
 		359F87F0174CDFEE0091F565 /* left_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 359F87EF174CDFEA0091F565 /* left_p.png */; };
+		35A301851755C687002A4F4B /* SettingDupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A301841755C687002A4F4B /* SettingDupCell.m */; };
+		35A3018C1755C6AA002A4F4B /* SettingDupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A3018B1755C6AA002A4F4B /* SettingDupCell.xib */; };
+		35A301941755DC12002A4F4B /* ZSDLCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A301931755DC10002A4F4B /* ZSDLCell.m */; };
+		35A301961755DC85002A4F4B /* ZSDLCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A301951755DC83002A4F4B /* ZSDLCell.xib */; };
+		35A301991756016A002A4F4B /* TimePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A3019817560167002A4F4B /* TimePicker.m */; };
 		35A99C8A174DAD9500C9DF69 /* addfriend_button_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A99C89174DAD9500C9DF69 /* addfriend_button_p.png */; };
 		35A99C94174DB23F00C9DF69 /* my_homepage_chat.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A99C8E174DB23F00C9DF69 /* my_homepage_chat.png */; };
 		35A99C95174DB23F00C9DF69 /* my_homepage_chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A99C8F174DB23F00C9DF69 /* my_homepage_chat@2x.png */; };
@@ -464,9 +467,6 @@
 		358C1BD0174A21A1006E5A8D /* ContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactViewController.h; sourceTree = "<group>"; };
 		358C1BD1174A21A1006E5A8D /* ContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactViewController.m; sourceTree = "<group>"; };
 		358C1BD2174A21A1006E5A8D /* ContactViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactViewController.xib; sourceTree = "<group>"; };
-		358C1BD5174A21B5006E5A8D /* ZhaoshangDailiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhaoshangDailiViewController.h; sourceTree = "<group>"; };
-		358C1BD6174A21B5006E5A8D /* ZhaoshangDailiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhaoshangDailiViewController.m; sourceTree = "<group>"; };
-		358C1BD7174A21B5006E5A8D /* ZhaoshangDailiViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZhaoshangDailiViewController.xib; sourceTree = "<group>"; };
 		358C1BDA174A21C7006E5A8D /* MyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileViewController.h; sourceTree = "<group>"; };
 		358C1BDB174A21C7006E5A8D /* MyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileViewController.m; sourceTree = "<group>"; };
 		358C1BDC174A21C7006E5A8D /* MyProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyProfileViewController.xib; sourceTree = "<group>"; };
@@ -920,6 +920,14 @@
 		359F87EB174CDBA80091F565 /* home_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_icon.png; sourceTree = "<group>"; };
 		359F87ED174CDEFF0091F565 /* middle_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = middle_p.png; sourceTree = "<group>"; };
 		359F87EF174CDFEA0091F565 /* left_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_p.png; sourceTree = "<group>"; };
+		35A301831755C687002A4F4B /* SettingDupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingDupCell.h; sourceTree = "<group>"; };
+		35A301841755C687002A4F4B /* SettingDupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingDupCell.m; sourceTree = "<group>"; };
+		35A3018B1755C6AA002A4F4B /* SettingDupCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingDupCell.xib; sourceTree = "<group>"; };
+		35A301921755DC0F002A4F4B /* ZSDLCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSDLCell.h; sourceTree = "<group>"; };
+		35A301931755DC10002A4F4B /* ZSDLCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSDLCell.m; sourceTree = "<group>"; };
+		35A301951755DC83002A4F4B /* ZSDLCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZSDLCell.xib; sourceTree = "<group>"; };
+		35A3019717560165002A4F4B /* TimePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePicker.h; sourceTree = "<group>"; };
+		35A3019817560167002A4F4B /* TimePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePicker.m; sourceTree = "<group>"; };
 		35A99C89174DAD9500C9DF69 /* addfriend_button_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addfriend_button_p.png; sourceTree = "<group>"; };
 		35A99C8E174DB23F00C9DF69 /* my_homepage_chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_homepage_chat.png; sourceTree = "<group>"; };
 		35A99C8F174DB23F00C9DF69 /* my_homepage_chat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_homepage_chat@2x.png"; sourceTree = "<group>"; };
@@ -1147,9 +1155,6 @@
 				359E9ACB174B05EC0018E87F /* ZhaoshangAndDailiViewController.h */,
 				359E9ACC174B05EC0018E87F /* ZhaoshangAndDailiViewController.m */,
 				359E9ACD174B05EC0018E87F /* ZhaoshangAndDailiViewController.xib */,
-				358C1BD5174A21B5006E5A8D /* ZhaoshangDailiViewController.h */,
-				358C1BD6174A21B5006E5A8D /* ZhaoshangDailiViewController.m */,
-				358C1BD7174A21B5006E5A8D /* ZhaoshangDailiViewController.xib */,
 				359EAC4B1752E885004D4356 /* ZhaoshangInfoViewController.h */,
 				359EAC4C1752E885004D4356 /* ZhaoshangInfoViewController.m */,
 				359EAC4D1752E885004D4356 /* ZhaoshangInfoViewController.xib */,
@@ -1282,11 +1287,19 @@
 				359EAC541752E92F004D4356 /* ZSInfoPersonInfoCell.m */,
 				359EAC561752E942004D4356 /* ZSInfoPersonInfoCell.xib */,
 				359EAC581752EC32004D4356 /* ZSInfoCell.h */,
-				359EAC5B1752EC58004D4356 /* ZSInfoCell.xib */,
 				359EAC591752EC32004D4356 /* ZSInfoCell.m */,
+				359EAC5B1752EC58004D4356 /* ZSInfoCell.xib */,
 				359EAC5D1752EDCF004D4356 /* ZSInfoContactCell.h */,
 				359EAC5E1752EDCF004D4356 /* ZSInfoContactCell.m */,
 				359EAC601752EDE6004D4356 /* ZSInfoContactCell.xib */,
+				35A301831755C687002A4F4B /* SettingDupCell.h */,
+				35A301841755C687002A4F4B /* SettingDupCell.m */,
+				35A3018B1755C6AA002A4F4B /* SettingDupCell.xib */,
+				35A301921755DC0F002A4F4B /* ZSDLCell.h */,
+				35A301931755DC10002A4F4B /* ZSDLCell.m */,
+				35A301951755DC83002A4F4B /* ZSDLCell.xib */,
+				35A3019717560165002A4F4B /* TimePicker.h */,
+				35A3019817560167002A4F4B /* TimePicker.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1947,7 +1960,6 @@
 				358C1BAF174A1F6C006E5A8D /* zsdl@2x.png in Resources */,
 				358C1BCF174A217C006E5A8D /* TheNewMessageViewController.xib in Resources */,
 				358C1BD4174A21A1006E5A8D /* ContactViewController.xib in Resources */,
-				358C1BD9174A21B5006E5A8D /* ZhaoshangDailiViewController.xib in Resources */,
 				358C1BDE174A21C7006E5A8D /* MyProfileViewController.xib in Resources */,
 				358C1BEA174A28C7006E5A8D /* nav_bar.png in Resources */,
 				359E9AB1174B03170018E87F /* AddInfoViewController.xib in Resources */,
@@ -2140,6 +2152,8 @@
 				35987DD6175481F6004E2EF5 /* setting_confirm_l@2x.png in Resources */,
 				35987E321754B20E004E2EF5 /* SettingWorkTimeViewController.xib in Resources */,
 				35987E371754BB96004E2EF5 /* SettingDuplicateViewController.xib in Resources */,
+				35A3018C1755C6AA002A4F4B /* SettingDupCell.xib in Resources */,
+				35A301961755DC85002A4F4B /* ZSDLCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2155,7 +2169,6 @@
 				358C1B7D174A1F43006E5A8D /* CustomNavigationController.m in Sources */,
 				358C1BCE174A217C006E5A8D /* TheNewMessageViewController.m in Sources */,
 				358C1BD3174A21A1006E5A8D /* ContactViewController.m in Sources */,
-				358C1BD8174A21B5006E5A8D /* ZhaoshangDailiViewController.m in Sources */,
 				358C1BDD174A21C7006E5A8D /* MyProfileViewController.m in Sources */,
 				358C1BE1174A223F006E5A8D /* UIImage+stretch.m in Sources */,
 				358C1BE6174A257A006E5A8D /* NSString+stringValue.m in Sources */,
@@ -2295,6 +2308,9 @@
 				35987E311754B20E004E2EF5 /* SettingWorkTimeViewController.m in Sources */,
 				35987E361754BB96004E2EF5 /* SettingDuplicateViewController.m in Sources */,
 				35987E3F1754C806004E2EF5 /* UIPopoverListView.m in Sources */,
+				35A301851755C687002A4F4B /* SettingDupCell.m in Sources */,
+				35A301941755DC12002A4F4B /* ZSDLCell.m in Sources */,
+				35A301991756016A002A4F4B /* TimePicker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

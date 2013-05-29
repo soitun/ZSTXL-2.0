@@ -7,6 +7,7 @@
 //
 
 #import "SettingWorkTimeViewController.h"
+#import "SettingDupCell.h"
 #import "SettingCell.h"
 #import "CustomCellBackgroundView.h"
 #import "UIPopoverListView.h"
@@ -124,7 +125,7 @@
 - (void)duplicate
 {
     DLog(@"设置重复");
-    UIPopoverListView *list = [[UIPopoverListView alloc] initWithFrame:CGRectMake(10, 20, 280, 340)];
+    UIPopoverListView *list = [[UIPopoverListView alloc] initWithFrame:CGRectMake(10, 20, 280, 340+44)];
     [list setTitle:@"重复"];
     list.listView.scrollEnabled = NO;
     list.datasource = self;
@@ -165,8 +166,8 @@
 
 - (UITableViewCell *)popoverListView:(UIPopoverListView *)popoverListView cellForIndexPath:(NSIndexPath *)indexPath
 {
-    SettingCell *settingCell = [[[NSBundle mainBundle] loadNibNamed:@"SettingCell" owner:nil options:nil] lastObject];
-    settingCell.frame = CGRectMake(0, 0, 280, 44);
+    SettingDupCell *settingCell = [[[NSBundle mainBundle] loadNibNamed:@"SettingDupCell" owner:nil options:nil] lastObject];
+    settingCell.selectionStyle = UITableViewCellSelectionStyleNone;
     return settingCell;
 }
 
@@ -184,6 +185,11 @@
 - (void)popoverListViewCancel:(UIPopoverListView *)popoverListView
 {
     
+}
+
+- (void)popoverListconfirmSelect:(NSMutableArray *)array
+{
+    DLog(@"pop select array %@", array);
 }
 
 - (CGFloat)popoverListView:(UIPopoverListView *)popoverListView
