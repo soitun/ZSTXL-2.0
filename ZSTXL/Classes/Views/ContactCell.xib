@@ -46,7 +46,7 @@
 								<string key="NSFrame">{{10, 8}, {43, 43}}</string>
 								<reference key="NSSuperview" ref="241262570"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="254118142"/>
+								<reference key="NSNextKeyView" ref="562262922"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -61,7 +61,7 @@
 								<string key="NSFrame">{{60, 8}, {189, 21}}</string>
 								<reference key="NSSuperview" ref="241262570"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="254118142"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="1001556258">
 									<int key="NSColorSpace">3</int>
@@ -111,7 +111,7 @@
 							<object class="IBUIImageView" id="81540584">
 								<reference key="NSNextResponder" ref="241262570"/>
 								<int key="NSvFlags">-2147483356</int>
-								<string key="NSFrame">{{252, 17}, {15, 15}}</string>
+								<string key="NSFrame">{{275, 22}, {15, 15}}</string>
 								<reference key="NSSuperview" ref="241262570"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="6131772"/>
@@ -129,7 +129,7 @@
 								<string key="NSFrame">{{60, 30}, {104, 21}}</string>
 								<reference key="NSSuperview" ref="241262570"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="562262922"/>
+								<reference key="NSNextKeyView" ref="81540584"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -175,7 +175,7 @@
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="241262570"/>
-				<string key="IBUIReuseIdentifier">contactCell</string>
+				<string key="IBUIReuseIdentifier">ContactCell</string>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">

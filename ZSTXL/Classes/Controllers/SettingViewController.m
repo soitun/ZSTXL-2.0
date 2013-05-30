@@ -185,21 +185,22 @@
     if (indexPath.section == 2 && indexPath.row == 3) {
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.delegate = self;
-        cell.switchLabel.hidden = YES;
-    }
-    
-    else if (indexPath.section == 1 && indexPath.row == 0) {
+        cell.onLabel.hidden = YES;
+        cell.offLabel.hidden = YES;
+    } else if ((indexPath.section == 1 && indexPath.row == 0) || (indexPath.section == 2 && indexPath.row == 0)) {
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.selectImage.hidden = YES;
         cell.switchImage.hidden = NO;
         cell.delegate = self;
-        cell.switchLabel.hidden = NO;
+        cell.onLabel.hidden = NO;
+        cell.offLabel.hidden = NO;
 
     } else {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.switchImage.hidden = YES;
         cell.selectImage.hidden = YES;
-        cell.switchLabel.hidden = YES;
+        cell.onLabel.hidden = YES;
+        cell.offLabel.hidden = YES;
     }
     
     return cell;

@@ -21,7 +21,8 @@
 @property (retain, nonatomic) IBOutlet UIImageView *selectImage;
 @property (retain, nonatomic) IBOutlet UIImageView *switchImage;
 @property (nonatomic, assign) id<SettingCellDelegate> delegate;
-@property (retain, nonatomic) IBOutlet UILabel *switchLabel;
+@property (retain, nonatomic) IBOutlet UILabel *onLabel;
+@property (nonatomic, retain) IBOutlet UILabel *offLabel;
 
 @end
 

@@ -46,7 +46,8 @@
 - (void)dealloc {
     [_selectImage release];
     [_switchImage release];
-    [_switchLabel release];
+    [_onLabel release];
+    [_offLabel release];
     [super dealloc];
 }
 

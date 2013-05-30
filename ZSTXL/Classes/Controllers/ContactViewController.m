@@ -12,6 +12,7 @@
 #import "CommendContactViewController.h"
 #import "CityTitleView.h"
 #import "SelectViewController.h"
+#import "SearchContactViewController.h"
 
 @interface ContactViewController ()
 
@@ -37,6 +38,15 @@
 {
     [super viewDidLoad];
     self.cityName = @"北京";
+    
+    UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [searchButton setImage:[UIImage imageNamed:@"search_contact.png"] forState:UIControlStateNormal];
+    [searchButton addTarget:self action:@selector(searchContact:) forControlEvents:UIControlEventTouchUpInside];
+    searchButton.frame = CGRectMake(0, 0, 30, 30);
+    
+    UIBarButtonItem *rBarButton = [[[UIBarButtonItem alloc] initWithCustomView:searchButton] autorelease];
+    [self.navigationItem setRightBarButtonItem:rBarButton];
+    
     
     [self initAreaPickerView];
     [self initTitleView];
@@ -88,7 +98,7 @@
     self.mSlideMenu.frame = CGRectMake(0, 0, 320, 34);
     self.mSlideMenu.delegate = self;
     [self.view addSubview:self.mSlideMenu];
-//    [Utility addShadow:self.mSlideMenu];
+    [Utility addShadow:self.mSlideMenu];
 }
 
 - (void)initScrollView
@@ -121,14 +131,28 @@
     [siftButton setBackgroundImage:[UIImage imageNamed:@"sift"] forState:UIControlStateNormal];
     [siftButton setBackgroundImage:[UIImage imageNamed:@"sift_p"] forState:UIControlStateHighlighted];
     [siftButton setTitle:@"筛选" forState:UIControlStateNormal];
-    [siftButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [siftButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [siftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [siftButton addTarget:self action:@selector(sift) forControlEvents:UIControlEventTouchUpInside];
-    siftButton.titleEdgeInsets = UIEdgeInsetsMake(0, 12, 0, 0);
-    siftButton.frame = CGRectMake(320-37, allVC.view.frame.size.height-35, 37, 32);
+    siftButton.titleEdgeInsets = UIEdgeInsetsMake(0, 12, 3, 0);
+    siftButton.frame = CGRectMake(320-46, allVC.view.frame.size.height-35-20, 46, 50);
     [allVC.view addSubview:siftButton];
     [allVC.view bringSubviewToFront:siftButton];
     [self.controllerArray addObject:allVC];
+}
+
+#pragma mark - nav bar
+
+- (void)resetNavigationBar {
+    if (self.navigationController.navigationBar.frame.origin.y != 0) {
+        self.navigationController.navigationBar.frame = CGRectMake(0, 0, 320, 44);
+    }
+}
+
+- (void)searchContact:(UIButton *)sender
+{
+    SearchContactViewController *searchContactVC = [[[SearchContactViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:searchContactVC animated:YES];
 }
 
 

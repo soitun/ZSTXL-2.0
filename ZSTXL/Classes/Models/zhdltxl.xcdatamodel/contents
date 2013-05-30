@@ -183,9 +183,9 @@
         <element name="MailInfo" positionX="351" positionY="101" width="128" height="240"/>
         <element name="MyInfo" positionX="-45" positionY="-151" width="128" height="150"/>
         <element name="Pharmacology" positionX="189" positionY="-108" width="128" height="103"/>
+        <element name="SearchContact" positionX="855" positionY="369" width="128" height="45"/>
         <element name="SMSList" positionX="531" positionY="-160" width="128" height="178"/>
         <element name="SMSRecord" positionX="369" positionY="-157" width="128" height="103"/>
         <element name="UserDetail" positionX="117" positionY="122" width="128" height="268"/>
-        <element name="SearchContact" positionX="160" positionY="192" width="128" height="45"/>
     </elements>
 </model>

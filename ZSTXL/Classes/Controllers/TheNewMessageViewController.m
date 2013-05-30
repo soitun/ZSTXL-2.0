@@ -31,16 +31,16 @@
     // Do any additional setup after loading the view from its nib.
     [self initNavBar];
 
-    self.tableView.frame = CGRectMake(0, 0, 320, self.view.frame.size.height-48);
+    self.tableView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-49);
     self.dataSourceArray = [NSMutableArray array];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    self.view.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64);
-}
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    [super viewDidAppear:animated];
+//    self.view.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64);
+//}
 
 - (void)initNavBar
 {
@@ -66,6 +66,7 @@
     LoginViewController *loginVC = [[[LoginViewController alloc] init] autorelease];
     CustomNavigationController *nav = [[[CustomNavigationController alloc] initWithRootViewController:loginVC] autorelease];
     [self.navigationController presentModalViewController:nav animated:YES];
+//    [kAppDelegate.tabController hidesTabBar:YES animated:NO];
 }
 
 #pragma mark - table view

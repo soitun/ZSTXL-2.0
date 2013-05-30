@@ -11,6 +11,7 @@
 #import "SettingCell.h"
 #import "CustomCellBackgroundView.h"
 #import "UIPopoverListView.h"
+#import "TimePicker.h"
 
 @interface SettingWorkTimeViewController ()
 
@@ -35,7 +36,6 @@
     [self initNavBar];
     
     self.tableView.backgroundView = nil;
-    
     self.dupArray = [[NSMutableArray alloc] initWithObjects:@"星期一", @"星期二", @"星期三", @"星期四", @"星期五", @"星期六", @"星期日", nil];
     
 }
@@ -137,11 +137,19 @@
 - (void)onDuty
 {
     DLog(@"上班");
+    self.onDutyTimePicker = [[TimePicker alloc] initWithTitle:@"上班时间" delegate:self];
+    self.onDutyTimePicker.datePicker.datePickerMode = UIDatePickerModeTime;
+    [self.onDutyTimePicker showInView:self.view];
+    [self.onDutyTimePicker release];
 }
 
 - (void)offDuty
 {
     DLog(@"下班");
+    self.offDutyTimePicker = [[TimePicker alloc] initWithTitle:@"下班时间" delegate:self];
+    self.offDutyTimePicker.datePicker.datePickerMode = UIDatePickerModeTime;
+    [self.offDutyTimePicker showInView:self.view];
+    [self.offDutyTimePicker release];
 }
 
 #pragma mark - nav back button
@@ -196,6 +204,17 @@
    heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 44.f;
+}
+
+#pragma mark - time picker delegate
+
+- (void)timePickerConfirm:(TimePicker *)picker
+{
+    if (picker == self.onDutyTimePicker) {
+        
+    }else if (picker == self.offDutyTimePicker){
+        
+    }
 }
 
 

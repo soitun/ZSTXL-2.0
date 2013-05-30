@@ -63,7 +63,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellID = @"contactCell";
+    static NSString *cellID = @"ContactCell";
     ContactCell *cell = (ContactCell *)[tableView dequeueReusableCellWithIdentifier:cellID];
     if (nil == cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ContactCell" owner:self options:nil] objectAtIndex:0];

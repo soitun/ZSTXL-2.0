@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "PersonBasicInfoCell.h"
+#import "TimePicker.h"
 
 @interface PersonBasicInfoSettingViewController : UIViewController
-<UITableViewDataSource, UITableViewDelegate, PersonBasicInfoCellDelegate, UIActionSheetDelegate>
+<UITableViewDataSource, UITableViewDelegate, PersonBasicInfoCellDelegate, UIActionSheetDelegate, TimePickerDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) IBOutlet UILabel *useridLabel;
 @property (retain, nonatomic) IBOutlet UILabel *telLabel;
 @property (retain, nonatomic) IBOutlet UIImageView *headIcon;
+@property (nonatomic, retain) TimePicker *timePicker;
 
 @property (nonatomic, retain) NSMutableArray *titleArray;
 @property (nonatomic, retain) NSMutableArray *selectorArray;
@@ -26,9 +28,6 @@
 @property (nonatomic, assign) BOOL isMale;
 
 
-@property (nonatomic, retain) UIDatePicker *theDatePicker;
-@property (nonatomic, retain) UIToolbar* pickerToolbar;
-@property (nonatomic, retain) UIActionSheet* pickerViewDate;
 @property (nonatomic, retain) NSDate *birthDate;
 
 @end

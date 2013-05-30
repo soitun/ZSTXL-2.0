@@ -10,15 +10,6 @@
 
 @implementation TimePicker
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -28,67 +19,66 @@
 }
 */
 
-- (id)initWithTitle:(NSString *)title delegate:(id<UIActionSheetDelegate>)delegate cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
+- (id)initWithTitle:(NSString *)title delegate:(id<TimePickerDelegate>)timePickerDelegate
 {
-    va_list args;
-    va_start(args, otherButtonTitles);
-    self = [super initWithTitle:title delegate:delegate cancelButtonTitle:cancelButtonTitle destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:otherButtonTitles, args, nil];
+    self = [[[NSBundle mainBundle] loadNibNamed:@"TimePicker" owner:nil options:nil] lastObject];
     if (self) {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy MM dd"];
-        
-        NSTimeZone *tz = [NSTimeZone systemTimeZone];
-        [dateFormatter setTimeZone:tz];
-        
-        self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0, 44.0, 0.0, 0.0)];
-        self.datePicker.datePickerMode = UIDatePickerModeDate;
-        self.datePicker.timeZone = [NSTimeZone localTimeZone];
-        NSDate *maxDate = [NSDate date];
-        NSDate *minDate = [dateFormatter dateFromString:@"1950 01 01"];
-        
-        
-        
-        [self.datePicker addTarget:self action:@selector(dateChanged) forControlEvents:UIControlEventValueChanged];
-        self.datePicker.maximumDate = maxDate;
-        self.datePicker.minimumDate = minDate;
-        
-        self.topBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-        self.topBar.barStyle=UIBarStyleBlackTranslucent;
-        [self.topBar sizeToFit];
-        NSMutableArray *barItems = [[NSMutableArray alloc] init];
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                                                                    target:self
-                                                                                    action:@selector(datePickerDoneClick)];
-        
-        UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                                                   target:self
-                                                                                   action:nil];
-        
-        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                                                      target:self
-                                                                                      action:@selector(datePickerCancelClick)];
-        [barItems addObject:cancelButton];
-        [barItems addObject:flexSpace];
-        [barItems addObject:doneButton];
-        
-        [self.topBar setItems:barItems animated:YES];
-        [self addSubview:self.topBar];
-        [self addSubview:self.datePicker];
-        self.datePicker.frame = CGRectMake(0, SCREEN_HEIGHT-64-44-self.datePicker.frame.size.height, 320, self.datePicker.frame.size.height+44);
+        self.timePickerDelegate = timePickerDelegate;
+        self.titleLab.text = title;
     }
-    
-    va_end(args);
     return self;
 }
 
-- (void)datePickerDoneClick
+#define kDuration 0.3
+
+- (void)showInView:(UIView *)view
 {
+    CATransition *animation = [CATransition  animation];
+    animation.delegate = self;
+    animation.duration = kDuration;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    animation.type = kCATransitionPush;
+    animation.subtype = kCATransitionFromTop;
+    [self setAlpha:1.0f];
+    [self.layer addAnimation:animation forKey:@"DDLocateView"];
     
+    self.frame = CGRectMake(0, view.frame.size.height - self.frame.size.height, self.frame.size.width, self.frame.size.height);
+    
+    [view addSubview:self];
 }
 
-- (void)datePickerCancelClick
+- (void)dealloc
 {
-    
+    [_titleLab release];
+    [super dealloc];
 }
 
+- (IBAction)cancelCilck:(UIBarButtonItem *)sender
+{
+    CATransition *animation = [CATransition  animation];
+    animation.delegate = self;
+    animation.duration = kDuration;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    animation.type = kCATransitionPush;
+    animation.subtype = kCATransitionFromBottom;
+    [self setAlpha:0.0f];
+    [self.layer addAnimation:animation forKey:@"TSLocateView"];
+    [self performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:kDuration];
+}
+
+- (IBAction)doneClick:(UIBarButtonItem *)sender
+{
+    CATransition *animation = [CATransition  animation];
+    animation.delegate = self;
+    animation.duration = kDuration;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    animation.type = kCATransitionPush;
+    animation.subtype = kCATransitionFromBottom;
+    [self setAlpha:0.0f];
+    [self.layer addAnimation:animation forKey:@"TSLocateView"];
+    [self performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:kDuration];
+    if ([self.timePickerDelegate respondsToSelector:@selector(timePickerConfirm:)]) {
+        [self.timePickerDelegate performSelector:@selector(timePickerConfirm:) withObject:self];
+    }
+}
 @end

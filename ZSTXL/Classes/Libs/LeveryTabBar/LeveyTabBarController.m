@@ -176,8 +176,16 @@
 
 -(void)setSelectedIndex:(NSUInteger)index
 {
+//    [self displayViewAtIndex:index];
+//    [_tabBar selectTabAtIndex:index];
+    
     [self displayViewAtIndex:index];
-    [_tabBar selectTabAtIndex:index];
+    [self selectTabBarAtIndex:index];
+}
+
+- (void)selectTabBarAtIndex:(int)index {
+    UIButton *button = [_tabBar.buttons objectAtIndex:index];
+    [_tabBar tabBarButtonClicked:button];
 }
 
 - (void)removeViewControllerAtIndex:(NSUInteger)index
@@ -215,6 +223,22 @@
     }
     
     _selectedIndex = index;
+    
+    UIViewController *selectedVC = [self.viewControllers objectAtIndex:index];
+	selectedVC.view.frame = _transitionView.frame;
+    
+    if ([[(UINavigationController *)selectedVC topViewController] respondsToSelector:@selector(resetNavigationBar)]) {
+        [[(UINavigationController *)selectedVC topViewController] performSelector:@selector(resetNavigationBar)];
+    }
+    
+//    if ([selectedVC.view isDescendantOfView:_transitionView])
+//	{
+//		[_transitionView bringSubviewToFront:selectedVC.view];
+//	}
+//	else
+//	{
+//		[_transitionView addSubview:selectedVC.view];
+//	}
     
 	[_transitionView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview) withObject:nil];
 	targetViewController.view.frame = _transitionView.bounds;

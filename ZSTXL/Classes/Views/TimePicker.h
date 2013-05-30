@@ -18,9 +18,13 @@
 @end
 
 @interface TimePicker : UIActionSheet
-
-@property (nonatomic, retain) UIDatePicker *datePicker;
-@property (nonatomic, retain) UIToolbar *topBar;
+- (IBAction)cancelCilck:(UIBarButtonItem *)sender;
+- (IBAction)doneClick:(UIBarButtonItem *)sender;
+@property (retain, nonatomic) IBOutlet UILabel *titleLab;
+@property (nonatomic, retain) IBOutlet UIDatePicker *datePicker;
 @property (nonatomic, assign) id<TimePickerDelegate> timePickerDelegate;
+
+- (id)initWithTitle:(NSString *)title delegate:(id<TimePickerDelegate>)timePickerDelegate;
+
 
 @end

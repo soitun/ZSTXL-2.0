@@ -12,4 +12,8 @@
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSArray *leftArray;
 @property (nonatomic, assign) NSInteger zdKind;
+
+- (IBAction)confirm:(UIButton *)sender;
+
+
 @end

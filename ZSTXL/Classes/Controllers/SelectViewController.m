@@ -7,7 +7,8 @@
 //
 
 #import "SelectViewController.h"
-#import "HomePageCell.h"
+#import "SettingCell.h"
+#import "CustomCellBackgroundView.h"
 
 @interface SelectViewController ()
 
@@ -41,6 +42,7 @@
     [super viewDidLoad];
     self.title = @"筛选";
     self.leftArray = @[@"招商/代理", @"类别偏好"];
+    self.tableView.backgroundView = nil;
     [self initNavBar];
 }
 
@@ -82,12 +84,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 0.f;
+    return 15.f;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 0.f;
+    return 44.f;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -102,16 +104,36 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    HomePageCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"HomePageCell" owner:nil options:nil] lastObject];
-    cell.nameLabel.text = [self.leftArray objectAtIndex:indexPath.row];
-    cell.detailLabel.hidden = YES;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell.nameLabel setTextColor:kContentBlueColor];
-    if (indexPath.row == 1) {
-        cell.separatorImage.hidden = YES;
+    SettingCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"SettingCell" owner:nil options:nil] lastObject];
+    cell.frame = CGRectMake(0, 0, 320, 44);
+    cell.selectImage.hidden = YES;
+    cell.switchImage.hidden = YES;
+    cell.onLabel.hidden = YES;
+    cell.offLabel.hidden = YES;
+
+    
+    
+    CustomCellBackgroundViewPosition pos;
+    
+    if (indexPath.row == 0) {
+        pos = CustomCellBackgroundViewPositionTop;
+    }
+    else{
+        pos = CustomCellBackgroundViewPositionBottom;
     }
     
+    CustomCellBackgroundView *cellBg = [[CustomCellBackgroundView alloc] initWithFrame:cell.frame];
+    cellBg.position = pos;
+    cellBg.fillColor = [UIColor whiteColor];
+    cellBg.borderColor = kCellBorderColor;
+    cellBg.cornerRadius = 5.f;
+    cell.backgroundView = cellBg;
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell.textLabel setTextColor:kContentBlueColor];
+    [cell.textLabel setFont:[UIFont systemFontOfSize:16]];
+    cell.textLabel.text = [self.leftArray objectAtIndex:indexPath.row];
     
     return cell;
 }
@@ -138,4 +160,6 @@
     DLog(@"选择药品类别");
 }
 
+- (IBAction)confirm:(UIButton *)sender {
+}
 @end

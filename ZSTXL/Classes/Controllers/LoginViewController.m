@@ -120,8 +120,65 @@
 
 - (IBAction)login:(UIButton *)sender
 {
-    
     DLog(@"login");
+    NSString *name = [self.userIdTextField.text removeSpace];
+    if (![name isValid]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"出错了"
+                                                        message:@"请输入有效的用户名"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"知道了"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        return;
+    }
+    
+    NSString *pwd = [self.passwdTextField.text removeSpace];
+    if (![pwd isValid]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"出错了"
+                                                        message:@"请输入有效的密码"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"知道了"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        return;
+    }
+    
+    [self.userIdTextField resignFirstResponder];
+    [self.passwdTextField resignFirstResponder];
+    
+    
+    
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"正在登录";
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"zslogin.json", @"path",
+                          name, @"commusername",
+                          pwd, @"passwd",
+                          kAppDelegate.uuid, @"uuid", nil];
+    
+    
+    NSLog(@"login dict: %@", dict);
+    
+    [DreamFactoryClient getWithURLParameters:dict success:^(NSDictionary *json) {
+        if ([[[json objForKey:@"returnCode"] stringValue] isEqualToString:@"0"]) {
+            
+            NSString *userId = [[json objForKey:@"Userid"] stringValue];
+
+            [PersistenceHelper setData:userId forKey:kUserId];
+            [self.navigationController dismissModalViewControllerAnimated:YES];
+            
+        } else {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:nil];
+        }
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+    }];
+    
+    
 }
 
 - (IBAction)regist:(UIButton *)sender

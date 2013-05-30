@@ -189,7 +189,7 @@
         cell.selectionStyle = UITableViewCellSeparatorStyleNone;
     }
     else{
-        static NSString *cellID = @"contactCell";
+        static NSString *cellID = @"ContactCell";
         cell = (ContactCell *)[tableView dequeueReusableCellWithIdentifier:cellID];
         if (nil == cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"ContactCell" owner:self options:nil] objectAtIndex:0];
