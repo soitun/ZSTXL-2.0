@@ -55,7 +55,6 @@
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 70)];
     
-    
     UIButton *logoffButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [logoffButton setTitle:@"退出登录" forState:UIControlStateNormal];
     [logoffButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

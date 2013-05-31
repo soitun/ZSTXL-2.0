@@ -22,7 +22,7 @@
 
 
 #define bgSkyBlueColor  RGBCOLOR(0,184,238)
-#define bgGreyColor     RGBCOLOR(231,234,239)
+#define bgGreyColor     RGBCOLOR(243,244,245)
 #define kContentColor   RGBCOLOR(70, 70, 70)
 #define kSubContentColor RGBCOLOR(98, 98, 98)
 

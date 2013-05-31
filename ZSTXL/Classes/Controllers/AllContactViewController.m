@@ -169,19 +169,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (tableView == self.searchDC.searchResultsTableView) {
-//        //        NSLog(@"search tableview cell");
-//        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//        static NSString *cellID = @"searchContactCell";
-//        SearchContactCell *cell = (SearchContactCell *)[tableView dequeueReusableCellWithIdentifier:cellID];
-//        if (nil == cell) {
-//            cell = [[[NSBundle mainBundle] loadNibNamed:@"SearchContactCell" owner:self options:nil] objectAtIndex:0];
-//        }
-//        [self configureCell:(UITableViewCell *)cell atIndexPath:indexPath OfTableView:(UITableView *)tableView];
-//    }
-//    
-//    
-
     UITableViewCell *cell = nil;
     
     if (indexPath.row == self.dataSourceArray.count) {

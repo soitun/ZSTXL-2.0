@@ -100,6 +100,27 @@
 		35987E3F1754C806004E2EF5 /* UIPopoverListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35987E3E1754C806004E2EF5 /* UIPopoverListView.m */; };
 		359ADF34174F09020032856C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 359ADF32174F09020032856C /* LoginViewController.m */; };
 		359ADF35174F09020032856C /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359ADF33174F09020032856C /* LoginViewController.xib */; };
+		359C976C17583C480068D6AE /* MailBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C976A17583C480068D6AE /* MailBoxViewController.m */; };
+		359C976D17583C480068D6AE /* MailBoxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359C976B17583C480068D6AE /* MailBoxViewController.xib */; };
+		359C977317583CA40068D6AE /* MailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C977217583CA40068D6AE /* MailCell.m */; };
+		359C977517583CB00068D6AE /* MailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359C977417583CB00068D6AE /* MailCell.xib */; };
+		359C977817583E9D0068D6AE /* TitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C977717583E9D0068D6AE /* TitleView.m */; };
+		359C977A17583EB80068D6AE /* TitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359C977917583EB80068D6AE /* TitleView.xib */; };
+		359C977D175844770068D6AE /* MailSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C977C175844770068D6AE /* MailSelectorView.m */; };
+		359C977F175844840068D6AE /* MailSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359C977E175844840068D6AE /* MailSelectorView.xib */; };
+		359C9782175849910068D6AE /* MailSelectorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C9781175849910068D6AE /* MailSelectorCell.m */; };
+		359C9784175849A80068D6AE /* MailSelectorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359C9783175849A80068D6AE /* MailSelectorCell.xib */; };
+		359C97871758793D0068D6AE /* SuspensionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C97861758793C0068D6AE /* SuspensionButton.m */; };
+		359C978B17587D5F0068D6AE /* PublishQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C978917587D5C0068D6AE /* PublishQueryViewController.m */; };
+		359C978C17587D5F0068D6AE /* PublishQueryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359C978A17587D5D0068D6AE /* PublishQueryViewController.xib */; };
+		359C978F17587F2B0068D6AE /* ConfirmFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C978E17587F2A0068D6AE /* ConfirmFooterView.m */; };
+		359C979117587F410068D6AE /* ConfirmFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359C979017587F400068D6AE /* ConfirmFooterView.xib */; };
+		359C979817588C4E0068D6AE /* PublishZhaoshangViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C979617588C4A0068D6AE /* PublishZhaoshangViewController.m */; };
+		359C979917588C4E0068D6AE /* PublishZhaoshangViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359C979717588C4C0068D6AE /* PublishZhaoshangViewController.xib */; };
+		359C979C175895980068D6AE /* TextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C979B175895970068D6AE /* TextFieldCell.m */; };
+		359C979E175895AF0068D6AE /* TextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359C979D175895AD0068D6AE /* TextFieldCell.xib */; };
+		359C97A71758A7E60068D6AE /* PublishBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 359C97A51758A7DE0068D6AE /* PublishBaseViewController.m */; };
+		359C97A81758A7E60068D6AE /* PublishBaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359C97A61758A7E20068D6AE /* PublishBaseViewController.xib */; };
 		359CA0F0174F0D4900803018 /* login_button_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 359CA0E3174F0D4900803018 /* login_button_p.png */; };
 		359CA0F1174F0D4900803018 /* login_button_p@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 359CA0E4174F0D4900803018 /* login_button_p@2x.png */; };
 		359CA0F2174F0D4900803018 /* login_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 359CA0E5174F0D4900803018 /* login_button.png */; };
@@ -334,8 +355,6 @@
 		359E9BEE174B1BC30018E87F /* JPinYinUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9BED174B1BC30018E87F /* JPinYinUtil.m */; };
 		359E9BF2174B1C610018E87F /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9BF1174B1C610018E87F /* JSONKit.m */; };
 		359E9BF4174B1CC40018E87F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359E9BF3174B1CC20018E87F /* CoreLocation.framework */; };
-		359E9BF7174B1DD10018E87F /* l_regist.png in Resources */ = {isa = PBXBuildFile; fileRef = 359E9BF5174B1DD10018E87F /* l_regist.png */; };
-		359E9BF8174B1DD10018E87F /* l_regist_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 359E9BF6174B1DD10018E87F /* l_regist_p.png */; };
 		359E9BFF174B21C30018E87F /* TheNewMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9BFE174B21C20018E87F /* TheNewMessageCell.m */; };
 		359E9C01174B21DA0018E87F /* TheNewMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359E9C00174B21D90018E87F /* TheNewMessageCell.xib */; };
 		359E9C04174B4EB70018E87F /* MenuControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9C03174B4EB50018E87F /* MenuControlView.m */; };
@@ -594,6 +613,38 @@
 		359ADF31174F09020032856C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		359ADF32174F09020032856C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		359ADF33174F09020032856C /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		359C976917583C480068D6AE /* MailBoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailBoxViewController.h; sourceTree = "<group>"; };
+		359C976A17583C480068D6AE /* MailBoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailBoxViewController.m; sourceTree = "<group>"; };
+		359C976B17583C480068D6AE /* MailBoxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailBoxViewController.xib; sourceTree = "<group>"; };
+		359C977117583CA40068D6AE /* MailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailCell.h; sourceTree = "<group>"; };
+		359C977217583CA40068D6AE /* MailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailCell.m; sourceTree = "<group>"; };
+		359C977417583CB00068D6AE /* MailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailCell.xib; sourceTree = "<group>"; };
+		359C977617583E9D0068D6AE /* TitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleView.h; sourceTree = "<group>"; };
+		359C977717583E9D0068D6AE /* TitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleView.m; sourceTree = "<group>"; };
+		359C977917583EB80068D6AE /* TitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleView.xib; sourceTree = "<group>"; };
+		359C977B175844770068D6AE /* MailSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailSelectorView.h; sourceTree = "<group>"; };
+		359C977C175844770068D6AE /* MailSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailSelectorView.m; sourceTree = "<group>"; };
+		359C977E175844840068D6AE /* MailSelectorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailSelectorView.xib; sourceTree = "<group>"; };
+		359C9780175849910068D6AE /* MailSelectorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailSelectorCell.h; sourceTree = "<group>"; };
+		359C9781175849910068D6AE /* MailSelectorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailSelectorCell.m; sourceTree = "<group>"; };
+		359C9783175849A80068D6AE /* MailSelectorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailSelectorCell.xib; sourceTree = "<group>"; };
+		359C97851758793B0068D6AE /* SuspensionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuspensionButton.h; sourceTree = "<group>"; };
+		359C97861758793C0068D6AE /* SuspensionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuspensionButton.m; sourceTree = "<group>"; };
+		359C978817587D5B0068D6AE /* PublishQueryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishQueryViewController.h; sourceTree = "<group>"; };
+		359C978917587D5C0068D6AE /* PublishQueryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishQueryViewController.m; sourceTree = "<group>"; };
+		359C978A17587D5D0068D6AE /* PublishQueryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishQueryViewController.xib; sourceTree = "<group>"; };
+		359C978D17587F290068D6AE /* ConfirmFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmFooterView.h; sourceTree = "<group>"; };
+		359C978E17587F2A0068D6AE /* ConfirmFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmFooterView.m; sourceTree = "<group>"; };
+		359C979017587F400068D6AE /* ConfirmFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmFooterView.xib; sourceTree = "<group>"; };
+		359C979517588C490068D6AE /* PublishZhaoshangViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishZhaoshangViewController.h; sourceTree = "<group>"; };
+		359C979617588C4A0068D6AE /* PublishZhaoshangViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishZhaoshangViewController.m; sourceTree = "<group>"; };
+		359C979717588C4C0068D6AE /* PublishZhaoshangViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishZhaoshangViewController.xib; sourceTree = "<group>"; };
+		359C979A175895950068D6AE /* TextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldCell.h; sourceTree = "<group>"; };
+		359C979B175895970068D6AE /* TextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldCell.m; sourceTree = "<group>"; };
+		359C979D175895AD0068D6AE /* TextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextFieldCell.xib; sourceTree = "<group>"; };
+		359C97A41758A7DB0068D6AE /* PublishBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishBaseViewController.h; sourceTree = "<group>"; };
+		359C97A51758A7DE0068D6AE /* PublishBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishBaseViewController.m; sourceTree = "<group>"; };
+		359C97A61758A7E20068D6AE /* PublishBaseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishBaseViewController.xib; sourceTree = "<group>"; };
 		359CA0E3174F0D4900803018 /* login_button_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_button_p.png; sourceTree = "<group>"; };
 		359CA0E4174F0D4900803018 /* login_button_p@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_button_p@2x.png"; sourceTree = "<group>"; };
 		359CA0E5174F0D4900803018 /* login_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_button.png; sourceTree = "<group>"; };
@@ -937,8 +988,6 @@
 		359E9BF0174B1C610018E87F /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		359E9BF1174B1C610018E87F /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		359E9BF3174B1CC20018E87F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		359E9BF5174B1DD10018E87F /* l_regist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = l_regist.png; sourceTree = "<group>"; };
-		359E9BF6174B1DD10018E87F /* l_regist_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = l_regist_p.png; sourceTree = "<group>"; };
 		359E9BFD174B21C10018E87F /* TheNewMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheNewMessageCell.h; sourceTree = "<group>"; };
 		359E9BFE174B21C20018E87F /* TheNewMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheNewMessageCell.m; sourceTree = "<group>"; };
 		359E9C00174B21D90018E87F /* TheNewMessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TheNewMessageCell.xib; sourceTree = "<group>"; };
@@ -1200,6 +1249,9 @@
 				359ADF31174F09020032856C /* LoginViewController.h */,
 				359ADF32174F09020032856C /* LoginViewController.m */,
 				359ADF33174F09020032856C /* LoginViewController.xib */,
+				359C976917583C480068D6AE /* MailBoxViewController.h */,
+				359C976A17583C480068D6AE /* MailBoxViewController.m */,
+				359C976B17583C480068D6AE /* MailBoxViewController.xib */,
 				358C1BDA174A21C7006E5A8D /* MyProfileViewController.h */,
 				358C1BDB174A21C7006E5A8D /* MyProfileViewController.m */,
 				358C1BDC174A21C7006E5A8D /* MyProfileViewController.xib */,
@@ -1217,6 +1269,12 @@
 				359CA9821756F41A00DA00AC /* PharCategoryViewController.xib */,
 				359E9ABA174B03F30018E87F /* ProvinceViewController.h */,
 				359E9ABB174B03F30018E87F /* ProvinceViewController.m */,
+				359C978817587D5B0068D6AE /* PublishQueryViewController.h */,
+				359C978917587D5C0068D6AE /* PublishQueryViewController.m */,
+				359C978A17587D5D0068D6AE /* PublishQueryViewController.xib */,
+				359C979517588C490068D6AE /* PublishZhaoshangViewController.h */,
+				359C979617588C4A0068D6AE /* PublishZhaoshangViewController.m */,
+				359C979717588C4C0068D6AE /* PublishZhaoshangViewController.xib */,
 				359EAC6A175321E3004D4356 /* RegistFirstViewController.h */,
 				359EAC6B175321E3004D4356 /* RegistFirstViewController.m */,
 				359EAC6C175321E3004D4356 /* RegistFirstViewController.xib */,
@@ -1226,6 +1284,9 @@
 				359CA131174F341E00803018 /* RegistViewController.h */,
 				359CA132174F341E00803018 /* RegistViewController.m */,
 				359CA133174F341E00803018 /* RegistViewController.xib */,
+				359CA9C41757334C00DA00AC /* SearchContactViewController.h */,
+				359CA9C51757334F00DA00AC /* SearchContactViewController.m */,
+				359CA9C61757335100DA00AC /* SearchContactViewController.xib */,
 				359E9B55174B0D5B0018E87F /* SelectedUserViewController.h */,
 				359E9B56174B0D5C0018E87F /* SelectedUserViewController.m */,
 				359E9B57174B0D5D0018E87F /* SelectedUserViewController.xib */,
@@ -1273,9 +1334,9 @@
 				359EAC4B1752E885004D4356 /* ZhaoshangInfoViewController.h */,
 				359EAC4C1752E885004D4356 /* ZhaoshangInfoViewController.m */,
 				359EAC4D1752E885004D4356 /* ZhaoshangInfoViewController.xib */,
-				359CA9C41757334C00DA00AC /* SearchContactViewController.h */,
-				359CA9C51757334F00DA00AC /* SearchContactViewController.m */,
-				359CA9C61757335100DA00AC /* SearchContactViewController.xib */,
+				359C97A41758A7DB0068D6AE /* PublishBaseViewController.h */,
+				359C97A51758A7DE0068D6AE /* PublishBaseViewController.m */,
+				359C97A61758A7E20068D6AE /* PublishBaseViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1354,6 +1415,9 @@
 				35A99CCF174DFAF500C9DF69 /* CityTitleView.h */,
 				35A99CD0174DFAF500C9DF69 /* CityTitleView.m */,
 				35A99CD2174DFB0700C9DF69 /* CityTitleView.xib */,
+				359C978D17587F290068D6AE /* ConfirmFooterView.h */,
+				359C978E17587F2A0068D6AE /* ConfirmFooterView.m */,
+				359C979017587F400068D6AE /* ConfirmFooterView.xib */,
 				359E9B60174B0E960018E87F /* ContactCell.h */,
 				359E9B61174B0E960018E87F /* ContactCell.m */,
 				359E9B62174B0E960018E87F /* ContactCell.xib */,
@@ -1364,15 +1428,27 @@
 				359E9BD1174B194F0018E87F /* HomePageCell.h */,
 				359E9BD2174B19510018E87F /* HomePageCell.m */,
 				359E9BD3174B19540018E87F /* HomePageCell.xib */,
-				359CA99C1757006100DA00AC /* InformationCell.h */,
-				359CA99D1757006100DA00AC /* InformationCell.m */,
-				359CA99E1757006100DA00AC /* InformationCell.xib */,
 				359CA9AC1757167200DA00AC /* InfoAdvHeaderView.h */,
 				359CA9AD1757167300DA00AC /* InfoAdvHeaderView.m */,
 				359CA9AE1757167300DA00AC /* InfoAdvHeaderView.xib */,
+				359CA99C1757006100DA00AC /* InformationCell.h */,
+				359CA99D1757006100DA00AC /* InformationCell.m */,
+				359CA99E1757006100DA00AC /* InformationCell.xib */,
 				35A99CF2174E1C2F00C9DF69 /* LoadMoreCell.h */,
 				35A99CF3174E1C2F00C9DF69 /* LoadMoreCell.m */,
 				35A99CF5174E1C3D00C9DF69 /* LoadMoreCell.xib */,
+				359CAA0C175774B300DA00AC /* LoadMoreFooter.h */,
+				359CAA0D175774B600DA00AC /* LoadMoreFooter.m */,
+				359CAA0F175774CE00DA00AC /* LoadMoreFooter.xib */,
+				359C977117583CA40068D6AE /* MailCell.h */,
+				359C977217583CA40068D6AE /* MailCell.m */,
+				359C977417583CB00068D6AE /* MailCell.xib */,
+				359C9780175849910068D6AE /* MailSelectorCell.h */,
+				359C9781175849910068D6AE /* MailSelectorCell.m */,
+				359C9783175849A80068D6AE /* MailSelectorCell.xib */,
+				359C977B175844770068D6AE /* MailSelectorView.h */,
+				359C977C175844770068D6AE /* MailSelectorView.m */,
+				359C977E175844840068D6AE /* MailSelectorView.xib */,
 				359E9C02174B4EB40018E87F /* MenuControlView.h */,
 				359E9C03174B4EB50018E87F /* MenuControlView.m */,
 				359E9BD6174B1A770018E87F /* MyTalkCell.h */,
@@ -1387,11 +1463,17 @@
 				359EACA517538631004D4356 /* PersonBasicInfoCell.h */,
 				359EACA617538632004D4356 /* PersonBasicInfoCell.m */,
 				359EACA81753864D004D4356 /* PersonBasicInfoCell.xib */,
+				359CA98B1756F55F00DA00AC /* PharCategoryCell.h */,
+				359CA98C1756F55F00DA00AC /* PharCategoryCell.m */,
+				359CA98E1756F56F00DA00AC /* PharCategoryCell.xib */,
 				359E9AEF174B0BF60018E87F /* PharCell.h */,
 				359E9AF0174B0BF60018E87F /* PharCell.m */,
 				359E9AF1174B0BF60018E87F /* PharCell.xib */,
 				359CA9C117571D5D00DA00AC /* PhotoView.h */,
 				359CA9C217571D5D00DA00AC /* PhotoView.m */,
+				359CA9FB1757565800DA00AC /* PopContactView.h */,
+				359CA9FC1757565A00DA00AC /* PopContactView.m */,
+				359CA9FE1757566F00DA00AC /* PopContactView.xib */,
 				3595A61D174B61CD000780FE /* SearchContactCell.h */,
 				3595A61E174B61CD000780FE /* SearchContactCell.m */,
 				3595A61F174B61CD000780FE /* SearchContactCell.xib */,
@@ -1403,6 +1485,11 @@
 				35A3018B1755C6AA002A4F4B /* SettingDupCell.xib */,
 				359E9C09174B50C20018E87F /* SlideMenuView.h */,
 				359E9C0A174B50C40018E87F /* SlideMenuView.m */,
+				359C97851758793B0068D6AE /* SuspensionButton.h */,
+				359C97861758793C0068D6AE /* SuspensionButton.m */,
+				359C979A175895950068D6AE /* TextFieldCell.h */,
+				359C979B175895970068D6AE /* TextFieldCell.m */,
+				359C979D175895AD0068D6AE /* TextFieldCell.xib */,
 				359E9BFD174B21C10018E87F /* TheNewMessageCell.h */,
 				359E9BFE174B21C20018E87F /* TheNewMessageCell.m */,
 				359E9C00174B21D90018E87F /* TheNewMessageCell.xib */,
@@ -1412,6 +1499,9 @@
 				359E9BDB174B1A950018E87F /* TimeSplitCell.h */,
 				359E9BDC174B1A960018E87F /* TimeSplitCell.m */,
 				359E9BDD174B1A970018E87F /* TimeSplitCell.xib */,
+				359C977617583E9D0068D6AE /* TitleView.h */,
+				359C977717583E9D0068D6AE /* TitleView.m */,
+				359C977917583EB80068D6AE /* TitleView.xib */,
 				359E9ADE174B06C30018E87F /* ZDCell.h */,
 				359E9ADF174B06C30018E87F /* ZDCell.m */,
 				359E9AE0174B06C30018E87F /* ZDCell.xib */,
@@ -1427,15 +1517,6 @@
 				359EAC531752E92F004D4356 /* ZSInfoPersonInfoCell.h */,
 				359EAC541752E92F004D4356 /* ZSInfoPersonInfoCell.m */,
 				359EAC561752E942004D4356 /* ZSInfoPersonInfoCell.xib */,
-				359CA98B1756F55F00DA00AC /* PharCategoryCell.h */,
-				359CA98C1756F55F00DA00AC /* PharCategoryCell.m */,
-				359CA98E1756F56F00DA00AC /* PharCategoryCell.xib */,
-				359CA9FB1757565800DA00AC /* PopContactView.h */,
-				359CA9FC1757565A00DA00AC /* PopContactView.m */,
-				359CA9FE1757566F00DA00AC /* PopContactView.xib */,
-				359CAA0C175774B300DA00AC /* LoadMoreFooter.h */,
-				359CAA0D175774B600DA00AC /* LoadMoreFooter.m */,
-				359CAA0F175774CE00DA00AC /* LoadMoreFooter.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1497,8 +1578,6 @@
 				359F8789174C8ED30091F565 /* icon_slide_tool@2x.png */,
 				359CA9A5175700EE00DA00AC /* icon_special.png */,
 				359CA9A6175700EE00DA00AC /* icon_special@2x.png */,
-				359E9BF5174B1DD10018E87F /* l_regist.png */,
-				359E9BF6174B1DD10018E87F /* l_regist_p.png */,
 				359F87EF174CDFEA0091F565 /* left_p.png */,
 				359EAC7F17533FA8004D4356 /* logoff.png */,
 				359EAC8017533FA9004D4356 /* logoff@2x.png */,
@@ -2156,8 +2235,6 @@
 				359E9BD5174B19580018E87F /* HomePageCell.xib in Resources */,
 				359E9BDA174B1A780018E87F /* MyTalkCell.xib in Resources */,
 				359E9BDF174B1A980018E87F /* TimeSplitCell.xib in Resources */,
-				359E9BF7174B1DD10018E87F /* l_regist.png in Resources */,
-				359E9BF8174B1DD10018E87F /* l_regist_p.png in Resources */,
 				359E9C01174B21DA0018E87F /* TheNewMessageCell.xib in Resources */,
 				359E9C08174B50630018E87F /* bg_slider.png in Resources */,
 				3595A621174B61CD000780FE /* SearchContactCell.xib in Resources */,
@@ -2371,6 +2448,16 @@
 				359CAA0A1757607300DA00AC /* setting.png in Resources */,
 				359CAA0B1757607300DA00AC /* setting@2x.png in Resources */,
 				359CAA10175774D100DA00AC /* LoadMoreFooter.xib in Resources */,
+				359C976D17583C480068D6AE /* MailBoxViewController.xib in Resources */,
+				359C977517583CB00068D6AE /* MailCell.xib in Resources */,
+				359C977A17583EB80068D6AE /* TitleView.xib in Resources */,
+				359C977F175844840068D6AE /* MailSelectorView.xib in Resources */,
+				359C9784175849A80068D6AE /* MailSelectorCell.xib in Resources */,
+				359C978C17587D5F0068D6AE /* PublishQueryViewController.xib in Resources */,
+				359C979117587F410068D6AE /* ConfirmFooterView.xib in Resources */,
+				359C979917588C4E0068D6AE /* PublishZhaoshangViewController.xib in Resources */,
+				359C979E175895AF0068D6AE /* TextFieldCell.xib in Resources */,
+				359C97A81758A7E60068D6AE /* PublishBaseViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2537,6 +2624,17 @@
 				359CA9C71757335300DA00AC /* SearchContactViewController.m in Sources */,
 				359CA9FD1757565E00DA00AC /* PopContactView.m in Sources */,
 				359CAA0E175774B900DA00AC /* LoadMoreFooter.m in Sources */,
+				359C976C17583C480068D6AE /* MailBoxViewController.m in Sources */,
+				359C977317583CA40068D6AE /* MailCell.m in Sources */,
+				359C977817583E9D0068D6AE /* TitleView.m in Sources */,
+				359C977D175844770068D6AE /* MailSelectorView.m in Sources */,
+				359C9782175849910068D6AE /* MailSelectorCell.m in Sources */,
+				359C97871758793D0068D6AE /* SuspensionButton.m in Sources */,
+				359C978B17587D5F0068D6AE /* PublishQueryViewController.m in Sources */,
+				359C978F17587F2B0068D6AE /* ConfirmFooterView.m in Sources */,
+				359C979817588C4E0068D6AE /* PublishZhaoshangViewController.m in Sources */,
+				359C979C175895980068D6AE /* TextFieldCell.m in Sources */,
+				359C97A71758A7E60068D6AE /* PublishBaseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

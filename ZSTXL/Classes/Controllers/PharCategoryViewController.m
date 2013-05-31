@@ -8,6 +8,8 @@
 
 #import "PharCategoryViewController.h"
 #import "PharCategoryCell.h"
+#import "SuspensionButton.h"
+#import "PublishQueryViewController.h"
 
 @interface PharCategoryViewController ()
 
@@ -29,9 +31,13 @@
     [super viewDidLoad];
     self.title = @"分类";
     self.navigationController.delegate = self;
-    [self initNavBar];
-    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self initNavBar];
+    SuspensionButton *susButton = [[SuspensionButton alloc] initWithFrame:CGRectMake(320-46, SCREEN_HEIGHT-64-50-20, 46, 50)];
+    [susButton setTitle:@"发布" forState:UIControlStateNormal];
+    [susButton addTarget:self action:@selector(publishAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:susButton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,12 +55,22 @@
     [super viewDidUnload];
 }
 
+#pragma mark - publish
+
+- (void)publishAction
+{
+    DLog(@"publish zhaoshang");
+    PublishQueryViewController *publishQueryVC = [[[PublishQueryViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:publishQueryVC animated:YES];
+}
+
 
 #pragma mark - navigation controller delegate
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if ([viewController isKindOfClass:NSClassFromString(@"PharCategoryViewController")]) {
+    if ([viewController isKindOfClass:NSClassFromString(@"PharCategoryViewController")]
+        || [viewController isKindOfClass:NSClassFromString(@"PublishQueryViewController")]) {
         [kAppDelegate.tabController hidesTabBar:YES animated:YES];
     }
     else{

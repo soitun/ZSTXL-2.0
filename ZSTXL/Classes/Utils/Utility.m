@@ -907,6 +907,19 @@ char indexTitleOfString(unsigned short string) {
     return [cityIdProId autorelease];
 }
 
++ (void)groupTableView:(UITableView *)_tableView addBgViewForCell:(UITableViewCell *)cell withCellPos:(CustomCellBackgroundViewPosition)pos
+{
+    CustomCellBackgroundView *customCellBgView = [[[CustomCellBackgroundView alloc] initWithFrame:cell.frame] autorelease];
+    customCellBgView.position = pos;
+    customCellBgView.cornerRadius = 5.f;
+    customCellBgView.fillColor = [UIColor whiteColor];
+    customCellBgView.borderColor = kCellBorderColor;
+    cell.backgroundView = customCellBgView;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+    [cell.textLabel setFont:[UIFont boldSystemFontOfSize:16]];
+}
+
 + (NSArray *)deCryptJsonDict:(NSDictionary *)dict OfJsonKey:(NSString *)jsonKey
 {
     NSString *jsonEncryptStr = [[dict objForKey:jsonKey] removeSpace];

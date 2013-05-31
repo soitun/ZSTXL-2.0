@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CityIdProId.h"
+#import "CustomCellBackgroundView.h"
 
 @interface Utility : NSObject {
     
@@ -67,6 +68,8 @@ char indexTitleOfString(unsigned short string);
 + (void)groupTableView:(UITableView *)_tableView changeBgForCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 + (void)plainTableView:(UITableView *)_tableView changeBgForCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+
++ (void)groupTableView:(UITableView *)_tableView addBgViewForCell:(UITableViewCell *)cell withCellPos:(CustomCellBackgroundViewPosition)pos;
 
 + (CityIdProId *)getCityIdByCityName:(NSString *)cityName;
 

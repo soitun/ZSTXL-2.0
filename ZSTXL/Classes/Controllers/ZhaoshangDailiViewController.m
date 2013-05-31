@@ -51,10 +51,31 @@
     [super viewDidUnload];
 }
 
-- (void)resetNavigationBar {
-    if (self.navigationController.navigationBar.frame.origin.y != 0) {
-        self.navigationController.navigationBar.frame = CGRectMake(0, 0, 320, 44);
-    }
+//- (void)resetNavigationBar {
+//    if (self.navigationController.navigationBar.frame.origin.y != 0) {
+//        self.navigationController.navigationBar.frame = CGRectMake(0, 0, 320, 44);
+//    }
+//}
+
+#pragma mark - nav bar
+
+//- (void)initNavBar
+//{
+//    UIButton *pubButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    pubButton.frame = CGRectMake(0, 0, 55, 32);
+//    [pubButton setBackgroundImage:[UIImage imageByName:@"nav_login_button"] forState:UIControlStateNormal];
+//    [pubButton setBackgroundImage:[UIImage imageByName:@"nav_login_button"] forState:UIControlStateHighlighted];
+//    [pubButton setTitle:@"发布" forState:UIControlStateNormal];
+//    [pubButton.titleLabel setFont:[UIFont systemFontOfSize:16]];
+//    [pubButton addTarget:self action:@selector(publishAction) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:pubButton];
+//    self.navigationItem.rightBarButtonItem = barButton;
+//}
+
+- (void)publishAction
+{
+    DLog(@"publish zhaoshang");
 }
 
 #pragma mark - get info

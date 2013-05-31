@@ -17,7 +17,6 @@
 - (NSString *)removeSpaceAndNewLine;
 - (BOOL)isValid;
 
-- (NSString *)removeSpaceAndNewLine;
 - (NSString *)getCorrectMobileNumber;
 - (BOOL)isMobileNumber;
 - (BOOL)isValidEmail;

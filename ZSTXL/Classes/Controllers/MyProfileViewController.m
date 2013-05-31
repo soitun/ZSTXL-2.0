@@ -13,6 +13,7 @@
 #import "CityInfo.h"
 #import "CustomBadge.h"
 #import "SettingViewController.h"
+#import "MailBoxViewController.h"
 
 @interface MyProfileViewController ()
 
@@ -411,7 +412,8 @@
 
 - (IBAction)mail:(UIButton *)sender
 {
-    
+    MailBoxViewController *mailBoxVC = [[[MailBoxViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:mailBoxVC animated:YES];
 }
 
 - (IBAction)chat:(UIButton *)sender
