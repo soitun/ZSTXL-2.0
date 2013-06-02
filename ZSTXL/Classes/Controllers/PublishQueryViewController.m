@@ -90,7 +90,7 @@
 
 - (void)rightAction
 {
-    PublishZhaoshangViewController *publishZhaoshangVC = [[[PublishZhaoshangViewController alloc] init] autorelease];
+    PublishZhaoshangViewController *publishZhaoshangVC = [[PublishZhaoshangViewController alloc] init];
     [self.navigationController pushViewController:publishZhaoshangVC animated:YES];
 }
 

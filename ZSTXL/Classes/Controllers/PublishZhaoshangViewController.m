@@ -10,6 +10,10 @@
 #import "TextFieldCell.h"
 #import "SettingCell.h"
 #import "CustomCellBackgroundView.h"
+#import "PublishSellToViewController.h"
+#import "PublishZhaoshangPropertyViewController.h"
+#import "PublishProductAdvantageViewController.h"
+#import "PublishPeriodViewController.h"
 
 @interface PublishZhaoshangViewController ()
 
@@ -32,12 +36,17 @@
     self.title = @"发布招商信息";
     self.titleArray = @[@"区域选择：", @"销售方向：", @"招商性质：", @"产品优势：", @"信息有效期："];
     self.selectorArray = @[@"selectArea", @"sellTo", @"canvassProperty", @"productAdvantage", @"infoPeriod"];
+    self.navigationController.delegate = self;
     
     self.tableView.backgroundView = nil;
     [self initTableFooter];
-    
     [self initNavBar];
     
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,7 +99,7 @@
     
     
     UIButton *confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [confirmButton setTitle:@"退出登录" forState:UIControlStateNormal];
+    [confirmButton setTitle:@"确认" forState:UIControlStateNormal];
     [confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [confirmButton setBackgroundImage:[UIImage imageNamed:@"setting_confirm_l"] forState:UIControlStateNormal];
     [confirmButton setBackgroundImage:[UIImage imageNamed:@"setting_confirm_l_p"] forState:UIControlStateHighlighted];
@@ -124,7 +133,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *textCellId = @"TextFieldCell";
-    static NSString *commonCellId = @"cellId";
+    static NSString *commonCellId = @"SettingCell";
     
     if (indexPath.section == 0) {
         TextFieldCell *textFieldCell = (TextFieldCell *)[tableView dequeueReusableCellWithIdentifier:textCellId];
@@ -133,7 +142,7 @@
         }
         
         [Utility groupTableView:tableView addBgViewForCell:textFieldCell withCellPos:CustomCellBackgroundViewPositionSingle];
-        
+        textFieldCell.accessoryType = UITableViewCellAccessoryNone;
         return textFieldCell;
     }
     else{
@@ -152,11 +161,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
+    DLog(@"did select");
+    if (indexPath.section == 0) {
         
     }
     else{
-        SEL sel = NSSelectorFromString([self.selectorArray objectAtIndex:indexPath.row - 1]);
+        SEL sel = NSSelectorFromString([self.selectorArray objectAtIndex:indexPath.section - 1]);
         [self performSelector:sel];
     }
 }
@@ -170,22 +180,27 @@
 
 - (void)sellTo
 {
-    
+    DLog(@"sellto");
+    PublishSellToViewController *publishSellToVC = [[[PublishSellToViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:publishSellToVC animated:YES];
 }
 
 - (void)canvassProperty
 {
-    
+    PublishZhaoshangPropertyViewController *publishZhaoshangPropertyViewController = [[[PublishZhaoshangPropertyViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:publishZhaoshangPropertyViewController animated:YES];
 }
 
 - (void)productAdvantage
 {
-    
+    PublishProductAdvantageViewController *publishProductAdvantageViewController = [[[PublishProductAdvantageViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:publishProductAdvantageViewController animated:YES];
 }
 
 - (void)infoPeriod
 {
-    
+    PublishPeriodViewController *publishPeriodViewController = [[[PublishPeriodViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:publishPeriodViewController animated:YES];
 }
 
 - (void)confirmPublish:(UIButton *)sender

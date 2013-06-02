@@ -20,7 +20,7 @@
 
 @property (nonatomic, copy) NSString *leftButtonTitle;
 @property (nonatomic, copy) NSString *rightButtonTitle;
-@property (nonatomic, copy) id<ConfirmFooterViewDelegate> delegate;
+@property (nonatomic, assign) id<ConfirmFooterViewDelegate> delegate;
 
 - (IBAction)leftAction:(UIButton *)sender;
 - (IBAction)rightAction:(UIButton *)sender;

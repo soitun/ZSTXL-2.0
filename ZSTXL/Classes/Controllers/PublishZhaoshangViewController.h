@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PublishZhaoshangViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface PublishZhaoshangViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate>
 
 @property (retain, nonatomic) IBOutlet UILabel *drugNameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *drugNumLabel;

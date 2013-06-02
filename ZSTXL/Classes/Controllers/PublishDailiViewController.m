@@ -1,20 +1,20 @@
 //
-//  PublishBaseViewController.m
+//  PublishDailiViewController.m
 //  ZSTXL
 //
-//  Created by LiuYue on 13-5-31.
+//  Created by LiuYue on 13-6-2.
 //  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
-#import "PublishBaseViewController.h"
+#import "PublishDailiViewController.h"
 #import "SettingCell.h"
 #import "ConfirmFooterView.h"
 
-@interface PublishBaseViewController ()
+@interface PublishDailiViewController ()
 
 @end
 
-@implementation PublishBaseViewController
+@implementation PublishDailiViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,11 +28,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"发布代理";
+    self.titleArray = @[@"代理方向：", @"代理区域：", @"代理渠道：", @"代理优势：", @"信息有效期："];
+    self.selectorArray = @[@"dailiTo", @"dailiArea", @"dailiChnnel", @"dailiAdvantage", @"infoPeriod"];
     
-    self.view.backgroundColor = RGBCOLOR(243, 244, 245);
-    
-    [self initTableView];
     [self initNavBar];
+    [self initTableFooter];
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,15 +43,15 @@
 }
 
 - (void)dealloc {
-    [_tableVeiw release];
+    [_tableView release];
     [super dealloc];
 }
 - (void)viewDidUnload {
-    [self setTableVeiw:nil];
+    [self setTableView:nil];
     [super viewDidUnload];
 }
 
-#pragma mark - nav bar
+#pragma mark - nav back button
 
 - (void)initNavBar
 {
@@ -70,55 +71,69 @@
 
 #pragma mark - table view
 
-- (void)initTableView
+- (void)initTableFooter
 {
-    self.tableVeiw = [[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, SCREEN_HEIGHT-64) style:UITableViewStyleGrouped] autorelease];
-    self.tableVeiw.delegate = self;
-    self.tableVeiw.dataSource = self;
-    self.tableVeiw.backgroundView = nil;
-    [self.view addSubview:self.tableVeiw];
-    
-    ConfirmFooterView *footer = [[[NSBundle mainBundle] loadNibNamed:@"ConfirmFooterView" owner:nil options:nil] lastObject];
+    ConfirmFooterView *footer = [[[NSBundle mainBundle] loadNibNamed:@"ConfirmFooter" owner:nil options:nil] lastObject];
     footer.delegate = self;
-    self.tableVeiw.tableFooterView = footer;
+    self.tableView.tableFooterView = footer;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return self.titleArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.titleArray.count;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"SettingCell";
-    SettingCell *cell = (SettingCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
-    if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"SettingCell" owner:nil options:nil] lastObject];
+    SettingCell *commonCell = (SettingCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
+    if (commonCell == nil) {
+        commonCell = [[[NSBundle mainBundle] loadNibNamed:@"SettingCell" owner:nil options:nil] lastObject];
     }
     
-    CustomCellBackgroundViewPosition pos;
-    if (indexPath.row == 0) {
-        pos = CustomCellBackgroundViewPositionTop;
-    } else if (indexPath.row == self.titleArray.count-1) {
-        pos = CustomCellBackgroundViewPositionBottom;
-    }else{
-        pos = CustomCellBackgroundViewPositionMiddle;
-    }
-    
-    [Utility groupTableView:tableView addBgViewForCell:cell withCellPos:pos];
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.textLabel.text = [self.titleArray objectAtIndex:indexPath.row];
-    
-    return cell;
-
+    [Utility groupTableView:tableView addBgViewForCell:commonCell withCellPos:CustomCellBackgroundViewPositionSingle];
+    commonCell.textLabel.text = [self.titleArray objectAtIndex:indexPath.section-1];
+    commonCell.selectImage.hidden = YES;
+    return commonCell;
 }
 
-#pragma mark - confirm footer delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SEL sel = NSSelectorFromString([self.selectorArray objectAtIndex:indexPath.section]);
+    [self performSelector:sel];
+}
+
+- (void)dailiTo
+{
+    
+}
+
+- (void)dailiArea
+{
+    
+}
+
+- (void)dailiChannel
+{
+    
+}
+
+- (void)dailiAdvantage
+{
+    
+}
+
+- (void)infoPeriod
+{
+    
+}
+
+#pragma mark - confirm footer
 
 - (void)confirmFooterViewLeftAction
 {
@@ -129,6 +144,5 @@
 {
     
 }
-
 
 @end

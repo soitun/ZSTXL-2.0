@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ConfirmFooterView.h"
 
-@interface PublishBaseViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
-@property (retain, nonatomic) IBOutlet UITableView *tableVeiw;
+@interface PublishBaseViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ConfirmFooterViewDelegate>
+@property (retain, nonatomic) UITableView *tableVeiw;
 
-@property (nonatomic, retain) NSMutableArray *titleArray;
-@property (nonatomic, retain) NSMutableArray *selectorArray;
+@property (nonatomic, retain) NSArray *titleArray;
 
 
 @end

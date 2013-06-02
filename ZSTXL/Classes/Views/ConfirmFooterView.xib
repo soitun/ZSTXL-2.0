@@ -51,33 +51,31 @@
 						<double key="IBUITitleEdgeInsets.bottom">2</double>
 						<double key="IBUITitleEdgeInsets.left">0.0</double>
 						<double key="IBUITitleEdgeInsets.right">0.0</double>
+						<string key="IBUINormalTitle">确认</string>
 						<object class="NSColor" key="IBUIHighlightedTitleColor" id="200077308">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
 						</object>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-						</object>
+						<reference key="IBUINormalTitleColor" ref="200077308"/>
 						<object class="NSColor" key="IBUINormalTitleShadowColor" id="1058459272">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
-						<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage" id="483800901">
+						<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">setting_confirm_p.png</string>
 						</object>
-						<object class="NSCustomResource" key="IBUINormalBackgroundImage" id="845432123">
+						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">setting_confirm.png</string>
 						</object>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="296414013">
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="1027813918">
 							<int key="type">2</int>
-							<double key="pointSize">15</double>
+							<double key="pointSize">18</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="575520552">
+						<object class="NSFont" key="IBUIFont" id="82258385">
 							<string key="NSName">Helvetica-Bold</string>
-							<double key="NSSize">15</double>
+							<double key="NSSize">18</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
@@ -87,7 +85,6 @@
 						<string key="NSFrame">{{178, 14}, {98, 48}}</string>
 						<reference key="NSSuperview" ref="970520691"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -97,16 +94,20 @@
 						<double key="IBUITitleEdgeInsets.bottom">2</double>
 						<double key="IBUITitleEdgeInsets.left">0.0</double>
 						<double key="IBUITitleEdgeInsets.right">0.0</double>
+						<string key="IBUINormalTitle">取消</string>
 						<reference key="IBUIHighlightedTitleColor" ref="200077308"/>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-						</object>
+						<reference key="IBUINormalTitleColor" ref="200077308"/>
 						<reference key="IBUINormalTitleShadowColor" ref="1058459272"/>
-						<reference key="IBUIHighlightedBackgroundImage" ref="483800901"/>
-						<reference key="IBUINormalBackgroundImage" ref="845432123"/>
-						<reference key="IBUIFontDescription" ref="296414013"/>
-						<reference key="IBUIFont" ref="575520552"/>
+						<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">cancel_button_p.png</string>
+						</object>
+						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">cancel_button.png</string>
+						</object>
+						<reference key="IBUIFontDescription" ref="1027813918"/>
+						<reference key="IBUIFont" ref="82258385"/>
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 75}</string>
@@ -116,10 +117,7 @@
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MQA</bytes>
-					<object class="NSColorSpace" key="NSCustomColorSpace">
-						<int key="NSID">2</int>
-					</object>
+					<bytes key="NSWhite">MCAwAA</bytes>
 				</object>
 				<object class="IBUISimulatedSizeMetrics" key="IBUISimulatedDestinationMetrics">
 					<string key="IBUISimulatedSizeMetricsClass">IBUISimulatedFreeformSizeMetricsSentinel</string>
@@ -197,10 +195,10 @@
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="3.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
-				<real value="1" key="3.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="0.0" key="3.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="5.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
-				<real value="1" key="5.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="0.0" key="5.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
@@ -227,20 +225,6 @@
 							<string key="candidateClassName">UIButton</string>
 						</object>
 					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="leftButton">UIButton</string>
-						<string key="rightButton">UIButton</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="leftButton">
-							<string key="name">leftButton</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="rightButton">
-							<string key="name">rightButton</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/ConfirmFooterView.h</string>
@@ -253,6 +237,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="cancel_button.png">{98, 48}</string>
+			<string key="cancel_button_p.png">{98, 48}</string>
 			<string key="setting_confirm.png">{98, 48}</string>
 			<string key="setting_confirm_p.png">{98, 48}</string>
 		</dictionary>

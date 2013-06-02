@@ -462,6 +462,19 @@
 		35A99CF1174E0FAE00C9DF69 /* area_angle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A99CEF174E0FAE00C9DF69 /* area_angle@2x.png */; };
 		35A99CF4174E1C2F00C9DF69 /* LoadMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A99CF3174E1C2F00C9DF69 /* LoadMoreCell.m */; };
 		35A99CF6174E1C3D00C9DF69 /* LoadMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A99CF5174E1C3D00C9DF69 /* LoadMoreCell.xib */; };
+		35AAD53F175AE597009A5208 /* cancel_button_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 35AAD53B175AE597009A5208 /* cancel_button_p.png */; };
+		35AAD540175AE597009A5208 /* cancel_button_p@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35AAD53C175AE597009A5208 /* cancel_button_p@2x.png */; };
+		35AAD541175AE597009A5208 /* cancel_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 35AAD53D175AE597009A5208 /* cancel_button.png */; };
+		35AAD542175AE597009A5208 /* cancel_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35AAD53E175AE597009A5208 /* cancel_button@2x.png */; };
+		35AAD548175AE7D9009A5208 /* PublishSellToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35AAD547175AE7D9009A5208 /* PublishSellToViewController.m */; };
+		35AAD54B175AE899009A5208 /* PublishZhaoshangPropertyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35AAD54A175AE899009A5208 /* PublishZhaoshangPropertyViewController.m */; };
+		35AAD54E175AE913009A5208 /* PublishProductAdvantageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35AAD54D175AE913009A5208 /* PublishProductAdvantageViewController.m */; };
+		35AAD551175AE9C2009A5208 /* PublishPeriodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35AAD550175AE9C2009A5208 /* PublishPeriodViewController.m */; };
+		35AAD555175AEBA8009A5208 /* PublishDailiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35AAD553175AEBA8009A5208 /* PublishDailiViewController.m */; };
+		35AAD556175AEBA8009A5208 /* PublishDailiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35AAD554175AEBA8009A5208 /* PublishDailiViewController.xib */; };
+		35AAD559175AEF4E009A5208 /* PublishDailiToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35AAD558175AEF4D009A5208 /* PublishDailiToViewController.m */; };
+		35AAD55D175AF1CC009A5208 /* PublishDailiAdvantageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35AAD55B175AF1CB009A5208 /* PublishDailiAdvantageViewController.m */; };
+		35AAD55E175AF1CC009A5208 /* PublishDailiAdvantageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35AAD55C175AF1CC009A5208 /* PublishDailiAdvantageViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1118,6 +1131,26 @@
 		35A99CF2174E1C2F00C9DF69 /* LoadMoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadMoreCell.h; sourceTree = "<group>"; };
 		35A99CF3174E1C2F00C9DF69 /* LoadMoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadMoreCell.m; sourceTree = "<group>"; };
 		35A99CF5174E1C3D00C9DF69 /* LoadMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadMoreCell.xib; sourceTree = "<group>"; };
+		35AAD53B175AE597009A5208 /* cancel_button_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel_button_p.png; sourceTree = "<group>"; };
+		35AAD53C175AE597009A5208 /* cancel_button_p@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cancel_button_p@2x.png"; sourceTree = "<group>"; };
+		35AAD53D175AE597009A5208 /* cancel_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel_button.png; sourceTree = "<group>"; };
+		35AAD53E175AE597009A5208 /* cancel_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cancel_button@2x.png"; sourceTree = "<group>"; };
+		35AAD546175AE7D9009A5208 /* PublishSellToViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishSellToViewController.h; sourceTree = "<group>"; };
+		35AAD547175AE7D9009A5208 /* PublishSellToViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSellToViewController.m; sourceTree = "<group>"; };
+		35AAD549175AE899009A5208 /* PublishZhaoshangPropertyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishZhaoshangPropertyViewController.h; sourceTree = "<group>"; };
+		35AAD54A175AE899009A5208 /* PublishZhaoshangPropertyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishZhaoshangPropertyViewController.m; sourceTree = "<group>"; };
+		35AAD54C175AE912009A5208 /* PublishProductAdvantageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishProductAdvantageViewController.h; sourceTree = "<group>"; };
+		35AAD54D175AE913009A5208 /* PublishProductAdvantageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishProductAdvantageViewController.m; sourceTree = "<group>"; };
+		35AAD54F175AE9C2009A5208 /* PublishPeriodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishPeriodViewController.h; sourceTree = "<group>"; };
+		35AAD550175AE9C2009A5208 /* PublishPeriodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishPeriodViewController.m; sourceTree = "<group>"; };
+		35AAD552175AEBA8009A5208 /* PublishDailiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishDailiViewController.h; sourceTree = "<group>"; };
+		35AAD553175AEBA8009A5208 /* PublishDailiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishDailiViewController.m; sourceTree = "<group>"; };
+		35AAD554175AEBA8009A5208 /* PublishDailiViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishDailiViewController.xib; sourceTree = "<group>"; };
+		35AAD557175AEF4D009A5208 /* PublishDailiToViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishDailiToViewController.h; sourceTree = "<group>"; };
+		35AAD558175AEF4D009A5208 /* PublishDailiToViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishDailiToViewController.m; sourceTree = "<group>"; };
+		35AAD55A175AF1CB009A5208 /* PublishDailiAdvantageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishDailiAdvantageViewController.h; sourceTree = "<group>"; };
+		35AAD55B175AF1CB009A5208 /* PublishDailiAdvantageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishDailiAdvantageViewController.m; sourceTree = "<group>"; };
+		35AAD55C175AF1CC009A5208 /* PublishDailiAdvantageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishDailiAdvantageViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1337,6 +1370,22 @@
 				359C97A41758A7DB0068D6AE /* PublishBaseViewController.h */,
 				359C97A51758A7DE0068D6AE /* PublishBaseViewController.m */,
 				359C97A61758A7E20068D6AE /* PublishBaseViewController.xib */,
+				35AAD546175AE7D9009A5208 /* PublishSellToViewController.h */,
+				35AAD547175AE7D9009A5208 /* PublishSellToViewController.m */,
+				35AAD549175AE899009A5208 /* PublishZhaoshangPropertyViewController.h */,
+				35AAD54A175AE899009A5208 /* PublishZhaoshangPropertyViewController.m */,
+				35AAD54C175AE912009A5208 /* PublishProductAdvantageViewController.h */,
+				35AAD54D175AE913009A5208 /* PublishProductAdvantageViewController.m */,
+				35AAD54F175AE9C2009A5208 /* PublishPeriodViewController.h */,
+				35AAD550175AE9C2009A5208 /* PublishPeriodViewController.m */,
+				35AAD552175AEBA8009A5208 /* PublishDailiViewController.h */,
+				35AAD553175AEBA8009A5208 /* PublishDailiViewController.m */,
+				35AAD554175AEBA8009A5208 /* PublishDailiViewController.xib */,
+				35AAD557175AEF4D009A5208 /* PublishDailiToViewController.h */,
+				35AAD558175AEF4D009A5208 /* PublishDailiToViewController.m */,
+				35AAD55A175AF1CB009A5208 /* PublishDailiAdvantageViewController.h */,
+				35AAD55B175AF1CB009A5208 /* PublishDailiAdvantageViewController.m */,
+				35AAD55C175AF1CC009A5208 /* PublishDailiAdvantageViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1562,6 +1611,10 @@
 				359CA9A1175700D000DA00AC /* bg_news_pic.png */,
 				359CA9A2175700D000DA00AC /* bg_news_pic@2x.png */,
 				359E9C07174B50610018E87F /* bg_slider.png */,
+				35AAD53B175AE597009A5208 /* cancel_button_p.png */,
+				35AAD53C175AE597009A5208 /* cancel_button_p@2x.png */,
+				35AAD53D175AE597009A5208 /* cancel_button.png */,
+				35AAD53E175AE597009A5208 /* cancel_button@2x.png */,
 				358C1B82174A1F6C006E5A8D /* cell_bg.png */,
 				358C1B83174A1F6C006E5A8D /* cell_bg_p.png */,
 				359F87E7174CD5B90091F565 /* chat_connect.png */,
@@ -2458,6 +2511,12 @@
 				359C979917588C4E0068D6AE /* PublishZhaoshangViewController.xib in Resources */,
 				359C979E175895AF0068D6AE /* TextFieldCell.xib in Resources */,
 				359C97A81758A7E60068D6AE /* PublishBaseViewController.xib in Resources */,
+				35AAD53F175AE597009A5208 /* cancel_button_p.png in Resources */,
+				35AAD540175AE597009A5208 /* cancel_button_p@2x.png in Resources */,
+				35AAD541175AE597009A5208 /* cancel_button.png in Resources */,
+				35AAD542175AE597009A5208 /* cancel_button@2x.png in Resources */,
+				35AAD556175AEBA8009A5208 /* PublishDailiViewController.xib in Resources */,
+				35AAD55E175AF1CC009A5208 /* PublishDailiAdvantageViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2635,6 +2694,13 @@
 				359C979817588C4E0068D6AE /* PublishZhaoshangViewController.m in Sources */,
 				359C979C175895980068D6AE /* TextFieldCell.m in Sources */,
 				359C97A71758A7E60068D6AE /* PublishBaseViewController.m in Sources */,
+				35AAD548175AE7D9009A5208 /* PublishSellToViewController.m in Sources */,
+				35AAD54B175AE899009A5208 /* PublishZhaoshangPropertyViewController.m in Sources */,
+				35AAD54E175AE913009A5208 /* PublishProductAdvantageViewController.m in Sources */,
+				35AAD551175AE9C2009A5208 /* PublishPeriodViewController.m in Sources */,
+				35AAD555175AEBA8009A5208 /* PublishDailiViewController.m in Sources */,
+				35AAD559175AEF4E009A5208 /* PublishDailiToViewController.m in Sources */,
+				35AAD55D175AF1CC009A5208 /* PublishDailiAdvantageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
