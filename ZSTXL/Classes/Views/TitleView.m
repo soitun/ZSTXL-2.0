@@ -19,8 +19,6 @@
     return self;
 }
 
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
     CGSize titleSize = [self.title sizeWithFont:[UIFont boldSystemFontOfSize:20] constrainedToSize:CGSizeMake(200, 44)];
@@ -32,8 +30,8 @@
     self.titleLabel.frame = CGRectIntegral(self.titleLabel.frame);
     self.titleLabel.text = self.title;
     
-    CGFloat x = self.titleLabel.frame.origin.x + self.titleLabel.frame.size.width;
-    self.Angle.frame = CGRectMake(x, 30, 9, 6);
+    CGFloat x = self.titleLabel.frame.origin.x + self.titleLabel.frame.size.width+2;
+    self.Angle.frame = CGRectMake(x, 26, 9, 6);
 }
 
 - (void)awakeFromNib

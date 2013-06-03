@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZSInfoHeader.h"
+#import "ZSInfoContactView.h"
 
-@interface ZhaoshangInfoViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ZhaoshangInfoViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ZSInfoHeaderDelegate, ZSInfoContactViewDelegate>
 
 @property (nonatomic, retain) NSMutableArray *titleArray;
 @property (nonatomic, retain) NSMutableArray *contentArray;
@@ -16,5 +18,7 @@
 @property (nonatomic, retain) NSDictionary *contactInfo;
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, retain) ZSInfoHeader *header;
+@property (nonatomic, retain) ZSInfoContactView *contactView;
 
 @end

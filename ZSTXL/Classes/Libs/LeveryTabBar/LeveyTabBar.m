@@ -74,6 +74,11 @@
                 
                 btn.titleLabel.font = [UIFont systemFontOfSize:12];
                 [btn setTitle:[titleArray objectAtIndex:i] forState:UIControlStateNormal];
+                [btn setTitleColor:RGBCOLOR(187, 187, 184) forState:UIControlStateNormal];
+
+                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted|UIControlStateSelected];
                 //CGFloat top, CGFloat left, CGFloat bottom, CGFloat right
                 
                 // the space between the image and text

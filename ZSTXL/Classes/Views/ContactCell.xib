@@ -48,7 +48,6 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="562262922"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
@@ -300,7 +299,6 @@
 						<string key="ZDLabel">UILabel</string>
 						<string key="headIcon">UIImageView</string>
 						<string key="nameLabel">UILabel</string>
-						<string key="unSelectedImage">UIImageView</string>
 						<string key="xun_VImage">UIImageView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -315,10 +313,6 @@
 						<object class="IBToOneOutletInfo" key="nameLabel">
 							<string key="name">nameLabel</string>
 							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="unSelectedImage">
-							<string key="name">unSelectedImage</string>
-							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="xun_VImage">
 							<string key="name">xun_VImage</string>
@@ -337,7 +331,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="avatar.png">{86, 86}</string>
+			<string key="avatar.png">{43, 43}</string>
 			<string key="separator.png">{640, 2}</string>
 			<string key="xun_V.png">{39, 35}</string>
 		</dictionary>

@@ -9,6 +9,7 @@
 #import "MailBoxViewController.h"
 #import "MailCell.h"
 #import "MailSelectorView.h"
+#import "MailInfoViewController.h"
 
 @interface MailBoxViewController ()
 
@@ -23,6 +24,11 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
 }
 
 - (void)viewDidLoad
@@ -70,15 +76,31 @@
 - (void)popVC:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
 }
 
 - (void)titleViewTap
 {
     DLog(@"tap title view");
-    MailSelectorView *mailSelectorView = [[[NSBundle mainBundle] loadNibNamed:@"MailSelectorView" owner:nil options:nil] lastObject];
-    mailSelectorView.frame = CGRectMake(160, -5, 100, 150);
-    mailSelectorView.delegate = self;
-    [self.view addSubview:mailSelectorView];
+//    MailSelectorView *mailSelectorView = [[[NSBundle mainBundle] loadNibNamed:@"MailSelectorView" owner:nil options:nil] lastObject];
+//    mailSelectorView.frame = CGRectMake(160, -5, 100, 150);
+//    mailSelectorView.delegate = self;
+//    [self.view addSubview:mailSelectorView];
+    self.mailSentButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.mailSentButton.frame = CGRectMake(180, 50, 88, 48);
+    [self.mailSentButton setBackgroundImage:[UIImage imageNamed:@"mail_sent_texture"] forState:UIControlStateNormal];
+    [self.mailSentButton setBackgroundImage:[UIImage imageNamed:@"mail_sent_texture_p"] forState:UIControlStateHighlighted];
+    [self.mailSentButton setTitle:@"已发送" forState:UIControlStateNormal];
+    [self.mailSentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.mailSentButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    [self.mailSentButton addTarget:self action:@selector(mailSent) forControlEvents:UIControlEventTouchUpInside];
+    [kAppDelegate.window addSubview:self.mailSentButton];
+    
+}
+
+- (void)mailSent
+{
+    [self.mailSentButton removeFromSuperview];
 }
 
 #pragma mark - request mail
@@ -118,6 +140,17 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 61.f;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MailInfoViewController *mailInfoVC = [[[MailInfoViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:mailInfoVC animated:YES];
+}
+
 #pragma mark - mail selector view delegate
 
 - (void)MailSelectorChooseIndexPath:(NSIndexPath *)indexPath
@@ -147,4 +180,23 @@
 }
 
 
+- (IBAction)mailTransmit:(UIButton *)sender
+{
+    
+}
+
+- (IBAction)mailRefresh:(UIButton *)sender
+{
+    
+}
+
+- (IBAction)mailDelete:(UIButton *)sender
+{
+    
+}
+
+- (IBAction)mailWrite:(UIButton *)sender
+{
+    
+}
 @end

@@ -36,12 +36,6 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
-//- (void)viewDidAppear:(BOOL)animated
-//{
-//    [super viewDidAppear:animated];
-//    self.view.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64);
-//}
-
 - (void)initNavBar
 {
     UIImageView *titleImage = [[[UIImageView alloc] initWithImage:[UIImage imageByName:@"mark"]] autorelease];

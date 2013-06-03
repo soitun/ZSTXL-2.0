@@ -92,7 +92,6 @@
     }
     
     cell.ZDLabel.text = zd;
-    cell.unSelectedImage.hidden = YES;
     
     return cell;
 }

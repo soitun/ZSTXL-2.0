@@ -33,6 +33,21 @@
     [self getCommendData];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [_tableView release];
+    [super dealloc];
+}
+- (void)viewDidUnload {
+    [self setTableView:nil];
+    [super viewDidUnload];
+}
+
 - (void)getCommendData
 {
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"loginid == %@ AND cityid == %@", kAppDelegate.userId, [PersistenceHelper dataForKey:kCityId]];
@@ -141,6 +156,8 @@
 
 - (void)configureCell:(ContactCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    cell.delegate = self;
+    cell.contact = [self.commendContactArray objectAtIndex:indexPath.row];
     cell.selectionStyle = UITableViewCellEditingStyleNone;
     
     
@@ -181,34 +198,60 @@
         cell.xun_VImage.hidden = YES;
     }
     
-    cell.unSelectedImage.hidden = YES;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OtherHomepageViewController *otherProfileVC = [[OtherHomepageViewController alloc] init];
+    [self showContactView];
     
-    otherProfileVC.contact = [self.commendContactArray objectAtIndex:indexPath.row];
+    
+
+}
+
+- (void)contactCellTapAvatarOfContact:(Contact *)contact
+{
+    OtherHomepageViewController *otherProfileVC = [[[OtherHomepageViewController alloc] init] autorelease];
+
+    otherProfileVC.contact = contact;
     if ([self.parentController respondsToSelector:@selector(pushViewController:)]) {
         [self.parentController performSelector:@selector(pushViewController:) withObject:otherProfileVC];
     }
-    [otherProfileVC release];
 }
 
 
-- (void)didReceiveMemoryWarning
+#pragma mark - contact view
+
+- (void)showContactView
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    PopContactView *contactView = [[[NSBundle mainBundle] loadNibNamed:@"PopContactView" owner:nil options:nil] lastObject];
+    contactView.frame = CGRectMake(34, 150, 252, 170);
+    contactView.delegate = self;
+    
+    self.bgControl = [[[UIControl alloc] initWithFrame:CGRectMake(0, 0, 320, SCREEN_HEIGHT)] autorelease];
+    self.bgControl.backgroundColor = RGBACOLOR(0, 0, 0, 0.6);
+    [self.bgControl addTarget:self action:@selector(removeBg) forControlEvents:UIControlEventTouchDown];
+    [self.bgControl addSubview:contactView];
+    
+    [kAppDelegate.window addSubview:self.bgControl];
 }
 
-- (void)dealloc {
-    [_tableView release];
-    [super dealloc];
+- (void)popContactViewChat
+{
+    [self.bgControl removeFromSuperview];
 }
-- (void)viewDidUnload {
-    [self setTableView:nil];
-    [super viewDidUnload];
+
+- (void)popContactViewTel
+{
+    [self.bgControl removeFromSuperview];
 }
+
+- (void)removeBg
+{
+    [self.bgControl removeFromSuperview];
+}
+
+
+
+
 @end

@@ -66,9 +66,12 @@ typedef struct
 
 #define DB_SAVE() ([[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait])
 
-
-
-
+#define PERFORM_SELECTOR(a, b) \
+do { \
+if([a respondsToSelector:@selector(b)]) { \
+    [a performSelector:@selector(b)]; \
+} \
+} while (0)
 
 #define APP_DEBUG
 

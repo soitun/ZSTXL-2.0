@@ -1,8 +1,8 @@
 //
-//  PopContactView.m
+//  ContactView.m
 //  ZSTXL
 //
-//  Created by LiuYue on 13-5-30.
+//  Created by LiuYue on 13-6-3.
 //  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
@@ -27,5 +27,27 @@
     // Drawing code
 }
 */
+
+- (void)dealloc {
+    [_avatar release];
+    [_nameLabel release];
+    [_useridLabel release];
+    [_xunImage release];
+    [_xunVImage release];
+    [_xunBImage release];
+    [super dealloc];
+}
+- (IBAction)telAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(popContactViewTel)]) {
+        [self.delegate performSelector:@selector(popContactViewTel)];
+    }
+    
+}
+
+- (IBAction)chatAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(popContactViewChat)]) {
+        [self.delegate performSelector:@selector(popContactViewChat)];
+    }
+}
 
 @end

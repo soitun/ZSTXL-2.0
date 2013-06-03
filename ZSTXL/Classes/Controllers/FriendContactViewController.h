@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PopContactView.h"
+#import "ContactCell.h"
 
-@interface FriendContactViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface FriendContactViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PopContactViewDelegate, ContactCellDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *dataSourceArray;
@@ -16,6 +18,6 @@
 @property (nonatomic, retain) NSMutableArray *sectionArray;
 
 @property (nonatomic, retain) UIViewController *parentController;
-
+@property (nonatomic, retain) UIControl *bgControl;
 
 @end

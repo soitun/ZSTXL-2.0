@@ -15,5 +15,13 @@
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *dataSourceArray;
 @property (nonatomic, retain) NSArray *mailSelectorArray;
+@property (nonatomic, retain) UIButton *mailSentButton;
+
+
+- (IBAction)mailTransmit:(UIButton *)sender;
+- (IBAction)mailRefresh:(UIButton *)sender;
+- (IBAction)mailDelete:(UIButton *)sender;
+- (IBAction)mailWrite:(UIButton *)sender;
+
 
 @end

@@ -10,7 +10,7 @@
 #import "InfoAdvHeaderView.h"
 
 
-@interface ZhaoshangDailiViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ZhaoshangDailiViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *dataSource;
 @property (nonatomic, retain) UIButton *CateButton;

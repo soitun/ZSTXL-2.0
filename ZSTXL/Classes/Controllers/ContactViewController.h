@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SlideMenuView.h"
 #import "Contact.h"
+#import "TitleView.h"
 
-@interface ContactViewController : UIViewController <UIScrollViewDelegate, MenuDelegate>
+@interface ContactViewController : UIViewController <UIScrollViewDelegate, MenuDelegate, TitleViewDelegate>
 
 @property (retain, nonatomic) IBOutlet UIScrollView *mScrollView;
 @property (retain, nonatomic) SlideMenuView *mSlideMenu;

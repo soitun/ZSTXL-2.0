@@ -26,6 +26,12 @@
     // Configure the view for the selected state
 }
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    [self.bottomButton addTarget:self action:@selector(touchAction) forControlEvents:UIControlEventTouchUpInside];
+}
+
 - (void)dealloc {
     [_pharImage release];
     [_nameLabel release];
@@ -34,4 +40,12 @@
     [_bottomButton release];
     [super dealloc];
 }
+
+- (void)touchAction
+{
+    if ([self.delegate respondsToSelector:@selector(pharCategotyCellTap)]) {
+        [self.delegate performSelector:@selector(pharCategotyCellTap)];
+    }
+}
+
 @end

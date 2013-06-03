@@ -36,6 +36,21 @@
     [self getFriendData];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [_tableView release];
+    [super dealloc];
+}
+- (void)viewDidUnload {
+    [self setTableView:nil];
+    [super viewDidUnload];
+}
+
 - (void)initContactDict
 {
     self.contactDict = [[[NSMutableDictionary alloc] init] autorelease];
@@ -202,6 +217,12 @@
 
 - (void)configureCell:(ContactCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    cell.delegate = self;
+    
+    NSString *sectionKey = [self.sectionArray objectAtIndex:indexPath.section];
+    Contact *contact = [[self.contactDict objectForKey:sectionKey] objectAtIndex:indexPath.row];
+    cell.contact = contact;
+    
     cell.selectionStyle = UITableViewCellEditingStyleNone;
     
     FriendContact *userDetail = [[self.contactDict objForKey:[self.sectionArray objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
@@ -233,8 +254,6 @@
         cell.nameLabel.text = userDetail.username;
     }
     
-    cell.unSelectedImage.hidden = YES;
-    
     if ([userDetail.col2 isEqualToString:@"1"]) {
         cell.xun_VImage.hidden = NO;
     }
@@ -245,31 +264,51 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self showContactView];
+}
+
+- (void)contactCellTapAvatarOfContact:(Contact *)contact
+{
     OtherHomepageViewController *otherProfileVC = [[OtherHomepageViewController alloc] init];
-    
-    NSString *sectionKey = [self.sectionArray objectAtIndex:indexPath.section];
-    Contact *contact = [[self.contactDict objectForKey:sectionKey] objectAtIndex:indexPath.row];
-    
     
     otherProfileVC.contact = contact;
     if ([self.parentController respondsToSelector:@selector(pushViewController:)]) {
         [self.parentController performSelector:@selector(pushViewController:) withObject:otherProfileVC];
     }
-    [otherProfileVC release];;
+    [otherProfileVC release];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - contact view 
+
+- (void)showContactView
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    PopContactView *contactView = [[[NSBundle mainBundle] loadNibNamed:@"PopContactView" owner:nil options:nil] lastObject];
+    contactView.frame = CGRectMake(34, 150, 252, 170);
+    contactView.delegate = self;
+    
+    self.bgControl = [[[UIControl alloc] initWithFrame:CGRectMake(0, 0, 320, SCREEN_HEIGHT)] autorelease];
+    self.bgControl.backgroundColor = RGBACOLOR(0, 0, 0, 0.6);
+    [self.bgControl addTarget:self action:@selector(removeBg) forControlEvents:UIControlEventTouchDown];
+    [self.bgControl addSubview:contactView];
+    
+    [kAppDelegate.window addSubview:self.bgControl];
 }
 
-- (void)dealloc {
-    [_tableView release];
-    [super dealloc];
+- (void)popContactViewChat
+{
+    [self.bgControl removeFromSuperview];
 }
-- (void)viewDidUnload {
-    [self setTableView:nil];
-    [super viewDidUnload];
+
+- (void)popContactViewTel
+{
+    [self.bgControl removeFromSuperview];
 }
+
+- (void)removeBg
+{
+    [self.bgControl removeFromSuperview];
+}
+
+
+
 @end

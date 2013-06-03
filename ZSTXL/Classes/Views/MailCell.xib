@@ -43,18 +43,22 @@
 							<object class="IBUIImageView" id="657358658">
 								<reference key="NSNextResponder" ref="554465615"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{13, 22}, {37, 27}}</string>
+								<string key="NSFrame">{{13, 21}, {23, 17}}</string>
 								<reference key="NSSuperview" ref="554465615"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="109024629"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">mail_icon_on.png</string>
+								</object>
 							</object>
 							<object class="IBUILabel" id="109024629">
 								<reference key="NSNextResponder" ref="554465615"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{63, 12}, {161, 21}}</string>
+								<string key="NSFrame">{{52, 7}, {161, 21}}</string>
 								<reference key="NSSuperview" ref="554465615"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="154248012"/>
@@ -89,7 +93,7 @@
 							<object class="IBUILabel" id="1014826521">
 								<reference key="NSNextResponder" ref="554465615"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{63, 37}, {237, 21}}</string>
+								<string key="NSFrame">{{52, 30}, {237, 21}}</string>
 								<reference key="NSSuperview" ref="554465615"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -116,7 +120,7 @@
 							<object class="IBUILabel" id="154248012">
 								<reference key="NSNextResponder" ref="554465615"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{232, 12}, {68, 21}}</string>
+								<string key="NSFrame">{{232, 7}, {68, 21}}</string>
 								<reference key="NSSuperview" ref="554465615"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1014826521"/>
@@ -139,7 +143,7 @@
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 72}</string>
+						<string key="NSFrameSize">{320, 60}</string>
 						<reference key="NSSuperview" ref="547927699"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="657358658"/>
@@ -155,16 +159,20 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 73}</string>
+				<string key="NSFrameSize">{320, 61}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="554465615"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
+				<object class="NSColor" key="IBUIBackgroundColor">
+					<int key="NSColorSpace">1</int>
+					<bytes key="NSRGB">MC45NTI5NDExNzY1IDAuOTU2ODYyNzQ1MSAwLjk2MDc4NDMxMzcAA</bytes>
+				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="554465615"/>
 				<string key="IBUIReuseIdentifier">MailCell</string>
-				<real value="73" key="IBUIRowHeight"/>
+				<real value="61" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -226,9 +234,9 @@
 						<reference key="object" ref="547927699"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="657358658"/>
-							<reference ref="109024629"/>
 							<reference ref="1014826521"/>
 							<reference ref="154248012"/>
+							<reference ref="109024629"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -269,7 +277,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">11</int>
+			<int key="maxID">14</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -311,6 +319,10 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">mail_icon_on.png</string>
+			<string key="NS.object.0">{23, 17}</string>
+		</object>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

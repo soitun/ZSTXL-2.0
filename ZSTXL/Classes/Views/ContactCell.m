@@ -26,12 +26,28 @@
     // Configure the view for the selected state
 }
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    UITapGestureRecognizer *tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvatar)] autorelease];
+    [self.headIcon addGestureRecognizer:tap];
+}
+
 - (void)dealloc {
     [_headIcon release];
     [_nameLabel release];
     [_xun_VImage release];
     [_ZDLabel release];
-    [_unSelectedImage release];
     [super dealloc];
 }
+
+#pragma mark - tap avatar
+
+- (void)tapAvatar
+{
+    if ([self.delegate respondsToSelector:@selector(contactCellTapAvatarOfContact:)]) {
+        [self.delegate performSelector:@selector(contactCellTapAvatarOfContact:) withObject:self.contact];
+    }
+}
+
 @end

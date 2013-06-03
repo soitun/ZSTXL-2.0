@@ -12,6 +12,7 @@
 #import "Contact.h"
 #import "SearchContactCell.h"
 #import "LoadMoreCell.h"
+#import "LoadMoreFooter.h"
 
 @interface AllContactViewController ()
 
@@ -33,7 +34,23 @@
     [super viewDidLoad];
     self.sortid = 0;
     self.dataSourceArray = [NSMutableArray array];
+    [self initTableFooter];
     [self getAllContactFromDB];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [_tableView release];
+    [super dealloc];
+}
+- (void)viewDidUnload {
+    [self setTableView:nil];
+    [super viewDidUnload];
 }
 
 - (void)getAllContactFromDB
@@ -146,6 +163,14 @@
 
 #pragma mark - table view
 
+- (void)initTableFooter
+{
+    LoadMoreFooter *footer = [[[NSBundle mainBundle] loadNibNamed:@"LoadMoreFooter" owner:nil options:nil] lastObject];
+    footer.titleLabel.text = @"加载更多";
+    footer.delegate = self;
+    self.tableView.tableFooterView = footer;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -153,13 +178,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView == self.searchDC.searchResultsTableView) {
-        return self.searchArray.count;
-    }
-    else{
-        NSLog(@"contact array count %d", self.dataSourceArray.count);
-        return self.dataSourceArray.count + 1;
-    }
+    NSLog(@"contact array count %d", self.dataSourceArray.count);
+    return self.dataSourceArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -169,127 +189,112 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = nil;
+    static NSString *cellID = @"ContactCell";
+    ContactCell * cell = (ContactCell *)[tableView dequeueReusableCellWithIdentifier:cellID];
+    if (nil == cell) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"ContactCell" owner:self options:nil] objectAtIndex:0];
+    }
+    cell.contact = [self.dataSourceArray objectAtIndex:indexPath.row];
+    cell.delegate = self;
+    [self configureCell:cell atIndexPath:indexPath OfTableView:tableView];
     
-    if (indexPath.row == self.dataSourceArray.count) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"LoadMoreCell" owner:nil options:nil] objectAtIndex:0];
-        cell.selectionStyle = UITableViewCellSeparatorStyleNone;
-    }
-    else{
-        static NSString *cellID = @"ContactCell";
-        cell = (ContactCell *)[tableView dequeueReusableCellWithIdentifier:cellID];
-        if (nil == cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"ContactCell" owner:self options:nil] objectAtIndex:0];
-        }
-        [self configureCell:(UITableViewCell *)cell atIndexPath:indexPath OfTableView:(UITableView *)tableView];
-    }
     return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath OfTableView:(UITableView *)tableView
+- (void)configureCell:(ContactCell *)cell atIndexPath:(NSIndexPath *)indexPath OfTableView:(UITableView *)tableView
 {
     cell.selectionStyle = UITableViewCellEditingStyleNone;
     
     AllContact *userDetail;
     
+    userDetail = [self.dataSourceArray objectAtIndex:indexPath.row];
     
-    if (tableView == self.searchDC.searchResultsTableView) {
-        userDetail = [self.searchArray objectAtIndex:indexPath.row];
-        
-        ((SearchContactCell *)cell).headIcon.layer.cornerRadius = 4;
-        ((SearchContactCell *)cell).headIcon.layer.masksToBounds = YES;
-        [((SearchContactCell *)cell).headIcon setImageWithURL:[NSURL URLWithString:userDetail.picturelinkurl] placeholderImage:[UIImage imageByName:@"avatar"]];
-        
-        
-        if ([userDetail.remark isValid]) {
-            NSMutableString *userName = [NSMutableString stringWithFormat:@"%@(%@)", userDetail.username, userDetail.remark];
-            ((SearchContactCell *)cell).nameLabel.text = userName;
-        }
-        else{
-            ((SearchContactCell *)cell).nameLabel.text = userDetail.username;
-        }
-        
-        ((SearchContactCell *)cell).areaLabel.text = userDetail.areaname;
-        if ([userDetail.col2 isEqualToString:@"1"])
-        {
-            ((SearchContactCell *)cell).xun_VImage.hidden = NO;
-        }
-        
+    switch (userDetail.invagency.intValue) {
+        case 1:
+            cell.ZDLabel.text = @"招商";
+            break;
+        case 2:
+            cell.ZDLabel.text = @"代理";
+            break;
+        case 3:
+            cell.ZDLabel.text = @"招商、代理";
+            break;
+        default:
+            break;
+    }
+    
+    cell.headIcon.layer.cornerRadius = 4;
+    cell.headIcon.layer.masksToBounds = YES;
+    [cell.headIcon setImageWithURL:[NSURL URLWithString:userDetail.picturelinkurl]
+                                   placeholderImage:[UIImage imageByName:@"avatar"]];
+    
+    
+    if ([userDetail.remark isValid]) {
+        NSMutableString *userName = [NSMutableString stringWithFormat:@"%@(%@)", userDetail.username, userDetail.remark];
+        cell.nameLabel.text = userName;
     }
     else{
-        userDetail = [self.dataSourceArray objectAtIndex:indexPath.row];
-        
-        switch (userDetail.invagency.intValue) {
-            case 1:
-                ((ContactCell *)cell).ZDLabel.text = @"招商";
-                break;
-            case 2:
-                ((ContactCell *)cell).ZDLabel.text = @"代理";
-                break;
-            case 3:
-                ((ContactCell *)cell).ZDLabel.text = @"招商、代理";
-                break;
-            default:
-                break;
-        }
-        
-        ((ContactCell *)cell).headIcon.layer.cornerRadius = 4;
-        ((ContactCell *)cell).headIcon.layer.masksToBounds = YES;
-        [((ContactCell *)cell).headIcon setImageWithURL:[NSURL URLWithString:userDetail.picturelinkurl]
-                                       placeholderImage:[UIImage imageByName:@"avatar"]];
-        
-        
-        if ([userDetail.remark isValid]) {
-            NSMutableString *userName = [NSMutableString stringWithFormat:@"%@(%@)", userDetail.username, userDetail.remark];
-            ((ContactCell *)cell).nameLabel.text = userName;
-        }
-        else{
-            ((ContactCell *)cell).nameLabel.text = userDetail.username;
-        }
-        
-        ((ContactCell *)cell).unSelectedImage.hidden = YES;
-        if ([userDetail.col2 isEqualToString:@"1"]) {
-            ((ContactCell *)cell).xun_VImage.hidden = NO;
-        }
-        else{
-            ((ContactCell *)cell).xun_VImage.hidden = YES;
-        }
+        cell.nameLabel.text = userDetail.username;
+    }
+    
+    if ([userDetail.col2 isEqualToString:@"1"]) {
+        cell.xun_VImage.hidden = NO;
+    }
+    else{
+        cell.xun_VImage.hidden = YES;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OtherHomepageViewController *otherProfileVC = [[OtherHomepageViewController alloc] init];
-    
-    if (tableView == self.searchDC.searchResultsTableView) {
-        otherProfileVC.contact = [self.searchArray objectAtIndex:indexPath.row];
-        [self.searchDC setActive:NO];
-    }
-    else{
-        if (indexPath.row == self.dataSourceArray.count) {
-            [self loadMoreContact];
-        }
-        else{
-            otherProfileVC.contact = [self.dataSourceArray objectAtIndex:indexPath.row];
-            if ([self.parentController respondsToSelector:@selector(pushViewController:)]) {
-                [self.parentController performSelector:@selector(pushViewController:) withObject:otherProfileVC];
-            }
-        }
-    }
+    [self showContactView];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)LoadMoreFooterTap
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self getInvestmentUserListFromServer];
 }
 
-- (void)dealloc {
-    [_tableView release];
-    [super dealloc];
+- (void)contactCellTapAvatarOfContact:(Contact *)contact
+{
+    OtherHomepageViewController *otherProfileVC = [[[OtherHomepageViewController alloc] init] autorelease];
+    otherProfileVC.contact = contact;
+    if ([self.parentController respondsToSelector:@selector(pushViewController:)]) {
+        [self.parentController performSelector:@selector(pushViewController:) withObject:otherProfileVC];
+    }
 }
-- (void)viewDidUnload {
-    [self setTableView:nil];
-    [super viewDidUnload];
+
+#pragma mark - contact view
+
+- (void)showContactView
+{
+    PopContactView *contactView = [[[NSBundle mainBundle] loadNibNamed:@"PopContactView" owner:nil options:nil] lastObject];
+    contactView.frame = CGRectMake(34, 150, 252, 170);
+    contactView.delegate = self;
+    
+    self.bgControl = [[[UIControl alloc] initWithFrame:CGRectMake(0, 0, 320, SCREEN_HEIGHT)] autorelease];
+    self.bgControl.backgroundColor = RGBACOLOR(0, 0, 0, 0.6);
+    [self.bgControl addTarget:self action:@selector(removeBg) forControlEvents:UIControlEventTouchDown];
+    [self.bgControl addSubview:contactView];
+    
+    [kAppDelegate.window addSubview:self.bgControl];
+    
 }
+
+- (void)popContactViewChat
+{
+    [self.bgControl removeFromSuperview];
+}
+
+- (void)popContactViewTel
+{
+    [self.bgControl removeFromSuperview];
+}
+
+- (void)removeBg
+{
+    [self.bgControl removeFromSuperview];
+}
+
+
 @end

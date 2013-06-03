@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PublishView.h"
+#import "PharCategoryCell.h"
 
-@interface PharCategoryViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate>
+@interface PharCategoryViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, PublishViewDelegate, PharCategoryCellDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *dataSource;
+@property (nonatomic, retain) UIControl *bgControl;
 
 @end

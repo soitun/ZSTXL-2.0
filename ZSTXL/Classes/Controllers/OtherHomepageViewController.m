@@ -564,7 +564,7 @@ enum eAlertTag {
     mail.picturelinkurl = self.contact.picturelinkurl;
     
     SendEmailViewController *seVC = [[SendEmailViewController alloc] init];
-    seVC.mail = mail;
+//    seVC.mail = mail;
 //    seVC.currentContact = self.contact;
     [self.navigationController pushViewController:seVC animated:YES];
     [seVC release];

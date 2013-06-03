@@ -11,6 +11,7 @@
 #import "ZSInfoCell.h"
 #import "ZSInfoContactCell.h"
 
+
 @interface ZhaoshangInfoViewController ()
 
 @end
@@ -26,18 +27,6 @@
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
-    self.tableView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64);
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
-    self.tableView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-49);
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -46,8 +35,9 @@
     
     self.contentArray = [NSMutableArray arrayWithArray:@[@"国金企业", @"小儿咳喘灵颗粒", @"Z20063280", @"颗粒型", @"河北国金药业有限责任公司", @"北京", @"医保甲类", @"医院、药店", @"暂无内容", @"宣肺、清热、止咳、祛痰。用于上呼吸道感染引起的咳嗽。"]];
     
-    self.tableView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-49);
+    self.tableView.frame = CGRectMake(0, 106, 320, SCREEN_HEIGHT-64-106);
     self.tableView.bounces = NO;
+    [self initHeaderView];
     [self initNavBar];
 }
 
@@ -86,6 +76,14 @@
 
 #pragma mark - table view
 
+- (void)initHeaderView
+{
+    self.header = [[[NSBundle mainBundle] loadNibNamed:@"ZSInfoHeader" owner:nil options:nil] lastObject];
+    self.header.delegate = self;
+    self.header.frame = CGRectMake(0, 0, 320, 106);
+    [self.view addSubview:self.header];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -93,60 +91,63 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.titleArray.count + 2;
+    return self.titleArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = 0.f;
-    if (indexPath.row == 0) {
-        height = 106.f;
-    }else if(indexPath.row == self.titleArray.count + 1){
-        height = 240;
-    }else{
-        height = 61.f;
-    }
-return height;
+
+    return 61.f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = nil;
-    if (indexPath.row == 0) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"ZSInfoPersonInfoCell" owner:nil options:nil] lastObject];
-        [((ZSInfoPersonInfoCell *)cell).headIcon setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"avatar"]];
-        ((ZSInfoPersonInfoCell *)cell).nameLabel.text = @"刘月荣";
-        ((ZSInfoPersonInfoCell *)cell).useridLabel.text = @"123456";
-    } else if (indexPath.row == self.titleArray.count+1){
-
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"ZSInfoContactCell" owner:nil options:nil] lastObject];
-        ((ZSInfoContactCell *)cell).nameLabel.text = @"蔡经理";
-        ((ZSInfoContactCell *)cell).tenantLabel.text = @"盛杰奥品牌营销中心";
-        ((ZSInfoContactCell *)cell).addrLabel.text = @"长春市陕西路14栋";
-        ((ZSInfoContactCell *)cell).telLabel.text = @"15590249977";
-        ((ZSInfoContactCell *)cell).mailLabel.text = @"32421999@qq.com";
-        ((ZSInfoContactCell *)cell).faxLabel.text = @"0431-88989333";
-        ((ZSInfoContactCell *)cell).QQLabel.text = @"32421999";
-        
-        
-    } else {
-        
-        static NSString *cellId = @"ZSInfoCell";
-        cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-        if (cell == nil) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"ZSInfoCell" owner:nil options:nil] lastObject];
-        }
-        
-        ((ZSInfoCell *)cell).nameLabel.text = [self.titleArray objectAtIndex:indexPath.row-1];
-        ((ZSInfoCell *)cell).contentLabel.text = [self.contentArray objectAtIndex:indexPath.row-1];
-        
-        if (indexPath.row == self.titleArray.count) {
-            ((ZSInfoCell *)cell).separator.hidden = YES;
-        }
-
+    static NSString *cellId = @"ZSInfoCell";
+    ZSInfoCell * cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"ZSInfoCell" owner:nil options:nil] lastObject];
     }
+    
+    cell.nameLabel.text = [self.titleArray objectAtIndex:indexPath.row];
+    cell.contentLabel.text = [self.contentArray objectAtIndex:indexPath.row];
+    
+    if (indexPath.row == self.titleArray.count-1) {
+        cell.separator.hidden = YES;
+    }
+    else{
+        cell.separator.hidden = NO;
+    }
+
     return cell;
 }
+
+#pragma mark - header delegate
+
+- (void)zsINfoHeaderContactStar
+{
+    
+}
+
+- (void)zsInfoHeaderContactMe
+{
+    self.contactView = [[[NSBundle mainBundle] loadNibNamed:@"ZSInfoContactView" owner:nil options:nil] lastObject];
+    self.contactView.delegate = self;
+    self.contactView.frame = CGRectMake(121, 42, 187, 53);
+    [self.header addSubview:self.contactView];
+}
+
+#pragma mark - zsinfo contact view delegate
+
+- (void)zsInfoContactViewChat
+{
+    [self.contactView removeFromSuperview];
+}
+
+- (void)zsInfoContactViewTel
+{
+    [self.contactView removeFromSuperview];
+}
+
 
 
 

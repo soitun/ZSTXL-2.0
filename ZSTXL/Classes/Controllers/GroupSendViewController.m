@@ -256,10 +256,10 @@
     cell.nameLabel.text = userDetail.username;
     
     if ([self.selectArray containsObject:userDetail]) {
-        cell.unSelectedImage.image = [UIImage imageNamed:@"selected.png"];
+//        cell.unSelectedImage.image = [UIImage imageNamed:@"selected.png"];
     }
     else{
-        cell.unSelectedImage.image = [UIImage imageNamed:@"unselected.png"];
+//        cell.unSelectedImage.image = [UIImage imageNamed:@"unselected.png"];
     }
 }
 

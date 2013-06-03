@@ -7,9 +7,11 @@
 //
 
 #import "PharCategoryViewController.h"
-#import "PharCategoryCell.h"
 #import "SuspensionButton.h"
 #import "PublishQueryViewController.h"
+#import "PublishDailiViewController.h"
+#import "PublishView.h"
+#import "ZhaoshangInfoViewController.h"
 
 @interface PharCategoryViewController ()
 
@@ -26,11 +28,16 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.title = @"分类";
-    self.navigationController.delegate = self;
+//    self.navigationController.delegate = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self initNavBar];
@@ -59,23 +66,41 @@
 
 - (void)publishAction
 {
+    PublishView *view = [[[NSBundle mainBundle] loadNibNamed:@"PublishView" owner:nil options:nil] lastObject];
+    view.frame = CGRectMake(31, 160, 258, 203);
+    view.delegate = self;
+    self.bgControl = [[[UIControl alloc] initWithFrame:CGRectMake(0, 0, 320, SCREEN_HEIGHT)] autorelease];
+    self.bgControl.backgroundColor = RGBACOLOR(0, 0, 0, 0.8);
+    [self.bgControl addSubview:view];
+    [self.bgControl addTarget:self action:@selector(removeBgControl) forControlEvents:UIControlEventTouchDown];
+    
+    [kAppDelegate.window addSubview:self.bgControl];
+
+}
+
+- (void)publishViewZhaoshang
+{
     DLog(@"publish zhaoshang");
+    [self.bgControl removeFromSuperview];
     PublishQueryViewController *publishQueryVC = [[[PublishQueryViewController alloc] init] autorelease];
     [self.navigationController pushViewController:publishQueryVC animated:YES];
 }
 
-
-#pragma mark - navigation controller delegate
-
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+- (void)publishViewDaili
 {
-    if ([viewController isKindOfClass:NSClassFromString(@"PharCategoryViewController")]
-        || [viewController isKindOfClass:NSClassFromString(@"PublishQueryViewController")]) {
-        [kAppDelegate.tabController hidesTabBar:YES animated:YES];
-    }
-    else{
-        [kAppDelegate.tabController hidesTabBar:NO animated:YES];
-    }
+    [self.bgControl removeFromSuperview];
+    PublishDailiViewController *publishDailiVC = [[[PublishDailiViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:publishDailiVC animated:YES];
+}
+
+- (void)publishViewCancel
+{
+    [self.bgControl removeFromSuperview];
+}
+
+- (void)removeBgControl
+{
+    [self.bgControl removeFromSuperview];
 }
 
 
@@ -103,6 +128,7 @@
 - (void)popVC:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
 }
 
 - (void)searchContact:(UIButton *)sender
@@ -132,16 +158,23 @@
 {
     static NSString *cellId = @"PharCategoryCell";
     PharCategoryCell *cell = (PharCategoryCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
+
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"PharCategoryCell" owner:nil options:nil] lastObject];
     }
-    
+    cell.delegate = self;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DLog(@"%d", indexPath.row);
+    
+}
+
+- (void)pharCategotyCellTap
+{
+    ZhaoshangInfoViewController *zhaoshangInfoVC = [[[ZhaoshangInfoViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:zhaoshangInfoVC animated:YES];
 }
 
 @end

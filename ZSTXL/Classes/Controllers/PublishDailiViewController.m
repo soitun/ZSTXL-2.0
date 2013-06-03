@@ -9,6 +9,10 @@
 #import "PublishDailiViewController.h"
 #import "SettingCell.h"
 #import "ConfirmFooterView.h"
+#import "PublishDailiToViewController.h"
+#import "PublishSellToViewController.h"
+#import "PublishPeriodViewController.h"
+#import "PublishDailiAdvantageViewController.h"
 
 @interface PublishDailiViewController ()
 
@@ -32,6 +36,8 @@
     self.titleArray = @[@"代理方向：", @"代理区域：", @"代理渠道：", @"代理优势：", @"信息有效期："];
     self.selectorArray = @[@"dailiTo", @"dailiArea", @"dailiChnnel", @"dailiAdvantage", @"infoPeriod"];
     
+    self.tableView.backgroundView = nil;
+    self.view.backgroundColor = bgGreyColor;
     [self initNavBar];
     [self initTableFooter];
 }
@@ -73,9 +79,19 @@
 
 - (void)initTableFooter
 {
-    ConfirmFooterView *footer = [[[NSBundle mainBundle] loadNibNamed:@"ConfirmFooter" owner:nil options:nil] lastObject];
+    ConfirmFooterView *footer = [[[NSBundle mainBundle] loadNibNamed:@"ConfirmFooterView" owner:nil options:nil] lastObject];
     footer.delegate = self;
     self.tableView.tableFooterView = footer;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 15.f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 15.f;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -97,7 +113,7 @@
     }
     
     [Utility groupTableView:tableView addBgViewForCell:commonCell withCellPos:CustomCellBackgroundViewPositionSingle];
-    commonCell.textLabel.text = [self.titleArray objectAtIndex:indexPath.section-1];
+    commonCell.textLabel.text = [self.titleArray objectAtIndex:indexPath.section];
     commonCell.selectImage.hidden = YES;
     return commonCell;
 }
@@ -110,7 +126,8 @@
 
 - (void)dailiTo
 {
-    
+    PublishDailiToViewController *publishDailiToVC = [[[PublishDailiToViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:publishDailiToVC animated:YES];
 }
 
 - (void)dailiArea
@@ -118,19 +135,22 @@
     
 }
 
-- (void)dailiChannel
+- (void)dailiChnnel
 {
-    
+    PublishSellToViewController *publishSellToVC = [[[PublishSellToViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:publishSellToVC animated:YES];
 }
 
 - (void)dailiAdvantage
 {
-    
+    PublishDailiAdvantageViewController *publishDailiAdvantageViewController = [[[PublishDailiAdvantageViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:publishDailiAdvantageViewController animated:YES];
 }
 
 - (void)infoPeriod
 {
-    
+    PublishPeriodViewController *publishPeriodVC = [[[PublishPeriodViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:publishPeriodVC animated:YES];
 }
 
 #pragma mark - confirm footer

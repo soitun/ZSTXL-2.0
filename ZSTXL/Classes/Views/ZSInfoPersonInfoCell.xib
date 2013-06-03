@@ -423,7 +423,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="avatar.png">{86, 86}</string>
+			<string key="avatar.png">{43, 43}</string>
 			<string key="homepage_bg.png">{640, 213}</string>
 			<string key="xun.png">{37, 42}</string>
 			<string key="xun_B.png">{37, 38}</string>
