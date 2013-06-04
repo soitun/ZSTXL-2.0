@@ -41,8 +41,9 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyBoard:)];
     [self.scrollView addGestureRecognizer:tap];
     
-    self.isAllowFriendContact = NO;
-    [self.allowFriendContactButton addTarget:self action:@selector(allowFriendContact:) forControlEvents:UIControlEventTouchUpInside];
+    self.allowFriendContact = 1;
+    UITapGestureRecognizer *tapImage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(allowFriendContact:)];
+    [self.friendContactImage addGestureRecognizer:tapImage];
     [self initNavBar];
 }
 
@@ -55,10 +56,13 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+
+    
     [_telTextField release];
     [_authCodeTextField release];
     [_scrollView release];
-    [_allowFriendContactButton release];
+    [_countDownLabel release];
+    [_friendContactImage release];
     [super dealloc];
 }
 
@@ -66,7 +70,8 @@
     [self setTelTextField:nil];
     [self setAuthCodeTextField:nil];
     [self setScrollView:nil];
-    [self setAllowFriendContactButton:nil];
+    [self setCountDownLabel:nil];
+    [self setFriendContactImage:nil];
     [super viewDidUnload];
 }
 
@@ -85,6 +90,7 @@
 
 - (void)popVC:(UIButton *)sender
 {
+    [self stopTimer];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -115,7 +121,7 @@
     [UIView setAnimationCurve:[curve intValue]];
     
     CGFloat keyBoardHeight = keyboardBounds.size.height;
-    self.scrollView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-keyBoardHeight);
+    self.scrollView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-keyBoardHeight+20);
     [UIView commitAnimations];
 }
 
@@ -140,19 +146,129 @@
 - (IBAction)getAuthCode:(UIButton *)sender
 {
     DLog(@"getAuthcode");
+    
+    [self hideKeyBoard:nil];
+    
+    [self.telTextField resignFirstResponder];
+    if (![Utility mobileNumIsValid:self.tel]) {
+        return;
+    }else{
+        
+        if (self.countDownTimer != nil) {
+            [Utility showAlertWithTitle:@"三分钟内请勿重复获取"];
+            return;
+        }
+        
+        
+        NSDictionary *para = @{@"path": @"sendCheckingCode.json", @"phoneNm": self.tel, @"type" : @"2"};
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+        hud.labelText = @"获取验证码";
+        [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+            [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+            
+            if (RETURNCODE_ISVALID(json)) {
+                self.lastAuthCodeDate = [NSDate date];
+                self.countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.f target:self selector:@selector(countDown) userInfo:nil repeats:YES];
+                DLog(@"json %@", json);
+            }
+            else{
+                DLog(@"%@", GET_RETURNMESSAGE(json));
+            }
+            
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+            DLog(@"error %@", error);
+        }];
+    }
 }
 
-- (void)allowFriendContact:(UIButton *)sender
+- (void)allowFriendContact:(UITapGestureRecognizer *)tap
 {
     DLog(@"allowFriendContact");
-    self.isAllowFriendContact = !self.isAllowFriendContact;
-    self.allowFriendContactButton.selected = !self.allowFriendContactButton.selected;
+    self.allowFriendContact = 1 - self.allowFriendContact;
+    if (self.allowFriendContact == 0) {
+        self.friendContactImage.image = [UIImage imageNamed:@"login_select"];
+    }
+    else{
+        self.friendContactImage.image = [UIImage imageNamed:@"login_noselect"];
+    }
 }
 
 - (IBAction)regist:(UIButton *)sender
 {
+    
+    [self hideKeyBoard:nil];
+    //验证验证码
     DLog(@"regist");
-    RegistFirstViewController *registFirstVC = [[[RegistFirstViewController alloc] init] autorelease];
-    [self.navigationController pushViewController:registFirstVC animated:YES];
+    if (![self.authCode isValid]) {
+        [Utility showAlertWithTitle:@"请输入验证码"];
+        return;
+    }
+    else{
+        NSDictionary *para = @{@"path": @"checkingCode.json", @"phoneNm": self.tel, @"verificationCode": self.authCode};
+        [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+        [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+            [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+            if (RETURNCODE_ISVALID(json)) {
+                
+                [self stopTimer];
+                
+                RegistFirstViewController *registFirstVC = [[[RegistFirstViewController alloc] init] autorelease];
+                registFirstVC.tel = self.tel;
+                registFirstVC.allowFriendContact = self.allowFriendContact;
+                [self.navigationController pushViewController:registFirstVC animated:YES];
+            }
+            else{
+                [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+            }
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+            DLog(@"error %@", error);
+        }];
+    }
 }
+
+- (void)countDown
+{
+    NSTimeInterval secondsBetween = [[NSDate date] timeIntervalSinceDate:self.lastAuthCodeDate];
+    DLog(@"time interval %lf", secondsBetween);
+    if (secondsBetween > 180.f) {
+        [self.countDownTimer invalidate];
+        self.countDownTimer = nil;
+        self.countDownLabel.hidden = YES;
+    }
+    else{
+        self.countDownLabel.hidden = NO;
+        self.countDownLabel.text = [NSString stringWithFormat:@"%d秒", 180-(int)(secondsBetween+0.5)];
+    }
+}
+
+- (void)stopTimer
+{
+    self.countDownLabel.hidden = YES;
+    self.lastAuthCodeDate = nil;
+    if (self.countDownTimer) {
+        [self.countDownTimer invalidate];
+        self.countDownTimer = nil;
+    }
+}
+
+#pragma mark - textfiled delegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField == self.telTextField) {
+        self.tel = textField.text;
+    }
+    else if(textField == self.authCodeTextField){
+        self.authCode = self.authCodeTextField.text;
+    }
+}
+
+
 @end

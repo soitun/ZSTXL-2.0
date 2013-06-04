@@ -13,6 +13,10 @@
 - (IBAction)nextStep:(UIButton *)sender;
 @property (retain, nonatomic) IBOutlet UILabel *telLabel;
 @property (retain, nonatomic) IBOutlet UITextField *authcodeTextField;
+
 @property (nonatomic, copy) NSString *tel;
+@property (nonatomic, copy) NSDate *lastAuthcodeDate;
+@property (nonatomic, retain) NSTimer *countDownTimer;
+
 
 @end

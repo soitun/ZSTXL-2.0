@@ -39,6 +39,15 @@
     [self.telLabel setTextColor:kContentBlueColor];
     self.telLabel.text = self.tel;
     [self initNavBar];
+    
+    
+    //倒计时
+    self.lastAuthcodeDate = [PersistenceHelper dataForKey:@"lastAuthcodeDate"];
+    if (self.lastAuthcodeDate != nil) {
+        self.countDownTimer = [NSTimer timerWithTimeInterval:1.f target:self selector:@selector(countDown) userInfo:nil repeats:YES];
+    }
+    
+    
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -52,12 +61,49 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [_authcodeTextField release];
+    [_telLabel release];
+    [super dealloc];
+}
+- (void)viewDidUnload {
+    [self setAuthcodeTextField:nil];
+    [self setTelLabel:nil];
+    [super viewDidUnload];
+}
+
 
 #pragma mark - button method
 
 - (IBAction)sendAuth:(UIButton *)sender
 {
     DLog(@"发送验证码");
+    self.lastAuthcodeDate = [PersistenceHelper dataForKey:@"lastAuthcodeDate"];
+    if (self.lastAuthcodeDate != nil) {
+        self.countDownTimer = [NSTimer timerWithTimeInterval:1.f target:self selector:@selector(countDown) userInfo:nil repeats:YES];
+    }
+    
+    
+    NSDictionary *para = @{@"phoneNm": self.tel, @"type" : @"1", @"path": @"sendCheckingCode.json"};
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        if (RETURNCODE_ISVALID(json)) {
+            DLog(@"%@", json);
+            self.lastAuthcodeDate = [NSDate date];
+            [PersistenceHelper setData:self.lastAuthcodeDate forKey:@"lastAuthcodeDate"];
+        }
+        else{
+            DLog(@"message %@", GET_RETURNMESSAGE(json));
+        }
+    } failure:^(NSError *error) {
+        DLog(@"%@", error);
+    }];
+}
+
+- (void)countDown
+{
+    
 }
 
 - (IBAction)nextStep:(UIButton *)sender
@@ -76,18 +122,7 @@
 }
 
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    [_authcodeTextField release];
-    [_telLabel release];
-    [super dealloc];
-}
-- (void)viewDidUnload {
-    [self setAuthcodeTextField:nil];
-    [self setTelLabel:nil];
-    [super viewDidUnload];
-}
+
 
 #pragma mark - nav
 

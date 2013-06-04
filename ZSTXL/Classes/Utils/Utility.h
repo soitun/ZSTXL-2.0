@@ -79,4 +79,8 @@ char indexTitleOfString(unsigned short string);
 
 + (UIImage *)readImageFromDisk:(NSString *)path;
 
++ (BOOL)mobileNumIsValid:(NSString *)mobileNum;
+
++ (void)showAlertWithTitle:(NSString *)title;
+
 @end

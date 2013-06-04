@@ -20,6 +20,8 @@
 @interface TimePicker : UIActionSheet
 - (IBAction)cancelCilck:(UIBarButtonItem *)sender;
 - (IBAction)doneClick:(UIBarButtonItem *)sender;
+
+@property (retain, nonatomic) IBOutlet UIToolbar *titleToolbar;
 @property (retain, nonatomic) IBOutlet UILabel *titleLab;
 @property (nonatomic, retain) IBOutlet UIDatePicker *datePicker;
 @property (nonatomic, assign) id<TimePickerDelegate> timePickerDelegate;

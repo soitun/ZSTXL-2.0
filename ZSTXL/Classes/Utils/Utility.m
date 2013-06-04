@@ -947,4 +947,23 @@ char indexTitleOfString(unsigned short string) {
     return image;
 }
 
++ (BOOL)mobileNumIsValid:(NSString *)mobileNum
+{
+    if (![mobileNum isValid] || ([mobileNum removeSpace].length < 11) || ![mobileNum isMobileNumber]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入正确的手机号" message:nil delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        return NO;
+    }
+    
+    return YES;
+}
+
++ (void)showAlertWithTitle:(NSString *)title
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+}
+
 @end

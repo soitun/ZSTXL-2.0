@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingNameViewController : UIViewController
+@interface SettingNameViewController : UIViewController <UITextFieldDelegate>
+
 - (IBAction)saveName:(UIButton *)sender;
+@property (retain, nonatomic) IBOutlet UITextField *nameTextField;
+
+@property (copy, nonatomic) NSString *name;
 
 @end

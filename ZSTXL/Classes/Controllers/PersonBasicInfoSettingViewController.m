@@ -32,11 +32,12 @@
 {
     [super viewDidLoad];
     self.title = @"个人信息设置";
-    self.userid = @"123456";
+    self.view.backgroundColor = bgGreyColor;
+    self.userid = [PersistenceHelper dataForKey:kUserId];
     self.tel = @"13800000001";
-    
     self.name = @"张三";
     self.birth = @"1990-00-00";
+    self.sex = @"";
     
     
     self.isMale = YES;
@@ -45,10 +46,12 @@
     self.telLabel.text = self.tel;
     
     [self initNavBar];
-    [self initTableViewData];
+    [self initTableView];
     
     self.tableView.backgroundView = nil;
-    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    
+    [self requestPersonInfo];
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,7 +98,7 @@
 
 #pragma mark - table view data
 
-- (void)initTableViewData
+- (void)initTableView
 {
     NSArray *titleArr1 = @[@"姓名", @"手机号码"];
     NSArray *titleArr2 = @[@"性别", @"生日"];
@@ -104,6 +107,75 @@
     NSArray *selArr1 = @[@"settingName", @"settingTel"];
     NSArray *selArr2 = @[@"settingSex", @"settingBirth"];
     self.selectorArray = [NSMutableArray arrayWithObjects:selArr1, selArr2, nil];
+    
+    
+    
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 70)];
+    footerView.backgroundColor = [UIColor clearColor];
+    
+    self.saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.saveButton setBackgroundImage:[UIImage imageByName:@"setting_confirm_l"] forState:UIControlStateNormal];
+    [self.saveButton setBackgroundImage:[UIImage imageByName:@"setting_confirm_l_p"] forState:UIControlStateHighlighted];
+    [self.saveButton setTitle:@"保 存" forState:UIControlStateNormal];
+    [self.saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.saveButton.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
+    [self.saveButton addTarget:self action:@selector(saveAction) forControlEvents:UIControlEventTouchUpInside];
+    self.saveButton.frame = CGRectMake(15, 10, 289, 48);
+    [footerView addSubview:self.saveButton];
+    
+    self.tableView.tableFooterView = footerView;
+    
+}
+
+- (void)requestPersonInfo
+{
+    NSDictionary *para = @{@"path": @"getZsUserBirthdate.json",
+                           @"userid": [PersistenceHelper dataForKey:kUserId]};
+    
+    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        if (RETURNCODE_ISVALID(json)) {
+            
+            DLog(@"json %@", json);
+            self.birth = [json objForKey:@"userBirthdate"];
+            self.sex = [[json objForKey:@"userSex"] removeSpace];
+            [self.tableView reloadData];
+            
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+    }];
+}
+
+- (void)saveAction
+{
+    
+    NSDictionary *para = @{@"path": @"changeZsUserBirthdate.json",
+                           @"userid": [PersistenceHelper dataForKey:kUserId],
+                           @"sex": self.sex,
+                           @"birthdate": self.birth};
+    
+    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        if (RETURNCODE_ISVALID(json)) {
+            [kAppDelegate showWithCustomAlertViewWithText:@"保存成功" andImageName:nil];
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+    }];
+    
 }
 
 #pragma mark - table view
@@ -151,6 +223,23 @@
         cell.femaleLabel.hidden = NO;
         cell.chooseMaleImage.hidden = NO;
         cell.chooseFemaleImage.hidden = NO;
+        
+        if (![self.sex isValid]) {
+            cell.chooseMaleImage.image = [UIImage imageByName:@"login_noselect"];
+            cell.chooseFemaleImage.image = [UIImage imageByName:@"login_noselect"];
+        }
+        else{
+            if ([self.sex isEqualToString:@"男"]) {
+                cell.chooseMaleImage.image = [UIImage imageByName:@"login_select"];
+                cell.chooseFemaleImage.image = [UIImage imageByName:@"login_noselect"];
+            }
+            else{
+                cell.chooseFemaleImage.image = [UIImage imageByName:@"login_select"];
+                cell.chooseMaleImage.image = [UIImage imageByName:@"login_noselect"];
+            }
+        }
+        
+        
     } else if (indexPath.section ==0 && indexPath.row == 0){
         cell.detailLabel.text = self.name;
     } else if (indexPath.section == 1 && indexPath.row == 1){
@@ -204,7 +293,6 @@
     self.timePicker.datePicker.minimumDate = minDate;
     
     [self.timePicker showInView:self.view];
-    [self.timePicker release];
 }
 
 - (void)timePickerConfirm:(TimePicker *)picker
@@ -212,11 +300,14 @@
     [picker dismissWithClickedButtonIndex:0 animated:YES];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     dateFormatter.timeZone = [NSTimeZone localTimeZone];
     self.birthDate = picker.datePicker.date;
+    self.birth = [dateFormatter stringFromDate:picker.datePicker.date];
+    [self.tableView reloadData];
     
-    DLog(@"date %@", [dateFormatter stringFromDate:picker.datePicker.date]);
+    DLog(@"date %@", self.birth);
+    
 }
 
 - (void)timePickerCancel:(TimePicker *)picker
@@ -228,8 +319,8 @@
 
 - (void)chooseMale:(PersonBasicInfoCell *)cell
 {
-    if (!self.isMale) {
-        self.isMale = YES;
+    if ([self.sex isEqualToString:@"女"]) {
+        self.sex = @"男";
         cell.chooseMaleImage.image = [UIImage imageNamed:@"login_select"];
         cell.chooseFemaleImage.image = [UIImage imageNamed:@"login_noselect"];
     }
@@ -237,8 +328,8 @@
 
 - (void)chooseFemale:(PersonBasicInfoCell *)cell
 {
-    if (self.isMale) {
-        self.isMale = NO;
+    if ([self.sex isEqualToString:@"男"]) {
+        self.sex = @"女";
         cell.chooseMaleImage.image = [UIImage imageNamed:@"login_noselect"];
         cell.chooseFemaleImage.image = [UIImage imageNamed:@"login_select"];
     }

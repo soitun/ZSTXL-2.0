@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface RegistSecondViewController : UIViewController
+
+@property (copy, nonatomic) NSString *userid;
 @property (retain, nonatomic) IBOutlet UILabel *useridLabel;
 - (IBAction)confirm:(UIButton *)sender;
 

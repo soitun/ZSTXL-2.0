@@ -64,6 +64,8 @@ typedef struct
 #define GET_RETURNMESSAGE(xx_json) \
 [[xx_json objForKey:@"returnMess"] stringValue]
 
+#define RETURNCODE_ISVALID(xx_json) ([[[xx_json objForKey:@"returnCode"] stringValue] isEqualToString:@"0"])
+
 #define DB_SAVE() ([[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait])
 
 #define PERFORM_SELECTOR(a, b) \
@@ -72,6 +74,14 @@ if([a respondsToSelector:@selector(b)]) { \
     [a performSelector:@selector(b)]; \
 } \
 } while (0)
+
+#define PERFORM_SELECTOR_WITH_OBJECT(a, b, c) \
+do { \
+if([a respondsToSelector:b]) { \
+[a performSelector:b withObject:c]; \
+} \
+} while (0)
+
 
 #define APP_DEBUG
 

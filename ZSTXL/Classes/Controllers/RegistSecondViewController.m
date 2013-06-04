@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
     self.title = @"注册";
+    self.useridLabel.text = self.userid;
+    
     [self initNavBar];
 }
 
@@ -44,7 +46,8 @@
     [self setUseridLabel:nil];
     [super viewDidUnload];
 }
-- (IBAction)confirm:(UIButton *)sender {
+- (IBAction)confirm:(UIButton *)sender
+{
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 

@@ -16,6 +16,9 @@
 @property (retain, nonatomic) IBOutlet UILabel *useridLabel;
 @property (retain, nonatomic) IBOutlet UILabel *telLabel;
 @property (retain, nonatomic) IBOutlet UIImageView *headIcon;
+@property (retain, nonatomic) UIButton *saveButton;
+
+
 @property (nonatomic, retain) TimePicker *timePicker;
 
 @property (nonatomic, retain) NSMutableArray *titleArray;
@@ -26,6 +29,7 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *birth;
 @property (nonatomic, assign) BOOL isMale;
+@property (nonatomic, copy) NSString *sex;
 
 
 @property (nonatomic, retain) NSDate *birthDate;

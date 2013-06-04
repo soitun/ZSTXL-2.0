@@ -49,6 +49,7 @@
 {
     [super viewDidLoad];
     self.title = @"设置";
+    self.view.backgroundColor = bgGreyColor;
     self.toneOn = YES;
     [self initNavBar];
     [self initTableViewData];
@@ -66,7 +67,9 @@
     
     [self.tableView setTableFooterView:footerView];
     self.tableView.backgroundView = nil;
-    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    
+    [self requestAllowTel];
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,6 +89,33 @@
     [self setTableView:nil];
     [super viewDidUnload];
 }
+
+#pragma mark - request setting info
+
+- (void)requestAllowTel
+{
+    NSDictionary *para = @{@"path": @"getAllowtelStatus.json",
+                           @"userid": kAppDelegate.userId};
+    
+    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        if (RETURNCODE_ISVALID(json)) {
+            self.allowFriendContact = [[json objForKey:@"userAllowtel"] intValue];
+            [self.tableView reloadData];
+            DLog(@"json %@", json);
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        DLog(@"err %@", error);
+    }];
+}
+
 
 #pragma mark - nav bar
 
@@ -182,10 +212,19 @@
     [cell.textLabel setFont:[UIFont boldSystemFontOfSize:16]];
     
     if (indexPath.section == 2 && indexPath.row == 3) {
+        cell.selectImage.hidden = NO;
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.delegate = self;
         cell.onLabel.hidden = YES;
         cell.offLabel.hidden = YES;
+        
+        if (self.allowFriendContact) {
+            cell.selectImage.image = [UIImage imageNamed:@"login_select"];
+        }
+        else{
+            cell.selectImage.image = [UIImage imageNamed:@"login_noselect"];
+        }
+        
     } else if ((indexPath.section == 1 && indexPath.row == 0) || (indexPath.section == 2 && indexPath.row == 0)) {
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.selectImage.hidden = YES;
@@ -208,8 +247,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SettingCell *cell = (SettingCell *)[tableView cellForRowAtIndexPath:indexPath];
-    ((CustomCellBackgroundView *)(cell.backgroundView)).fillColor = kCellSelectColor;
-    [((CustomCellBackgroundView *)(cell.backgroundView)) setNeedsDisplay];
+    if (indexPath.section == 2 && indexPath.row == 3) {
+        
+    }
+    else {
+        ((CustomCellBackgroundView *)(cell.backgroundView)).fillColor = kCellSelectColor;
+        [((CustomCellBackgroundView *)(cell.backgroundView)) setNeedsDisplay];
+    }
+    
+    
     NSString *selName = [[self.selectorArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     SEL sel = NSSelectorFromString(selName);
     [self performSelector:sel];
@@ -260,6 +306,30 @@
 - (void)telConnect
 {
     DLog(@"telConnect");
+    
+    NSDictionary *para = @{@"path": @"changeAllowtelStatus.json",
+                           @"allowtelStatus": [NSString stringWithFormat:@"%d", self.allowFriendContact],
+                           @"userid": kAppDelegate.userId};
+    
+    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        if (RETURNCODE_ISVALID(json)) {
+            [self.tableView reloadData];
+            self.allowFriendContact = 1 - self.allowFriendContact;
+            DLog(@"json %@", json);
+        }
+        else{
+            
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        DLog(@"err %@",error);
+    }];
+    
+    
 }
 
 - (void)functionIntro

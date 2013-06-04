@@ -177,7 +177,6 @@
         [self.selectArray removeObject:indexStr];
         cell.selectImage.image = [UIImage imageNamed:@"login_noselect"];
     }
-    
 }
 
 

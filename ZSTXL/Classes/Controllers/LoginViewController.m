@@ -37,10 +37,38 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIColor *bgColor = [UIColor colorWithPatternImage:[UIImage imageByName:@"login_bg_texture"]];
+    self.view.backgroundColor = bgColor;
+    
+    
+    
     self.scrollView.contentSize = CGSizeMake(320, SCREEN_HEIGHT-64);
+    [self initNavBar];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyBoard:)];
     [self.scrollView addGestureRecognizer:tap];
+}
+
+#pragma mark - nav bar
+
+- (void)initNavBar
+{
+    UIButton *lButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [lButton setBackgroundImage:[UIImage imageByName:@"nav_login_button"] forState:UIControlStateNormal];
+    [lButton setBackgroundImage:[UIImage imageByName:@"nav_login_button_p"] forState:UIControlStateHighlighted];
+    [lButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [lButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    [lButton setTitle:@"取消" forState:UIControlStateNormal];
+    [lButton.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [lButton addTarget:self action:@selector(cancelLogin) forControlEvents:UIControlEventTouchUpInside];
+    lButton.frame = CGRectMake(0, 0, 54, 32);
+    UIBarButtonItem *lBarButton = [[UIBarButtonItem alloc] initWithCustomView:lButton];
+    self.navigationItem.leftBarButtonItem = lBarButton;
+}
+
+- (void)cancelLogin
+{
+    [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - tap gesture

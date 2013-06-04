@@ -10,19 +10,21 @@
 
 @implementation TimePicker
 
-/*
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
+    self.titleToolbar.barStyle = UIBarStyleBlackTranslucent;
 }
-*/
 
 - (id)initWithTitle:(NSString *)title delegate:(id<TimePickerDelegate>)timePickerDelegate
 {
     self = [[[NSBundle mainBundle] loadNibNamed:@"TimePicker" owner:nil options:nil] lastObject];
     if (self) {
+        self.titleToolbar.translucent = YES;
+        self.titleToolbar.barStyle = UIBarStyleBlackTranslucent;
         self.timePickerDelegate = timePickerDelegate;
         self.titleLab.text = title;
     }
@@ -50,6 +52,7 @@
 - (void)dealloc
 {
     [_titleLab release];
+    [_titleToolbar release];
     [super dealloc];
 }
 

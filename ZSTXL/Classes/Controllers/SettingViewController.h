@@ -16,4 +16,6 @@
 @property (nonatomic, retain) NSMutableArray *selectorArray;
 @property (nonatomic, assign) BOOL toneOn;
 
+@property (nonatomic, assign) int allowFriendContact;
+
 @end

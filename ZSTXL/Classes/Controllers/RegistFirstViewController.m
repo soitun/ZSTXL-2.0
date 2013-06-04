@@ -36,9 +36,8 @@
 {
     [super viewDidLoad];
     self.title = @"注册";
-    self.tel = @"13800000001";
     
-    
+    self.inviteUserId = @"0";   //不填传0
     self.telLabel.text = self.tel;
     self.scrollView.contentSize = CGSizeMake(320, 320);
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyBoard:)];
@@ -52,7 +51,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [_nameTextField release];
@@ -62,7 +62,9 @@
     [_telLabel release];
     [super dealloc];
 }
-- (void)viewDidUnload {
+
+- (void)viewDidUnload
+{
     [self setNameTextField:nil];
     [self setPasswdTextField:nil];
     [self setInviteTextField:nil];
@@ -70,9 +72,74 @@
     [self setTelLabel:nil];
     [super viewDidUnload];
 }
-- (IBAction)confirm:(UIButton *)sender {
-    RegistSecondViewController *registSecondVC = [[[RegistSecondViewController alloc] init] autorelease];
-    [self.navigationController pushViewController:registSecondVC animated:YES];
+- (IBAction)confirm:(UIButton *)sender
+{
+    [self hideKeyBoard:nil];
+    
+    //姓名
+    if (![self.name isValid]) {
+        [kAppDelegate showWithCustomAlertViewWithText:@"请输入用户名" andImageName:kErrorIcon];
+        return;
+    } else {
+        if ([self.name length] < 2)
+        {
+            [kAppDelegate showWithCustomAlertViewWithText:@"用户名不得少于2个字符" andImageName:kErrorIcon];
+            return;
+        }
+        if (![self.name isMatchedByRegex:@"[\u4e00-\u9fa5]"]) {
+            [kAppDelegate showWithCustomAlertViewWithText:@"用户名必须全为汉字" andImageName:kErrorIcon];
+            return;
+        }
+    }
+    
+    //密码
+    if (![self.passwd isValid]) {
+        [kAppDelegate showWithCustomAlertViewWithText:@"请输入密码" andImageName:kErrorIcon];
+        return;
+    } else {
+        if ([self.passwd length] < 6) {
+            [kAppDelegate showWithCustomAlertViewWithText:@"密码不得小于6位" andImageName:kErrorIcon];
+            return;
+        }
+    }
+    
+    NSDictionary *para = @{@"path": @"addInvestmentUser.json",
+                           @"name": self.name,
+                           @"passwd": self.passwd,
+                           @"inviteid": self.inviteUserId,
+                           @"tel": self.tel,
+                           @"uuid": kAppDelegate.uuid,
+                           @"allowtel": [NSNumber numberWithInt:self.allowFriendContact]};
+    
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    hud.labelText = @"注册";
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        if (RETURNCODE_ISVALID(json)) {
+            
+            DLog(@"json %@", json);
+            
+            self.userId = [json objForKey:@"Userid"];
+            [self saveUserInfo];
+            
+            RegistSecondViewController *registSecondVC = [[[RegistSecondViewController alloc] init] autorelease];
+            registSecondVC.userid = [json objForKey:@"Userid"];
+            [self.navigationController pushViewController:registSecondVC animated:YES];
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+    } failure:^(NSError *error) {
+        DLog(@"error %@", error);
+    }];
+}
+
+- (void)saveUserInfo
+{
+    [PersistenceHelper setData:self.userId forKey:kUserId];
+    [PersistenceHelper setData:self.name forKey:KUserName];
 }
 
 #pragma mark - tap
@@ -143,6 +210,33 @@
     
     self.scrollView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64);
     [UIView commitAnimations];
+}
+
+#pragma mark - textfield delegate
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField == self.nameTextField) {
+        self.name = self.nameTextField.text;
+        
+        
+    }else if (textField == self.passwdTextField){
+        self.passwd = self.passwdTextField.text;
+        
+    }else if (textField == self.inviteTextField){
+        if (![self.inviteTextField.text isValid]) {
+            self.inviteUserId = @"0";
+        }
+        else{
+            self.inviteUserId = self.inviteTextField.text;
+        }
+    }
 }
 
 @end

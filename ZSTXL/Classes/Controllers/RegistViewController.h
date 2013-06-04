@@ -8,16 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RegistViewController : UIViewController
+@interface RegistViewController : UIViewController <UITextFieldDelegate>
 
 @property (retain, nonatomic) IBOutlet UITextField *telTextField;
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (retain, nonatomic) IBOutlet UITextField *authCodeTextField;
-@property (nonatomic, assign) BOOL isAllowFriendContact;
+@property (retain, nonatomic) IBOutlet UILabel *countDownLabel;
+@property (nonatomic, assign) NSInteger allowFriendContact;
+
+
+@property (nonatomic, copy) NSString *tel;
+@property (nonatomic, copy) NSString *authCode;
+@property (nonatomic, copy) NSDate *lastAuthCodeDate;
+@property (nonatomic, retain) NSTimer *countDownTimer;
+
 
 - (void)allowFriendContact:(UIButton *)sender;
 - (IBAction)regist:(UIButton *)sender;
 - (IBAction)getAuthCode:(UIButton *)sender;
-@property (retain, nonatomic) IBOutlet UIButton *allowFriendContactButton;
+@property (retain, nonatomic) IBOutlet UIImageView *friendContactImage;
+
 
 @end

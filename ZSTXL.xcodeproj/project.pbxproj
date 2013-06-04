@@ -75,6 +75,9 @@
 		3595A648174B7382000780FE /* zhdltxl.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 3595A647174B7382000780FE /* zhdltxl.xcdatamodel */; };
 		3595A64A174B77A3000780FE /* getProAndCityData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3595A649174B77A3000780FE /* getProAndCityData.json */; };
 		3595A64D174B993E000780FE /* CityIdProId.m in Sources */ = {isa = PBXBuildFile; fileRef = 3595A64C174B993E000780FE /* CityIdProId.m */; };
+		3595D127175DA00D0026FA74 /* login_bg_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 3595D126175DA00D0026FA74 /* login_bg_texture.png */; };
+		3595D139175E02B90026FA74 /* WeekDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3595D137175E02B30026FA74 /* WeekDayViewController.m */; };
+		3595D13A175E02B90026FA74 /* WeekDayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3595D138175E02B60026FA74 /* WeekDayViewController.xib */; };
 		35987DB41754786A004E2EF5 /* SettingNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35987DB21754786A004E2EF5 /* SettingNameViewController.m */; };
 		35987DB51754786A004E2EF5 /* SettingNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35987DB31754786A004E2EF5 /* SettingNameViewController.xib */; };
 		35987DBA17547A1F004E2EF5 /* switch_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 35987DB617547A1E004E2EF5 /* switch_off.png */; };
@@ -658,6 +661,10 @@
 		3595A649174B77A3000780FE /* getProAndCityData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = getProAndCityData.json; sourceTree = "<group>"; };
 		3595A64B174B993E000780FE /* CityIdProId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityIdProId.h; sourceTree = "<group>"; };
 		3595A64C174B993E000780FE /* CityIdProId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityIdProId.m; sourceTree = "<group>"; };
+		3595D126175DA00D0026FA74 /* login_bg_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_bg_texture.png; sourceTree = "<group>"; };
+		3595D136175E02B10026FA74 /* WeekDayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekDayViewController.h; sourceTree = "<group>"; };
+		3595D137175E02B30026FA74 /* WeekDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekDayViewController.m; sourceTree = "<group>"; };
+		3595D138175E02B60026FA74 /* WeekDayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeekDayViewController.xib; sourceTree = "<group>"; };
 		35987DB11754786A004E2EF5 /* SettingNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingNameViewController.h; sourceTree = "<group>"; };
 		35987DB21754786A004E2EF5 /* SettingNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingNameViewController.m; sourceTree = "<group>"; };
 		35987DB31754786A004E2EF5 /* SettingNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingNameViewController.xib; sourceTree = "<group>"; };
@@ -1538,6 +1545,9 @@
 				359EAC4B1752E885004D4356 /* ZhaoshangInfoViewController.h */,
 				359EAC4C1752E885004D4356 /* ZhaoshangInfoViewController.m */,
 				359EAC4D1752E885004D4356 /* ZhaoshangInfoViewController.xib */,
+				3595D136175E02B10026FA74 /* WeekDayViewController.h */,
+				3595D137175E02B30026FA74 /* WeekDayViewController.m */,
+				3595D138175E02B60026FA74 /* WeekDayViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1990,6 +2000,7 @@
 		359CA0DF174F0BE600803018 /* login_regist */ = {
 			isa = PBXGroup;
 			children = (
+				3595D126175DA00D0026FA74 /* login_bg_texture.png */,
 				359CA169174F5D3400803018 /* confirm.png */,
 				359CA158174F52E400803018 /* confirm@2x.png */,
 				359CA16F174F673B00803018 /* confirm_p.png */,
@@ -2831,6 +2842,8 @@
 				35B43E8D175CCA3A00AD4397 /* mail_pre_p.png in Resources */,
 				35B43E8E175CCA3A00AD4397 /* mail_pre_p@2x.png in Resources */,
 				35B43E93175CD31500AD4397 /* MailWriteViewController.xib in Resources */,
+				3595D127175DA00D0026FA74 /* login_bg_texture.png in Resources */,
+				3595D13A175E02B90026FA74 /* WeekDayViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3021,6 +3034,7 @@
 				35B43E7C175CBBC100AD4397 /* MailInfoViewController.m in Sources */,
 				35B43E84175CC45200AD4397 /* MailNextPreView.m in Sources */,
 				35B43E92175CD31500AD4397 /* MailWriteViewController.m in Sources */,
+				3595D139175E02B90026FA74 /* WeekDayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3050,6 +3064,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3082,6 +3097,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

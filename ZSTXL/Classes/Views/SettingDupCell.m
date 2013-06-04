@@ -28,6 +28,7 @@
 
 - (void)dealloc {
     [_selectImage release];
+    [_titleLabel release];
     [super dealloc];
 }
 @end
