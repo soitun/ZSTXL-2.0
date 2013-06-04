@@ -38,16 +38,10 @@ enum eAlertTag {
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     [kAppDelegate.tabController hidesTabBar:YES animated:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
 }
 
 - (void)viewDidLoad
@@ -418,6 +412,7 @@ enum eAlertTag {
 - (void)backToRootVC:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
 }
 
 #pragma mark - textfield delegate

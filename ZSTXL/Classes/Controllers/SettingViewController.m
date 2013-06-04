@@ -109,7 +109,6 @@
             [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
         }
         
-        
     } failure:^(NSError *error) {
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
         DLog(@"err %@", error);

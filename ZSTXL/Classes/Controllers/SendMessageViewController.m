@@ -41,9 +41,6 @@
     
     self.title = @"发送短信";
     
-    //nav bar image
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"topmargin.png"] forBarMetrics:UIBarMetricsDefault];
-    
     //back bar button
     self.backBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.backBarButton setImage:[UIImage imageNamed:@"retreat.png"] forState:UIControlStateNormal];

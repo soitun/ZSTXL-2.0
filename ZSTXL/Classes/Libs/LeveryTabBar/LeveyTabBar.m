@@ -93,7 +93,7 @@
                 
                 // the text width might have changed (in case it was shortened before due to
                 // lack of space and isn't anymore now), so we get the frame size again
-                titleSize = btn.titleLabel.frame.size;  
+                titleSize = btn.titleLabel.frame.size; 
                 
                 // raise the image and push it right to center it
                 btn.imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + spacing), 0.0, 0.0, - titleSize.width);

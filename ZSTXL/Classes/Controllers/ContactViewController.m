@@ -61,30 +61,6 @@
 
 - (void)initTitleView
 {
-//    UIView *titleView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 240, 44)] autorelease];
-//    titleView.backgroundColor = [UIColor clearColor];
-//    CGSize titleSize = [self.cityName sizeWithFont:[UIFont boldSystemFontOfSize:20] constrainedToSize:CGSizeMake(200, 44)];
-//    UILabel *titleLabel = [[UILabel alloc] init];
-//    
-//    titleLabel.frame = CGRectMake(0, 0, titleSize.width, titleSize.height);
-//    titleLabel.center = CGPointMake(titleView.center.x-4, titleView.center.y);
-//    titleLabel.frame = CGRectIntegral(titleLabel.frame);
-//    titleLabel.backgroundColor = [UIColor clearColor];
-//    titleLabel.text = self.cityName;
-//    titleLabel.textAlignment = NSTextAlignmentCenter;
-//    [titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
-//    [titleLabel setTextColor:[UIColor whiteColor]];
-//    [titleView addSubview:titleLabel];
-//    
-//    CGFloat x = titleLabel.frame.origin.x + titleLabel.frame.size.width;
-//    UIImageView *areaAngle = [[UIImageView alloc] initWithFrame:CGRectMake(x, 30, 9, 6)];
-//    areaAngle.image = [UIImage imageNamed:@"area_angle"];
-//    [titleView addSubview:areaAngle];
-//    
-//    self.navigationItem.titleView = titleView;
-//    UITapGestureRecognizer *tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeCity:)] autorelease];
-//    [titleView addGestureRecognizer:tap];
-    
     TitleView *titleView = [[[NSBundle mainBundle] loadNibNamed:@"TitleView" owner:nil options:nil] lastObject];
     titleView.title = @"北京";
     titleView.delegate = self;
