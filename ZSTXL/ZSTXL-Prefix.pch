@@ -24,6 +24,7 @@
 #import "CityIdProId.h"
 #import "RegexKitLite.h"
 #import "DES3Util.h"
+#import "UIImage+Resizing.h"
 
 #define MR_SHORTHAND
 #define MR_ENABLE_ACTIVE_RECORD_LOGGING 0

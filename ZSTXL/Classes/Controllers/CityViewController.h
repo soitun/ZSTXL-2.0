@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AreaCell.h"
 #import "MyInfo.h"
 
 @protocol CityViewControllerDelegate <NSObject>

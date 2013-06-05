@@ -38,9 +38,9 @@ enum eAlertTag {
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     [kAppDelegate.tabController hidesTabBar:YES animated:YES];
 }
 

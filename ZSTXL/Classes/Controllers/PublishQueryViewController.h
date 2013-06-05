@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PublishQueryViewController : UIViewController
+@interface PublishQueryViewController : UIViewController <UITextFieldDelegate>
 @property (retain, nonatomic) IBOutlet UIButton *leftButton;
 @property (retain, nonatomic) IBOutlet UIButton *rightButton;
 
@@ -19,6 +19,12 @@
 @property (retain, nonatomic) IBOutlet UITextView *orientationTextView;
 
 @property (retain, nonatomic) IBOutlet UITextField *drugNumTextField;
+@property (retain, nonatomic) IBOutlet UIImageView *sepImage;
 
+@property (copy, nonatomic) NSString *drugNum;
+@property (copy, nonatomic) NSString *drugId;
+@property (copy, nonatomic) NSString *productName;
+@property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (assign, nonatomic) BOOL queryFinished;
 
 @end

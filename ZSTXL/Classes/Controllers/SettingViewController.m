@@ -11,6 +11,9 @@
 #import "CustomCellBackgroundView.h"
 #import "PersonBasicInfoSettingViewController.h"
 #import "SettingWorkTimeViewController.h"
+#import "AboutViewController.h"
+#import "InviteFriendViewController.h"
+#import "ModifyPasswdViewController.h"
 
 @interface SettingViewController ()
 
@@ -27,22 +30,11 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
-    [self.tableView reloadData];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-//    [super viewWillDisappear:animated];
-//    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
-    self.tableView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64);
+    [super viewDidAppear:animated];
+    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad
@@ -111,6 +103,7 @@
         
     } failure:^(NSError *error) {
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
         DLog(@"err %@", error);
     }];
 }
@@ -278,6 +271,8 @@
 - (void)changePasswd
 {
     DLog(@"changePasswd");
+    ModifyPasswdViewController *modifyPasswdVC = [[[ModifyPasswdViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:modifyPasswdVC animated:YES];
 }
 
 - (void)workTime
@@ -300,6 +295,8 @@
 - (void)inviteFriend
 {
     DLog(@"inviteFriend");
+    InviteFriendViewController *inviteFriendVC = [[[InviteFriendViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:inviteFriendVC animated:YES];
 }
 
 - (void)telConnect
@@ -325,6 +322,7 @@
         
     } failure:^(NSError *error) {
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
         DLog(@"err %@",error);
     }];
     
@@ -344,6 +342,9 @@
 - (void)version
 {
     DLog(@"version");
+    
+    AboutViewController *aboutVC = [[[AboutViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:aboutVC animated:YES];
 }
 
 

@@ -8,6 +8,13 @@
 
 #import "PublishBaseViewController.h"
 
+@protocol PublishSellToViewControllerDelegate <NSObject>
+
+- (void)publishSellToSelectFinish:(NSArray *)array;
+
+@end
+
 @interface PublishSellToViewController : PublishBaseViewController
+
 
 @end

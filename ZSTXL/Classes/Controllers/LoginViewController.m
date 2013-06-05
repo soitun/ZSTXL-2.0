@@ -187,14 +187,14 @@
                           kAppDelegate.uuid, @"uuid", nil];
     
     
-    NSLog(@"login dict: %@", dict);
-    
     [DreamFactoryClient getWithURLParameters:dict success:^(NSDictionary *json) {
         if ([[[json objForKey:@"returnCode"] stringValue] isEqualToString:@"0"]) {
             
+            DLog(@"json %@", json);
             NSString *userId = [[json objForKey:@"Userid"] stringValue];
-
+            
             [PersistenceHelper setData:userId forKey:kUserId];
+            [PersistenceHelper setData:pwd forKey:KPassWord];
             [self.navigationController dismissModalViewControllerAnimated:YES];
             
         } else {

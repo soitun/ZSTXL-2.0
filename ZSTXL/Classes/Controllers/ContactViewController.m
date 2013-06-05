@@ -29,6 +29,11 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self resetNavigationBar];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     self.view.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64);
@@ -65,8 +70,6 @@
     titleView.title = @"北京";
     titleView.delegate = self;
     self.navigationItem.titleView = titleView;
-    
-    
 }
 
 - (void)changeCity:(UITapGestureRecognizer *)tap

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CityIdProId.h"
 #import "CustomCellBackgroundView.h"
+#import "MyInfo.h"
 
 @interface Utility : NSObject {
     
@@ -82,5 +83,7 @@ char indexTitleOfString(unsigned short string);
 + (BOOL)mobileNumIsValid:(NSString *)mobileNum;
 
 + (void)showAlertWithTitle:(NSString *)title;
+
++ (MyInfo *)getMyInfo;
 
 @end

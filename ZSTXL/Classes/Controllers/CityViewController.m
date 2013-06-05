@@ -10,6 +10,7 @@
 #import "CityInfo.h"
 #import "UserDetail.h"
 #import "MyInfo.h"
+#import "AreaCell.h"
 
 @interface CityViewController ()
 

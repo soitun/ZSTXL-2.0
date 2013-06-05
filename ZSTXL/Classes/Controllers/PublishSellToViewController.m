@@ -36,21 +36,25 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (NSDictionary *)para
 {
-    
+    NSDictionary *para = @{@"path": @"getSalesDirection.json",
+                           @"type": @"1"};
+    return para;
 }
 
-#pragma mark - confirm footer delegate
-
-- (void)confirmFooterViewLeftAction
+- (void)analyseData:(NSDictionary *)json
 {
-    
+    NSArray *tmpArray = [json objForKey:@"InvestmentInfo"];
+    for (NSDictionary *dict in tmpArray) {
+        [self.dataSourceArray addObject:dict];
+    }
 }
 
-- (void)confirmFooterViewRightAction
+- (NSString *)titleNameOfDict:(NSDictionary *)dict
 {
-    
+    return [dict objForKey:@"content"];
 }
 
 @end

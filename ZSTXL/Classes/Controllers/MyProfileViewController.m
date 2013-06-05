@@ -14,6 +14,8 @@
 #import "CustomBadge.h"
 #import "SettingViewController.h"
 #import "MailBoxViewController.h"
+#import "LoginViewController.h"
+
 
 @interface MyProfileViewController ()
 
@@ -35,10 +37,14 @@
     self.scrollView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-49);
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self showBasicInfo];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     self.title = @"我的主页";
     self.leftArray_1 = @[@"招商代理：", @"常驻地区：", @"类别偏好：", @"账户余额："];
     self.leftArray_2 = @[@"他的招商代理信息", @"好友的招商代理信息"];
@@ -46,27 +52,69 @@
     
     self.scrollView.contentSize = CGSizeMake(320, 520);
     
-//    [self getMyInfoFromDB];
+    [self autoLogin];
+    
+    [self getMyInfoFromDB];
     [self showBasicInfo];
     [self initNavBar];
+    [self initHeadIcon];
 }
 
-- (void)initTableSelector
+- (void)dealloc {
+    [_nameLabel release];
+    [_useridLabel release];
+    [_telLabel release];
+    [_gradeLabel release];
+    [_xunImage release];
+    [_xunVImage release];
+    [_xunBImage release];
+    [_tableView_1 release];
+    [_tableView_2 release];
+    [_headIcon release];
+    [_scrollView release];
+    [super dealloc];
+}
+- (void)viewDidUnload {
+    [self setNameLabel:nil];
+    [self setUseridLabel:nil];
+    [self setTelLabel:nil];
+    [self setGradeLabel:nil];
+    [self setXunImage:nil];
+    [self setXunVImage:nil];
+    [self setXunBImage:nil];
+    [self setTableView_1:nil];
+    [self setTableView_2:nil];
+    [self setHeadIcon:nil];
+    [self setScrollView:nil];
+    [super viewDidUnload];
+}
+
+#pragma mark - auto login
+
+- (void)autoLogin
 {
-    NSArray *selectorNameArray_1 = @[@"chooseAngencyOrBusiness", @"addArea", @"addPhar", @"showExtra"];
-    NSArray *selectorNameArray_2 = @[@"hisBusinessInfo", @"friendBusinessInfo"];
-    
-    self.selectorArray_1 = [[[NSMutableArray alloc] init] autorelease];
-    [selectorNameArray_1 enumerateObjectsUsingBlock:^(NSString *selectorName, NSUInteger idx, BOOL *stop) {
-        SEL sel = NSSelectorFromString(selectorName);
-        [self.selectorArray_1 addObject:[NSValue valueWithPointer:sel]];
-    }];
-    
-    self.selectorArray_2 = [[[NSMutableArray alloc] init] autorelease];
-    [selectorNameArray_2 enumerateObjectsUsingBlock:^(NSString *selectorName, NSUInteger idx, BOOL *stop) {
-        SEL sel = NSSelectorFromString(selectorName);
-        [self.selectorArray_2 addObject:[NSValue valueWithPointer:sel]];
-    }];
+    if (![[PersistenceHelper dataForKey:kUserId] isValid]) {
+        LoginViewController *loginVC = [[[LoginViewController alloc] init] autorelease];
+        CustomNavigationController *nav = [[[CustomNavigationController alloc] initWithRootViewController:loginVC] autorelease];
+        [self.navigationController presentModalViewController:nav animated:YES];
+    }
+}
+
+- (void)initHeadIcon
+{
+    self.headIcon.layer.cornerRadius = 8;
+    self.headIcon.layer.masksToBounds = YES;
+    self.headIcon.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(modifyHeadIcon)];
+    [self.headIcon addGestureRecognizer:tap];
+}
+
+- (void)modifyHeadIcon
+{
+    NSLog(@"更换头像");
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"设置头像" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"从相册选取", nil];
+    [actionSheet showInView:self.view];
+    [actionSheet release];
 }
 
 - (void)getMyInfoFromDB
@@ -76,6 +124,9 @@
     if (self.myInfo == nil) {
         [self getMyInfoFromNet];
     }
+    else{
+        [self showBasicInfo];
+    }
 }
 
 - (void)getMyInfoFromNet
@@ -83,18 +134,17 @@
     //paradict getMypageDetail.json userid
     NSString *userid = [kAppDelegate userId];
     NSDictionary *paraDict = [NSDictionary dictionaryWithObjectsAndKeys:userid, @"userid", @"getMypageDetail.json", @"path", nil];
-    NSLog(@"get personinfo Dict: %@", paraDict);
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
     hud.labelText = @"获取个人信息";
     [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
-        if ([[json objectForKey:@"returnCode"] longValue] == 0) {
-            
+        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+        if (RETURNCODE_ISVALID(json)) {
             DLog(@"my info json %@", json);
             
-            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
             NSDictionary *dict = [json objectForKey:@"UserDetail"];
-            
-            
+            UserDetail *userDetail = [UserDetail createEntity];
+            self.myInfo = [MyInfo createEntity];
+            self.myInfo.userDetail = userDetail;
             self.myInfo.account = [json objForKey:@"Account"];
             self.myInfo.unreadCount = [json objForKey:@"UnreadCount"];
             self.myInfo.unreadSMSCount = [json objForKey:@"UnreadSMSCount"];
@@ -104,7 +154,6 @@
             
             self.nameLabel.text = self.myInfo.userDetail.username;
             self.telLabel.text = self.myInfo.userDetail.tel;
-            self.mailLabel.text = self.myInfo.userDetail.mailbox;
             
             //            id: 20086,
             //        username: "liuyue",
@@ -130,6 +179,11 @@
             if (![self.myInfo.userDetail.col2 isEqualToString:@"1"]) {
                 self.xunVImage.hidden = YES;
             }
+            
+            DLog(@"myinfo %@", self.myInfo);
+            DB_SAVE();
+            
+            [self showBasicInfo];
             
             
 //            //取得未读消息
@@ -234,7 +288,25 @@
     self.useridLabel.text = kAppDelegate.userId;
 }
 
-#pragma mark - table view datasouce
+#pragma mark - table view
+
+- (void)initTableSelector
+{
+    NSArray *selectorNameArray_1 = @[@"chooseAngencyOrBusiness", @"addArea", @"addPhar", @"showExtra"];
+    NSArray *selectorNameArray_2 = @[@"hisBusinessInfo", @"friendBusinessInfo"];
+    
+    self.selectorArray_1 = [[[NSMutableArray alloc] init] autorelease];
+    [selectorNameArray_1 enumerateObjectsUsingBlock:^(NSString *selectorName, NSUInteger idx, BOOL *stop) {
+        SEL sel = NSSelectorFromString(selectorName);
+        [self.selectorArray_1 addObject:[NSValue valueWithPointer:sel]];
+    }];
+    
+    self.selectorArray_2 = [[[NSMutableArray alloc] init] autorelease];
+    [selectorNameArray_2 enumerateObjectsUsingBlock:^(NSString *selectorName, NSUInteger idx, BOOL *stop) {
+        SEL sel = NSSelectorFromString(selectorName);
+        [self.selectorArray_2 addObject:[NSValue valueWithPointer:sel]];
+    }];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -375,11 +447,18 @@
 - (void)addArea
 {
     DLog(@"addArea");
+    SelectCityViewController *selectCityVC = [[[SelectCityViewController alloc] init] autorelease];
+    selectCityVC.delegate = self;
+    selectCityVC.allowMultiselect = YES;
+    [self.navigationController pushViewController:selectCityVC animated:YES];
 }
 
 - (void)addPhar
 {
     DLog(@"addPhar");
+    SelectPharViewController *selectPharVC = [[[SelectPharViewController alloc] init] autorelease];
+    selectPharVC.delegate = self;
+    [self.navigationController pushViewController:selectPharVC animated:YES];
 }
 
 - (void)showExtra
@@ -395,6 +474,107 @@
 - (void)friendBusinessInfo
 {
     DLog(@"friendBusinessInfo");
+}
+
+#pragma mark - select city delegate
+
+- (void)SelectCityFinished:(NSArray *)array
+{
+    DLog(@"array %@", array);
+    
+    [self.myInfo.areaList enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        [self.myInfo removeAreaListObject:obj];
+    }];
+    
+    if (array.count == 0) {
+        [self makeDefaultCity];
+    }
+
+    for (NSDictionary *city in array) {
+        CityInfo *cityInfo = [CityInfo createEntity];
+        cityInfo.cityname = [city objForKey:@"cityname"];
+        cityInfo.cityid = [city objForKey:@"cityid"];
+        cityInfo.provinceid = [city objForKey:@"provinceid"];
+        [self.myInfo addAreaListObject:cityInfo];
+    }
+    
+    DB_SAVE();
+    [self.tableView_1 reloadData];
+}
+
+- (void)makeDefaultCity
+{
+    NSString *defaultCity = kAppDelegate.theNewCity;
+    NSString *provinceId = [[Utility getCityIdByCityName:defaultCity] proId];
+    NSString *cityId = [[Utility getCityIdByCityName:defaultCity] cityId];
+    
+    CityInfo *city = [CityInfo createEntity];
+    city.cityid = cityId;
+    city.provinceid = provinceId;
+    city.cityname = defaultCity;
+    [self.myInfo addAreaListObject:city];
+    DB_SAVE();
+}
+
+#pragma mark - select phar delegate
+
+- (void)selectPharFinished:(NSArray *)array
+{
+    if (array.count == 0) {
+        return;
+    }
+    else{
+        //pharid
+        
+        NSMutableString *preferid = [[[NSMutableString alloc] init] autorelease];
+        for (NSDictionary *dict in array) {
+            [preferid appendFormat:@"%@,", [dict objForKey:@"pharid"]];
+        }
+        if ([preferid isValid]) {
+            preferid = [NSMutableString stringWithString:[preferid substringToIndex:preferid.length-1]];
+        }
+        
+        NSSet *pharlist = self.myInfo.pharList;
+        [self.myInfo removePharList:pharlist];
+
+        
+        NSDictionary *paraDict = @{@"path": @"changeprefer.json",
+                               @"preferid": preferid,
+                               @"userid": [PersistenceHelper dataForKey:kUserId]};
+        
+        
+        [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
+        [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
+            
+            [MBProgressHUD hideAllHUDsForView:[kAppDelegate window] animated:YES];
+            if ([[[json objForKey:@"returnCode"] stringValue] isEqualToString:@"0"]) {
+                
+                for (NSDictionary *dict in array) {
+                    Pharmacology *phar = [Pharmacology createEntity];
+                    phar.pharid = [dict objForKey:@"pharid"];
+                    phar.content = [dict objForKey:@"content"];
+                    [self.myInfo addPharListObject:phar];
+                }
+                
+                DB_SAVE();
+                [self.tableView_1 reloadData];
+                
+            }
+            else{
+
+                [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:nil];
+            }
+            
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideAllHUDsForView:[kAppDelegate window] animated:YES];
+            [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+        }];
+        
+        
+        
+    }
+    
+    
 }
 
 
@@ -428,34 +608,7 @@
 }
 
 
-- (void)dealloc {
-    [_nameLabel release];
-    [_useridLabel release];
-    [_telLabel release];
-    [_mailLabel release];
-    [_xunImage release];
-    [_xunVImage release];
-    [_xunBImage release];
-    [_tableView_1 release];
-    [_tableView_2 release];
-    [_headIcon release];
-    [_scrollView release];
-    [super dealloc];
-}
-- (void)viewDidUnload {
-    [self setNameLabel:nil];
-    [self setUseridLabel:nil];
-    [self setTelLabel:nil];
-    [self setMailLabel:nil];
-    [self setXunImage:nil];
-    [self setXunVImage:nil];
-    [self setXunBImage:nil];
-    [self setTableView_1:nil];
-    [self setTableView_2:nil];
-    [self setHeadIcon:nil];
-    [self setScrollView:nil];
-    [super viewDidUnload];
-}
+
 
 #pragma mark - nav bar
 
@@ -473,6 +626,80 @@
 {
     SettingViewController *setVC = [[[SettingViewController alloc] init] autorelease];
     [self.navigationController pushViewController:setVC animated:YES];
+}
+
+#pragma mark - actionsheet delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"buttonIndex; %d", buttonIndex);
+    switch (buttonIndex) {
+        case 0:
+        {
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            picker.showsCameraControls = YES;
+            picker.allowsEditing = YES;
+            picker.delegate = self;
+            [self presentModalViewController:picker animated:YES];
+            [picker release];
+        }
+            break;
+        case 1:
+        {
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+            
+            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            picker.allowsEditing = YES;
+            picker.delegate = self;
+            [self presentModalViewController:picker animated:YES];
+            [picker release];
+        }
+            break;
+        case 2:
+            NSLog(@"设置头像取消");
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - image picker delegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    self.headIcon.image=[info valueForKey:UIImagePickerControllerEditedImage];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
+    hud.labelText = @"上传头像";
+    
+    UIImage *smallImage = [self.headIcon.image scaleToFillSize:CGSizeMake(180.f, 180.f)];
+    //addAndUpdateUserPic.json image userid imageurl
+    NSString *userid = self.myInfo.userDetail.userid;
+    NSDictionary *paraDict = [NSDictionary dictionaryWithObjectsAndKeys:@"addAndUpdateUserPic.json", @"path",
+                              userid, @"userid",
+                              self.userDetail.picturelinkurl, @"imageurl", nil];
+    
+    NSLog(@"smallImage width: %f, height: %f", smallImage.size.width, smallImage.size.height);
+    
+    [DreamFactoryClient postWithParameters:paraDict image:smallImage success:^(id obj) {
+        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:@"上传成功" andImageName:nil];
+        
+        
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        path = [path stringByAppendingFormat:@"/%@.png", self.myInfo.userDetail.username];
+        
+        self.myInfo.userDetail.headiconlocalurl = path;
+        [Utility saveImage:smallImage toDiskWithName:path];
+        
+        DB_SAVE();
+        
+    } failure:^{
+        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:@"上传失败" andImageName:nil];
+    }];
+    
+    [picker dismissModalViewControllerAnimated:YES];
 }
 
 @end

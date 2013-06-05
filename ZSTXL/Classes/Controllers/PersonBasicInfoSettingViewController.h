@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "PersonBasicInfoCell.h"
 #import "TimePicker.h"
+#import "MyInfo.h"
+#import "UserDetail.h"
 
 @interface PersonBasicInfoSettingViewController : UIViewController
 <UITableViewDataSource, UITableViewDelegate, PersonBasicInfoCellDelegate, UIActionSheetDelegate, TimePickerDelegate>
@@ -24,14 +26,11 @@
 @property (nonatomic, retain) NSMutableArray *titleArray;
 @property (nonatomic, retain) NSMutableArray *selectorArray;
 
-@property (nonatomic, copy) NSString *userid;
-@property (nonatomic, copy) NSString *tel;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *birth;
-@property (nonatomic, assign) BOOL isMale;
 @property (nonatomic, copy) NSString *sex;
-
+@property (nonatomic, copy) NSString *userid;
+@property (nonatomic, copy) NSString *birth;
 
 @property (nonatomic, retain) NSDate *birthDate;
+@property (nonatomic, retain) MyInfo *myInfo;
 
 @end

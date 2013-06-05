@@ -177,6 +177,7 @@
             
         } failure:^(NSError *error) {
             [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+            [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
             DLog(@"error %@", error);
         }];
     }
@@ -223,6 +224,7 @@
             }
         } failure:^(NSError *error) {
             [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+            [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
             DLog(@"error %@", error);
         }];
     }

@@ -70,7 +70,7 @@
             
             _containerView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
             
-            _transitionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320.0f, _containerView.frame.size.height - kTabBarHeight)];
+            _transitionView = [[UIView alloc] initWithFrame:CGRectMake(0, 44.f, 320.0f, _containerView.frame.size.height - kTabBarHeight-44.f)];
             _transitionView.backgroundColor =  [UIColor groupTableViewBackgroundColor];
             
             _tabBar = [[LeveyTabBar alloc] initWithFrame:CGRectMake(0, _containerView.frame.size.height - kTabBarHeight, 320.0f, kTabBarHeight) buttonImages:imageArray titleArray:titleArray];
@@ -185,7 +185,8 @@
 
 - (void)selectTabBarAtIndex:(int)index {
     UIButton *button = [_tabBar.buttons objectAtIndex:index];
-    [_tabBar tabBarButtonClicked:button];
+//    [_tabBar tabBarButtonClicked:button];
+    [self tabBar:self.tabBar didSelectIndex:index];
 }
 
 - (void)removeViewControllerAtIndex:(NSUInteger)index

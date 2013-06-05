@@ -1,13 +1,12 @@
 //
-//  SelectPreferViewController.m
-//  ZHDLTXL
+//  SelectPharViewController.m
+//  ZSTXL
 //
-//  Created by LiuYue on 13-4-15.
-//  Copyright (c) 2013年 zxcx. All rights reserved.
+//  Created by LiuYue on 13-6-5.
+//  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
 #import "SelectPharViewController.h"
-#import "Pharmacology.h"
 #import "PharCell.h"
 
 @interface SelectPharViewController ()
@@ -25,121 +24,78 @@
     return self;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.preferArray = [[[NSMutableArray alloc] init] autorelease];
-    self.hidesBottomBarWhenPushed = YES;
+    self.title = @"选择偏好";
+    self.selectArray = [NSMutableArray array];
+    self.dataSourceArray = [NSMutableArray array];
     
-    self.title = @"类别偏好";
+    [self initNavBar];
+    [self requestPharData];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [_tableView release];
+    [super dealloc];
+}
+- (void)viewDidUnload {
+    [self setTableView:nil];
+    [super viewDidUnload];
+}
+
+#pragma mark - nav bar
+
+- (void)initNavBar
+{
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setImage:[UIImage imageNamed:@"retreat.png"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(popVC:) forControlEvents:UIControlEventTouchUpInside];
+    backButton.frame = CGRectMake(0, 0, 30, 30);
     
-    //back button
-    self.backBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.backBarButton setImage:[UIImage imageNamed:@"retreat.png"] forState:UIControlStateNormal];
-    [self.backBarButton addTarget:self action:@selector(backToRootVC:) forControlEvents:UIControlEventTouchUpInside];
-    self.backBarButton.frame = CGRectMake(0, 0, 30, 30);
-    
-    UIBarButtonItem *lBarButton = [[[UIBarButtonItem alloc] initWithCustomView:self.backBarButton] autorelease];
+    UIBarButtonItem *lBarButton = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
     [self.navigationItem setLeftBarButtonItem:lBarButton];
     
     
-    self.preferTableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height-44) style:UITableViewStylePlain] autorelease];
-
-    UIButton *confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [confirmButton setImage:[UIImage imageNamed:@"button.png"] forState:UIControlStateNormal];
-    [confirmButton setImage:[UIImage imageNamed:@"button_p.png"] forState:UIControlStateHighlighted];
-    confirmButton.frame = CGRectMake(0, 0, 80, 34);
-    [confirmButton addTarget:self action:@selector(confirmSelect:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 34)] autorelease];
-    label.backgroundColor = [UIColor clearColor];
-    label.text = @"确认";
-    label.textColor = [UIColor whiteColor];
-    label.textAlignment = NSTextAlignmentCenter;
-    [confirmButton addSubview:label];
-    
-    UIBarButtonItem *rBarButton = [[[UIBarButtonItem alloc] initWithCustomView:confirmButton] autorelease];
+    UIButton *rButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rButton setBackgroundImage:[UIImage imageNamed:@"nav_login_button"] forState:UIControlStateNormal];
+    [rButton setBackgroundImage:[UIImage imageNamed:@"nav_login_button_p"] forState:UIControlStateHighlighted];
+    [rButton setTitle:@"确认" forState:UIControlStateNormal];
+    [rButton.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [rButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rButton addTarget:self action:@selector(selectFinished) forControlEvents:UIControlEventTouchUpInside];
+    rButton.frame = CGRectMake(0, 0, 54, 32);
+    UIBarButtonItem *rBarButton = [[[UIBarButtonItem alloc] initWithCustomView:rButton] autorelease];
     self.navigationItem.rightBarButtonItem = rBarButton;
-    
-    [self getUserinfoFromDB];
-    [self getPreferJsonData];
-    
-    self.preferTableView.delegate = self;
-    self.preferTableView.dataSource = self;
-    [self.preferTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [self.view addSubview:self.preferTableView];
-    
-    self.theNewPharSet = [NSMutableSet setWithSet:self.myInfo.pharList];
-    
-
 }
 
-- (void)getUserinfoFromDB
+- (void)popVC:(UIButton *)sender
 {
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"userDetail.userid == %@", kAppDelegate.userId];
-    self.myInfo = [MyInfo findFirstWithPredicate:pred];
-}
-
-- (void)confirmSelect:(UIButton *)sender
-{
-    //上传数据
-    //para: changezsarea.json provcityid userid
-    NSString *userid = [kAppDelegate userId];
-    NSMutableString *preferid = [[NSMutableString alloc] init];
-    [self.myInfo.pharList enumerateObjectsUsingBlock:^(Pharmacology *phar, BOOL *stop) {
-        [preferid appendFormat:@"%@,", phar.pharid];
-    }];
-    
-    
-    if (![preferid isValid]) {
-        preferid = [NSMutableString stringWithString:@"1"];
-    }
-    else{
-        preferid = (NSMutableString *)[preferid substringToIndex:[preferid length]-1];
-    }
-
-
-    NSDictionary *paraDict = [NSDictionary dictionaryWithObjectsAndKeys:preferid, @"preferid", userid, @"userid", @"changeprefer.json", @"path", nil];
-
-//    NSLog(@"para dict %@", paraDict);
-
-    [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
-    [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
-        NSLog(@"add resident %@", json);
-        if ([[[json objForKey:@"returnCode"] stringValue] isEqualToString:@"0"]) {
-            [MBProgressHUD hideAllHUDsForView:[kAppDelegate window] animated:YES];
-            NSLog(@"myinfo %@", self.myInfo);
-            DB_SAVE();
-            if ([self.delegate respondsToSelector:@selector(finishSelectPhar:)]) {
-                [self.delegate performSelector:@selector(finishSelectPhar:) withObject:self.myInfo.pharList];
-            }
-            
-            [self.navigationController popViewControllerAnimated:YES];
-
-        }
-        else{
-            [MBProgressHUD hideAllHUDsForView:[kAppDelegate window] animated:YES];
-            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:nil];
-        }
-
-
-    } failure:^(NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:[kAppDelegate window] animated:YES];
-        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
-    }];
-}
-
-- (void)backToRootVC:(UIButton *)sender
-{
+    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kSelectPharFinished object:self.selectArray];
 }
 
-- (void)getPreferJsonData
+- (void)selectFinished
 {
-    //getPharmacologyClassify.json
-    
-    
+    PERFORM_SELECTOR_WITH_OBJECT(self.delegate, @selector(selectPharFinished:), self.selectArray);
+    [self popVC:nil];
+}
+
+#pragma mark - phar info
+
+- (void)requestPharData
+{
     NSDictionary *paraDict = [NSDictionary dictionaryWithObjectsAndKeys:@"getPharmacologyClassify.json", @"path", nil];
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
@@ -148,15 +104,13 @@
         [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
         NSArray *pharArray = [json objectForKey:@"PharmacologyList"];
         [pharArray enumerateObjectsUsingBlock:^(NSDictionary *pharDict, NSUInteger idx, BOOL *stop) {
-            Pharmacology *phar = [Pharmacology createEntity];
-            phar.content = [pharDict objForKey:@"content"];
-            phar.pharid = [[pharDict objForKey:@"id"] stringValue];
-            phar.picturelinkurl = [pharDict objForKey:@"picturelinkurl"];
-            phar.col4 = [[pharDict objForKey:@"col4"] stringValue];
-            [self.preferArray addObject:phar];
+            NSDictionary *dict = @{@"pharid": [[pharDict objForKey:@"id"] stringValue],
+                                   @"content": [pharDict objForKey:@"content"],
+                                   };
+            [self.dataSourceArray addObject:dict];
         }];
         
-        [self.preferTableView reloadData];
+        [self.tableView reloadData];
         
     } failure:^(NSError *error) {
         [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
@@ -164,7 +118,8 @@
     }];
 }
 
-#pragma mark - table view datasource
+#pragma mark - tableview
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -172,7 +127,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.preferArray count];
+    return self.dataSourceArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -182,77 +137,42 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellId = @"pharCell";
-    PharCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    static NSString *cellId = @"PharCell";
+    PharCell *cell = (PharCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"PharCell" owner:self options:nil] objectAtIndex:0];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"PharCell" owner:nil options:nil] lastObject];
     }
-    cell.nameLabel.text = [[self.preferArray objectAtIndex:indexPath.row] content];
-
     
-    Pharmacology *phar = [self.preferArray objectAtIndex:indexPath.row];
-    if ([self haveSelectThePrefer:phar]) {
-        cell.selectImage.image = [UIImage imageNamed:@"selected.png"];
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
+    
+    cell.nameLabel.text = [dict objForKey:@"content"];
+    if ([self.selectArray containsObject:dict]) {
+        cell.selectImage.image = [UIImage imageByName:@"login_select"];
     }
     else{
-        cell.selectImage.image = [UIImage imageNamed:@"unselected.png"];
+        cell.selectImage.image = [UIImage imageByName:@"login_noselect"];
     }
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSLog(@"prefer array: %@", self.preferArray);
-//    NSLog(@"select array: %@", self.selectArray);
-    Pharmacology *phar = [self.preferArray objectAtIndex:indexPath.row];
-    if (self.myInfo.pharList.count == 2 && ![self haveSelectThePrefer:phar]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"最多选择两个偏好" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-        [alert show];
-        [alert release];
-        return;
-    }
-    
-
-    if ([self haveSelectThePrefer:phar]) {
-
-        __block Pharmacology *phar2delete = nil;
-        [self.myInfo.pharList enumerateObjectsUsingBlock:^(Pharmacology *pharTmp, BOOL *stop) {
-            if ([pharTmp.pharid isEqualToString:phar.pharid]) {
-                phar2delete = pharTmp;
-            }
-        }];
-        
-        if (phar2delete) {
-            [self.myInfo removePharListObject:phar2delete];
-        }
-        NSLog(@"self.theNewPharSet.count = %d", self.theNewPharSet.count);
+    NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
+    if ([self.selectArray containsObject:dict]) {
+        [self.selectArray removeObject:dict];
     }
     else{
-        [self.myInfo addPharListObject:phar];
-    }
-    [self.preferTableView reloadData];
-}
-
-- (BOOL)haveSelectThePrefer:(Pharmacology *)phar
-{
-    __block BOOL isSelect = NO;
-    [self.myInfo.pharList enumerateObjectsUsingBlock:^(Pharmacology *pharTmp, BOOL *stop) {
-        if ([pharTmp.pharid isEqualToString:phar.pharid]) {
-            isSelect = YES;
-            *stop = YES;
+        if (self.selectArray.count == 2) {
+            [kAppDelegate showWithCustomAlertViewWithText:@"最多选择两个类别" andImageName:kErrorIcon];
+            return;
         }
-        
-    }];
-    return isSelect;
+        [self.selectArray addObject:dict];
+    }
+    
+    [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 @end

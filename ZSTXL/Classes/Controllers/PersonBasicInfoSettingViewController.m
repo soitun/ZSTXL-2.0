@@ -34,16 +34,11 @@
     self.title = @"个人信息设置";
     self.view.backgroundColor = bgGreyColor;
     self.userid = [PersistenceHelper dataForKey:kUserId];
-    self.tel = @"13800000001";
-    self.name = @"张三";
-    self.birth = @"1990-00-00";
     self.sex = @"";
     
-    
-    self.isMale = YES;
-    
+    self.myInfo = [Utility getMyInfo];
     self.useridLabel.text = self.userid;
-    self.telLabel.text = self.tel;
+    self.telLabel.text = self.myInfo.userDetail.tel;
     
     [self initNavBar];
     [self initTableView];
@@ -95,6 +90,7 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 
 #pragma mark - table view data
 
@@ -241,7 +237,7 @@
         
         
     } else if (indexPath.section ==0 && indexPath.row == 0){
-        cell.detailLabel.text = self.name;
+        cell.detailLabel.text = self.myInfo.userDetail.username;
     } else if (indexPath.section == 1 && indexPath.row == 1){
         cell.detailLabel.text = self.birth;
     }

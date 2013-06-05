@@ -30,9 +30,13 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = RGBCOLOR(243, 244, 245);
+    self.dataSourceArray = [NSMutableArray array];
+    self.selectArray = [NSMutableArray array];
     
+    [self requestData];
     [self initTableView];
     [self initNavBar];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,6 +52,28 @@
 - (void)viewDidUnload {
     [self setTableVeiw:nil];
     [super viewDidUnload];
+}
+
+#pragma mark - request data
+
+- (void)requestData
+{
+    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    [DreamFactoryClient getWithURLParameters:[self para] success:^(NSDictionary *json) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        if (RETURNCODE_ISVALID(json)) {
+            DLog(@"json %@", json);
+            [self analyseData:json];
+            [self.tableVeiw reloadData];
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+    }];
 }
 
 #pragma mark - nav bar
@@ -90,7 +116,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.titleArray.count;
+    return self.dataSourceArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -99,6 +125,14 @@
     SettingCell *cell = (SettingCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SettingCell" owner:nil options:nil] lastObject];
+    }
+    
+    NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
+    if ([self.selectArray containsObject:dict]) {
+        cell.selectImage.image = [UIImage imageNamed:@"login_select"];
+    }
+    else{
+        cell.selectImage.image = [UIImage imageNamed:@"login_noselect"];
     }
     
     CustomCellBackgroundViewPosition pos;
@@ -112,9 +146,35 @@
     
     [Utility groupTableView:tableView addBgViewForCell:cell withCellPos:pos];
     cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.textLabel.text = [self.titleArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = [self titleNameOfDict:dict];
     
     return cell;
+
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
+    
+    if (self.allowMultiSelect) {
+        if ([self.selectArray containsObject:dict]) {
+            [self.selectArray removeObject:dict];
+        }
+        else{
+            [self.selectArray addObject:dict];
+        }
+        
+        [self.tableVeiw reloadData];
+    }
+    else{
+        if (![self.selectArray containsObject:dict]) {
+            [self.selectArray removeAllObjects];
+            [self.selectArray addObject:dict];
+        }
+        
+        [self.tableVeiw reloadData];
+    }
+    
 
 }
 
@@ -122,12 +182,16 @@
 
 - (void)confirmFooterViewLeftAction
 {
-    
+//    PERFORM_SELECTOR_WITH_OBJECT(self.delegate, @selector(publishSelectFinish:), self.selectArray);
+    if ([self.delegate respondsToSelector:@selector(publishSelectFinish:withType:)]) {
+        [self.delegate performSelector:@selector(publishSelectFinish:withType:) withObject:self.selectArray withObject:self.type];
+        [self popVC:nil];
+    }
 }
 
 - (void)confirmFooterViewRightAction
 {
-    
+    [self popVC:nil];
 }
 
 

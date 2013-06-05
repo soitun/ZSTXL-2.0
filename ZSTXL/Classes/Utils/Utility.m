@@ -966,4 +966,10 @@ char indexTitleOfString(unsigned short string) {
     [alert release];
 }
 
++ (MyInfo *)getMyInfo
+{
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"userDetail.userid == %@", kAppDelegate.userId];
+    return [MyInfo findFirstWithPredicate:pred];
+}
+
 @end

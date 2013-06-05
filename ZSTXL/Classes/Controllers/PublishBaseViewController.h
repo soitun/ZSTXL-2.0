@@ -9,10 +9,26 @@
 #import <UIKit/UIKit.h>
 #import "ConfirmFooterView.h"
 
-@interface PublishBaseViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ConfirmFooterViewDelegate>
-@property (retain, nonatomic) UITableView *tableVeiw;
+@protocol PublishBaseViewControllerDelegate <NSObject>
 
+- (void)publishSelectFinish:(NSArray *)array withType:(NSString *)type;
+
+@end
+
+@interface PublishBaseViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ConfirmFooterViewDelegate>
+
+@property (assign, nonatomic) NSString *type;
+@property (retain, nonatomic) UITableView *tableVeiw;
 @property (nonatomic, retain) NSArray *titleArray;
 
+@property (nonatomic, retain) NSMutableArray *dataSourceArray;
+@property (nonatomic, retain) NSMutableArray *selectArray;
+@property (nonatomic, assign) id<PublishBaseViewControllerDelegate> delegate;
+@property (nonatomic, assign) BOOL allowMultiSelect;
+
+//重写
+- (NSDictionary *)para;
+- (void)analyseData:(NSDictionary *)json;
+- (NSString *)titleNameOfDict:(NSDictionary *)dict;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "Reachability.h"
 
 #import "CustomNavigationController.h"
 #import "TheNewMessageViewController.h"
@@ -26,11 +27,30 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
 
+    //DB
     [MagicalRecord setupCoreDataStack];
     self.uuid = [[UIDevice currentDevice] uniqueDeviceIdentifier];
     
+    //判断网络
+    Reachability* reach = [Reachability reachabilityWithHostname:@"www.boracloud.com"];
+    if (self.isGpsError) {
+        self.theNewCity = @"北京";
+    }
+    else{
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(reachabilityChanged:)
+                                                     name:kReachabilityChangedNotification
+                                                   object:nil];
+        
+        [reach startNotifier];
+    }
+    
+    //gps
+    self.geocoder = [[[CLGeocoder alloc] init] autorelease];
+    [self initGPS];
+    
+    
     [self initTabController];
-
     self.window.rootViewController = self.tabController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -94,6 +114,77 @@
 
 }
 
+#pragma mark - network reachbility
+
+- (void)reachabilityChanged:(NSNotification *)noti
+{
+    Reachability * reach = [noti object];
+    
+    if([reach isReachable])
+    {
+        [self getCurrentCity];
+        DLog(@"new city %@", self.theNewCity);
+        NSLog(@"网络可行");
+    }
+    else
+    {
+        NSLog(@"网络不可行");
+        [self showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+    }
+}
+
+
+#pragma mark - geo
+
+- (void)initGPS {
+    if(self.locationManager == nil) {
+        self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+        self.locationManager.delegate = self;
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.locationManager.distanceFilter = 10.f;
+	}
+    if ([CLLocationManager locationServicesEnabled]   &&   [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied) {
+        [self.locationManager startUpdatingLocation];
+        self.isGpsError = NO;
+    }
+    else{
+        self.isGpsError = YES;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"请在系统设置中打开“定位服务”来允许“招商代理通讯录”确定您的位置"
+                                                       delegate:nil cancelButtonTitle:@"知道了"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (void)getCurrentCity  //有网的时候
+{
+    __block NSString *city = nil;
+    [self.geocoder reverseGeocodeLocation:self.locationManager.location completionHandler:^(NSArray *placemarks, NSError *error) {
+        CLPlacemark *placemark = [placemarks objectAtIndex:0];
+        city = [placemark performSelector:NSSelectorFromString(@"administrativeArea")];
+        city = [city substringToIndex:[city length] -1];
+        if ([city isValid]) {
+            self.theNewCity = city;
+        }
+        else{
+            self.theNewCity = @"北京";
+        }
+    }];
+}
+
+#pragma mark - location delegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    [manager stopUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    NSLog(@"location manager AuthorizationStatus: %d", status);
+}
+
 - (NSString *)userId
 {
     NSString *userIdTmp = [PersistenceHelper dataForKey:kUserId];
@@ -102,6 +193,8 @@
     }
     return userIdTmp;
 }
+
+#pragma mark - show alert
 
 - (void)showWithCustomAlertViewWithText:(NSString *)text andImageName:(NSString *)image {
 	

@@ -33,5 +33,5 @@
 @protocol LeveyTabBarDelegate<NSObject>
 @optional
 - (BOOL)tabBar:(LeveyTabBar *)tabBar shouldSelectIndex:(NSInteger)index;
-- (void)tabBar:(LeveyTabBar *)tabBar didSelectIndex:(NSInteger)index; 
+- (void)tabBar:(LeveyTabBar *)tabBar didSelectIndex:(NSInteger)index;
 @end

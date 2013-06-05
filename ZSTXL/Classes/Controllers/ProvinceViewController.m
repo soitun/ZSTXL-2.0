@@ -8,9 +8,9 @@
 
 #import "ProvinceViewController.h"
 #import "CityViewController.h"
-#import "AreaCell.h"
 #import "ProvinceInfo.h"
 #import "CityInfo.h"
+#import "AreaCell.h"
 
 @interface ProvinceViewController ()
 

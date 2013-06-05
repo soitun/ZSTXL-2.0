@@ -7,6 +7,8 @@
 //
 
 #import "SettingNameViewController.h"
+#import "MyInfo.h"
+#import "UserDetail.h"
 
 @interface SettingNameViewController ()
 
@@ -86,13 +88,17 @@
         
     } failure:^(NSError *error) {
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
         DLog(@"error %@", error);
     }];
 }
 
 - (void)saveUserName
-{
-    [PersistenceHelper setData:self.name forKey:KUserName];
+{    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"userDetail.userid == %@", kAppDelegate.userId];
+    MyInfo *myinfo = [MyInfo findFirstWithPredicate:pred];
+    myinfo.userDetail.username = self.name;
+    DB_SAVE();
 }
 
 
