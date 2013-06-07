@@ -33,7 +33,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
     [self.tableView reloadData];
 }
 
@@ -125,7 +124,6 @@
 - (void)popVC:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
-    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
 }
 
 #pragma mark - table view data

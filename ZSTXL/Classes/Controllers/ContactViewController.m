@@ -13,6 +13,7 @@
 #import "CityTitleView.h"
 #import "SelectViewController.h"
 #import "SearchContactViewController.h"
+#import "SelectCityViewController.h"
 
 @interface ContactViewController ()
 
@@ -51,25 +52,36 @@
     
     UIBarButtonItem *rBarButton = [[[UIBarButtonItem alloc] initWithCustomView:searchButton] autorelease];
     [self.navigationItem setRightBarButtonItem:rBarButton];
+    self.navigationController.delegate = self;
     
-    
-    [self initAreaPickerView];
     [self initTitleView];
     [self initSlideView];
     [self initScrollView];
 }
 
-- (void)initAreaPickerView
+- (void)didReceiveMemoryWarning
 {
-    
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
+
+- (void)dealloc {
+    [_mScrollView release];
+    [super dealloc];
+}
+- (void)viewDidUnload {
+    [self setMScrollView:nil];
+    [super viewDidUnload];
+}
+
+#pragma mark - init
 
 - (void)initTitleView
 {
-    TitleView *titleView = [[[NSBundle mainBundle] loadNibNamed:@"TitleView" owner:nil options:nil] lastObject];
-    titleView.title = @"北京";
-    titleView.delegate = self;
-    self.navigationItem.titleView = titleView;
+    self.titleView = [[[NSBundle mainBundle] loadNibNamed:@"TitleView" owner:nil options:nil] lastObject];
+    self.titleView.title = [PersistenceHelper dataForKey:kCityName];
+    self.titleView.delegate = self;
+    self.navigationItem.titleView = self.titleView;
 }
 
 - (void)changeCity:(UITapGestureRecognizer *)tap
@@ -128,6 +140,16 @@
 }
 
 #pragma mark - nav bar
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if ([viewController isKindOfClass:NSClassFromString(@"ContactViewController")]) {
+        [kAppDelegate.tabController hidesTabBar:NO animated:YES];
+    }
+    else{
+        [kAppDelegate.tabController hidesTabBar:YES animated:YES];
+    }
+}
 
 - (void)resetNavigationBar {
     if (self.navigationController.navigationBar.frame.origin.y != 0) {
@@ -192,18 +214,45 @@
     [self.navigationController pushViewController:selectVC animated:YES];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - title view delegate
+
+- (void)titleViewTap
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    SelectCityViewController *selectCityVC = [[[SelectCityViewController alloc] init] autorelease];
+    selectCityVC.delegate = self;
+    selectCityVC.allowMultiselect = NO;
+    [self.navigationController pushViewController:selectCityVC animated:YES];
 }
 
-- (void)dealloc {
-    [_mScrollView release];
-    [super dealloc];
+#pragma mark - select city delegate
+
+- (void)SelectCityFinished:(NSArray *)array
+{
+    if (array.count == 0) {
+        return;
+    }
+    else{
+        DLog(@"%@", array);
+        NSDictionary *dict = [array lastObject];
+        NSString *cityId = [dict objForKey:@"cityid"];
+        if (![cityId isEqualToString:[PersistenceHelper dataForKey:kCityId]]) {
+            NSString *provinceId = [dict objForKey:@"provinceid"];
+            NSString *cityName = [dict objForKey:@"cityname"];
+            
+            [PersistenceHelper setData:cityId forKey:kCityId];
+            [PersistenceHelper setData:provinceId forKey:kProvinceId];
+            [PersistenceHelper setData:cityName forKey:kCityName];
+            
+            DLog(@"%@", [PersistenceHelper dataForKey:kCityName]);
+            
+            self.titleView.title = cityName;
+            [self.titleView setNeedsDisplay];
+            
+            NSNotification *noti = [NSNotification notificationWithName:kCityChangedNoification object:nil];
+            [[NSNotificationCenter defaultCenter] postNotification:noti];
+            
+        }
+    }
 }
-- (void)viewDidUnload {
-    [self setMScrollView:nil];
-    [super viewDidUnload];
-}
+
 @end

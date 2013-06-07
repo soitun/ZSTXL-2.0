@@ -9,6 +9,9 @@
 #import "SelectViewController.h"
 #import "SettingCell.h"
 #import "CustomCellBackgroundView.h"
+#import "ZDCell.h"
+#import "PublishCell.h"
+#import "ShowSelectViewController.h"
 
 @interface SelectViewController ()
 
@@ -25,24 +28,17 @@
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = bgGreyColor;
     self.title = @"筛选";
     self.leftArray = @[@"招商/代理", @"类别偏好"];
+    self.pharArray = [NSMutableArray array];
     self.tableView.backgroundView = nil;
+    
+    self.zdNameArray = @[@"招商", @"代理"];
+    self.zdDict = [NSMutableDictionary dictionary];
     [self initNavBar];
 }
 
@@ -104,14 +100,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SettingCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"SettingCell" owner:nil options:nil] lastObject];
-    cell.frame = CGRectMake(0, 0, 320, 44);
-    cell.selectImage.hidden = YES;
-    cell.switchImage.hidden = YES;
-    cell.onLabel.hidden = YES;
-    cell.offLabel.hidden = YES;
+    PublishCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"PublishCell" owner:nil options:nil] lastObject];
 
-    
     
     CustomCellBackgroundViewPosition pos;
     
@@ -122,7 +112,7 @@
         pos = CustomCellBackgroundViewPositionBottom;
     }
     
-    CustomCellBackgroundView *cellBg = [[CustomCellBackgroundView alloc] initWithFrame:cell.frame];
+    CustomCellBackgroundView *cellBg = [[[CustomCellBackgroundView alloc] initWithFrame:cell.frame] autorelease];
     cellBg.position = pos;
     cellBg.fillColor = [UIColor whiteColor];
     cellBg.borderColor = kCellBorderColor;
@@ -131,9 +121,11 @@
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell.textLabel setTextColor:kContentBlueColor];
-    [cell.textLabel setFont:[UIFont systemFontOfSize:16]];
-    cell.textLabel.text = [self.leftArray objectAtIndex:indexPath.row];
+    [cell.nameLabel setTextColor:kContentBlueColor];
+    [cell.nameLabel setFont:[UIFont systemFontOfSize:16]];
+    cell.nameLabel.text = [self.leftArray objectAtIndex:indexPath.row];
+    
+    [cell.contentLabel setFont:[UIFont systemFontOfSize:16]];
     
     return cell;
 }
@@ -153,13 +145,163 @@
 - (void)selectZhaoShangDaiLi
 {
     DLog(@"选择招商代理");
+    SBTableAlert *tableAlert = [[SBTableAlert alloc] initWithTitle:@"请选择招商代理" cancelButtonTitle:@"确定" messageFormat:nil];
+    [tableAlert setType:SBTableAlertTypeMultipleSelct];
+    tableAlert.delegate = self;
+    tableAlert.dataSource = self;
+    [tableAlert show];
 }
 
 - (void)selectPharCategory
 {
     DLog(@"选择药品类别");
+    ShaixuanPharViewController *sxPharVC = [[[ShaixuanPharViewController alloc] init] autorelease];
+    sxPharVC.delegate = self;
+    [self.navigationController pushViewController:sxPharVC animated:YES];
+    
 }
 
-- (IBAction)confirm:(UIButton *)sender {
+- (IBAction)confirm:(UIButton *)sender
+{
+    if (![self.pharId isValid]) {
+        [kAppDelegate showWithCustomAlertViewWithText:@"请选择药品类别" andImageName:kErrorIcon];
+        return;
+    }else if (self.zdValue.intValue == 0){
+        [kAppDelegate showWithCustomAlertViewWithText:@"请选择招商代理" andImageName:kErrorIcon];
+        return;
+    }
+    
+//    NSMutableDictionary *para = [NSMutableDictionary dictionaryWithDictionary:@{@"path": @"getZsUserBypreferPage.json",
+//                                                                                   @"userid": kAppDelegate.userId,
+//                                                                                   @"provinceid": [PersistenceHelper dataForKey:kProvinceId],
+//                                                                                   @"cityid": [PersistenceHelper dataForKey:kCityId],
+//                                                                                   @"invagency": self.zdValue,
+//                                                                                   @"preferid": self.pharId}];
+    
+    ShowSelectViewController *showVC = [[[ShowSelectViewController alloc] init] autorelease];
+    showVC.preferId = self.pharId;
+    showVC.invagency = self.zdValue;
+    [self.navigationController pushViewController:showVC animated:YES];
+    
+//    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+//    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+//       
+//        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+//        if (RETURNCODE_ISVALID(json)) {
+//            DLog(@"json %@", json);
+//        }
+//        else{
+//            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+//        }
+//        
+//    } failure:^(NSError *error) {
+//        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+//        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+//    }];
+    
+    
 }
+
+#pragma mark - table alert data source
+- (NSInteger)numberOfSectionsInTableAlert:(SBTableAlert *)tableAlert
+{
+    return 1;
+}
+
+- (NSInteger)tableAlert:(SBTableAlert *)tableAlert numberOfRowsInSection:(NSInteger)section
+{
+    return self.zdNameArray.count;
+}
+
+- (UITableViewCell *)tableAlert:(SBTableAlert *)tableAlert cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ZDCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"ZDCell" owner:self options:nil] lastObject];
+    cell.nameLabel.text = [self.zdNameArray objectAtIndex:indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
+- (void)tableAlert:(SBTableAlert *)tableAlert didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ZDCell *cell = (ZDCell *)[tableAlert.tableView cellForRowAtIndexPath:indexPath];
+    NSString *zdString = [self.zdNameArray objectAtIndex:indexPath.row];
+    if (![[self.zdDict objectForKey:zdString] intValue] == 0) {
+        [self.zdDict setObject:[NSNumber numberWithInt:0] forKey:zdString];
+        cell.selectImage.image = [UIImage imageNamed:@"login_noselect.png"];
+    }
+    else{
+        [self.zdDict setObject:[NSNumber numberWithInt:indexPath.row+1] forKey:zdString];
+        cell.selectImage.image = [UIImage imageNamed:@"login_select.png"];
+    }
+}
+
+- (CGFloat)tableAlert:(SBTableAlert *)tableAlert heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 51.f;
+}
+
+- (void)tableAlert:(SBTableAlert *)tableAlert clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    __block int zdValueTmp = 0;
+    [self.zdDict enumerateKeysAndObjectsUsingBlock:^(id key, NSNumber *num, BOOL *stop) {
+        zdValueTmp += num.intValue;
+    }];
+    self.zdValue = [NSNumber numberWithInt:zdValueTmp];
+    switch (zdValueTmp) {
+        case 0:
+            self.zsdl = @"";
+            break;
+        case 1:
+            self.zsdl = @"招商";
+            break;
+        case 2:
+            self.zsdl = @"代理";
+            break;
+        case 3:
+            self.zsdl = @"招商/代理";
+            break;
+        default:
+            break;
+    }
+    
+    for (NSString *key in [self.zdDict allKeys]) {
+        [self.zdDict setObject:[NSNumber numberWithInt:0] forKey:key];
+    }
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    PublishCell *cell = (PublishCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.contentLabel.text = self.zsdl;
+    
+    [tableAlert release];
+}
+
+#pragma mark - shaixuan phar delegate
+
+- (void)shaixuanPharSelectFinish:(NSArray *)array
+{
+    [self.pharArray removeAllObjects];
+    [self.pharArray addObjectsFromArray:array];
+    
+    NSMutableString *tmp = [NSMutableString string];
+    NSMutableString *pharStr = [NSMutableString string];
+    for (NSDictionary *dict in self.pharArray) {
+        [pharStr appendFormat:@"%@、", [dict objForKey:@"content"]];
+        [tmp appendFormat:@"%@,", [dict objForKey:@"id"]];
+    }
+    
+    if ([pharStr isValid]) {
+        self.pharContent = [pharStr substringToIndex:pharStr.length-1];
+    }
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    PublishCell *cell = (PublishCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.contentLabel.text = self.pharContent;
+    
+    if ([tmp isValid]) {
+        self.pharId = [tmp substringToIndex:tmp.length-1];
+    }
+    
+}
+
+
 @end

@@ -29,10 +29,11 @@
 {
     [super viewDidLoad];
     self.title = @"招商代理";
-    [self initCateButton];
+    self.navigationController.delegate = self;
     
     self.dataSource = [NSMutableArray array];
     self.tableView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-49);
+    [self initCateButton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,12 +51,20 @@
     [super viewDidUnload];
 }
 
-#pragma mark - nav bar
 
-- (void)publishAction
+
+#pragma mark - navigation delegate
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    DLog(@"publish zhaoshang");
+    if ([viewController isKindOfClass:NSClassFromString(@"ZhaoshangDailiViewController")]) {
+        [kAppDelegate.tabController hidesTabBar:NO animated:YES];
+    }else{
+        [kAppDelegate.tabController hidesTabBar:YES animated:YES];
+    }
 }
+
+
 
 #pragma mark - get info
 

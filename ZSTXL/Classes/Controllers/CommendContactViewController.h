@@ -15,6 +15,8 @@
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) NSMutableArray *commendContactArray;
 @property (retain, nonatomic) UIViewController *parentController;
-@property (nonatomic, retain) UIControl *bgControl;
+@property (assign, nonatomic) BOOL getContactFinsh;
+
+- (void)refreshAction;
 
 @end

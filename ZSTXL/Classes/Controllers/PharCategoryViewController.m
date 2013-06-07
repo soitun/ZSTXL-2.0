@@ -28,10 +28,10 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
-}
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
+//}
 
 - (void)viewDidLoad
 {
@@ -67,7 +67,7 @@
 - (void)publishAction
 {
     PublishView *view = [[[NSBundle mainBundle] loadNibNamed:@"PublishView" owner:nil options:nil] lastObject];
-    view.frame = CGRectMake(31, 160, 258, 203);
+    view.frame = CGRectMake(31, 180, 258, 203);
     view.delegate = self;
     self.bgControl = [[[UIControl alloc] initWithFrame:CGRectMake(0, 0, 320, SCREEN_HEIGHT)] autorelease];
     self.bgControl.backgroundColor = RGBACOLOR(0, 0, 0, 0.8);
@@ -128,7 +128,7 @@
 - (void)popVC:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
-    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
+//    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
 }
 
 - (void)searchContact:(UIButton *)sender

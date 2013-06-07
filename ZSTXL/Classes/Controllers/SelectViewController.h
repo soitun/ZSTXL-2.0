@@ -7,11 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SBTableAlert.h"
+#import "MyInfo.h"
+#import "ShaixuanPharViewController.h"
 
-@interface SelectViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface SelectViewController : UIViewController
+<UITableViewDataSource, UITableViewDelegate, SBTableAlertDataSource, SBTableAlertDelegate, UIAlertViewDelegate, ShaixuanPharViewControllerDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSArray *leftArray;
+@property (nonatomic, retain) NSString *zsdl;
 @property (nonatomic, assign) NSInteger zdKind;
+@property (nonatomic, retain) NSArray *zdNameArray;
+@property (nonatomic, retain) NSMutableDictionary *zdDict;
+@property (nonatomic, retain) NSNumber *zdValue;
+@property (nonatomic, retain) NSMutableArray *pharArray;
+@property (nonatomic, copy) NSString *pharId;
+@property (nonatomic, copy) NSString *pharContent;
 
 - (IBAction)confirm:(UIButton *)sender;
 

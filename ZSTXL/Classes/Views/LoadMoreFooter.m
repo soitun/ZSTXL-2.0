@@ -45,8 +45,8 @@
 
 - (void)tapMe:(UITapGestureRecognizer *)tap
 {
-    if ([self.delegate respondsToSelector:@selector(LoadMoreFooterTap)]) {
-        [self.delegate performSelector:@selector(LoadMoreFooterTap)];
+    if ([self.delegate respondsToSelector:@selector(LoadMoreFooterTap:)]) {
+        [self.delegate performSelector:@selector(LoadMoreFooterTap:) withObject:self];
     }
 }
 

@@ -11,6 +11,8 @@
 #import "LoadMoreCell.h"
 #import "SearchContact.h"
 #import "LoadMoreFooter.h"
+#import "PopContactView.h"
+#import "OtherHomepageViewController.h"
 
 @interface SearchContactViewController ()
 
@@ -74,23 +76,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
-}
-
-
 #pragma mark - table view
 
 - (void)initTableFooter
 {
     self.footer = [[[NSBundle mainBundle] loadNibNamed:@"LoadMoreFooter" owner:nil options:nil] lastObject];
-    self.footer.titleLabel.text = @"加载更多";
     self.footer.delegate = self;
     self.tableView.tableFooterView = self.footer;
 }
@@ -120,19 +110,23 @@
     }
     
     SearchContact *contact = [self.dataSource objectAtIndex:indexPath.row];
+    cell.delegate = self;
+    cell.contact = contact;
+    [cell refresh];
     
-    cell.nameLabel.text = contact.username;
     return cell;
-
-
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    SearchContact *contact = [self.dataSource objectAtIndex:indexPath.row];
+    PopContactView *popView = [[PopContactView alloc] initWithNib:@"PopContactView"];
+    popView.delegate = self;
+    popView.contact = contact;
+    [popView showInView:kAppDelegate.window];
 }
 
-- (void)LoadMoreFooterTap
+- (void)LoadMoreFooterTap:(LoadMoreFooter *)footer
 {
     if ([self finishLoad]) {
         return;
@@ -153,16 +147,9 @@
 {
     DLog(@"search");
     [searchBar resignFirstResponder];
+    [self resetDataSource];
     [self getSearchUser:searchBar.text];
 }
-
-//- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-//{
-//    DLog(@"cancel search");
-//    [self.dataSource removeAllObjects];
-//    [self.tableView reloadData];
-//    self.tableView.tableFooterView = nil;
-//}
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     if ([searchBar.text isEqualToString:@""]) {
@@ -200,29 +187,48 @@
     [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
     [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
         [self.footer.indicator stopAnimating];
-        if ([GET_RETURNCODE(json) isEqualToString:@"0"]) {
-            [MBProgressHUD hideAllHUDsForView:[kAppDelegate window] animated:YES];
+        [MBProgressHUD hideAllHUDsForView:[kAppDelegate window] animated:YES];
+        if (RETURNCODE_ISVALID(json)) {
+
             
             NSArray *tmpArray = [Utility deCryptJsonDict:json OfJsonKey:@"DataList"];
             DLog(@"tmpArray %@", tmpArray);
             
-            [tmpArray enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
+            [tmpArray enumerateObjectsUsingBlock:^(NSDictionary *contactDict, NSUInteger idx, BOOL *stop) {
                 SearchContact *contact = [SearchContact createEntity];
-                contact.username = [dict objectForKey:@"username"];
+                contact.userid = [[contactDict objForKey:@"id"] stringValue];
+                contact.username = [contactDict objForKey:@"username"];
+                contact.tel = [contactDict objForKey:@"tel"];
+                contact.mailbox = [contactDict objForKey:@"mailbox"];
+                contact.picturelinkurl = [contactDict objForKey:@"picturelinkurl"];
+                contact.col1 = [contactDict objForKey:@"col1"];
+                contact.col2 = [contactDict objForKey:@"col2"];
+                contact.col2 = [contactDict objForKey:@"col2"];
+                contact.cityid = [PersistenceHelper dataForKey:kCityId];
+                contact.loginid = [kAppDelegate userId];
+                contact.username_p = makePinYinOfName(contact.username);
+                contact.invagency = [[contactDict objForKey:@"invagency"] stringValue];
                 [self.dataSource addObject:contact];
             }];
             
             self.page++;
             
+            if (self.page == 1) {
+                [self initTableFooter];
+            }
+            
             if ([self finishLoad]) {
                 self.footer.titleLabel.text = @"加载完成";
             }
-            else if (self.page == 1){
-                [self initTableFooter];
+            else{
+                self.footer.titleLabel.text = @"加载更多";
             }
             
             
             [self.tableView reloadData];
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
         }
     } failure:^(NSError *error) {
         [self.footer.indicator stopAnimating];
@@ -240,6 +246,28 @@
         return YES;
     }
     return NO;
+}
+
+#pragma mark - pop contact
+
+- (void)popContactViewChat:(Contact *)contact
+{
+    
+}
+
+- (void)popContactViewTel:(Contact *)contact
+{
+    NSString *tel = [Utility deCryptTel:contact.tel withUserId:contact.userid];
+    [Utility callContact:tel];
+}
+
+#pragma mark - cell delegate
+
+- (void)contactCellTapAvatarOfContact:(Contact *)contact
+{
+    OtherHomepageViewController *otherVC = [[[OtherHomepageViewController alloc] init] autorelease];
+    otherVC.contact = contact;
+    [self.navigationController pushViewController:otherVC animated:YES];
 }
 
 @end

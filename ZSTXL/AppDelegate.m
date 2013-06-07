@@ -29,6 +29,7 @@
 
     //DB
     [MagicalRecord setupCoreDataStack];
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     self.uuid = [[UIDevice currentDevice] uniqueDeviceIdentifier];
     
     //判断网络
@@ -150,7 +151,7 @@
     else{
         self.isGpsError = YES;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"请在系统设置中打开“定位服务”来允许“招商代理通讯录”确定您的位置"
+                                                        message:@"请在系统设置中打开“定位服务”来允许“招商通讯录”确定您的位置"
                                                        delegate:nil cancelButtonTitle:@"知道了"
                                               otherButtonTitles:nil];
         [alert show];
@@ -170,6 +171,14 @@
         else{
             self.theNewCity = @"北京";
         }
+        
+        
+        NSString *cityid = [[Utility getCityIdByCityName:self.theNewCity] cityId];
+        NSString *provinceid = [[Utility getCityIdByCityName:self.theNewCity] proId];
+        [PersistenceHelper setData:self.theNewCity forKey:kCityName];
+        [PersistenceHelper setData:cityid forKey:kCityId];
+        [PersistenceHelper setData:provinceid forKey:kProvinceId];
+        
     }];
 }
 

@@ -14,6 +14,10 @@
 #import "PublishPeriodViewController.h"
 #import "PublishDailiAdvantageViewController.h"
 
+#import "PublishCell.h"
+
+
+
 @interface PublishDailiViewController ()
 
 @end
@@ -106,15 +110,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellId = @"SettingCell";
-    SettingCell *commonCell = (SettingCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
+    static NSString *cellId = @"PublishCell";
+    PublishCell *commonCell = (PublishCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
     if (commonCell == nil) {
-        commonCell = [[[NSBundle mainBundle] loadNibNamed:@"SettingCell" owner:nil options:nil] lastObject];
+        commonCell = [[[NSBundle mainBundle] loadNibNamed:@"PublishCell" owner:nil options:nil] lastObject];
     }
     
     [Utility groupTableView:tableView addBgViewForCell:commonCell withCellPos:CustomCellBackgroundViewPositionSingle];
-    commonCell.textLabel.text = [self.titleArray objectAtIndex:indexPath.section];
-    commonCell.selectImage.hidden = YES;
+    commonCell.nameLabel.text = [self.titleArray objectAtIndex:indexPath.section];
     return commonCell;
 }
 
@@ -126,30 +129,44 @@
 
 - (void)dailiTo
 {
+    //药品
     PublishDailiToViewController *publishDailiToVC = [[[PublishDailiToViewController alloc] init] autorelease];
+    publishDailiToVC.type = @"0";
+    publishDailiToVC.allowMultiSelect = YES;
+    publishDailiToVC.delegate = self;
     [self.navigationController pushViewController:publishDailiToVC animated:YES];
 }
 
 - (void)dailiArea
 {
-    
+    SelectCityViewController *selectCityVC = [[[SelectCityViewController alloc] init] autorelease];
+    selectCityVC.delegate = self;
+    selectCityVC.allowMultiselect = NO;
+    [self.navigationController pushViewController:selectCityVC animated:YES];
 }
 
 - (void)dailiChnnel
 {
+    
     PublishSellToViewController *publishSellToVC = [[[PublishSellToViewController alloc] init] autorelease];
+    publishSellToVC.type = @"2";
+    publishSellToVC.allowMultiSelect = YES;
+    publishSellToVC.delegate = self;
     [self.navigationController pushViewController:publishSellToVC animated:YES];
 }
 
 - (void)dailiAdvantage
 {
     PublishDailiAdvantageViewController *publishDailiAdvantageViewController = [[[PublishDailiAdvantageViewController alloc] init] autorelease];
+    publishDailiAdvantageViewController.delegate = self;
     [self.navigationController pushViewController:publishDailiAdvantageViewController animated:YES];
 }
 
 - (void)infoPeriod
 {
     PublishPeriodViewController *publishPeriodVC = [[[PublishPeriodViewController alloc] init] autorelease];
+    publishPeriodVC.type = @"4";
+    publishPeriodVC.delegate = self;
     [self.navigationController pushViewController:publishPeriodVC animated:YES];
 }
 
@@ -157,12 +174,122 @@
 
 - (void)confirmFooterViewLeftAction
 {
+    if (![self.durgclassificationid isValid]) {
+        [kAppDelegate showWithCustomAlertViewWithText:@"请选择代理方向" andImageName:kErrorIcon];
+        return;
+    }else if (![self.cityId isValid]){
+        [kAppDelegate showWithCustomAlertViewWithText:@"请选择代理区域" andImageName:kErrorIcon];
+        return;
+    }else if (![self.direction isValid]){
+        [kAppDelegate showWithCustomAlertViewWithText:@"请选择代理渠道" andImageName:kErrorIcon];
+        return;
+    }else if (![self.advantage isValid]){
+        [kAppDelegate showWithCustomAlertViewWithText:@"请输入代理优势" andImageName:kErrorIcon];
+        return;
+    }else if (![self.duration isValid]){
+        [kAppDelegate showWithCustomAlertViewWithText:@"请选择信息有效期" andImageName:kErrorIcon];
+        return;
+    }
     
+    NSDictionary *para = @{@"path": @"addAgency.json",
+                           @"durgclassificationid": self.durgclassificationid,
+                           @"proviceid": self.provinceId,
+                           @"cityid": self.cityId,
+                           @"direction": self.direction,
+                           @"superiority": self.advantage,
+                           @"duration": self.duration};
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    hud.labelText = @"发布代理信息";
+    
+    [DreamFactoryClient postWithParameters:para image:nil success:^(id response) {
+        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+        
+        if ([[[(NSDictionary *)response objForKey:@"returnCode"] stringValue] isEqualToString:@"0"]) {
+            [kAppDelegate showWithCustomAlertViewWithText:@"发送代理信息成功" andImageName:nil];
+        } else {
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(response) andImageName:nil];
+        }
+    } failure:^{
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+    }];
 }
 
 - (void)confirmFooterViewRightAction
 {
+    [self popVC:nil];
+}
+
+#pragma mark - selectcity delegate
+
+- (void)SelectCityFinished:(NSArray *)array
+{
+    NSDictionary *city = [array lastObject];
+    self.provinceId = [city objForKey:@"provinceid"];
+    self.cityId = [city objForKey:@"cityid"];
     
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    PublishCell *cell = (PublishCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.contentLabel.text = [city objForKey:@"cityname"];
+}
+
+#pragma mark - select period delegate
+
+- (void)publishSelectFinish:(NSArray *)array withType:(NSString *)type
+{
+        //信息有效期
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:type.intValue];
+    PublishCell *cell = (PublishCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+
+    switch (type.intValue) {
+        case 0:
+        {
+            NSMutableString *phar = [NSMutableString string];
+            NSMutableString *str = [NSMutableString string];
+            for (NSDictionary *dict in array) {
+                NSString *pharid = [dict objForKey:@"id"];
+                [str appendFormat:@"%@,", pharid];
+                
+                NSString *content = [dict objForKey:@"content"];
+                [phar appendFormat:@"%@、", content];
+            }
+            if ([str isValid]) {
+                self.durgclassificationid = [str substringToIndex:str.length-1];
+                cell.contentLabel.text = [phar substringToIndex:phar.length-1];
+            }
+        }
+            break;
+        case 2:
+        {
+            NSMutableString *str = [NSMutableString string];
+            for (NSDictionary *dict in array) {
+                NSString *pharid = [dict objForKey:@"content"];
+                [str appendFormat:@"%@、", pharid];
+            }
+            if ([str isValid]) {
+                self.direction = [str substringToIndex:str.length-1];
+                cell.contentLabel.text = self.direction;
+            }
+        }
+            break;
+        case 4:
+        {
+            self.duration = [NSString stringWithFormat:@"%d", [[[array lastObject] objForKey:@"col4"] intValue]];
+            cell.contentLabel.text = [[array lastObject] objForKey:@"content"];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)publishDailiAdvantageFinish:(NSString *)string
+{
+    self.advantage = string;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
+    PublishCell *cell = (PublishCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.contentLabel.text = self.advantage;
 }
 
 @end

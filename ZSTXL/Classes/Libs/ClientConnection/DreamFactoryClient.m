@@ -90,17 +90,19 @@ NSString * const kAFGowallaBaseURLString = @"http://192.168.1.234:9101/BLZTCloud
         path = [NSString stringWithFormat:@"/BLZTCloud/%@", path] ;
     }
     NSMutableURLRequest *request = [[DreamFactoryClient sharedClient] multipartFormRequestWithMethod:@"POST" path:path parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>formData) {
-        [formData appendPartWithFileData:imageData name:@"image" fileName:@"imgFile001" mimeType:@"image/jpeg"];
+        if (imageData) {
+            [formData appendPartWithFileData:imageData name:@"image" fileName:@"imgFile001" mimeType:@"image/jpeg"];
+        }
+
+        [formData appendPartWithFormData:[[kAppDelegate uuid] dataUsingEncoding:NSUTF8StringEncoding] name:@"uuid"];
+        [formData appendPartWithFormData:[@"iphone" dataUsingEncoding:NSUTF8StringEncoding] name:@"via"];
+        [formData appendPartWithFormData:[kClientVersion dataUsingEncoding:NSUTF8StringEncoding] name:@"version"];
         
-//        [formData appendPartWithFormData:[[kAppDelegate uuid] dataUsingEncoding:NSUTF8StringEncoding] name:@"uuid"];
-//        [formData appendPartWithFormData:[@"iphone" dataUsingEncoding:NSUTF8StringEncoding] name:@"via"];
-//        [formData appendPartWithFormData:[kClientVersion dataUsingEncoding:NSUTF8StringEncoding] name:@"version"];
-        
-//        NSString *myUid = [PersistenceHelper dataForKey:@"userid"];
-//        if ([myUid isValid]) {
-//            [formData appendPartWithFormData:[myUid dataUsingEncoding:NSUTF8StringEncoding] name:@"userid"];
-//            [formData appendPartWithFormData:[myUid dataUsingEncoding:NSUTF8StringEncoding] name:@"myuserid"];
-//        }
+        NSString *myUid = [PersistenceHelper dataForKey:@"userid"];
+        if ([myUid isValid]) {
+            [formData appendPartWithFormData:[myUid dataUsingEncoding:NSUTF8StringEncoding] name:@"userid"];
+            [formData appendPartWithFormData:[myUid dataUsingEncoding:NSUTF8StringEncoding] name:@"myuserid"];
+        }
         
         for (NSString *key in [parameters allKeys]) {
             [formData appendPartWithFormData:[[parameters objForKey:key] dataUsingEncoding:NSUTF8StringEncoding] name:key];            
@@ -114,10 +116,13 @@ NSString * const kAFGowallaBaseURLString = @"http://192.168.1.234:9101/BLZTCloud
     }];
     
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if ([responseObject isKindOfClass:[NSString class]]) {
-            successBlock([responseObject objectFromJSONString]);
+        NSString* newStr = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] autorelease];
+        
+        
+        if ([newStr isKindOfClass:[NSString class]]) {
+            successBlock([newStr objectFromJSONString]);
         } else {
-            successBlock(responseObject);
+            successBlock(newStr);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock();

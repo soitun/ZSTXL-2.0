@@ -18,7 +18,6 @@
 @property (nonatomic, retain) UIButton *mailSentButton;
 
 
-- (IBAction)mailTransmit:(UIButton *)sender;
 - (IBAction)mailRefresh:(UIButton *)sender;
 - (IBAction)mailDelete:(UIButton *)sender;
 - (IBAction)mailWrite:(UIButton *)sender;

@@ -65,7 +65,6 @@
 						<string key="NSFrame">{{0, 372}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1028609959"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -74,13 +73,13 @@
 							<string key="NSResourceName">mail_bottom_texture.png</string>
 						</object>
 					</object>
-					<object class="IBUIButton" id="1028609959">
+					<object class="IBUIButton" id="871876289">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{20, 384}, {29, 19}}</string>
+						<string key="NSFrame">{{150, 383}, {20, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1064387358"/>
+						<reference key="NSNextKeyView" ref="107523493"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -97,47 +96,22 @@
 						</object>
 						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">mail_transmit.png</string>
+							<string key="NSResourceName">mail_delete.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="653876890">
 							<int key="type">2</int>
 							<double key="pointSize">15</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="297713141">
+						<object class="NSFont" key="IBUIFont" id="340266855">
 							<string key="NSName">Helvetica-Bold</string>
 							<double key="NSSize">15</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUIButton" id="871876289">
-						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{194, 383}, {20, 21}}</string>
-						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="107523493"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIOpaque">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<int key="IBUIContentHorizontalAlignment">0</int>
-						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIHighlightedTitleColor" ref="919783724"/>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-						</object>
-						<reference key="IBUINormalTitleShadowColor" ref="504834079"/>
-						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">mail_delete.png</string>
-						</object>
-						<reference key="IBUIFontDescription" ref="653876890"/>
-						<reference key="IBUIFont" ref="297713141"/>
-					</object>
 					<object class="IBUIButton" id="107523493">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{275, 383}, {21, 21}}</string>
+						<string key="NSFrame">{{43, 383}, {21, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -156,12 +130,12 @@
 							<string key="NSResourceName">mail_write.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="653876890"/>
-						<reference key="IBUIFont" ref="297713141"/>
+						<reference key="IBUIFont" ref="340266855"/>
 					</object>
 					<object class="IBUIButton" id="1064387358">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{107, 383}, {25, 21}}</string>
+						<string key="NSFrame">{{252, 383}, {25, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="871876289"/>
@@ -181,7 +155,7 @@
 							<string key="NSResourceName">mail_refresh.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="653876890"/>
-						<reference key="IBUIFont" ref="297713141"/>
+						<reference key="IBUIFont" ref="340266855"/>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 64}, {320, 416}}</string>
@@ -264,15 +238,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">mailTransmit:</string>
-						<reference key="source" ref="1028609959"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">13</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">mailDelete:</string>
 						<reference key="source" ref="871876289"/>
 						<reference key="destination" ref="372490531"/>
@@ -304,10 +269,9 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="1057278"/>
 							<reference ref="439683397"/>
-							<reference ref="107523493"/>
-							<reference ref="1028609959"/>
-							<reference ref="1064387358"/>
 							<reference ref="871876289"/>
+							<reference ref="107523493"/>
+							<reference ref="1064387358"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -338,11 +302,6 @@
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">10</int>
-						<reference key="object" ref="1028609959"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">11</int>
 						<reference key="object" ref="871876289"/>
 						<reference key="parent" ref="191373211"/>
@@ -360,7 +319,6 @@
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="10.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="11.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="12.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -381,7 +339,6 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="mailDelete:">UIButton</string>
 						<string key="mailRefresh:">UIButton</string>
-						<string key="mailTransmit:">UIButton</string>
 						<string key="mailWrite:">UIButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -391,10 +348,6 @@
 						</object>
 						<object class="IBActionInfo" key="mailRefresh:">
 							<string key="name">mailRefresh:</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBActionInfo" key="mailTransmit:">
-							<string key="name">mailTransmit:</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBActionInfo" key="mailWrite:">
@@ -428,7 +381,6 @@
 			<string key="mail_bottom_texture.png">{320, 44}</string>
 			<string key="mail_delete.png">{20, 21}</string>
 			<string key="mail_refresh.png">{25, 21}</string>
-			<string key="mail_transmit.png">{29, 19}</string>
 			<string key="mail_write.png">{21, 21}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>

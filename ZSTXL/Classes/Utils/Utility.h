@@ -75,6 +75,7 @@ char indexTitleOfString(unsigned short string);
 + (CityIdProId *)getCityIdByCityName:(NSString *)cityName;
 
 + (NSArray *)deCryptJsonDict:(NSDictionary *)dict OfJsonKey:(NSString *)jsonKey;
++ (NSString *)deCryptTel:(NSString *)tel withUserId:(NSString *)userId;
 
 + (void)saveImage:(UIImage *)image toDiskWithName:(NSString *)name;
 
@@ -85,5 +86,7 @@ char indexTitleOfString(unsigned short string);
 + (void)showAlertWithTitle:(NSString *)title;
 
 + (MyInfo *)getMyInfo;
+
++ (void)callContact:(NSString *)tel;
 
 @end

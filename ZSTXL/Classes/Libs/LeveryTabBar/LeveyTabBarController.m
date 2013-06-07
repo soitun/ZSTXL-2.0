@@ -162,6 +162,7 @@
 	{
 		[UIView commitAnimations];
 	}
+
 }
 
 - (NSUInteger)selectedIndex
@@ -184,7 +185,7 @@
 }
 
 - (void)selectTabBarAtIndex:(int)index {
-    UIButton *button = [_tabBar.buttons objectAtIndex:index];
+//    UIButton *button = [_tabBar.buttons objectAtIndex:index];
 //    [_tabBar tabBarButtonClicked:button];
     [self tabBar:self.tabBar didSelectIndex:index];
 }

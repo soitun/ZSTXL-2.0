@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class Contact;
+#import "Contact.h"
 
 @protocol ContactCellDelegate <NSObject>
 
@@ -21,7 +20,10 @@
 @property (retain, nonatomic) IBOutlet UILabel *nameLabel;
 @property (retain, nonatomic) IBOutlet UIImageView *xun_VImage;
 @property (retain, nonatomic) IBOutlet UILabel *ZDLabel;
+@property (retain, nonatomic) IBOutlet UILabel *preferLabel;
 @property (retain, nonatomic) Contact *contact;
 @property (assign, nonatomic) id<ContactCellDelegate> delegate;
+
+- (void)refresh;
 
 @end

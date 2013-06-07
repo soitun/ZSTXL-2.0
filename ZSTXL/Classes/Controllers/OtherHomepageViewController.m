@@ -38,12 +38,6 @@ enum eAlertTag {
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -51,7 +45,6 @@ enum eAlertTag {
     
     self.preferArray = [[[NSMutableArray alloc] init] autorelease];
     self.areaArray = [[[NSMutableArray alloc] init] autorelease];
-    
     //back button
     UIButton *backBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBarButton setImage:[UIImage imageNamed:@"retreat.png"] forState:UIControlStateNormal];
@@ -62,19 +55,10 @@ enum eAlertTag {
     [self.navigationItem setLeftBarButtonItem:lBarButton];
 
     [self.addFriendButton addTarget:self action:@selector(addFriend:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.messageButton setBackgroundImage:[UIImage imageNamed:@"middle_p"] forState:UIControlStateHighlighted];
-    [self.mailButton setBackgroundImage:[UIImage imageNamed:@"middle_p"] forState:UIControlStateHighlighted];
-    [self.telButton setBackgroundImage:[UIImage imageNamed:@"left_p"] forState:UIControlStateHighlighted];
-    
-    [self.telButton setImage:[UIImage imageNamed:@"tel"] forState:UIControlStateHighlighted];
-    [self.messageButton setImage:[UIImage imageNamed:@"message_connect"] forState:UIControlStateHighlighted];
-    [self.mailButton setImage:[UIImage imageNamed:@"mail_connect"] forState:UIControlStateHighlighted];
-    [self.chatButton setImage:[UIImage imageNamed:@"chat_connect"] forState:UIControlStateHighlighted];
-    
     [self.messageButton addTarget:self action:@selector(message:) forControlEvents:UIControlEventTouchUpInside];
     [self.mailButton addTarget:self action:@selector(email:) forControlEvents:UIControlEventTouchUpInside];
     [self.chatButton addTarget:self action:@selector(chat:) forControlEvents:UIControlEventTouchUpInside];
+    [self.telButton addTarget:self action:@selector(tel:) forControlEvents:UIControlEventTouchUpInside];
     
     self.headIcon.layer.cornerRadius = 8;
     self.headIcon.layer.masksToBounds = YES;
@@ -87,17 +71,63 @@ enum eAlertTag {
     self.leftArray = [NSMutableArray arrayWithArray:@[@"招商代理：", @"常驻地区：", @"类别偏好：", @"他的招商代理信息："]];
     self.rightArray = [NSMutableArray array];
     
-    
+    [self showHisInfo];
     [self getUserInfo];
+    
+
 }
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [_nameLabel release];
+    [_messageButton release];
+    [_mailButton release];
+    [_chatButton release];
+    [_addFriendButton release];
+    [_headIcon release];
+    [_tableView release];
+    [_xunImage release];
+    [_xun_VImage release];
+    [_xun_BImage release];
+    [_useridLabel release];
+    [_telButton release];
+    [_gradeLabel release];
+    [super dealloc];
+}
+- (void)viewDidUnload {
+    [self setTableView:nil];
+    [self setXunImage:nil];
+    [self setXun_VImage:nil];
+    [self setXun_BImage:nil];
+    [self setUseridLabel:nil];
+    [self setTelButton:nil];
+    [self setGradeLabel:nil];
+    [super viewDidUnload];
+}
+
 
 - (IBAction)comment:(UIButton *)sender {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"修改备注" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert textFieldAtIndex:0].placeholder = @"备注";
+    UITextField *textField = [alert textFieldAtIndex:0];
+    textField.delegate = self;
+    textField.placeholder = @"备注";
     alert.tag = commentAlert;
     [alert show];
     [alert release];
+}
+
+#pragma mark - navigation delegate
+
+- (void)backToRootVC:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    PERFORM_SELECTOR(self.delegate, @selector(otherHPFriendRefresh));
 }
 
 
@@ -190,6 +220,15 @@ enum eAlertTag {
     return 45.f;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 3) {
+        DLog(@"他的招商代理信息");
+    }
+}
+
+#pragma mark - user info
+
 - (void)getUserInfo
 {
     NSString *peoperid = self.contact.userid;   //好友id
@@ -256,27 +295,12 @@ enum eAlertTag {
             self.contact.username = [userDetail objForKey:@"username"];
             self.contact.userid = [[userDetail objForKey:@"id"] stringValue];
             self.contact.isreal = [[userDetail objForKey:@"isreal"] stringValue];
+            DB_SAVE();
             
-            if (self.contact.type.intValue == 0) {
-                self.isFriend = NO;
-                [self.addFriendButton setTitle:@"加为好友" forState:UIControlStateNormal];
-            }
-            else{
-                self.isFriend = YES;
-                [self.addFriendButton setTitle:@"删除好友" forState:UIControlStateNormal];
-            }
-            
-            self.useridLabel.text = self.contact.userid;
-            self.nameLabel.text = self.contact.username;
-            
-            if ([self.contact.col2 isEqualToString:@"1"]) {
-                self.xun_VImage.hidden = NO;
-            }
-            else{
-                self.xun_VImage.hidden = YES;
-            }
-            
+            [self showHisInfo];
             [self.tableView reloadData];
+            
+
         }
         else{
             [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:nil];
@@ -287,16 +311,43 @@ enum eAlertTag {
     }];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)showHisInfo
 {
-    if (indexPath.row == 3) {
-        DLog(@"他的招商代理信息");
+    if (self.contact.type.intValue == 0) {
+        self.isFriend = NO;
+        [self.addFriendButton setTitle:@"加为好友" forState:UIControlStateNormal];
     }
+    else{
+        self.isFriend = YES;
+        [self.addFriendButton setTitle:@"删除好友" forState:UIControlStateNormal];
+    }
+    
+    if ([self.contact.remark isValid]) {
+        NSString *name = [NSString stringWithFormat:@"%@(%@)", self.contact.username, self.contact.remark];
+        self.nameLabel.text = name;
+    }
+    else{
+        self.nameLabel.text = self.contact.username;
+    }
+    
+    self.useridLabel.text = self.contact.userid;
+
+    
+    if ([self.contact.col2 isEqualToString:@"1"]) {
+        self.xun_VImage.hidden = NO;
+    }
+    else{
+        self.xun_VImage.hidden = YES;
+    }
+    
 }
+
+
 
 
 - (void)addFriend:(UIButton *)sender
 {
+    
     if ([self showLoginAlert]) {
         return;
     }
@@ -309,7 +360,7 @@ enum eAlertTag {
         NSString *attentionid =  self.contact.userid;
         NSString *userid = [kAppDelegate userId];
         NSString *cityid = [PersistenceHelper dataForKey:kCityId];
-        NSString *provinceid = [PersistenceHelper dataForKey:kProvinceId];
+        NSString *provinceid = [[Utility getCityIdByCityName:[PersistenceHelper dataForKey:kCityName]] proId];
         NSDictionary *paraDict = [NSDictionary dictionaryWithObjectsAndKeys:attentionid, @"attentionid",
                                   userid, @"userid",
                                   cityid, @"cityid",
@@ -321,8 +372,10 @@ enum eAlertTag {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
         hud.labelText = @"添加好友";
         [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
-            if ([[json objectForKey:@"returnCode"] longValue] == 0) {
-                [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+            
+            if (RETURNCODE_ISVALID(json)) {
+
                 self.isFriend = YES;
                 [self.addFriendButton setTitle:@"删除好友" forState:UIControlStateNormal];
                 
@@ -330,7 +383,6 @@ enum eAlertTag {
                 
             }
             else{
-                [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
                 [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:nil];
             }
         } failure:^(NSError *error) {
@@ -358,13 +410,16 @@ enum eAlertTag {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
         hud.labelText = @"删除好友";
         [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
-            long returnCode = [[json objectForKey:@"returnCode"] longValue];
-            NSLog(@"returnCode: %ld", returnCode);
-            if ([[json objectForKey:@"returnCode"] longValue] == 0) {
-                [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+            
+            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+            if (RETURNCODE_ISVALID(json)) {
+
                 self.isFriend = NO;
                 [self.addFriendButton setTitle:@"加为好友" forState:UIControlStateNormal];
                 [self updateIsFriend:self.isFriend];
+            }
+            else{
+                [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
             }
             
         } failure:^(NSError *error) {
@@ -409,11 +464,7 @@ enum eAlertTag {
 
 }
 
-- (void)backToRootVC:(UIButton *)sender
-{
-    [self.navigationController popViewControllerAnimated:YES];
-    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
-}
+
 
 #pragma mark - textfield delegate
 
@@ -503,10 +554,9 @@ enum eAlertTag {
         return;
     }
     
-    SendMessageViewController *smVC = [[SendMessageViewController alloc] init];
-    smVC.currentContact = self.contact;
-    [self.navigationController pushViewController:smVC animated:YES];
-    [smVC release];
+    TalkViewController *talkVC = [[[TalkViewController alloc] init] autorelease];
+    talkVC.username = self.contact.username;
+    [self.navigationController pushViewController:talkVC animated:YES];
 }
 
 - (void)email:(UIButton *)sender
@@ -586,7 +636,16 @@ enum eAlertTag {
     talk.fAvatarUrl = self.contact.picturelinkurl;
     NSLog(@"talk.fid %@", talk.fid);
     [self.navigationController pushViewController:talk animated:YES];
+}
+
+- (void)tel:(UIButton *)button
+{
+    NSString *userTel = [Utility deCryptTel:self.contact.tel withUserId:self.contact.userid];
     
+    NSString *telStr = [NSString stringWithFormat:@"tel://%@", userTel];
+    UIWebView *callPhoneWebVw = [[UIWebView alloc] init];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:telStr]];
+    [callPhoneWebVw loadRequest:request];
 }
 
 - (BOOL)showLoginAlert
@@ -625,35 +684,5 @@ enum eAlertTag {
 
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)dealloc {
-    [_nameLabel release];
-    [_messageButton release];
-    [_mailButton release];
-    [_chatButton release];
-    [_addFriendButton release];
-    [_headIcon release];
-    [_tableView release];
-    [_xunImage release];
-    [_xun_VImage release];
-    [_xun_BImage release];
-    [_useridLabel release];
-    [_telButton release];
-    [super dealloc];
-}
-- (void)viewDidUnload {
-    [self setTableView:nil];
-    [self setXunImage:nil];
-    [self setXun_VImage:nil];
-    [self setXun_BImage:nil];
-    [self setUseridLabel:nil];
-    [self setTelButton:nil];
-    [super viewDidUnload];
-}
 
 @end

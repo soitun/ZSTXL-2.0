@@ -26,9 +26,11 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
+    if (self.mailSentButton.superview) {
+        [self.mailSentButton removeFromSuperview];
+    }
 }
 
 - (void)viewDidLoad
@@ -76,31 +78,29 @@
 - (void)popVC:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
-    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
+//    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
 }
 
 - (void)titleViewTap
 {
     DLog(@"tap title view");
-//    MailSelectorView *mailSelectorView = [[[NSBundle mainBundle] loadNibNamed:@"MailSelectorView" owner:nil options:nil] lastObject];
-//    mailSelectorView.frame = CGRectMake(160, -5, 100, 150);
-//    mailSelectorView.delegate = self;
-//    [self.view addSubview:mailSelectorView];
-    self.mailSentButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.mailSentButton.frame = CGRectMake(180, 50, 88, 48);
-    [self.mailSentButton setBackgroundImage:[UIImage imageNamed:@"mail_sent_texture"] forState:UIControlStateNormal];
-    [self.mailSentButton setBackgroundImage:[UIImage imageNamed:@"mail_sent_texture_p"] forState:UIControlStateHighlighted];
-    [self.mailSentButton setTitle:@"已发送" forState:UIControlStateNormal];
-    [self.mailSentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.mailSentButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-    [self.mailSentButton addTarget:self action:@selector(mailSent) forControlEvents:UIControlEventTouchUpInside];
-    [kAppDelegate.window addSubview:self.mailSentButton];
-    
+    if (!self.mailSentButton) {
+        self.mailSentButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.mailSentButton.frame = CGRectMake(180, 50, 88, 48);
+        [self.mailSentButton setBackgroundImage:[UIImage imageNamed:@"mail_sent_texture"] forState:UIControlStateNormal];
+        [self.mailSentButton setBackgroundImage:[UIImage imageNamed:@"mail_sent_texture_p"] forState:UIControlStateHighlighted];
+        [self.mailSentButton setTitle:@"已发送" forState:UIControlStateNormal];
+        [self.mailSentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.mailSentButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+        [self.mailSentButton addTarget:self action:@selector(mailSent) forControlEvents:UIControlEventTouchUpInside];
+        [kAppDelegate.window addSubview:self.mailSentButton];
+    }
 }
 
 - (void)mailSent
 {
     [self.mailSentButton removeFromSuperview];
+    self.mailSentButton = nil;
 }
 
 #pragma mark - request mail
@@ -159,6 +159,7 @@
     [self performSelector:sel];
 }
 
+
 - (void)MailSelectorSent
 {
     DLog(@"mail sent");
@@ -179,11 +180,7 @@
     DLog(@"mail trash");
 }
 
-
-- (IBAction)mailTransmit:(UIButton *)sender
-{
-    
-}
+#pragma mark - button method
 
 - (IBAction)mailRefresh:(UIButton *)sender
 {

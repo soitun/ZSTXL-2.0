@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="AllContact" representedClassName="AllContact" syncable="YES">
-        <attribute name="areaname" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="autograph" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="cityid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="col1" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="col2" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="col3" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="invagency" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isreal" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="loginid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="mailbox" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="picturelinkurl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="prefercontent" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="remark" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sectionkey" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sortid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tel" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="username_p" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
+    <entity name="AllContact" representedClassName="AllContact" parentEntity="Contact" syncable="YES"/>
     <entity name="ChatList" representedClassName="ChatList" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="count" optional="YES" attributeType="String" syncable="YES"/>
@@ -48,17 +27,21 @@
         <attribute name="provinceid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="radius" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="CommendContact" representedClassName="CommendContact" syncable="YES">
+    <entity name="CommendContact" representedClassName="CommendContact" parentEntity="Contact" syncable="YES"/>
+    <entity name="Contact" representedClassName="Contact" syncable="YES">
         <attribute name="autograph" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cityid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="col1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="col2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="col3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creditlevel" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="invagency" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ismember" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isreal" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="loginid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mailbox" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="picturelinkurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prefercontent" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remark" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sectionkey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortid" optional="YES" attributeType="String" syncable="YES"/>
@@ -68,45 +51,7 @@
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username_p" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Contact" representedClassName="Contact" syncable="YES">
-        <attribute name="areaname" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="autograph" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="cityid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="col1" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="col2" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="col3" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="invagency" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isreal" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="loginid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="mailbox" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="picturelinkurl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="remark" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sectionkey" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tel" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="username_p" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="FriendContact" representedClassName="FriendContact" syncable="YES">
-        <attribute name="autograph" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="cityid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="col1" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="col2" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="col3" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="invagency" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isreal" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="loginid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="mailbox" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="picturelinkurl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="remark" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sectionkey" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tel" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="username_p" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
+    <entity name="FriendContact" representedClassName="FriendContact" parentEntity="Contact" syncable="YES"/>
     <entity name="MailInfo" representedClassName="MailInfo" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
@@ -173,13 +118,13 @@
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AllContact" positionX="855" positionY="-342" width="128" height="345"/>
+        <element name="AllContact" positionX="837" positionY="-142" width="128" height="43"/>
         <element name="ChatList" positionX="529" positionY="-441" width="128" height="178"/>
         <element name="ChatRecord" positionX="367" positionY="-441" width="128" height="103"/>
         <element name="CityInfo" positionX="90" positionY="-396" width="128" height="148"/>
-        <element name="CommendContact" positionX="702" positionY="-342" width="128" height="315"/>
-        <element name="Contact" positionX="855" positionY="9" width="128" height="315"/>
-        <element name="FriendContact" positionX="702" positionY="8" width="128" height="298"/>
+        <element name="CommendContact" positionX="693" positionY="-117" width="128" height="43"/>
+        <element name="Contact" positionX="855" positionY="9" width="128" height="360"/>
+        <element name="FriendContact" positionX="693" positionY="92" width="128" height="43"/>
         <element name="MailInfo" positionX="351" positionY="101" width="128" height="240"/>
         <element name="MyInfo" positionX="-45" positionY="-151" width="128" height="150"/>
         <element name="Pharmacology" positionX="189" positionY="-108" width="128" height="103"/>

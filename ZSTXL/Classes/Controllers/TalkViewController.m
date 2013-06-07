@@ -45,7 +45,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.hidesBottomBarWhenPushed = YES;
     
     [self initGrowTextView];
     [self initNavigationBar];
@@ -262,21 +261,16 @@
 }
 
 - (void)refreshAction {
-//    [self talkHistory]; 
+    
 }
 
 - (void)initNavigationBar {
-    //right item
-    UIButton *button = nil;
-    UIBarButtonItem *button1 = nil;
 
-    //left item
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0, 0, 30, 30);
     [button addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-//    button.showsTouchWhenHighlighted = YES;
     [button setImage:[UIImage imageByName:@"retreat.png"] forState:UIControlStateNormal];
-    button1 = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+    UIBarButtonItem *button1 = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
     self.navigationItem.leftBarButtonItem = button1;
 }
 

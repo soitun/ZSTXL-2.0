@@ -30,12 +30,12 @@
 
 - (IBAction)mailPreAction:(UIButton *)sender
 {
-    PERFORM_SELECTOR(self.delegate, mailPre);
+    PERFORM_SELECTOR(self.delegate, @selector(mailPre));
 }
 
 - (IBAction)mailNextAction:(UIButton *)sender
 {
-    PERFORM_SELECTOR(self.delegate, mailNext);
+    PERFORM_SELECTOR(self.delegate, @selector(mailNext));
 }
 
 @end

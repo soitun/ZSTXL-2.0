@@ -43,4 +43,6 @@ typedef enum
 // Preserves aspect ratio. Same as 'aspect fill' in IB.
 -(UIImage*)scaleToCoverSize:(CGSize)newSize;
 
++ (UIImage*)imageWithSize:(UIImage*)image scaledToSize:(CGSize)newSize;
+
 @end

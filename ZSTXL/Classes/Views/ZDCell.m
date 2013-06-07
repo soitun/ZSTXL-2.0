@@ -36,7 +36,7 @@
 {
     CGRect frame = self.contentView.frame;
     
-    self.selectImage.frame = CGRectMake(frame.size.width-20-30, 10, 30, 30);
+    self.selectImage.frame = CGRectMake(frame.size.width-20-14, 18, 14, 14);
     
     [super layoutSubviews];
 }

@@ -21,7 +21,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cityChanged:) name:kCityChangedNoification object:nil];
     }
     return self;
 }
@@ -43,6 +43,7 @@
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCityChangedNoification object:nil];
     [_tableView release];
     [super dealloc];
 }
@@ -99,9 +100,8 @@
 
 - (void)getInvestmentUserListFromServer
 {
-    [PersistenceHelper setData:@"北京" forKey:kCityName];
     NSString *cityName = [PersistenceHelper dataForKey:kCityName];
-    NSString *cityId = [[Utility getCityIdByCityName:cityName] cityId];
+    NSString *cityId = [PersistenceHelper dataForKey:kCityId];
     NSString *provinceId = [[Utility getCityIdByCityName:cityName] proId];
     //parameter: provinceid, cityid, userid(用来取备注),
     NSString *userid = kAppDelegate.userId;
@@ -110,7 +110,7 @@
                           userid, @"userid",
                           @"getZsAttentionUserByArea.json", @"path", nil];
     
-        NSLog(@"all contact dict %@", dict);
+    NSLog(@"all contact dict %@", dict);
     
     
     [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
@@ -128,24 +128,8 @@
                 //                NSLog(@"contact Dict: %@", contactDict);
                 
                 FriendContact *contact = [FriendContact MR_createEntity];
-                contact.userid = [[contactDict objForKey:@"id"] stringValue];
-                contact.username = [contactDict objForKey:@"username"];
-                contact.tel = [contactDict objForKey:@"tel"];
-                contact.mailbox = [contactDict objForKey:@"mailbox"];
-                contact.picturelinkurl = [contactDict objForKey:@"picturelinkurl"];
-                contact.col1 = [contactDict objForKey:@"col1"];
-                contact.col2 = [contactDict objForKey:@"col2"];
-                contact.col2 = [contactDict objForKey:@"col2"];
-                contact.cityid = [PersistenceHelper dataForKey:kCityId];
-                contact.loginid = [kAppDelegate userId];
+                [contact initWithDict:contactDict];
                 contact.type = @"1";
-                contact.username_p = makePinYinOfName(contact.username);
-                contact.invagency = [[contactDict objForKey:@"invagency"] stringValue];
-                
-                
-                //                NSLog(@"pinyin %@", makePinYinOfName(contact.username));
-                
-                contact.sectionkey = [NSString stringWithFormat:@"%c", indexTitleOfString([contact.username characterAtIndex:0])];
                 [[self.contactDict objForKey:contact.sectionkey] addObject:contact];
                 DB_SAVE();
             }];
@@ -210,11 +194,17 @@
     if (nil == cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ContactCell" owner:self options:nil] objectAtIndex:0];
     }
-    [self configureCell:cell atIndexPath:indexPath];
+    
+    NSString *sectionKey = [self.sectionArray objectAtIndex:indexPath.section];
+    Contact *contact = [[self.contactDict objectForKey:sectionKey] objectAtIndex:indexPath.row];
+    cell.contact = contact;
+    cell.delegate = self;
+    [cell refresh];
     
     return cell;
 }
 
+//弃用
 - (void)configureCell:(ContactCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     cell.delegate = self;
@@ -235,7 +225,7 @@
             cell.ZDLabel.text = @"代理";
             break;
         case 3:
-            cell.ZDLabel.text = @"招商、代理";
+            cell.ZDLabel.text = @"招商/代理";
             break;
         default:
             break;
@@ -254,23 +244,29 @@
         cell.nameLabel.text = userDetail.username;
     }
     
-    if ([userDetail.col2 isEqualToString:@"1"]) {
-        cell.xun_VImage.hidden = NO;
-    }
-    else{
-        cell.xun_VImage.hidden = YES;
-    }
+//    if ([userDetail.col2 isEqualToString:@"1"]) {
+//        cell.xun_VImage.hidden = NO;
+//    }
+//    else{
+//        cell.xun_VImage.hidden = YES;
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self showContactView];
+    NSString *sectionKey = [self.sectionArray objectAtIndex:indexPath.section];
+    Contact *contact = [[self.contactDict objectForKey:sectionKey] objectAtIndex:indexPath.row];
+
+    PopContactView *contactView = [[PopContactView alloc] initWithNib:@"PopContactView"];
+    contactView.delegate = self;
+    contactView.contact = contact;
+    [contactView showInView:kAppDelegate.window];
 }
 
 - (void)contactCellTapAvatarOfContact:(Contact *)contact
 {
     OtherHomepageViewController *otherProfileVC = [[OtherHomepageViewController alloc] init];
-    
+    otherProfileVC.delegate = self;
     otherProfileVC.contact = contact;
     if ([self.parentController respondsToSelector:@selector(pushViewController:)]) {
         [self.parentController performSelector:@selector(pushViewController:) withObject:otherProfileVC];
@@ -283,32 +279,45 @@
 - (void)showContactView
 {
     PopContactView *contactView = [[[NSBundle mainBundle] loadNibNamed:@"PopContactView" owner:nil options:nil] lastObject];
-    contactView.frame = CGRectMake(34, 150, 252, 170);
     contactView.delegate = self;
-    
-    self.bgControl = [[[UIControl alloc] initWithFrame:CGRectMake(0, 0, 320, SCREEN_HEIGHT)] autorelease];
-    self.bgControl.backgroundColor = RGBACOLOR(0, 0, 0, 0.6);
-    [self.bgControl addTarget:self action:@selector(removeBg) forControlEvents:UIControlEventTouchDown];
-    [self.bgControl addSubview:contactView];
-    
-    [kAppDelegate.window addSubview:self.bgControl];
+    [contactView showInView:kAppDelegate.window];
+
 }
 
-- (void)popContactViewChat
+- (void)popContactViewChat:(Contact *)contact
 {
-    [self.bgControl removeFromSuperview];
+
 }
 
-- (void)popContactViewTel
+- (void)popContactViewTel:(Contact *)contact
 {
-    [self.bgControl removeFromSuperview];
+    NSString *tel = [Utility deCryptTel:contact.tel withUserId:contact.userid];
+    [Utility callContact:tel];
 }
 
-- (void)removeBg
+#pragma mark - refresh data
+
+- (void)refreshAction
 {
-    [self.bgControl removeFromSuperview];
+    [self.contactDict removeAllObjects];
+    [self.sectionArray removeAllObjects];
+    [self initContactDict];
+    [self getFriendData];
 }
 
+#pragma mark - friend delegate
+
+- (void)otherHPFriendRefresh    //从他的主页删除好友时 回调
+{
+    [self refreshAction];
+}
+
+#pragma mark - notify
+
+- (void)cityChanged:(NSNotification *)noti
+{
+    [self refreshAction];
+}
 
 
 @end

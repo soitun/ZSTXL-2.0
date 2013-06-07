@@ -39,11 +39,6 @@
     [self getAreaData];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -86,7 +81,6 @@
 
 - (void)popVC:(UIButton *)sender
 {
-    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

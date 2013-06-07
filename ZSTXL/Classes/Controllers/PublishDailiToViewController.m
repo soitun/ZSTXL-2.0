@@ -27,7 +27,6 @@
 {
     [super viewDidLoad];
     self.title = @"代理方向";
-    self.titleArray = @[@"抗生素", @"骨伤风湿用药", @"抗肿瘤类", @"内分泌用药", @"泌尿生殖用药", @"心脑血管用药", @"神经用药", @"呼吸系统用药", @"消化系统", @"其他药物"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -36,21 +35,23 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (NSDictionary *)para
 {
-    
+    NSDictionary *para = @{@"path": @"getPharmacologyClassify.json"};
+    return para;
 }
 
-#pragma mark - confirm footer delegate
-
-- (void)confirmFooterViewLeftAction
+- (void)analyseData:(NSDictionary *)json
 {
-    
+    NSArray *tmpArray = [json objForKey:@"PharmacologyList"];
+    for (NSDictionary *dict in tmpArray) {
+        [self.dataSourceArray addObject:dict];
+    }
 }
 
-- (void)confirmFooterViewRightAction
+- (NSString *)titleNameOfDict:(NSDictionary *)dict
 {
-    
+    return [dict objForKey:@"content"];
 }
 
 @end

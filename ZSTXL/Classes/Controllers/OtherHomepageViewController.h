@@ -11,11 +11,11 @@
 #import "FriendContact.h"
 #import "AllContact.h"
 #import "CommendContact.h"
+#import "UserDetail.h"
 
-@protocol FriendDidChangeDelegate <NSObject>
+@protocol OtherHomepageVCDelegate <NSObject>
 
-- (void)friendDidAdd:(FriendContact *)myFriend;
-- (void)friendDidDelete:(FriendContact *)myFriend;
+- (void)otherHPFriendRefresh;
 
 @end
 
@@ -39,6 +39,7 @@ UITableViewDataSource
 
 @property (retain, nonatomic) IBOutlet UILabel *nameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *useridLabel;
+@property (retain, nonatomic) IBOutlet UILabel *gradeLabel;
 
 @property (retain, nonatomic) IBOutlet UIButton *messageButton;
 @property (retain, nonatomic) IBOutlet UIButton *mailButton;
@@ -55,7 +56,7 @@ UITableViewDataSource
 @property (nonatomic, copy) NSString *contactId;
 @property (nonatomic, retain) NSMutableArray *leftArray;
 @property (nonatomic, retain) NSMutableArray *rightArray;
-@property (nonatomic, assign) id<FriendDidChangeDelegate> delegate;
+@property (nonatomic, assign) id<OtherHomepageVCDelegate> delegate;
 
 - (IBAction)comment:(UIButton *)sender;
 

@@ -47,7 +47,7 @@
     [button setBackgroundImage:[UIImage imageNamed:@"nav_login_button"] forState:UIControlStateNormal];
     [button setBackgroundImage:[UIImage imageNamed:@"nav_login_button_p"] forState:UIControlStateHighlighted];
     [button setTitle:@"登录" forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
     button.frame = CGRectMake(0, 0, 54, 32);
     
@@ -60,7 +60,6 @@
     LoginViewController *loginVC = [[[LoginViewController alloc] init] autorelease];
     CustomNavigationController *nav = [[[CustomNavigationController alloc] initWithRootViewController:loginVC] autorelease];
     [self.navigationController presentModalViewController:nav animated:YES];
-//    [kAppDelegate.tabController hidesTabBar:YES animated:NO];
 }
 
 #pragma mark - table view

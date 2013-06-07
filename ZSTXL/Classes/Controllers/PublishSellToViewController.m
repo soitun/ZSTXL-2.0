@@ -27,7 +27,6 @@
 {
     [super viewDidLoad];
     self.title = @"销售方向";
-    self.titleArray = @[@"医院", @"药店", @"社区", @"第三终端"];
 }
 
 - (void)didReceiveMemoryWarning

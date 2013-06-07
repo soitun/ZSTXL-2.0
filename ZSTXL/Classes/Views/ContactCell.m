@@ -38,6 +38,7 @@
     [_nameLabel release];
     [_xun_VImage release];
     [_ZDLabel release];
+    [_preferLabel release];
     [super dealloc];
 }
 
@@ -47,6 +48,43 @@
 {
     if ([self.delegate respondsToSelector:@selector(contactCellTapAvatarOfContact:)]) {
         [self.delegate performSelector:@selector(contactCellTapAvatarOfContact:) withObject:self.contact];
+    }
+}
+
+- (void)refresh
+{
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (self.contact) {
+        
+        switch (self.contact.invagency.intValue) {
+            case 1:
+                self.ZDLabel.text = @"招商";
+                break;
+            case 2:
+                self.ZDLabel.text = @"代理";
+                break;
+            case 3:
+                self.ZDLabel.text = @"招商/代理";
+                break;
+            default:
+                break;
+        }
+        
+        self.headIcon.layer.cornerRadius = 4;
+        self.headIcon.layer.masksToBounds = YES;
+        [self.headIcon setImageWithURL:[NSURL URLWithString:self.contact.picturelinkurl]
+                      placeholderImage:[UIImage imageByName:@"avatar"]];
+        
+        
+        if ([self.contact.remark isValid]) {
+            NSMutableString *userName = [NSMutableString stringWithFormat:@"%@(%@)", self.contact.username, self.contact.remark];
+            self.nameLabel.text = userName;
+        }
+        else{
+            self.nameLabel.text = self.contact.username;
+        }
+        
+        self.preferLabel.text = self.contact.prefercontent;
     }
 }
 

@@ -26,6 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"代理优势";
     
     [self initNavBar];
     
@@ -85,12 +86,18 @@
 
 - (void)confirmFooterViewLeftAction
 {
-    
+    [self.textField resignFirstResponder];
+    if ([self.dailiAdvantage isEqualToString:@"请输入产品优势"]) {
+        [kAppDelegate showWithCustomAlertViewWithText:@"请输入产品优势" andImageName:kErrorIcon];
+        return;
+    }
+    PERFORM_SELECTOR_WITH_OBJECT(self.delegate, @selector(publishDailiAdvantageFinish:), self.dailiAdvantage);
+    [self popVC:nil];
 }
 
 - (void)confirmFooterViewRightAction
 {
-    
+    [self popVC:nil];
 }
 
 #pragma mark - text field delegate
@@ -106,6 +113,9 @@
     if (![textField.text isValid]) {
         textField.text = @"请输入产品优势";
         [textField setTextColor:[UIColor grayColor]];
+    }
+    else{
+        self.dailiAdvantage = textField.text;
     }
 }
 

@@ -11,6 +11,7 @@
 
 @protocol TitleViewDelegate <NSObject>
 
+@optional
 - (void)titleViewTap;
 
 @end

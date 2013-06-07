@@ -31,6 +31,7 @@
 #define kCellBorderColor RGBCOLOR(191,191,191)
 #define kCellSelectColor RGBCOLOR(211,239,242)
 
+#define kDefaultIamgeScale 640
 #define kEventShakeHand @"kEventShakeHand"
 #define kNetworkError  @"网络不给力啊"
 #define kErrorIcon     @"ico_error_info"
@@ -70,8 +71,8 @@ typedef struct
 
 #define PERFORM_SELECTOR(a, b) \
 do { \
-if([a respondsToSelector:@selector(b)]) { \
-    [a performSelector:@selector(b)]; \
+if([a respondsToSelector:b]) { \
+    [a performSelector:b]; \
 } \
 } while (0)
 
@@ -91,3 +92,7 @@ if([a respondsToSelector:b]) { \
 #else
 #  define DLog(...)
 #endif
+
+//notify
+#define kCityChangedNoification @"kCityChangedNoification"
+

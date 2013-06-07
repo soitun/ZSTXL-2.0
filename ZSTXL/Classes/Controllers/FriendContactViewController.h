@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "PopContactView.h"
 #import "ContactCell.h"
+#import "OtherHomepageViewController.h"
 
-@interface FriendContactViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PopContactViewDelegate, ContactCellDelegate>
+@interface FriendContactViewController : UIViewController
+<UITableViewDataSource, UITableViewDelegate, PopContactViewDelegate, ContactCellDelegate, OtherHomepageVCDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *dataSourceArray;
@@ -18,6 +20,7 @@
 @property (nonatomic, retain) NSMutableArray *sectionArray;
 
 @property (nonatomic, retain) UIViewController *parentController;
-@property (nonatomic, retain) UIControl *bgControl;
+
+- (void)refreshAction;
 
 @end

@@ -10,7 +10,7 @@
 #import "PublishBaseViewController.h"
 #import "SelectCityViewController.h"
 
-@interface PublishZhaoshangViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, PublishBaseViewControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, SelectCityViewControllerDelegate>
+@interface PublishZhaoshangViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PublishBaseViewControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, SelectCityViewControllerDelegate>
 
 @property (retain, nonatomic) IBOutlet UILabel *drugNameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *drugNumLabel;
@@ -34,6 +34,9 @@
 @property (nonatomic, copy) NSString *superiority; //产品优势
 @property (nonatomic, copy) NSString *duration;
 @property (nonatomic, copy) NSString *userId;
+
+@property (nonatomic, copy) NSString *producer;
+@property (nonatomic, copy) NSString *drugNum;  //国药准字号
 
 
 @end

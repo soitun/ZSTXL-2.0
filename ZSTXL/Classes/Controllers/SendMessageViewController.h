@@ -13,16 +13,20 @@
 
 @interface SendMessageViewController : UIViewController <UITextViewDelegate, GroupSendVCDelegate>
 
-@property (retain, nonatomic) IBOutlet UIButton *addButton;
+- (IBAction)addContact:(UIButton *)sender;
+
 
 @property (nonatomic, retain) UIButton *backBarButton;
 
+@property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 @property (retain, nonatomic) IBOutlet UITextView *textView;
 @property (retain, nonatomic) IBOutlet UIImageView *textBgImageView;
 
 @property (nonatomic, retain) Contact *currentContact;
 @property (nonatomic, retain) NSMutableArray *contactArray;
+
+@property (nonatomic, copy) NSString *content;
 
 
 @end

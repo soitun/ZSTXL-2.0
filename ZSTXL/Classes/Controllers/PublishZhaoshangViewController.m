@@ -15,6 +15,7 @@
 #import "PublishZhaoshangPropertyViewController.h"
 #import "PublishProductAdvantageViewController.h"
 #import "PublishPeriodViewController.h"
+#import "NSDictionary+Helper.h"
 
 @interface PublishZhaoshangViewController ()
 
@@ -37,18 +38,16 @@
     self.title = @"发布招商信息";
     self.titleArray = @[@"区域选择：", @"销售方向：", @"招商性质：", @"产品优势：", @"信息有效期："];
     self.selectorArray = @[@"selectArea", @"sellTo", @"canvassProperty", @"productAdvantage", @"infoPeriod"];
-    self.navigationController.delegate = self;
+    
+    self.drugNameLabel.text = self.productName;
+    self.producerLabel.text = self.producer;
+    self.drugNumLabel.text = self.drugNum;
     
     self.tableView.backgroundView = nil;
     [self initDrugImage];
     [self initTableFooter];
     [self initNavBar];
     
-}
-
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -131,8 +130,42 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    self.drugImage.image=[info valueForKey:UIImagePickerControllerEditedImage];
+    UIImage *pickedImage = [info objectForKey:UIImagePickerControllerEditedImage];
+    if (pickedImage == nil) {
+        pickedImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    }
+    
+    UIImage *scaledImage = [self postProcessImage:pickedImage width:kDefaultIamgeScale];
+    
+    self.drugImage.image = scaledImage;
     [picker dismissModalViewControllerAnimated:YES];
+}
+
+-(UIImage *)postProcessImage:(UIImage *)_capturedImage width:(float)width
+{
+	UIImageOrientation orient = _capturedImage.imageOrientation;
+	CGSize newSize;
+	if (orient == UIImageOrientationRight || orient == UIImageOrientationLeft)
+	{
+		float ratio = _capturedImage.size.height/_capturedImage.size.width;
+		if( ratio > 1 )
+			newSize = CGSizeMake(width, width*ratio);
+		else
+			newSize = CGSizeMake(width/ratio, width);
+	}
+	else
+	{
+		float ratio = _capturedImage.size.width/_capturedImage.size.height;
+		if( ratio > 1 )
+			newSize = CGSizeMake(width*ratio, width);
+		else
+			newSize = CGSizeMake(width, width/ratio);
+	}
+	
+	UIImage *newImg = [UIImage imageWithSize:_capturedImage scaledToSize:newSize];
+    UIImage *scaledImage = [newImg cropToSize:CGSizeMake(width, width) usingMode:NYXCropModeCenter];
+    
+    return scaledImage;
 }
 
 #pragma mark - nav back button
@@ -206,6 +239,13 @@
         
         [Utility groupTableView:tableView addBgViewForCell:textFieldCell withCellPos:CustomCellBackgroundViewPositionSingle];
         textFieldCell.accessoryType = UITableViewCellAccessoryNone;
+        
+        if ([self.productName isValid] && [self.producer isValid]) {
+            NSString *str = [NSString stringWithFormat:@"%@/%@", self.productName, self.producer];
+            textFieldCell.textField.text = str;
+        }
+        
+        
         return textFieldCell;
     }
     else{
@@ -260,7 +300,7 @@
     PublishZhaoshangPropertyViewController *publishZhaoshangPropertyViewController = [[[PublishZhaoshangPropertyViewController alloc] init] autorelease];
     publishZhaoshangPropertyViewController.type = @"2";
     publishZhaoshangPropertyViewController.delegate = self;
-    publishZhaoshangPropertyViewController.allowMultiSelect = YES;
+    publishZhaoshangPropertyViewController.allowMultiSelect = NO;
     [self.navigationController pushViewController:publishZhaoshangPropertyViewController animated:YES];
 }
 
@@ -287,47 +327,69 @@
 - (void)confirmPublish:(UIButton *)sender
 {
 //    添加招商信息	/addInvestment.json		image	File	图片	durgid	long	药品ID	productname	String	商品名	proviceid	String	省ID	cityid	String	市ID	countyid	String	县ID（删除）	direction	String	方向	quale	String	招商性质	superiority	String	产品优势	duration	long	时长	userid	long	用户宝通号
-    if (![self.drugId isValid] ||
-        ![self.productName isValid] ||
-        ![self.provinceId isValid] ||
-        ![self.cityId isValid] ||
-        ![self.direction isValid] ||
-        ![self.quale isValid] ||
-        ![self.superiority isValid] ||
-        ![self.duration isValid]) {
-        [kAppDelegate showWithCustomAlertViewWithText:@"请完善招商信息" andImageName:kErrorIcon];
+//    if (![self.drugId isValid] ||
+//        ![self.productName isValid] ||
+//        ![self.provinceId isValid] ||
+//        ![self.cityId isValid] ||
+//        ![self.direction isValid] ||
+//        ![self.quale isValid] ||
+//        ![self.superiority isValid] ||
+//        ![self.duration isValid]) {
+//        [kAppDelegate showWithCustomAlertViewWithText:@"请完善招商信息" andImageName:kErrorIcon];
+//        return;
+//    }
+    
+    if (![self.provinceId isValid]) {
+        [kAppDelegate showWithCustomAlertViewWithText:@"请选择区域" andImageName:kErrorIcon];
+        return;
+    }else if (![self.direction isValid]){
+        [kAppDelegate showWithCustomAlertViewWithText:@"请选择销售方向" andImageName:kErrorIcon];
+        return;
+    }else if (![self.quale isValid]){
+        [kAppDelegate showWithCustomAlertViewWithText:@"请选择招商性质" andImageName:kErrorIcon];
+        return;
+    }else if (![self.superiority isValid]){
+        [kAppDelegate showWithCustomAlertViewWithText:@"请选择产品优势" andImageName:kErrorIcon];
+        return;
+    }else if(![self.duration isValid]){
+        [kAppDelegate showWithCustomAlertViewWithText:@"请选择产品优势" andImageName:kErrorIcon];
         return;
     }
     
     
+    
+    
+    
+    
     UIImage *smallImage = [self.drugImage.image scaleToFillSize:CGSizeMake(80.f, 60.f)];
-    NSData *imageData = UIImageJPEGRepresentation(smallImage, 0.6);
 
     NSDictionary *para = @{@"durgid": self.drugId,
                            @"productname": self.productName,
-                           @"provinceid": self.provinceId,
+                           @"proviceid": self.provinceId,
                            @"cityid": self.cityId,
                            @"direction": self.direction,
                            @"quale": self.quale,
                            @"superiority": self.superiority,
                            @"duration": self.duration,
-                           @"userid": kAppDelegate.userId};
+                           @"userid": kAppDelegate.userId,
+                           @"path": @"addInvestment.json"};
+    
+    
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
     hud.labelText = @"发布招商信息";
-    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
-        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
-        if (RETURNCODE_ISVALID(json)) {
-            
-        }
-        else{
-            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
-        }
+    
+    [DreamFactoryClient postWithParameters:para image:smallImage success:^(id response) {
+        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
         
-    } failure:^(NSError *error) {
+        if ([[[(NSDictionary *)response objForKey:@"returnCode"] stringValue] isEqualToString:@"0"]) {
+            [kAppDelegate showWithCustomAlertViewWithText:@"发送招商信息成功" andImageName:nil];
+        } else {
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(response) andImageName:nil];
+        }
+    } failure:^{
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
         [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
-        
     }];
     
 }

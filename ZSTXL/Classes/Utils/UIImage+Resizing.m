@@ -159,4 +159,14 @@
 	return [self scaleToFillSize:CGSizeMake(destWidth, destHeight)];
 }
 
++ (UIImage*)imageWithSize:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+	UIGraphicsBeginImageContext( newSize );
+	[image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+	UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	
+	return newImage;
+}
+
 @end

@@ -15,6 +15,7 @@
 #import "SettingViewController.h"
 #import "MailBoxViewController.h"
 #import "LoginViewController.h"
+#import "FinanceInfoViewController.h"
 
 
 @interface MyProfileViewController ()
@@ -34,7 +35,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    self.scrollView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-49);
+    self.view.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-49);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -46,12 +47,12 @@
 {
     [super viewDidLoad];
     self.title = @"我的主页";
-    self.leftArray_1 = @[@"招商代理：", @"常驻地区：", @"类别偏好：", @"账户余额："];
-    self.leftArray_2 = @[@"他的招商代理信息", @"好友的招商代理信息"];
+    self.leftArray_1 = @[@"招商代理：", @"常驻地区：", @"类别偏好：", @"财务信息："];
+    self.leftArray_2 = @[@"我的招商代理信息", @"好友的招商代理信息"];
     [self initTableSelector];
     
     self.scrollView.contentSize = CGSizeMake(320, 520);
-    
+    self.navigationController.delegate = self;
     [self autoLogin];
     
     [self getMyInfoFromDB];
@@ -87,6 +88,18 @@
     [self setHeadIcon:nil];
     [self setScrollView:nil];
     [super viewDidUnload];
+}
+
+#pragma mark - navigation delegate
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if ([viewController isKindOfClass:NSClassFromString(@"MyProfileViewController")]) {
+        [kAppDelegate.tabController hidesTabBar:NO animated:YES];
+    }
+    else{
+        [kAppDelegate.tabController hidesTabBar:YES animated:YES];
+    }
 }
 
 #pragma mark - auto login
@@ -464,6 +477,8 @@
 - (void)showExtra
 {
     DLog(@"showExtra");
+    FinanceInfoViewController *financeInfoVC = [[[FinanceInfoViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:financeInfoVC animated:YES];
 }
 
 - (void)hisBusinessInfo
@@ -570,11 +585,7 @@
             [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
         }];
         
-        
-        
     }
-    
-    
 }
 
 

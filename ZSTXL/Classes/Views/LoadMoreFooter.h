@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class LoadMoreFooter;
 
 @protocol LoadMoreFooterDelegate <NSObject>
 
-- (void)LoadMoreFooterTap;
+@optional
+- (void)LoadMoreFooterTap:(LoadMoreFooter *)footer;
 
 @end
 

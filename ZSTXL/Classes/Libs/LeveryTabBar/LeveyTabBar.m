@@ -72,7 +72,7 @@
                     [btn setImage:[[imageArray objectAtIndex:i] objectForKey:@"Selected|Highlighted"] forState:UIControlStateSelected | UIControlStateHighlighted];
                 }
                 
-                btn.titleLabel.font = [UIFont systemFontOfSize:12];
+                btn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
                 [btn setTitle:[titleArray objectAtIndex:i] forState:UIControlStateNormal];
                 [btn setTitleColor:RGBCOLOR(187, 187, 184) forState:UIControlStateNormal];
 

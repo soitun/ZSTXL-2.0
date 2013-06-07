@@ -138,7 +138,7 @@
     CustomCellBackgroundViewPosition pos;
     if (indexPath.row == 0) {
         pos = CustomCellBackgroundViewPositionTop;
-    } else if (indexPath.row == self.titleArray.count-1) {
+    } else if (indexPath.row == self.dataSourceArray.count-1) {
         pos = CustomCellBackgroundViewPositionBottom;
     }else{
         pos = CustomCellBackgroundViewPositionMiddle;
@@ -182,7 +182,6 @@
 
 - (void)confirmFooterViewLeftAction
 {
-//    PERFORM_SELECTOR_WITH_OBJECT(self.delegate, @selector(publishSelectFinish:), self.selectArray);
     if ([self.delegate respondsToSelector:@selector(publishSelectFinish:withType:)]) {
         [self.delegate performSelector:@selector(publishSelectFinish:withType:) withObject:self.selectArray withObject:self.type];
         [self popVC:nil];

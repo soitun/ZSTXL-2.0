@@ -24,11 +24,6 @@
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [kAppDelegate.tabController hidesTabBar:YES animated:YES];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -82,7 +77,6 @@
 
 - (void)popVC:(UIButton *)sender
 {
-    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

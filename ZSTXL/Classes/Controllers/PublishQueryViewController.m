@@ -128,6 +128,7 @@
             
             self.pharNameLabel.text = [drugDict objForKey:@"commname"]; 
             self.producerLabel.text = [drugDict objForKey:@"companyname"];
+            self.producer = [drugDict objForKey:@"companyname"];
             self.drugFormLabel.text = [drugDict objForKey:@"dosage"];
             self.specLabel.text = [drugDict objForKey:@"standard"];
             self.orientationTextView.text = [drugDict objForKey:@"indication"];
@@ -154,6 +155,8 @@
     PublishZhaoshangViewController *publishZhaoshangVC = [[PublishZhaoshangViewController alloc] init];
     publishZhaoshangVC.drugId = self.drugId;
     publishZhaoshangVC.productName = self.productName;
+    publishZhaoshangVC.drugNum = self.drugNum;
+    publishZhaoshangVC.producer = self.producer;
     
     [self.navigationController pushViewController:publishZhaoshangVC animated:YES];
 }

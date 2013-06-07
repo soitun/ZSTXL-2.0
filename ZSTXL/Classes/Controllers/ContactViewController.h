@@ -10,8 +10,10 @@
 #import "SlideMenuView.h"
 #import "Contact.h"
 #import "TitleView.h"
+#import "SelectCityViewController.h"
 
-@interface ContactViewController : UIViewController <UIScrollViewDelegate, MenuDelegate, TitleViewDelegate>
+@interface ContactViewController : UIViewController
+<UIScrollViewDelegate, MenuDelegate, TitleViewDelegate, UINavigationControllerDelegate, SelectCityViewControllerDelegate>
 
 @property (retain, nonatomic) IBOutlet UIScrollView *mScrollView;
 @property (retain, nonatomic) SlideMenuView *mSlideMenu;
@@ -19,6 +21,8 @@
 @property (nonatomic, copy) NSString *cityName;
 @property (nonatomic, retain) UIPickerView *areaPicker;
 @property (nonatomic, assign) BOOL pickerIsOn;
+
+@property (nonatomic, retain) TitleView *titleView;
 
 - (void)pushViewController:(UIViewController *)vc;
 

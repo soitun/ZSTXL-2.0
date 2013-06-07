@@ -19,14 +19,35 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+    if (self.contact) {
+        self.nameLabel.text = self.contact.username;
+        self.useridLabel.text = self.contact.userid;
+        [self.avatar setImageWithURL:[NSURL URLWithString:self.contact.picturelinkurl] placeholderImage:[UIImage imageByName:@"pop_avatar.png"]];
+        
+        self.xunImage.hidden = self.contact.ismember.intValue ? YES : NO;
+        self.xunVImage.hidden = self.contact.col2.intValue ? YES : NO;
+        
+        [Utility addRoundCornerToView:self.avatar];
+    }
+    
 }
-*/
+
+- (id)initWithNib:(NSString *)nib
+{
+    self = [[[NSBundle mainBundle] loadNibNamed:nib owner:nil options:nil] lastObject];
+    if (self) {
+        self.bgControl = [[UIControl alloc] initWithFrame:CGRectMake(0, 0, 320, SCREEN_HEIGHT)];
+        self.bgControl.backgroundColor = RGBACOLOR(0, 0, 0, 0.6);
+        [self.bgControl addTarget:self action:@selector(tapBg) forControlEvents:UIControlEventTouchUpInside];
+        
+        self.frame = CGRectMake(34, 150, 252, 170);
+        [self.bgControl addSubview:self];
+    }
+    return self;
+}
 
 - (void)dealloc {
     [_avatar release];
@@ -38,16 +59,28 @@
     [super dealloc];
 }
 - (IBAction)telAction:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(popContactViewTel)]) {
-        [self.delegate performSelector:@selector(popContactViewTel)];
+    [self.bgControl removeFromSuperview];
+    if ([self.delegate respondsToSelector:@selector(popContactViewTel:)]) {
+        [self.delegate performSelector:@selector(popContactViewTel:) withObject:self.contact];
     }
     
 }
 
 - (IBAction)chatAction:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(popContactViewChat)]) {
-        [self.delegate performSelector:@selector(popContactViewChat)];
+    [self.bgControl removeFromSuperview];
+    if ([self.delegate respondsToSelector:@selector(popContactViewChat:)]) {
+        [self.delegate performSelector:@selector(popContactViewChat:) withObject:self.contact];
     }
+}
+
+- (void)showInView:(UIView *)view
+{
+    [view addSubview:self.bgControl];
+}
+
+- (void)tapBg
+{
+    [self.bgControl removeFromSuperview];
 }
 
 @end

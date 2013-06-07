@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Contact.h"
 
 @protocol PopContactViewDelegate <NSObject>
 
-- (void)popContactViewTel;
-- (void)popContactViewChat;
+- (void)popContactViewTel:(Contact *)contact;
+- (void)popContactViewChat:(Contact *)contact;
 
 @end
 
@@ -23,9 +23,12 @@
 @property (retain, nonatomic) IBOutlet UIImageView *xunImage;
 @property (retain, nonatomic) IBOutlet UIImageView *xunVImage;
 @property (retain, nonatomic) IBOutlet UIImageView *xunBImage;
-- (IBAction)telAction:(UIButton *)sender;
-- (IBAction)chatAction:(UIButton *)sender;
-
+@property (retain, nonatomic) UIControl *bgControl;
+@property (retain, nonatomic) Contact *contact;
 @property (assign, nonatomic) id<PopContactViewDelegate> delegate;
 
+- (IBAction)telAction:(UIButton *)sender;
+- (IBAction)chatAction:(UIButton *)sender;
+- (id)initWithNib:(NSString *)nib;
+- (void)showInView:(UIView *)view;
 @end

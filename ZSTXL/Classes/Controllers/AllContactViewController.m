@@ -24,7 +24,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cityChanged:) name:kCityChangedNoification object:nil];
     }
     return self;
 }
@@ -34,7 +34,8 @@
     [super viewDidLoad];
     self.sortid = 0;
     self.dataSourceArray = [NSMutableArray array];
-    [self initTableFooter];
+    self.maxrow = @"50";
+//    [self initTableFooter];
     [self getAllContactFromDB];
 }
 
@@ -45,6 +46,7 @@
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCityChangedNoification object:nil];
     [_tableView release];
     [super dealloc];
 }
@@ -65,6 +67,7 @@
         [self.dataSourceArray addObjectsFromArray:contactArray];
         [self.tableView reloadData];
         self.sortid = contactArray.count;
+        [self initTableFooter];
     }
     else{
         [self getInvestmentUserListFromServer];
@@ -82,7 +85,7 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:provinceId, @"provinceid",
                           cityId, @"cityid",
                           listPage, @"page",
-                          @"50", @"maxrow",
+                          self.maxrow, @"maxrow",
                           userid, @"userid",
                           @"getAllUserListByPage.json", @"path", nil];
     
@@ -90,50 +93,37 @@
     [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
     [DreamFactoryClient getWithURLParameters:dict success:^(NSDictionary *json) {
         if ([[[json objForKey:@"returnCode"] stringValue] isEqualToString:@"0"]) {
+            [MBProgressHUD hideAllHUDsForView:[kAppDelegate window] animated:YES];
+            [self.footer.indicator stopAnimating];
             
-            if (![[json objForKey:@"InvestmentUserList"] isValid]) {
-                //                [self.contactArray removeAllObjects];
-//                [self.tableView reloadData];
-                [MBProgressHUD hideAllHUDsForView:[kAppDelegate window] animated:YES];
-                [kAppDelegate showWithCustomAlertViewWithText:@"加载完毕" andImageName:nil];
-                //                NSLog(@"%@ 该地区暂无商家", [PersistenceHelper dataForKey:kCityName]);
-                return;
+            NSArray *jsonArray = [self deCryptJsonDict:json OfJsonKey:@"InvestmentUserList"];
+            
+            [jsonArray enumerateObjectsUsingBlock:^(NSDictionary *contactDict, NSUInteger idx, BOOL *stop) {
+                //                NSLog(@"contact Dict: %@", contactDict);
+                
+                AllContact *contact = [AllContact MR_createEntity];
+                [contact initWithDict:contactDict];
+                contact.sortid = [NSString stringWithFormat:@"%d", self.sortid++];
+                [self.dataSourceArray addObject:contact];
+                DB_SAVE();
+            }];
+            
+            self.page++;
+            if (self.page == 1) {
+                [self initTableFooter];
+            }
+            
+            if ([self requestFinish]) {
+                self.footer.titleLabel.text = @"加载完成";
             }
             else{
-                NSArray *jsonArray = [self deCryptJsonDict:json OfJsonKey:@"InvestmentUserList"];
-                
-                [jsonArray enumerateObjectsUsingBlock:^(NSDictionary *contactDict, NSUInteger idx, BOOL *stop) {
-                    //                NSLog(@"contact Dict: %@", contactDict);
-                    
-                    AllContact *contact = [AllContact MR_createEntity];
-                    
-                    contact.userid = [[contactDict objForKey:@"id"] stringValue];
-                    contact.username = [contactDict objForKey:@"username"];
-                    contact.tel = [contactDict objForKey:@"tel"];
-                    contact.mailbox = [contactDict objForKey:@"mailbox"];
-                    contact.picturelinkurl = [contactDict objForKey:@"picturelinkurl"];
-                    contact.col1 = [contactDict objForKey:@"col1"];
-                    contact.col2 = [contactDict objForKey:@"col2"];
-                    contact.col2 = [contactDict objForKey:@"col2"];
-                    contact.cityid = [PersistenceHelper dataForKey:kCityId];
-                    contact.loginid = [kAppDelegate userId];
-                    contact.username_p = makePinYinOfName(contact.username);
-                    contact.invagency = [[contactDict objForKey:@"invagency"] stringValue];
-                    //                NSLog(@"name pinyin %@", contact.username_p);
-                    
-                    contact.sectionkey = [NSString stringWithFormat:@"%c", indexTitleOfString([contact.username characterAtIndex:0])];
-                    contact.sortid = [NSString stringWithFormat:@"%d", self.sortid++];
-                    [self.dataSourceArray addObject:contact];
-                    DB_SAVE();
-                }];
-                
-                self.page++;
-                [MBProgressHUD hideAllHUDsForView:[kAppDelegate window] animated:YES];
-                [self.tableView reloadData];
+                self.footer.titleLabel.text = @"加载更多";
             }
+            
+            [self.tableView reloadData];
+            
         } else {
             
-            [MBProgressHUD hideAllHUDsForView:[kAppDelegate window] animated:YES];
             [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:nil];
         }
     } failure:^(NSError *error) {
@@ -161,14 +151,25 @@
     return jsonArray;
 }
 
+- (BOOL)requestFinish
+{
+    if (self.dataSourceArray.count == 0) {
+        return YES;
+    }else if(self.dataSourceArray.count % self.maxrow.intValue != 0){
+        return YES;
+    }
+    
+    return NO;
+}
+
 #pragma mark - table view
 
 - (void)initTableFooter
 {
-    LoadMoreFooter *footer = [[[NSBundle mainBundle] loadNibNamed:@"LoadMoreFooter" owner:nil options:nil] lastObject];
-    footer.titleLabel.text = @"加载更多";
-    footer.delegate = self;
-    self.tableView.tableFooterView = footer;
+    self.footer = [[[NSBundle mainBundle] loadNibNamed:@"LoadMoreFooter" owner:nil options:nil] lastObject];
+    self.footer.titleLabel.text = @"加载更多";
+    self.footer.delegate = self;
+    self.tableView.tableFooterView = self.footer;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -196,62 +197,33 @@
     }
     cell.contact = [self.dataSourceArray objectAtIndex:indexPath.row];
     cell.delegate = self;
-    [self configureCell:cell atIndexPath:indexPath OfTableView:tableView];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell refresh];
     
     return cell;
 }
 
 - (void)configureCell:(ContactCell *)cell atIndexPath:(NSIndexPath *)indexPath OfTableView:(UITableView *)tableView
 {
-    cell.selectionStyle = UITableViewCellEditingStyleNone;
     
-    AllContact *userDetail;
-    
-    userDetail = [self.dataSourceArray objectAtIndex:indexPath.row];
-    
-    switch (userDetail.invagency.intValue) {
-        case 1:
-            cell.ZDLabel.text = @"招商";
-            break;
-        case 2:
-            cell.ZDLabel.text = @"代理";
-            break;
-        case 3:
-            cell.ZDLabel.text = @"招商、代理";
-            break;
-        default:
-            break;
-    }
-    
-    cell.headIcon.layer.cornerRadius = 4;
-    cell.headIcon.layer.masksToBounds = YES;
-    [cell.headIcon setImageWithURL:[NSURL URLWithString:userDetail.picturelinkurl]
-                                   placeholderImage:[UIImage imageByName:@"avatar"]];
-    
-    
-    if ([userDetail.remark isValid]) {
-        NSMutableString *userName = [NSMutableString stringWithFormat:@"%@(%@)", userDetail.username, userDetail.remark];
-        cell.nameLabel.text = userName;
-    }
-    else{
-        cell.nameLabel.text = userDetail.username;
-    }
-    
-    if ([userDetail.col2 isEqualToString:@"1"]) {
-        cell.xun_VImage.hidden = NO;
-    }
-    else{
-        cell.xun_VImage.hidden = YES;
-    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self showContactView];
+    Contact *contact = [self.dataSourceArray objectAtIndex:indexPath.row];
+    PopContactView *pop = [[PopContactView alloc] initWithNib:@"PopContactView"];
+    pop.contact = contact;
+    pop.delegate = self;
+    [pop showInView:kAppDelegate.window];
 }
 
-- (void)LoadMoreFooterTap
+- (void)LoadMoreFooterTap:(LoadMoreFooter *)footer
 {
+    if ([self requestFinish]) {
+        self.footer.titleLabel.text = @"加载完成";
+        return;
+    }
+    [footer.indicator startAnimating];
     [self getInvestmentUserListFromServer];
 }
 
@@ -266,34 +238,34 @@
 
 #pragma mark - contact view
 
-- (void)showContactView
+- (void)popContactViewChat:(Contact *)contact
 {
-    PopContactView *contactView = [[[NSBundle mainBundle] loadNibNamed:@"PopContactView" owner:nil options:nil] lastObject];
-    contactView.frame = CGRectMake(34, 150, 252, 170);
-    contactView.delegate = self;
-    
-    self.bgControl = [[[UIControl alloc] initWithFrame:CGRectMake(0, 0, 320, SCREEN_HEIGHT)] autorelease];
-    self.bgControl.backgroundColor = RGBACOLOR(0, 0, 0, 0.6);
-    [self.bgControl addTarget:self action:@selector(removeBg) forControlEvents:UIControlEventTouchDown];
-    [self.bgControl addSubview:contactView];
-    
-    [kAppDelegate.window addSubview:self.bgControl];
     
 }
 
-- (void)popContactViewChat
+- (void)popContactViewTel:(Contact *)contact
 {
-    [self.bgControl removeFromSuperview];
+    NSString *tel = [Utility deCryptTel:contact.tel withUserId:contact.userid];
+    [Utility callContact:tel];
 }
 
-- (void)popContactViewTel
+#pragma mark - refresh data
+
+- (void)refreshAction
 {
-    [self.bgControl removeFromSuperview];
+    if (self.dataSourceArray.count == 0) {
+        [self getAllContactFromDB];
+    }
 }
 
-- (void)removeBg
+#pragma mark - notify
+
+- (void)cityChanged:(NSNotification *)noti
 {
-    [self.bgControl removeFromSuperview];
+    [self.dataSourceArray removeAllObjects];
+    self.page = 0;
+    self.sortid = 0;
+    [self getAllContactFromDB];
 }
 
 

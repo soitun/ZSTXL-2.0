@@ -930,6 +930,14 @@ char indexTitleOfString(unsigned short string) {
     return jsonArray;
 }
 
++ (NSString *)deCryptTel:(NSString *)tel withUserId:(NSString *)userId
+{
+    NSMutableString *key = [NSMutableString stringWithString:[kBaseKey substringToIndex:24-userId.length]];
+    [key appendFormat:@"%@", userId];
+    NSString *trueTel = [DES3Util decrypt:tel withKey:key];
+    return trueTel;
+}
+
 + (void)saveImage:(UIImage *)image toDiskWithName:(NSString *)name
 {
     if (!image) {
@@ -970,6 +978,14 @@ char indexTitleOfString(unsigned short string) {
 {
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"userDetail.userid == %@", kAppDelegate.userId];
     return [MyInfo findFirstWithPredicate:pred];
+}
+
++ (void)callContact:(NSString *)tel
+{
+    NSString *telStr = [NSString stringWithFormat:@"tel://%@",tel];
+    UIWebView *callPhoneWebVw = [[UIWebView alloc] init];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:telStr]];
+    [callPhoneWebVw loadRequest:request];
 }
 
 @end

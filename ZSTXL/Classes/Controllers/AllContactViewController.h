@@ -19,11 +19,14 @@
 @property (nonatomic, retain) UIViewController *parentController;
 
 @property (nonatomic, assign) NSInteger page;
+@property (nonatomic, copy) NSString *maxrow;
 @property (nonatomic, assign) NSInteger sortid;
 @property (nonatomic, retain) UISearchBar *searchBar;
 @property (nonatomic, retain) UISearchDisplayController *searchDC;
 
-@property (nonatomic, retain) UIControl *bgControl;
+@property (nonatomic, retain) LoadMoreFooter *footer;
+
+- (void)refreshAction;
 
 
 @end

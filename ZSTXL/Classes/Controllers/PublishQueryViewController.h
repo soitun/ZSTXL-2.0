@@ -23,6 +23,7 @@
 
 @property (copy, nonatomic) NSString *drugNum;
 @property (copy, nonatomic) NSString *drugId;
+@property (copy, nonatomic) NSString *producer;
 @property (copy, nonatomic) NSString *productName;
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (assign, nonatomic) BOOL queryFinished;
