@@ -88,6 +88,7 @@
     self.tabController = [[LeveyTabBarController alloc] initWithViewControllers:controllerArray imageArray:imageArray titleArray:titleArray];
     [self.tabController.tabBar setBackgroundImage:[UIImage imageNamed:@"tabbar"]];
     self.tabController.tabBarTransparent = YES;
+    [self.tabController setSelectedIndex:0];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

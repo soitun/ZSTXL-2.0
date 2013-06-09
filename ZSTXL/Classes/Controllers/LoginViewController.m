@@ -42,8 +42,8 @@
     
     
     
-    self.scrollView.contentSize = CGSizeMake(320, SCREEN_HEIGHT-64);
-    [self initNavBar];
+    self.scrollView.contentSize = CGSizeMake(320, 480-64);
+//    [self initNavBar];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyBoard:)];
     [self.scrollView addGestureRecognizer:tap];
@@ -195,7 +195,9 @@
             
             [PersistenceHelper setData:userId forKey:kUserId];
             [PersistenceHelper setData:pwd forKey:KPassWord];
-            [self.navigationController dismissModalViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:^{
+                PERFORM_SELECTOR(self.delegate, @selector(loginFinished));
+            }];
             
         } else {
             [MBProgressHUD hideHUDForView:self.view animated:YES];

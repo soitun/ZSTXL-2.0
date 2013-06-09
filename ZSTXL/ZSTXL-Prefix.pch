@@ -25,6 +25,9 @@
 #import "RegexKitLite.h"
 #import "DES3Util.h"
 #import "UIImage+Resizing.h"
+#import "WebViewManager.h"
+#import "NSNotificationCenter+MainThread.h"
+#import "NSString+MD5.h"
 
 #define MR_SHORTHAND
 #define MR_ENABLE_ACTIVE_RECORD_LOGGING 0

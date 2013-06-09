@@ -242,6 +242,11 @@
     }];
 }
 
+- (void)addFace
+{
+    DLog(@"add face");
+}
+
 - (void)dealloc {
     [doneButton release];
     [lastTime release];
@@ -276,10 +281,13 @@
 
 
 - (void)initGrowTextView {
-    containerView = [[[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 320, 40)] autorelease];
+    containerView = [[[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 49, 320, 49)] autorelease];
     
-    textView = [[[HPGrowingTextView alloc] initWithFrame:CGRectMake(6, 1, 240, 40) placeHolder:@"请输入要发送的消息" placeholderColor:PLACEHOLDER_COLOR] autorelease];
-    textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);    
+
+    
+    
+    textView = [[[HPGrowingTextView alloc] initWithFrame:CGRectMake(57, 7, 204, 35) placeHolder:@"请输入要发送的消息" placeholderColor:PLACEHOLDER_COLOR] autorelease];
+    textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
 	textView.minNumberOfLines = 1;
 	textView.maxNumberOfLines = 4;
 	textView.returnKeyType = UIReturnKeyDefault;
@@ -290,15 +298,15 @@
     
     [self.view addSubview:containerView];
 	
-    UIImage *rawEntryBackground = [UIImage imageByName:@"MessageEntryInputField"];
+    UIImage *rawEntryBackground = [UIImage imageByName:@"d_textfield_bg"];
     UIImage *entryBackground = [rawEntryBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
     UIImageView *entryImageView = [[[UIImageView alloc] initWithImage:entryBackground] autorelease];
-    entryImageView.frame = CGRectMake(5, 0, 248, 40);
+    entryImageView.frame = CGRectMake(55, 5, 208, 40);
     entryImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
-    UIImage *rawBackground = [UIImage imageByName:@"MessageEntryBackground"];
-    UIImage *background = [rawBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
-    UIImageView *imageView = [[[UIImageView alloc] initWithImage:background] autorelease];
+    UIImage *rawBackground = [UIImage imageByName:@"d_inputbar_bg"];
+//    UIImage *background = [rawBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
+    UIImageView *imageView = [[[UIImageView alloc] initWithImage:rawBackground] autorelease];
     imageView.frame = CGRectMake(0, 0, containerView.frame.size.width, containerView.frame.size.height);
     imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
@@ -306,14 +314,14 @@
     
     // view hierachy
     [containerView addSubview:imageView];
-    [containerView addSubview:textView];
     [containerView addSubview:entryImageView];
+    [containerView addSubview:textView];
     
-    UIImage *sendBtnBackground = [[UIImage imageByName:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
-    UIImage *selectedSendBtnBackground = [[UIImage imageByName:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
+    UIImage *sendBtnBackground = [[UIImage imageByName:@"d_send_button.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
+    UIImage *selectedSendBtnBackground = [[UIImage imageByName:@"d_send_button_p.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
     
 	UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-	doneBtn.frame = CGRectMake(containerView.frame.size.width - 69, 8, 63, 27);
+	doneBtn.frame = CGRectMake(containerView.frame.size.width - 47, 5, 40, 40);
     doneBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
 	[doneBtn setTitle:@"发送" forState:UIControlStateNormal];
     
@@ -326,6 +334,15 @@
     [doneBtn setBackgroundImage:sendBtnBackground forState:UIControlStateNormal];
     [doneBtn setBackgroundImage:selectedSendBtnBackground forState:UIControlStateSelected];
 	[containerView addSubview:doneBtn];
+    
+    UIButton *faceButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [faceButton setBackgroundImage:[UIImage imageNamed:@"d_face"] forState:UIControlStateNormal];
+    [faceButton setBackgroundImage:[UIImage imageNamed:@"d_face_p"] forState:UIControlStateHighlighted];
+    [faceButton addTarget:self action:@selector(addFace) forControlEvents:UIControlEventTouchUpInside];
+    faceButton.frame = CGRectMake(6, 5, 40, 40);
+    faceButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
+    [containerView addSubview:faceButton];
+    
     containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;    
     
     self.doneButton = doneBtn;

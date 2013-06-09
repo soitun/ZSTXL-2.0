@@ -21,11 +21,9 @@
 
 - (void)awakeFromNib
 {
-    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseMale)];
-    [self.chooseMaleImage addGestureRecognizer:tap1];
+    [self.maleButton addTarget:self action:@selector(chooseMale) forControlEvents:UIControlEventTouchUpInside];
     
-    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseFemale)];
-    [self.chooseFemaleImage addGestureRecognizer:tap2];
+    [self.femaleButton addTarget:self action:@selector(chooseFemale) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)chooseMale
@@ -59,10 +57,8 @@
 - (void)dealloc {
     [_titleLabel release];
     [_detailLabel release];
-    [_maleLabel release];
-    [_femaleLabel release];
-    [_chooseMaleImage release];
-    [_chooseFemaleImage release];
+    [_maleButton release];
+    [_femaleButton release];
     [super dealloc];
 }
 @end

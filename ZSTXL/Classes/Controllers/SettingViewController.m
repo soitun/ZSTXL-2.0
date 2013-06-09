@@ -30,9 +30,8 @@
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
     [self.tableView reloadData];
 }
 
@@ -237,7 +236,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SettingCell *cell = (SettingCell *)[tableView cellForRowAtIndexPath:indexPath];
-    if (indexPath.section == 2 && indexPath.row == 3) {
+    if ((indexPath.section == 2 && indexPath.row == 3) ||
+        (indexPath.section == 2 && indexPath.row == 1)) {
         
     }
     else {
@@ -288,6 +288,9 @@
 - (void)deleteChatRecord
 {
     DLog(@"deleteChatRecord");
+    DeleteChatView *deleteChatView = [[DeleteChatView alloc] init];
+    deleteChatView.delegate = self;
+    [deleteChatView showInView:kAppDelegate.window];
 }
 
 - (void)inviteFriend
@@ -350,7 +353,9 @@
 
 - (void)logoff:(UIButton *)sender
 {
-    DLog(@"logoff");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认退出" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    [alert show];
+    [alert release];
 }
 
 #pragma mark - setting cell delegate
@@ -369,6 +374,33 @@
 - (void)select:(SettingCell *)cell
 {
     DLog(@"select");
+}
+
+#pragma mark - alertview delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        
+    }
+    else{
+        [PersistenceHelper setData:@"" forKey:KUserName];
+        [PersistenceHelper setData:@"" forKey:kUserId];
+        [kAppDelegate.tabController.tabBar selectTabAtIndex:1];
+        [self popVC:nil];
+    }
+}
+
+#pragma mark - delete view delegate
+
+- (void)deleteChat
+{
+    
+}
+
+- (void)deleteChatCancel
+{
+    
 }
 
 @end

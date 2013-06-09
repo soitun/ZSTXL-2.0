@@ -16,6 +16,8 @@
 #import "MailBoxViewController.h"
 #import "LoginViewController.h"
 #import "FinanceInfoViewController.h"
+#import "StarNewsInfo.h"
+#import "StarNewsViewController.h"
 
 
 @interface MyProfileViewController ()
@@ -40,7 +42,16 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self showBasicInfo];
+    if (![kAppDelegate.userId isEqualToString:@"0"]) {
+        [self getMyInfoFromDB];
+        [self showBasicInfo];
+    }
+    else{
+        LoginViewController *loginVC = [[[LoginViewController alloc] init] autorelease];
+        loginVC.delegate = self;
+        CustomNavigationController *nav = [[[CustomNavigationController alloc] initWithRootViewController:loginVC] autorelease];
+        [self.navigationController presentModalViewController:nav animated:YES];
+    }
 }
 
 - (void)viewDidLoad
@@ -50,15 +61,13 @@
     self.leftArray_1 = @[@"招商代理：", @"常驻地区：", @"类别偏好：", @"财务信息："];
     self.leftArray_2 = @[@"我的招商代理信息", @"好友的招商代理信息"];
     [self initTableSelector];
-    
-    self.scrollView.contentSize = CGSizeMake(320, 520);
-    self.navigationController.delegate = self;
-    [self autoLogin];
-    
-    [self getMyInfoFromDB];
-    [self showBasicInfo];
     [self initNavBar];
     [self initHeadIcon];
+    [self initTheView];
+    self.scrollView.contentSize = CGSizeMake(320, 520);
+    self.navigationController.delegate = self;
+    
+
 }
 
 - (void)dealloc {
@@ -102,6 +111,41 @@
     }
 }
 
+#pragma mark - init attent, blacklist, star view
+
+- (void)initTheView
+{
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAttentView)];
+    [self.attentView addGestureRecognizer:tap1];
+    
+    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapStarView)];
+    [self.starView addGestureRecognizer:tap2];
+    
+    UITapGestureRecognizer *tap3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBlackListView)];
+    [self.blacklistView addGestureRecognizer:tap3];
+}
+
+- (void)tapAttentView
+{
+    
+}
+
+- (void)tapStarView
+{
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"type == %@", @"1"];
+    NSArray *array = [StarNewsInfo findAll];
+    StarNewsViewController *starNewsVC = [[[StarNewsViewController alloc] init] autorelease];
+    starNewsVC.dataSourceArray = array;
+    [self.navigationController pushViewController:starNewsVC animated:YES];
+}
+
+- (void)tapBlackListView
+{
+    
+}
+
+
+
 #pragma mark - auto login
 
 - (void)autoLogin
@@ -115,7 +159,7 @@
 
 - (void)initHeadIcon
 {
-    self.headIcon.layer.cornerRadius = 8;
+    self.headIcon.layer.cornerRadius = 5;
     self.headIcon.layer.masksToBounds = YES;
     self.headIcon.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(modifyHeadIcon)];
@@ -711,6 +755,15 @@
     }];
     
     [picker dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - Login delegate
+
+- (void)loginFinished
+{
+    [self getMyInfoFromDB];
+    [self showBasicInfo];
+
 }
 
 @end

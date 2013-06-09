@@ -8,11 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "InfoAdvHeaderView.h"
+#import "NewsInfo.h"
+#import "EGORefreshTableHeaderView.h"
 
 
-@interface ZhaoshangDailiViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate>
+@interface ZhaoshangDailiViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, EGORefreshTableHeaderDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) NSMutableArray *dataSource;
+@property (nonatomic, retain) NSMutableArray *dataSourceArray;
 @property (nonatomic, retain) UIButton *CateButton;
+
+@property (nonatomic, assign) NSInteger page;
+@property (nonatomic, copy) NSString *maxrow;
+@property (nonatomic, retain) EGORefreshTableHeaderView *egoView;
+@property (nonatomic, assign) BOOL reloading;
 
 @end

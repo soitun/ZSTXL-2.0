@@ -35,10 +35,21 @@
     
     self.contentArray = [NSMutableArray arrayWithArray:@[@"国金企业", @"小儿咳喘灵颗粒", @"Z20063280", @"颗粒型", @"河北国金药业有限责任公司", @"北京", @"医保甲类", @"医院、药店", @"暂无内容", @"宣肺、清热、止咳、祛痰。用于上呼吸道感染引起的咳嗽。"]];
     
-    self.tableView.frame = CGRectMake(0, 106, 320, SCREEN_HEIGHT-64-106);
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 106, 320, SCREEN_HEIGHT-64-106) style:UITableViewStylePlain];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
     self.tableView.bounces = NO;
+    [self.view addSubview:self.tableView];
     [self initHeaderView];
     [self initNavBar];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if (self.contactView) {
+        [self.contactView removeFromSuperview];
+        self.contactView = nil;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,6 +119,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ZSInfoCell" owner:nil options:nil] lastObject];
     }
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.nameLabel.text = [self.titleArray objectAtIndex:indexPath.row];
     cell.contentLabel.text = [self.contentArray objectAtIndex:indexPath.row];
     
@@ -130,10 +142,13 @@
 
 - (void)zsInfoHeaderContactMe
 {
-    self.contactView = [[[NSBundle mainBundle] loadNibNamed:@"ZSInfoContactView" owner:nil options:nil] lastObject];
-    self.contactView.delegate = self;
-    self.contactView.frame = CGRectMake(121, 42, 187, 53);
-    [self.header addSubview:self.contactView];
+    if (!self.contactView) {
+        self.contactView = [[[NSBundle mainBundle] loadNibNamed:@"ZSInfoContactView" owner:nil options:nil] lastObject];
+        self.contactView.delegate = self;
+        self.contactView.frame = CGRectMake(121, 42, 187, 53);
+        [self.header addSubview:self.contactView];
+    }
+
 }
 
 #pragma mark - zsinfo contact view delegate
@@ -141,11 +156,13 @@
 - (void)zsInfoContactViewChat
 {
     [self.contactView removeFromSuperview];
+    self.contactView = nil;
 }
 
 - (void)zsInfoContactViewTel
 {
     [self.contactView removeFromSuperview];
+    self.contactView = nil;
 }
 
 

@@ -334,7 +334,7 @@ char indexTitleOfString(unsigned short string) {
 + (void)addShadow:(UIView *)view {
     
     // shadow path
-    UIBezierPath *path = [UIBezierPath bezierPath]; 
+    UIBezierPath *path = [UIBezierPath bezierPath];
     
     CGPoint topLeft = view.bounds.origin; 
     CGPoint bottomLeft = CGPointMake(0.0, CGRectGetHeight(view.bounds) + 0); 
@@ -944,14 +944,16 @@ char indexTitleOfString(unsigned short string) {
         NSLog(@"image saved is nil");
         return;
     }
-    NSData *imageData = UIImagePNGRepresentation(image);
-
-    [imageData writeToFile:name atomically:YES];
+    
+    NSString *aPath=[NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),name];
+    NSData *imgData = UIImageJPEGRepresentation(image,1.0);
+    [imgData writeToFile:aPath atomically:YES];
 }
 
 + (UIImage *)readImageFromDisk:(NSString *)path
 {
-    UIImage *image = [UIImage imageWithContentsOfFile:path];
+    NSString *truePath = [NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),path];
+    UIImage *image = [UIImage imageWithContentsOfFile:truePath];
     return image;
 }
 

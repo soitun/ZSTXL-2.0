@@ -70,6 +70,11 @@
     [super viewDidUnload];
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
 #pragma mark - nav bar
 
 - (void)initNavBar
@@ -93,10 +98,14 @@
 - (void)leftAction
 {
     //查询
+    
     [self.drugNumTextField resignFirstResponder];
     if (![self.drugNum isValid]) {
         [kAppDelegate showWithCustomAlertViewWithText:@"请输入药品准字号" andImageName:kErrorIcon];
         return;
+    }
+    else{
+        self.drugNum = [self.drugNum uppercaseString];
     }
     
     NSDictionary *para = @{@"path": @"getDrugCommName.json",

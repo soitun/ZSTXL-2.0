@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  ZSTXL
+
+  Created by LiuYue on 13-6-9.
+  Copyright (c) 2013年 com.zxcxco. All rights reserved.
+*/
+
+
+"Release to refresh status" = "Release to refresh...";
+"Pull down to refresh status" = "Pull to refresh...";
+"Loading Status" = "loading...";
+"Last Updated:" = "Last updated：";

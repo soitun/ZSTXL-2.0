@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoginViewController.h"
 
-@interface TheNewMessageViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface TheNewMessageViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, LoginViewControllerDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) NSMutableArray *dataSourceArray;

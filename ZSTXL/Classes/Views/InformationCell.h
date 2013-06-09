@@ -12,13 +12,11 @@
     UILabel *labTip;
     UILabel *labSubTitle;
     UILabel *labTitle;
-    EGOImageView *avatar;
+    UIImageView *avatar;
 }
 
-@property (retain, nonatomic) IBOutlet UILabel *labTip;
 @property (retain, nonatomic) IBOutlet UILabel *labSubTitle;
 @property (retain, nonatomic) IBOutlet UILabel *labTitle;
-@property (retain, nonatomic) IBOutlet EGOImageView *avatar;
-@property (retain, nonatomic) IBOutlet UIImageView *specialView;
+@property (retain, nonatomic) IBOutlet UIImageView *avatar;
 @property (assign, nonatomic) BOOL isSpecail;
 @end

@@ -215,23 +215,21 @@
         cell.delegate = self;
         cell.detailLabel.hidden = YES;
         cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.maleLabel.hidden = NO;
-        cell.femaleLabel.hidden = NO;
-        cell.chooseMaleImage.hidden = NO;
-        cell.chooseFemaleImage.hidden = NO;
+        cell.maleButton.hidden = NO;
+        cell.femaleButton.hidden = NO;
         
         if (![self.sex isValid]) {
-            cell.chooseMaleImage.image = [UIImage imageByName:@"login_noselect"];
-            cell.chooseFemaleImage.image = [UIImage imageByName:@"login_noselect"];
+            [cell.maleButton setImage:[UIImage imageNamed:@"login_noselect"] forState:UIControlStateNormal];
+            [cell.femaleButton setImage:[UIImage imageNamed:@"login_noselect"] forState:UIControlStateNormal];
         }
         else{
             if ([self.sex isEqualToString:@"男"]) {
-                cell.chooseMaleImage.image = [UIImage imageByName:@"login_select"];
-                cell.chooseFemaleImage.image = [UIImage imageByName:@"login_noselect"];
+                [cell.maleButton setImage:[UIImage imageNamed:@"login_select"] forState:UIControlStateNormal];
+                [cell.femaleButton setImage:[UIImage imageNamed:@"login_noselect"] forState:UIControlStateNormal];
             }
             else{
-                cell.chooseFemaleImage.image = [UIImage imageByName:@"login_select"];
-                cell.chooseMaleImage.image = [UIImage imageByName:@"login_noselect"];
+                [cell.maleButton setImage:[UIImage imageNamed:@"login_noselect"] forState:UIControlStateNormal];
+                [cell.femaleButton setImage:[UIImage imageNamed:@"login_select"] forState:UIControlStateNormal];
             }
         }
         
@@ -315,20 +313,16 @@
 
 - (void)chooseMale:(PersonBasicInfoCell *)cell
 {
-    if ([self.sex isEqualToString:@"女"]) {
-        self.sex = @"男";
-        cell.chooseMaleImage.image = [UIImage imageNamed:@"login_select"];
-        cell.chooseFemaleImage.image = [UIImage imageNamed:@"login_noselect"];
-    }
+    self.sex = @"男";
+    [cell.maleButton setImage:[UIImage imageNamed:@"login_select"] forState:UIControlStateNormal];
+    [cell.femaleButton setImage:[UIImage imageNamed:@"login_noselect"] forState:UIControlStateNormal];
 }
 
 - (void)chooseFemale:(PersonBasicInfoCell *)cell
 {
-    if ([self.sex isEqualToString:@"男"]) {
-        self.sex = @"女";
-        cell.chooseMaleImage.image = [UIImage imageNamed:@"login_noselect"];
-        cell.chooseFemaleImage.image = [UIImage imageNamed:@"login_select"];
-    }
+    self.sex = @"女";
+    [cell.maleButton setImage:[UIImage imageNamed:@"login_noselect"] forState:UIControlStateNormal];
+    [cell.femaleButton setImage:[UIImage imageNamed:@"login_select"] forState:UIControlStateNormal];
 }
 
 @end

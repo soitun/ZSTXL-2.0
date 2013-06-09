@@ -76,6 +76,16 @@
         <relationship name="pharList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pharmacology" syncable="YES"/>
         <relationship name="userDetail" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UserDetail" syncable="YES"/>
     </entity>
+    <entity name="NewsInfo" representedClassName="NewsInfo" syncable="YES">
+        <attribute name="newsid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pictureurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publishedtime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="NormalNewsInfo" representedClassName="NormalNewsInfo" parentEntity="NewsInfo" syncable="YES"/>
     <entity name="Pharmacology" representedClassName="Pharmacology" syncable="YES">
         <attribute name="col4" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
@@ -100,6 +110,7 @@
         <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="StarNewsInfo" representedClassName="StarNewsInfo" parentEntity="NewsInfo" syncable="YES"/>
     <entity name="UserDetail" representedClassName="UserDetail" syncable="YES">
         <attribute name="autograph" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="col1" optional="YES" attributeType="String" syncable="YES"/>
@@ -125,12 +136,15 @@
         <element name="CommendContact" positionX="693" positionY="-117" width="128" height="43"/>
         <element name="Contact" positionX="855" positionY="9" width="128" height="360"/>
         <element name="FriendContact" positionX="693" positionY="92" width="128" height="43"/>
-        <element name="MailInfo" positionX="351" positionY="101" width="128" height="240"/>
+        <element name="MailInfo" positionX="297" positionY="126" width="128" height="240"/>
         <element name="MyInfo" positionX="-45" positionY="-151" width="128" height="150"/>
+        <element name="NewsInfo" positionX="306" positionY="54" width="128" height="150"/>
         <element name="Pharmacology" positionX="189" positionY="-108" width="128" height="103"/>
-        <element name="SearchContact" positionX="855" positionY="369" width="128" height="45"/>
+        <element name="SearchContact" positionX="700" positionY="234" width="128" height="45"/>
         <element name="SMSList" positionX="531" positionY="-160" width="128" height="178"/>
         <element name="SMSRecord" positionX="369" positionY="-157" width="128" height="103"/>
         <element name="UserDetail" positionX="117" positionY="122" width="128" height="268"/>
+        <element name="StarNewsInfo" positionX="160" positionY="192" width="128" height="45"/>
+        <element name="NormalNewsInfo" positionX="160" positionY="192" width="128" height="45"/>
     </elements>
 </model>

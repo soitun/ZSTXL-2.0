@@ -38,6 +38,7 @@
     self.dataSource = [NSMutableArray array];
     
     [self initNavBar];
+    [self initSearchBar];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,6 +56,14 @@
     [self setSearchBar:nil];
     [self setTableView:nil];
     [super viewDidUnload];
+}
+
+#pragma mark - search bar
+
+- (void)initSearchBar
+{
+    [self.searchBar setBackgroundImage:[UIImage imageNamed:@"search_bar_texture"]];
+    [self.searchBar setTranslucent:YES];
 }
 
 #pragma mark - nav bar

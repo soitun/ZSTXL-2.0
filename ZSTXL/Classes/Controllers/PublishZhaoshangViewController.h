@@ -10,7 +10,7 @@
 #import "PublishBaseViewController.h"
 #import "SelectCityViewController.h"
 
-@interface PublishZhaoshangViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PublishBaseViewControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, SelectCityViewControllerDelegate>
+@interface PublishZhaoshangViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PublishBaseViewControllerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, SelectCityViewControllerDelegate, UINavigationControllerDelegate>
 
 @property (retain, nonatomic) IBOutlet UILabel *drugNameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *drugNumLabel;

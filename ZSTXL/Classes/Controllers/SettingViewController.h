@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "SettingCell.h"
+#import "DeleteChatView.h"
 
-@interface SettingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, SettingCellDelegate>
+@interface SettingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, SettingCellDelegate, UIAlertViewDelegate, DeleteChatViewDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *settingInfo;

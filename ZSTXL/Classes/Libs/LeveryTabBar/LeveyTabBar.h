@@ -28,6 +28,7 @@
 - (void)removeTabAtIndex:(NSInteger)index;
 - (void)insertTabWithImageDic:(NSDictionary *)dict atIndex:(NSUInteger)index;
 - (void)setBackgroundImage:(UIImage *)img;
+- (void)tabBarButtonClicked:(id)sender;
 
 @end
 @protocol LeveyTabBarDelegate<NSObject>

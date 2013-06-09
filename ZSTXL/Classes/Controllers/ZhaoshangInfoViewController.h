@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSDictionary *userInfo;
 @property (nonatomic, retain) NSDictionary *contactInfo;
 
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
+@property (retain, nonatomic) UITableView *tableView;
 @property (nonatomic, retain) ZSInfoHeader *header;
 @property (nonatomic, retain) ZSInfoContactView *contactView;
 

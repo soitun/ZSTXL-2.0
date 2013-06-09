@@ -185,8 +185,8 @@
 }
 
 - (void)selectTabBarAtIndex:(int)index {
-//    UIButton *button = [_tabBar.buttons objectAtIndex:index];
-//    [_tabBar tabBarButtonClicked:button];
+    UIButton *button = [_tabBar.buttons objectAtIndex:index];
+    [_tabBar tabBarButtonClicked:button];
     [self tabBar:self.tabBar didSelectIndex:index];
 }
 

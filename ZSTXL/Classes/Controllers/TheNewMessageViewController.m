@@ -7,7 +7,6 @@
 //
 
 #import "TheNewMessageViewController.h"
-#import "LoginViewController.h"
 #import "TheNewMessageCell.h"
 
 @interface TheNewMessageViewController ()
@@ -25,6 +24,25 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    if ([kAppDelegate.userId isEqualToString:@"0"]) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setBackgroundImage:[UIImage imageNamed:@"nav_login_button"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"nav_login_button_p"] forState:UIControlStateHighlighted];
+        [button setTitle:@"登录" forState:UIControlStateNormal];
+        [button.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+        [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+        button.frame = CGRectMake(0, 0, 54, 32);
+        
+        UIBarButtonItem *item = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+        self.navigationItem.rightBarButtonItem = item;
+    }
+    else{
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -36,30 +54,44 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [_tableView release];
+    [super dealloc];
+}
+- (void)viewDidUnload {
+    [self setTableView:nil];
+    [super viewDidUnload];
+}
+
+#pragma mark - nav bar
+
 - (void)initNavBar
 {
     UIImageView *titleImage = [[[UIImageView alloc] initWithImage:[UIImage imageByName:@"mark"]] autorelease];
     titleImage.frame = CGRectMake(0, 0, 31, 32);
     self.navigationItem.titleView = titleImage;
-    
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setBackgroundImage:[UIImage imageNamed:@"nav_login_button"] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"nav_login_button_p"] forState:UIControlStateHighlighted];
-    [button setTitle:@"登录" forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-    button.frame = CGRectMake(0, 0, 54, 32);
-    
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.rightBarButtonItem = item;
 }
 
 - (void)login:(UIButton *)button
 {
     LoginViewController *loginVC = [[[LoginViewController alloc] init] autorelease];
+    loginVC.delegate = self;
     CustomNavigationController *nav = [[[CustomNavigationController alloc] initWithRootViewController:loginVC] autorelease];
     [self.navigationController presentModalViewController:nav animated:YES];
+}
+
+#pragma mark - login delegate
+
+- (void)loginFinished
+{
+    self.navigationItem.rightBarButtonItem = nil;
 }
 
 #pragma mark - table view
@@ -112,18 +144,4 @@
 }
 
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)dealloc {
-    [_tableView release];
-    [super dealloc];
-}
-- (void)viewDidUnload {
-    [self setTableView:nil];
-    [super viewDidUnload];
-}
 @end

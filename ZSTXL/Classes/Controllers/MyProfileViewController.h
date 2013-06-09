@@ -11,9 +11,10 @@
 #import "UserDetail.h"
 #import "SelectCityViewController.h"
 #import "SelectPharViewController.h"
+#import "LoginViewController.h"
 
 @interface MyProfileViewController : UIViewController
-<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SelectCityViewControllerDelegate, SelectPharViewControllerDelegate>
+<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SelectCityViewControllerDelegate, SelectPharViewControllerDelegate, LoginViewControllerDelegate>
 
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (retain, nonatomic) IBOutlet UIImageView *headIcon;

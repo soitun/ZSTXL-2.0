@@ -21,11 +21,10 @@
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;
 @property (retain, nonatomic) IBOutlet UILabel *detailLabel;
 
-@property (retain, nonatomic) IBOutlet UIImageView *chooseMaleImage;
-@property (retain, nonatomic) IBOutlet UIImageView *chooseFemaleImage;
 
-@property (retain, nonatomic) IBOutlet UILabel *maleLabel;
-@property (retain, nonatomic) IBOutlet UILabel *femaleLabel;
+@property (retain, nonatomic) IBOutlet UIButton *maleButton;
+@property (retain, nonatomic) IBOutlet UIButton *femaleButton;
+
 
 @property (nonatomic, assign) id<PersonBasicInfoCellDelegate> delegate;
 
