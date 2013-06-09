@@ -54,7 +54,7 @@
     [self.navigationItem setRightBarButtonItem:rBarButton];
     self.navigationController.delegate = self;
     
-    [self initTitleView];
+    self.title = @"通讯录";
     [self initSlideView];
     [self initScrollView];
 }
@@ -187,6 +187,16 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger currPage = scrollView.contentOffset.x/320;
+    if (currPage == 0) {
+        if (self.titleView) {
+            [self.titleView removeFromSuperview];
+            self.titleView = nil;
+            self.navigationItem.titleView = nil;
+        }
+        self.title = @"通讯录";
+    }else{
+        [self initTitleView];
+    }
     [self.mSlideMenu slideBgToIndex:currPage];
     [self refreshPageAtIndex:currPage];
 }
