@@ -39,6 +39,7 @@
     [_xun_VImage release];
     [_ZDLabel release];
     [_preferLabel release];
+    [_cityLabel release];
     [super dealloc];
 }
 

@@ -51,7 +51,9 @@
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username_p" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="FriendContact" representedClassName="FriendContact" parentEntity="Contact" syncable="YES"/>
+    <entity name="FriendContact" representedClassName="FriendContact" parentEntity="Contact" syncable="YES">
+        <attribute name="areaname" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="MailInfo" representedClassName="MailInfo" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
@@ -135,7 +137,7 @@
         <element name="CityInfo" positionX="90" positionY="-396" width="128" height="148"/>
         <element name="CommendContact" positionX="693" positionY="-117" width="128" height="43"/>
         <element name="Contact" positionX="855" positionY="9" width="128" height="360"/>
-        <element name="FriendContact" positionX="693" positionY="92" width="128" height="43"/>
+        <element name="FriendContact" positionX="693" positionY="92" width="128" height="60"/>
         <element name="MailInfo" positionX="297" positionY="126" width="128" height="240"/>
         <element name="MyInfo" positionX="-45" positionY="-151" width="128" height="150"/>
         <element name="NewsInfo" positionX="306" positionY="54" width="128" height="150"/>

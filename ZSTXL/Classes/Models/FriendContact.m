@@ -11,5 +11,6 @@
 
 @implementation FriendContact
 
+@dynamic areaname;
 
 @end

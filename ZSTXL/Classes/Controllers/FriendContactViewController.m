@@ -129,6 +129,7 @@
                 
                 FriendContact *contact = [FriendContact MR_createEntity];
                 [contact initWithDict:contactDict];
+                contact.areaname = [contactDict objForKey:@"areaname"];
                 contact.type = @"1";
                 [[self.contactDict objForKey:contact.sectionkey] addObject:contact];
                 DB_SAVE();
@@ -199,7 +200,9 @@
     Contact *contact = [[self.contactDict objectForKey:sectionKey] objectAtIndex:indexPath.row];
     cell.contact = contact;
     cell.delegate = self;
+    
     [cell refresh];
+    cell.cityLabel.text = ((FriendContact *)contact).areaname;
     
     return cell;
 }

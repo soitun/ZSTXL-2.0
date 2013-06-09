@@ -13,5 +13,6 @@
 
 @interface FriendContact : Contact
 
+@property (nonatomic, retain) NSString *areaname;
 
 @end
