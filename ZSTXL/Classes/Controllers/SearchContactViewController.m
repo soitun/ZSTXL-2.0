@@ -181,8 +181,6 @@
 {
     NSLog(@"search clicked!!!!!!!!!");
     
-    ///getZsUserByName.json, userid, proviceid, cityid, name
-    
     NSDictionary *paraDict = @{@"path": @"getZsUserByName.json",
                                @"userid": kAppDelegate.userId,
                                @"page": [NSString stringWithFormat:@"%d", self.page],

@@ -21,6 +21,7 @@
 #import "FinanceInfoViewController.h"
 #import "StarNewsViewController.h"
 #import "AddMeViewController.h"
+#import "BlacklistViewController.h"
 
 #import "SBTableAlert.h"
 #import "ZDCell.h"
@@ -548,7 +549,8 @@
 
 - (void)myProfileBlacklist
 {
-    
+    BlacklistViewController *blacklistVC = [[[BlacklistViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:blacklistVC animated:YES];
 }
 
 #pragma mark - select city delegate
@@ -686,8 +688,6 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - SBtablealert delegate
-
 #pragma mark - table alert data source
 - (NSInteger)numberOfSectionsInTableAlert:(SBTableAlert *)tableAlert
 {
@@ -781,5 +781,7 @@
     
     [tableAlert release];
 }
+
+
 
 @end

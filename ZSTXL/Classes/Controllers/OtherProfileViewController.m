@@ -327,6 +327,11 @@ enum eAlertTag {
     
     UIBarButtonItem *lBarButton = [[[UIBarButtonItem alloc] initWithCustomView:backBarButton] autorelease];
     [self.navigationItem setLeftBarButtonItem:lBarButton];
+    
+    
+    UIBarButtonItem *addBlackBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addBlacklist)];
+    UIBarButtonItem *delBlackBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemUndo target:self action:@selector(delBlacklist)];
+    self.navigationItem.rightBarButtonItems = @[addBlackBarButton, delBlackBarButton];
 }
 
 - (void)popVC:(UIButton *)sender
@@ -548,13 +553,32 @@ enum eAlertTag {
 
 - (void)otherProfileHeaderComment
 {
+    if ([kAppDelegate.userId isEqualToString:@"0"]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请登录修改备注" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        [[alert textFieldAtIndex:0] setPlaceholder:@"备注"];
+        alert.tag = loginAlert;
+        [alert show];
+        [alert release];
+        [self.view endEditing:YES];
+        return;
+    }
     
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"修改备注" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UITextField *textField = [alert textFieldAtIndex:0];
+    textField.delegate = self;
+    textField.placeholder = @"备注";
+    textField.clearsOnBeginEditing = YES;
+    alert.tag = commentAlert;
+    [alert show];
+    [alert release];
 }
 
-- (void)otherProfileModifyImage
-{
-    
-}
+//- (void)otherProfileModifyImage
+//{
+//    
+//}
 
 #pragma mark - alert delegate
 
@@ -578,6 +602,112 @@ enum eAlertTag {
         }
     }
     
+}
+
+#pragma mark - blacklist
+
+- (void)addBlacklist
+{
+    NSDictionary *para = @{@"path": @"addBlackUser.json",
+                           @"userid": kAppDelegate.userId,
+                           @"blackuserid": self.contact.userid};
+    
+    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        if (RETURNCODE_ISVALID(json)) {
+            DLog(@"add black %@", json);
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+    }];
+}
+
+- (void)delBlacklist
+{
+    NSDictionary *para = @{@"path": @"delBlackUser.json",
+                           @"userid": kAppDelegate.userId,
+                           @"blackuserid": self.contact.userid};
+    
+    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        if (RETURNCODE_ISVALID(json)) {
+            DLog(@"del black %@", json);
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+    }];
+}
+
+#pragma mark - textfield delegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if ([self.contact.remark isValid]) {
+        textField.text = self.contact.remark;
+    }
+    
+    textField.returnKeyType = UIReturnKeyDone;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSLog(@"text field edit end");
+    
+    
+    NSString *destid = self.contact.userid;
+    NSString *userid = kAppDelegate.userId;
+    
+    NSDictionary *paraDict = [NSDictionary dictionaryWithObjectsAndKeys:userid, @"userid",
+                              destid, @"destid",
+                              textField.text, @"remark",
+                              @"changeuserremark.json", @"path", nil];
+    
+    //        NSLog(@"comment para dict: %@", paraDict);
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
+    [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
+        if ([[json objectForKey:@"returnCode"] longValue] == 0) {
+            hud.labelText = @"修改成功";
+            [hud hide:YES afterDelay:.3];
+            
+            if (![textField.text isValid]) {
+                self.contact.remark = @"";
+            }
+            else{
+                self.contact.remark = textField.text;
+                NSString *remark = [NSString stringWithFormat:@"(%@)", self.contact.remark];
+                textField.text = remark;
+            }
+            self.contact.loginid = [kAppDelegate userId];
+            
+            DB_SAVE();
+        }
+        else{
+            [MBProgressHUD hideHUDForView:kAppDelegate.window animated:YES];
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:nil];
+        }
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+    }];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

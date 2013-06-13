@@ -37,7 +37,7 @@
 
 - (NSDictionary *)para
 {
-    NSDictionary *para = @{@"path": @"getPharmacologyClassify.json"};
+    NSDictionary *para = @{@"path": @"getPharmacologyClassifyTwo.json"};
     return para;
 }
 

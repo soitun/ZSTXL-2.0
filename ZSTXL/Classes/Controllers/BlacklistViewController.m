@@ -1,22 +1,20 @@
 //
-//  AddMeViewController.m
+//  BlacklistViewController.m
 //  ZSTXL
 //
 //  Created by LiuYue on 13-6-13.
 //  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
-#import "AddMeViewController.h"
-#import "HomePageCell.h"
-#import "Contact.h"
-#import "FriendContact.h"
+#import "BlacklistViewController.h"
+#import "ContactCell.h"
 #import "OtherProfileViewController.h"
 
-@interface AddMeViewController ()
+@interface BlacklistViewController ()
 
 @end
 
-@implementation AddMeViewController
+@implementation BlacklistViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,8 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"加我为好友的人";
-    self.view.backgroundColor = bgGreyColor;
+    self.title = @"黑名单";
     self.dataSourceArray = [NSMutableArray array];
     
     [self initNavBar];
@@ -57,7 +54,7 @@
 
 - (void)requestData
 {
-    NSDictionary *para = @{@"path": @"getAttentionMyUserData.json",
+    NSDictionary *para = @{@"path": @"getBlackUserList.json",
                            @"userid": kAppDelegate.userId};
     
     [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
@@ -135,9 +132,9 @@
 {
     NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
     
-    cell.delegate = self;
-    cell.contact = [self makeContactWithDict:dict];
-    cell.indexPath = indexPath;
+//    cell.delegate = self;
+//    cell.contact = [self makeContactWithDict:dict];
+//    cell.indexPath = indexPath;
     cell.selectionStyle = UITableViewCellEditingStyleNone;
     
     switch ([[dict objForKey:@"invagency"] intValue]) {
@@ -162,15 +159,6 @@
     
     cell.nameLabel.text = [dict objForKey:@"username"];
     cell.cityLabel.text = [dict objForKey:@"areaname"];
-    
-    NSInteger type = [[dict objForKey:@"type"] intValue];
-    if (type == 1) {
-        cell.addFriendButton.hidden = NO;
-    }
-    else{
-        cell.addFriendButton.hidden = YES;
-        cell.haveAddLabel.hidden = NO;
-    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -180,15 +168,16 @@
     OtherProfileViewController *otherProfileVC =[[[OtherProfileViewController alloc] init] autorelease];
     otherProfileVC.contact = [self makeContactWithDict:dict];
     [self.navigationController pushViewController:otherProfileVC animated:YES];
-    
 }
+
+#pragma mark - helper
 
 - (Contact *)makeContactWithDict:(NSDictionary *)dict
 {
     Contact *contact = [Contact createEntity];
     contact.areaname = [dict objForKey:@"areaname"];
     contact.prefercontent = [dict objForKey:@"prefercontent"];
-    contact.userid = [dict objForKey:@"attentionuserid"];
+    contact.userid = [[dict objForKey:@"blackuserid"] stringValue];
     contact.invagency = [[dict objForKey:@"invagency"] stringValue];
     contact.picturelinkurl = [dict objForKey:@"picturelinkurl"];
     contact.username = [dict objForKey:@"username"];
@@ -196,87 +185,6 @@
     contact.sectionkey = [NSString stringWithFormat:@"%c", indexTitleOfString([contact.username characterAtIndex:0])];
     contact.cityid = [PersistenceHelper dataForKey:kCityId];
     return contact;
-}
-
-#pragma mark - cell delegate
-
-//- (void)contactCellTapAvatarOfContact:(Contact *)contact
-//{
-//    OtherProfileViewController *otherProfileVC = [[[OtherProfileViewController alloc] init] autorelease];
-//    
-//    otherProfileVC.contact = contact;
-//    [self.navigationController pushViewController:otherProfileVC animated:YES];
-//}
-
-- (void)contactCellAddFriend:(Contact *)contact atIndexPath:(NSIndexPath *)indexPath
-{
-    NSDictionary *para = @{@"path": @"addZsAttentionUser.json",
-                           @"userid": kAppDelegate.userId,
-                           @"attentionid": contact.userid,
-                           @"provinceid": [PersistenceHelper dataForKey:kProvinceId],
-                           @"cityid": [PersistenceHelper dataForKey:kCityId]};
-    
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
-    hud.labelText = @"加为好友";
-    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
-        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
-        if (RETURNCODE_ISVALID(json)) {
-            [self updateContact:contact IsFriend:YES];
-            ContactCell *cell = (ContactCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.addFriendButton.hidden = YES;
-            cell.haveAddLabel.hidden = NO;
-            
-        }else{
-            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
-        }
-        
-    } failure:^(NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
-        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
-    }];
-}
-
-
-//#pragma mark - contact view
-//
-//- (void)popContactViewChat:(Contact *)contact
-//{
-//    
-//}
-//
-//- (void)popContactViewTel:(Contact *)contact
-//{
-//    NSString *tel = [Utility deCryptTel:contact.tel withUserId:contact.userid];
-//    [Utility callContact:tel];
-//}
-
-#pragma mark - add friend
-
-- (void)updateContact:(Contact *)contact IsFriend:(BOOL)isFriend
-{
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"userid == %@ AND loginid == %@ AND cityid == %@", contact.userid, [kAppDelegate userId], [PersistenceHelper dataForKey:kCityId]];
-    FriendContact *friendContact = [FriendContact findFirstWithPredicate:pred];
-    if (friendContact == nil) {
-        friendContact = [FriendContact createEntity];
-        friendContact.autograph = contact.autograph;
-        friendContact.cityid = [PersistenceHelper dataForKey:kCityId];
-        friendContact.col1 = contact.col1;
-        friendContact.col2 = contact.col2;
-        friendContact.col3 = contact.col3;
-        friendContact.invagency = contact.invagency;
-        friendContact.loginid = kAppDelegate.userId;
-        friendContact.mailbox = contact.mailbox;
-        friendContact.picturelinkurl = contact.picturelinkurl;
-        //        friendContact.remark = self.commentTextField.text;
-        friendContact.sectionkey = contact.sectionkey;
-        friendContact.tel = contact.tel;
-        friendContact.userid = contact.userid;
-        friendContact.username = contact.username;
-        friendContact.username_p = contact.username_p;
-    }
-    
-    DB_SAVE();
-    
 }
 
 @end

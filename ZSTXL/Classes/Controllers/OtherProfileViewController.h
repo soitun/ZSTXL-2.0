@@ -18,7 +18,7 @@
 @end
 
 @interface OtherProfileViewController : UIViewController
-<UITableViewDataSource, UITableViewDelegate, OtherProfileContactCellDelegate, OtherProfileHeaderDelegate, UIAlertViewDelegate>
+<UITableViewDataSource, UITableViewDelegate, OtherProfileContactCellDelegate, OtherProfileHeaderDelegate, UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, retain) OtherProfileHeader *tableHeader;

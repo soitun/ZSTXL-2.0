@@ -63,6 +63,7 @@
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
         if (RETURNCODE_ISVALID(json)) {
             DLog(@"json %@", json);
+            [self initTableFooter];
             [self analyseData:json];
             [self.tableVeiw reloadData];
         }
@@ -103,7 +104,10 @@
     self.tableVeiw.dataSource = self;
     self.tableVeiw.backgroundView = nil;
     [self.view addSubview:self.tableVeiw];
-    
+}
+
+- (void)initTableFooter
+{
     ConfirmFooterView *footer = [[[NSBundle mainBundle] loadNibNamed:@"ConfirmFooterView" owner:nil options:nil] lastObject];
     footer.delegate = self;
     self.tableVeiw.tableFooterView = footer;

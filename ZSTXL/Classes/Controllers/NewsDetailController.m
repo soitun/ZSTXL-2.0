@@ -345,11 +345,11 @@
         if ([[[json objForKey:@"returnCode"] stringValue] isEqualToString:@"0"]) {
             if (isNewsCollect) {
                 [kAppDelegate showWithCustomAlertViewWithText:@"已经取消收藏" andImageName:nil];
-                [self.newsToolBar.newsStarButton setImage:[UIImage imageByName:@"news_star"] forState:UIControlStateNormal];
+                [self.newsToolBar.newsStarButton setImage:[UIImage imageByName:@"news_star_off"] forState:UIControlStateNormal];
                 isNewsCollect = NO;
             } else {
                 [kAppDelegate showWithCustomAlertViewWithText:@"添加收藏成功" andImageName:nil];
-                [self.newsToolBar.newsStarButton setImage:[UIImage imageByName:@"news_star_off"] forState:UIControlStateNormal];
+                [self.newsToolBar.newsStarButton setImage:[UIImage imageByName:@"news_star"] forState:UIControlStateNormal];
                 isNewsCollect = YES;
             }
             
