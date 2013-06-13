@@ -59,8 +59,8 @@
 		356D5E631760898400498008 /* ShaixuanPharViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 356D5E611760897A00498008 /* ShaixuanPharViewController.xib */; };
 		356D5E6917609FE700498008 /* ShowSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 356D5E6717609FC100498008 /* ShowSelectViewController.m */; };
 		356D5E6A17609FE700498008 /* ShowSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 356D5E6817609FD600498008 /* ShowSelectViewController.xib */; };
-		3584597C17686AE400538EDB /* MyHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3584597A17686AE400538EDB /* MyHomePageViewController.m */; };
-		3584597D17686AE400538EDB /* MyHomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3584597B17686AE400538EDB /* MyHomePageViewController.xib */; };
+		3584597C17686AE400538EDB /* MyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3584597A17686AE400538EDB /* MyProfileViewController.m */; };
+		3584597D17686AE400538EDB /* MyProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3584597B17686AE400538EDB /* MyProfileViewController.xib */; };
 		3584598017686C0900538EDB /* MyProfileHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3584597F17686C0900538EDB /* MyProfileHeader.m */; };
 		3584598217686C2600538EDB /* MyProfileHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3584598117686C2600538EDB /* MyProfileHeader.xib */; };
 		358459851768705900538EDB /* MyProfileContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 358459841768705900538EDB /* MyProfileContactCell.m */; };
@@ -794,9 +794,9 @@
 		356D5E6617609FB700498008 /* ShowSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowSelectViewController.h; sourceTree = "<group>"; };
 		356D5E6717609FC100498008 /* ShowSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowSelectViewController.m; sourceTree = "<group>"; };
 		356D5E6817609FD600498008 /* ShowSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowSelectViewController.xib; sourceTree = "<group>"; };
-		3584597917686AE400538EDB /* MyHomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyHomePageViewController.h; sourceTree = "<group>"; };
-		3584597A17686AE400538EDB /* MyHomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyHomePageViewController.m; sourceTree = "<group>"; };
-		3584597B17686AE400538EDB /* MyHomePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyHomePageViewController.xib; sourceTree = "<group>"; };
+		3584597917686AE400538EDB /* MyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileViewController.h; sourceTree = "<group>"; };
+		3584597A17686AE400538EDB /* MyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileViewController.m; sourceTree = "<group>"; };
+		3584597B17686AE400538EDB /* MyProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyProfileViewController.xib; sourceTree = "<group>"; };
 		3584597E17686C0900538EDB /* MyProfileHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileHeader.h; sourceTree = "<group>"; };
 		3584597F17686C0900538EDB /* MyProfileHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileHeader.m; sourceTree = "<group>"; };
 		3584598117686C2600538EDB /* MyProfileHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyProfileHeader.xib; sourceTree = "<group>"; };
@@ -1965,9 +1965,9 @@
 				359A7E1C17638C4E00D453E8 /* StarNewsViewController.h */,
 				359A7E1D17638C5D00D453E8 /* StarNewsViewController.m */,
 				359A7E1E17638C6A00D453E8 /* StarNewsViewController.xib */,
-				3584597917686AE400538EDB /* MyHomePageViewController.h */,
-				3584597A17686AE400538EDB /* MyHomePageViewController.m */,
-				3584597B17686AE400538EDB /* MyHomePageViewController.xib */,
+				3584597917686AE400538EDB /* MyProfileViewController.h */,
+				3584597A17686AE400538EDB /* MyProfileViewController.m */,
+				3584597B17686AE400538EDB /* MyProfileViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3561,7 +3561,7 @@
 				359A7E1817637D5700D453E8 /* grayArrow@2x.png in Resources */,
 				359A7E2017638C7900D453E8 /* StarNewsViewController.xib in Resources */,
 				35B89CD91764512400DB51C0 /* Localizable.strings in Resources */,
-				3584597D17686AE400538EDB /* MyHomePageViewController.xib in Resources */,
+				3584597D17686AE400538EDB /* MyProfileViewController.xib in Resources */,
 				3584598217686C2600538EDB /* MyProfileHeader.xib in Resources */,
 				358459871768706B00538EDB /* MyProfileContactCell.xib in Resources */,
 			);
@@ -3793,7 +3793,7 @@
 				35C2AC7C1768150F004F84B0 /* MailClient.m in Sources */,
 				35C2AC88176850BD004F84B0 /* InboxMail.m in Sources */,
 				35C2AC8B17685798004F84B0 /* NSString+MD5Addition.m in Sources */,
-				3584597C17686AE400538EDB /* MyHomePageViewController.m in Sources */,
+				3584597C17686AE400538EDB /* MyProfileViewController.m in Sources */,
 				3584598017686C0900538EDB /* MyProfileHeader.m in Sources */,
 				358459851768705900538EDB /* MyProfileContactCell.m in Sources */,
 				3584598A1768B1AB00538EDB /* UserDetail.m in Sources */,

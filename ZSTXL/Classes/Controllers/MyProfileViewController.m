@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
-#import "MyHomePageViewController.h"
+#import "MyProfileViewController.h"
 #import "HomePageCell.h"
 #import "CustomCellBackgroundView.h"
 #import "MyInfo.h"
@@ -26,11 +26,11 @@
 
 
 
-@interface MyHomePageViewController ()
+@interface MyProfileViewController ()
 
 @end
 
-@implementation MyHomePageViewController
+@implementation MyProfileViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -94,7 +94,7 @@
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if ([viewController isKindOfClass:NSClassFromString(@"MyHomePageViewController")]) {
+    if ([viewController isKindOfClass:NSClassFromString(@"MyProfileViewController")]) {
         [kAppDelegate.tabController hidesTabBar:NO animated:YES];
     }
     else{

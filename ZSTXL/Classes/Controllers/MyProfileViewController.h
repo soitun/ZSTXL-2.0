@@ -15,7 +15,7 @@
 #import "SelectPharViewController.h"
 #import "SBTableAlert.h"
 
-@interface MyHomePageViewController : UIViewController
+@interface MyProfileViewController : UIViewController
 <
 UITableViewDataSource,
 UITableViewDelegate,
