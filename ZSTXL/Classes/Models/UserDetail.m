@@ -1,9 +1,9 @@
 //
 //  UserDetail.m
-//  ZHDLTXL
+//  ZSTXL
 //
-//  Created by LiuYue on 13-4-27.
-//  Copyright (c) 2013年 zxcx. All rights reserved.
+//  Created by LiuYue on 13-6-12.
+//  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
 #import "UserDetail.h"
@@ -15,7 +15,9 @@
 @dynamic col1;
 @dynamic col2;
 @dynamic col3;
+@dynamic headiconlocalurl;
 @dynamic invagency;
+@dynamic isreal;
 @dynamic mailbox;
 @dynamic picturelinkurl;
 @dynamic remark;
@@ -24,7 +26,7 @@
 @dynamic type;
 @dynamic userid;
 @dynamic username;
-@dynamic headiconlocalurl;
-@dynamic isreal;
+@dynamic ismember;
+@dynamic grade;
 
 @end

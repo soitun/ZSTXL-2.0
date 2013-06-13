@@ -54,6 +54,15 @@
     <entity name="FriendContact" representedClassName="FriendContact" parentEntity="Contact" syncable="YES">
         <attribute name="areaname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="InboxMail" representedClassName="InboxMail" syncable="YES">
+        <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seen" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sentdate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sentdatestr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="to" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="MailInfo" representedClassName="MailInfo" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
@@ -70,10 +79,10 @@
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="MyInfo" representedClassName="MyInfo" syncable="YES">
-        <attribute name="account" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="unreadCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="unreadMailCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="unreadSMSCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="account" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unreadCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unreadMailCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unreadSMSCount" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="areaList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CityInfo" syncable="YES"/>
         <relationship name="pharList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pharmacology" syncable="YES"/>
         <relationship name="userDetail" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UserDetail" syncable="YES"/>
@@ -118,8 +127,10 @@
         <attribute name="col1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="col2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="col3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="grade" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="headiconlocalurl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="invagency" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ismember" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isreal" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mailbox" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="picturelinkurl" optional="YES" attributeType="String" syncable="YES"/>
@@ -138,15 +149,16 @@
         <element name="CommendContact" positionX="693" positionY="-117" width="128" height="43"/>
         <element name="Contact" positionX="855" positionY="9" width="128" height="360"/>
         <element name="FriendContact" positionX="693" positionY="92" width="128" height="60"/>
+        <element name="InboxMail" positionX="160" positionY="192" width="128" height="150"/>
         <element name="MailInfo" positionX="297" positionY="126" width="128" height="240"/>
         <element name="MyInfo" positionX="-45" positionY="-151" width="128" height="150"/>
         <element name="NewsInfo" positionX="306" positionY="54" width="128" height="150"/>
+        <element name="NormalNewsInfo" positionX="160" positionY="192" width="128" height="45"/>
         <element name="Pharmacology" positionX="189" positionY="-108" width="128" height="103"/>
         <element name="SearchContact" positionX="700" positionY="234" width="128" height="45"/>
         <element name="SMSList" positionX="531" positionY="-160" width="128" height="178"/>
         <element name="SMSRecord" positionX="369" positionY="-157" width="128" height="103"/>
-        <element name="UserDetail" positionX="117" positionY="122" width="128" height="268"/>
         <element name="StarNewsInfo" positionX="160" positionY="192" width="128" height="45"/>
-        <element name="NormalNewsInfo" positionX="160" positionY="192" width="128" height="45"/>
+        <element name="UserDetail" positionX="117" positionY="122" width="128" height="300"/>
     </elements>
 </model>

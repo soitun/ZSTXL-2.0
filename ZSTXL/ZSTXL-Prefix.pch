@@ -16,6 +16,7 @@
 #import "NSString+stringValue.h"
 #import "UIImage+stretch.h"
 #import "DreamFactoryClient.h"
+#import "MailClient.h"
 #import "AFNetworking.h"
 #import "MBProgressHUD.h"
 #import "EGOImageView.h"
@@ -28,6 +29,7 @@
 #import "WebViewManager.h"
 #import "NSNotificationCenter+MainThread.h"
 #import "NSString+MD5.h"
+#import "CustomBadge.h"
 
 #define MR_SHORTHAND
 #define MR_ENABLE_ACTIVE_RECORD_LOGGING 0

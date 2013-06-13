@@ -43,10 +43,9 @@
 							<object class="IBUIImageView" id="657358658">
 								<reference key="NSNextResponder" ref="554465615"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{13, 21}, {23, 17}}</string>
+								<string key="NSFrame">{{13, 20}, {23, 17}}</string>
 								<reference key="NSSuperview" ref="554465615"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -58,7 +57,7 @@
 							<object class="IBUILabel" id="109024629">
 								<reference key="NSNextResponder" ref="554465615"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{52, 7}, {161, 21}}</string>
+								<string key="NSFrame">{{52, 7}, {167, 21}}</string>
 								<reference key="NSSuperview" ref="554465615"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="154248012"/>
@@ -80,11 +79,11 @@
 								</object>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
-									<int key="type">1</int>
+									<int key="type">2</int>
 									<double key="pointSize">20</double>
 								</object>
 								<object class="NSFont" key="IBUIFont">
-									<string key="NSName">Helvetica</string>
+									<string key="NSName">Helvetica-Bold</string>
 									<double key="NSSize">20</double>
 									<int key="NSfFlags">16</int>
 								</object>
@@ -106,12 +105,12 @@
 								<reference key="IBUITextColor" ref="773315378"/>
 								<reference key="IBUIHighlightedColor" ref="364997952"/>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="3380187">
-									<int key="type">1</int>
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="60589410">
+									<int key="type">2</int>
 									<double key="pointSize">16</double>
 								</object>
-								<object class="NSFont" key="IBUIFont" id="546523336">
-									<string key="NSName">Helvetica</string>
+								<object class="NSFont" key="IBUIFont" id="983461086">
+									<string key="NSName">Helvetica-Bold</string>
 									<double key="NSSize">16</double>
 									<int key="NSfFlags">16</int>
 								</object>
@@ -120,7 +119,7 @@
 							<object class="IBUILabel" id="154248012">
 								<reference key="NSNextResponder" ref="554465615"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{232, 7}, {68, 21}}</string>
+								<string key="NSFrame">{{227, 6}, {80, 21}}</string>
 								<reference key="NSSuperview" ref="554465615"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1014826521"/>
@@ -138,12 +137,12 @@
 								<reference key="IBUIHighlightedColor" ref="364997952"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<int key="IBUITextAlignment">2</int>
-								<reference key="IBUIFontDescription" ref="3380187"/>
-								<reference key="IBUIFont" ref="546523336"/>
+								<reference key="IBUIFontDescription" ref="60589410"/>
+								<reference key="IBUIFont" ref="983461086"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 60}</string>
+						<string key="NSFrameSize">{320, 59}</string>
 						<reference key="NSSuperview" ref="547927699"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="657358658"/>
@@ -159,7 +158,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 61}</string>
+				<string key="NSFrameSize">{320, 60}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="554465615"/>
@@ -172,7 +171,7 @@
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="554465615"/>
 				<string key="IBUIReuseIdentifier">MailCell</string>
-				<real value="61" key="IBUIRowHeight"/>
+				<real value="58" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">

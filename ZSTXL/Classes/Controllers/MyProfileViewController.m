@@ -35,16 +35,23 @@
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    self.view.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-49);
+- (void)resetNavigationBar {
+    if (self.navigationController.navigationBar.frame.origin.y != 0) {
+        self.navigationController.navigationBar.frame = CGRectMake(0, 0, 320, 44);
+    }
 }
+
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    DLog(@"frame %@", NSStringFromCGRect(self.view.frame));
+//}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     if (![kAppDelegate.userId isEqualToString:@"0"]) {
         [self getMyInfoFromDB];
         [self showBasicInfo];
+        [self getMyInfoFromNet];
     }
     else{
         LoginViewController *loginVC = [[[LoginViewController alloc] init] autorelease];
@@ -64,10 +71,8 @@
     [self initNavBar];
     [self initHeadIcon];
     [self initTheView];
-    self.scrollView.contentSize = CGSizeMake(320, 520);
+    self.scrollView.contentSize = CGSizeMake(320, 520); //固定值
     self.navigationController.delegate = self;
-    
-
 }
 
 - (void)dealloc {

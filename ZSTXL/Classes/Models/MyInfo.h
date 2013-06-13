@@ -1,9 +1,9 @@
 //
 //  MyInfo.h
-//  ZHDLTXL
+//  ZSTXL
 //
-//  Created by LiuYue on 13-4-27.
-//  Copyright (c) 2013年 zxcx. All rights reserved.
+//  Created by LiuYue on 13-6-12.
+//  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -13,10 +13,10 @@
 
 @interface MyInfo : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * account;
-@property (nonatomic, retain) NSNumber * unreadCount;
-@property (nonatomic, retain) NSNumber * unreadSMSCount;
-@property (nonatomic, retain) NSNumber * unreadMailCount;
+@property (nonatomic, retain) NSString * account;
+@property (nonatomic, retain) NSString * unreadCount;
+@property (nonatomic, retain) NSString * unreadMailCount;
+@property (nonatomic, retain) NSString * unreadSMSCount;
 @property (nonatomic, retain) NSSet *areaList;
 @property (nonatomic, retain) NSSet *pharList;
 @property (nonatomic, retain) UserDetail *userDetail;

@@ -441,16 +441,16 @@ char indexTitleOfString(unsigned short string) {
     [NSTimeZone setDefaultTimeZone:tzGMT];
 
     NSDateFormatter *format = [[[NSDateFormatter alloc] init] autorelease];
+    [format setLocale:[NSLocale currentLocale]];
+    [format setFormatterBehavior:NSDateFormatterBehaviorDefault];
     [format setTimeZone:tzGMT];
-//    [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    [format setDateFormat:@"MM月dd日 HH:mm"];
 //    MM/dd/yyyy hh:mm:ss a
     [format setDateFormat:@"MM/dd/yyyy hh:mm:ss a"];
     NSDate *parsedDate = [format dateFromString:dateString];
-    
     NSDate *now = [NSDate date];
     
     NSTimeInterval timeInterval = [now timeIntervalSinceDate:parsedDate];
-//    [format setDateFormat:@"yyyy-MM-dd HH:mm"];
     
     NSInteger year = timeInterval / 3600 / 24 / 365;
 //    NSInteger month = timeInterval / 3600 / 24 / 30;

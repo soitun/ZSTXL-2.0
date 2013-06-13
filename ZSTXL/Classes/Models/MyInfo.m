@@ -1,9 +1,9 @@
 //
 //  MyInfo.m
-//  ZHDLTXL
+//  ZSTXL
 //
-//  Created by LiuYue on 13-4-27.
-//  Copyright (c) 2013年 zxcx. All rights reserved.
+//  Created by LiuYue on 13-6-12.
+//  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
 #import "MyInfo.h"
@@ -16,8 +16,8 @@
 
 @dynamic account;
 @dynamic unreadCount;
-@dynamic unreadSMSCount;
 @dynamic unreadMailCount;
+@dynamic unreadSMSCount;
 @dynamic areaList;
 @dynamic pharList;
 @dynamic userDetail;

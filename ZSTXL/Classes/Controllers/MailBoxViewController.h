@@ -17,6 +17,8 @@
 @property (nonatomic, retain) NSArray *mailSelectorArray;
 @property (nonatomic, retain) UIButton *mailSentButton;
 
+@property (nonatomic, assign) BOOL isLoading;
+
 
 - (IBAction)mailRefresh:(UIButton *)sender;
 - (IBAction)mailDelete:(UIButton *)sender;

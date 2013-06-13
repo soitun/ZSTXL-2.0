@@ -13,7 +13,8 @@
 #import "TheNewMessageViewController.h"
 #import "ContactViewController.h"
 #import "ZhaoshangDailiViewController.h"
-#import "MyProfileViewController.h"
+//#import "MyProfileViewController.h"
+#import "MyHomePageViewController.h"
 
 @implementation AppDelegate
 
@@ -60,7 +61,7 @@
 
 - (void)initTabController
 {
-    NSArray *controllerNameArray = @[@"TheNewMessageViewController", @"ContactViewController", @"ZhaoshangDailiViewController", @"MyProfileViewController"];
+    NSArray *controllerNameArray = @[@"TheNewMessageViewController", @"ContactViewController", @"ZhaoshangDailiViewController", @"MyHomePageViewController"];
     NSArray *titleArray = @[@"最新消息", @"通讯录", @"招商代理", @"我的主页"];
     NSArray *tabBarImageArray = @[@"new_message", @"address_book", @"zsdl", @"my_profile"];
     NSArray *tabBarSelectedImageArray = @[@"new_message_p", @"address_book_p", @"zsdl_p", @"my_profile_p"];

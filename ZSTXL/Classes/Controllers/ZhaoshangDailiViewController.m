@@ -177,6 +177,7 @@
             [self.tableView reloadData];
         }
         else{
+            [self doneLoading];
             [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
         }
         
