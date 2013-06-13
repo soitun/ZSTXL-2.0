@@ -2,7 +2,7 @@
 //  FriendContact.m
 //  ZSTXL
 //
-//  Created by LiuYue on 13-6-6.
+//  Created by LiuYue on 13-6-13.
 //  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
@@ -11,6 +11,5 @@
 
 @implementation FriendContact
 
-@dynamic areaname;
 
 @end

@@ -40,7 +40,7 @@
             
         }
         
-        [self renderContentForType:FONT_TYPE_NORMAL needReloading:NO];
+        [self renderContentForType:FONT_TYPE_MIN needReloading:NO];
     }
     return self;
 }

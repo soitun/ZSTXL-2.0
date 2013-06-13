@@ -180,6 +180,8 @@ enum eAlertTag {
         self.tableHeader.xunVImage.hidden = YES;
     }
     
+    [self.tableHeader.avatar setImageWithURL:[NSURL URLWithString:self.contact.picturelinkurl] placeholderImage:[UIImage imageNamed:@"home_icon"]];
+    
 }
 
 - (void)addFriend:(UIButton *)sender
@@ -356,14 +358,28 @@ enum eAlertTag {
 
 - (void)initTableFooter
 {
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 70)];
+    CGFloat footerViewHeight = 0.f;
+    if (IS_IPHONE_5) {
+        footerViewHeight = 70.f;
+    }
+    else{
+        footerViewHeight = 55.f;
+    }
+    
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, footerViewHeight)];
     
     self.addFriendButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.addFriendButton setTitle:@"加为好友" forState:UIControlStateNormal];
     [self.addFriendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.addFriendButton setBackgroundImage:[UIImage imageNamed:@"addfriend_button"] forState:UIControlStateNormal];
     [self.addFriendButton setBackgroundImage:[UIImage imageNamed:@"addfriend_button_p"] forState:UIControlStateHighlighted];
-    self.addFriendButton.frame = CGRectMake(15, 10, 289, 48);
+    if (IS_IPHONE_5) {
+        self.addFriendButton.frame = CGRectMake(15, 10, 289, 48);
+    }
+    else{
+        self.addFriendButton.frame = CGRectMake(15, (footerViewHeight-48)/2, 289, 48);
+    }
+
     [self.addFriendButton addTarget:self action:@selector(addFriend:) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:self.addFriendButton];
     
@@ -372,11 +388,33 @@ enum eAlertTag {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 20.f;
-    }else{
+    if (IS_IPHONE_5) {
+        if (section == 0) {
+            return 20.f;
+        }else{
+            return 10.f;
+        }
+    }
+    else{
+        if (section == 0) {
+            return 8.f;
+        }else{
+            return 4.f;
+        }
+    }
+
+    return 0.f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (IS_IPHONE_5) {
         return 10.f;
     }
+    else{
+        return 4.f;
+    }
+    
     return 0.f;
 }
 

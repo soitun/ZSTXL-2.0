@@ -131,13 +131,13 @@
 {
     NSArray *nameArr1 = @[@"个人信息设置"];
     NSArray *nameArr2 = @[@"提示音", @"修改密码", @"工作时间"];
-    NSArray *nameArr3 = @[@"让附近的好友查看我", @"删除所有聊天记录", @"邀请好友加入通讯录", @"是否让您的好友、客户电话联系您！"];
+    NSArray *nameArr3 = @[@"让附近的好友查看我", @"手机通讯录匹配", @"删除所有聊天记录", @"邀请好友加入通讯录", @"是否让您的好友、客户电话联系您！"];
     NSArray *nameArr4 = @[@"功能介绍", @"帮助反馈", @"版本信息"];
     self.settingInfo = [NSMutableArray arrayWithObjects:nameArr1, nameArr2, nameArr3, nameArr4, nil];
     
     NSArray *selArr1 = @[@"personInfoSetting"];
     NSArray *selArr2 = @[@"toneSwitch", @"changePasswd", @"workTime"];
-    NSArray *selArr3 = @[@"findMe", @"deleteChatRecord", @"inviteFriend", @"telConnect"];
+    NSArray *selArr3 = @[@"findMe", @"addresssBookMatch", @"deleteChatRecord", @"inviteFriend", @"telConnect"];
     NSArray *selArr4 = @[@"functionIntro", @"feedBack", @"version"];
     
     self.selectorArray = [NSMutableArray arrayWithObjects:selArr1, selArr2, selArr3, selArr4, nil];
@@ -200,7 +200,7 @@
     [cell.textLabel setBackgroundColor:[UIColor clearColor]];
     [cell.textLabel setFont:[UIFont boldSystemFontOfSize:16]];
     
-    if (indexPath.section == 2 && indexPath.row == 3) {
+    if (indexPath.section == 2 && indexPath.row == 4) {
         cell.selectImage.hidden = NO;
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.delegate = self;
@@ -214,7 +214,9 @@
             cell.selectImage.image = [UIImage imageNamed:@"login_noselect"];
         }
         
-    } else if ((indexPath.section == 1 && indexPath.row == 0) || (indexPath.section == 2 && indexPath.row == 0)) {
+    } else if ((indexPath.section == 1 && indexPath.row == 0) ||
+               (indexPath.section == 2 && indexPath.row == 0) ||
+               (indexPath.section == 2 && indexPath.row == 1)) {
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.selectImage.hidden = YES;
         cell.switchImage.hidden = NO;
@@ -283,6 +285,11 @@
 - (void)findMe
 {
     DLog(@"findMe");
+}
+
+- (void)addressBookMatch
+{
+    
 }
 
 - (void)deleteChatRecord

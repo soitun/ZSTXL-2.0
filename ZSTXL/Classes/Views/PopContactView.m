@@ -58,6 +58,14 @@
     [_xunBImage release];
     [super dealloc];
 }
+- (IBAction)closeAction:(UIButton *)sender
+{
+    if (self.bgControl) {
+        [self.bgControl removeFromSuperview];
+        self.bgControl = nil;
+    }
+}
+
 - (IBAction)telAction:(UIButton *)sender {
     [self.bgControl removeFromSuperview];
     if ([self.delegate respondsToSelector:@selector(popContactViewTel:)]) {

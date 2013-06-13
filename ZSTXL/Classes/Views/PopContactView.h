@@ -27,6 +27,7 @@
 @property (retain, nonatomic) Contact *contact;
 @property (assign, nonatomic) id<PopContactViewDelegate> delegate;
 
+- (IBAction)closeAction:(UIButton *)sender;
 - (IBAction)telAction:(UIButton *)sender;
 - (IBAction)chatAction:(UIButton *)sender;
 - (id)initWithNib:(NSString *)nib;

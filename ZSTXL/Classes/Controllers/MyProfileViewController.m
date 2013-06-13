@@ -20,6 +20,7 @@
 #import "MailBoxViewController.h"
 #import "FinanceInfoViewController.h"
 #import "StarNewsViewController.h"
+#import "AddMeViewController.h"
 
 #import "SBTableAlert.h"
 #import "ZDCell.h"
@@ -240,11 +241,11 @@
     [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
         [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
         if (RETURNCODE_ISVALID(json)) {
-            DLog(@"my info json %@", json);
+//            DLog(@"my info json %@", json);
             [self updateMyInfo:json];
             [self showHeaderInfo];
             [self.tableView reloadData];
-            DLog(@"myinfo %@", self.myInfo);
+//            DLog(@"myinfo %@", self.myInfo);
 
         } else{
             [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
@@ -303,7 +304,7 @@
 
 - (void)initTableData
 {
-    self.titleArray = @[@[@"招商代理：", @"常驻地区：", @"类别偏好：", @"财务信息："], @[@"我的招商代理信息", @"好友的招商代理信息"]];
+    self.titleArray = @[@[@"招商代理：", @"常驻地区：", @"类别偏好：", @"财务信息"], @[@"我的招商代理信息", @"好友的招商代理信息"]];
     self.selectorArray = @[@[@"invAgency", @"area", @"pharmacology", @"finance"], @[@"myInvInfo", @"friendInvInfo"]];
 }
 
@@ -453,7 +454,7 @@
         }
     }
     else if (indexPath.section == 1 && indexPath.row == 3){
-        cell.detailLabel.text = @"1000条";
+        cell.detailLabel.text = nil;
     }
     
     [cell setNeedsDisplay];
@@ -533,7 +534,8 @@
 
 - (void)myProfileAttent
 {
-    
+    AddMeViewController *addMeVC = [[[AddMeViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:addMeVC animated:YES];
 }
 
 - (void)myProfileStar

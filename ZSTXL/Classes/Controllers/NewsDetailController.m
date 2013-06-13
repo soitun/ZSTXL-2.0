@@ -272,7 +272,7 @@
         if ([[[json objForKey:@"returnCode"] stringValue] isEqualToString:@"0"]) {
             NSString *status = [[json objForKey:@"state"] stringValue];
             if ([status isEqualToString:@"0"]) {
-                [self.newsToolBar.newsStarButton setImage:[UIImage imageByName:@"news_star"] forState:UIControlStateNormal];
+                [self.newsToolBar.newsStarButton setImage:[UIImage imageByName:@"news_star_off"] forState:UIControlStateNormal];
                 isNewsCollect = NO;
             } else {
                 [self.newsToolBar.newsStarButton setImage:[UIImage imageByName:@"news_star"] forState:UIControlStateNormal];
@@ -349,7 +349,7 @@
                 isNewsCollect = NO;
             } else {
                 [kAppDelegate showWithCustomAlertViewWithText:@"添加收藏成功" andImageName:nil];
-                [self.newsToolBar.newsStarButton setImage:[UIImage imageByName:@"news_star_p"] forState:UIControlStateNormal];
+                [self.newsToolBar.newsStarButton setImage:[UIImage imageByName:@"news_star_off"] forState:UIControlStateNormal];
                 isNewsCollect = YES;
             }
             

@@ -326,18 +326,6 @@
 
 - (void)confirmPublish:(UIButton *)sender
 {
-//    添加招商信息	/addInvestment.json		image	File	图片	durgid	long	药品ID	productname	String	商品名	proviceid	String	省ID	cityid	String	市ID	countyid	String	县ID（删除）	direction	String	方向	quale	String	招商性质	superiority	String	产品优势	duration	long	时长	userid	long	用户宝通号
-//    if (![self.drugId isValid] ||
-//        ![self.productName isValid] ||
-//        ![self.provinceId isValid] ||
-//        ![self.cityId isValid] ||
-//        ![self.direction isValid] ||
-//        ![self.quale isValid] ||
-//        ![self.superiority isValid] ||
-//        ![self.duration isValid]) {
-//        [kAppDelegate showWithCustomAlertViewWithText:@"请完善招商信息" andImageName:kErrorIcon];
-//        return;
-//    }
     
     if (![self.provinceId isValid]) {
         [kAppDelegate showWithCustomAlertViewWithText:@"请选择区域" andImageName:kErrorIcon];
@@ -355,11 +343,6 @@
         [kAppDelegate showWithCustomAlertViewWithText:@"请选择产品优势" andImageName:kErrorIcon];
         return;
     }
-    
-    
-    
-    
-    
     
     UIImage *smallImage = [self.drugImage.image scaleToFillSize:CGSizeMake(80.f, 60.f)];
 

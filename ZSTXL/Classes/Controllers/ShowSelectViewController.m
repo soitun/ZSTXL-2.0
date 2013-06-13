@@ -252,12 +252,12 @@
         cell.nameLabel.text = userDetail.username;
     }
     
-    if ([userDetail.col2 isEqualToString:@"1"]) {
-        cell.xun_VImage.hidden = NO;
-    }
-    else{
-        cell.xun_VImage.hidden = YES;
-    }
+//    if ([userDetail.col2 isEqualToString:@"1"]) {
+//        cell.xun_VImage.hidden = NO;
+//    }
+//    else{
+//        cell.xun_VImage.hidden = YES;
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

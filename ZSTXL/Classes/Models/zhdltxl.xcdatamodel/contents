@@ -28,7 +28,8 @@
         <attribute name="radius" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="CommendContact" representedClassName="CommendContact" parentEntity="Contact" syncable="YES"/>
-    <entity name="Contact" representedClassName="Contact" syncable="YES">
+    <entity name="Contact" representedClassName="Contact" isAbstract="YES" syncable="YES">
+        <attribute name="areaname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="autograph" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cityid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="col1" optional="YES" attributeType="String" syncable="YES"/>
@@ -51,9 +52,7 @@
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username_p" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="FriendContact" representedClassName="FriendContact" parentEntity="Contact" syncable="YES">
-        <attribute name="areaname" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
+    <entity name="FriendContact" representedClassName="FriendContact" parentEntity="Contact" syncable="YES"/>
     <entity name="InboxMail" representedClassName="InboxMail" syncable="YES">
         <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="seen" optional="YES" attributeType="String" syncable="YES"/>
@@ -147,8 +146,8 @@
         <element name="ChatRecord" positionX="367" positionY="-441" width="128" height="103"/>
         <element name="CityInfo" positionX="90" positionY="-396" width="128" height="148"/>
         <element name="CommendContact" positionX="693" positionY="-117" width="128" height="43"/>
-        <element name="Contact" positionX="855" positionY="9" width="128" height="360"/>
-        <element name="FriendContact" positionX="693" positionY="92" width="128" height="60"/>
+        <element name="Contact" positionX="855" positionY="9" width="128" height="375"/>
+        <element name="FriendContact" positionX="693" positionY="92" width="128" height="45"/>
         <element name="InboxMail" positionX="160" positionY="192" width="128" height="150"/>
         <element name="MailInfo" positionX="297" positionY="126" width="128" height="240"/>
         <element name="MyInfo" positionX="-45" positionY="-151" width="128" height="150"/>

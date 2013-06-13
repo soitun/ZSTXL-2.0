@@ -31,15 +31,18 @@
     [super awakeFromNib];
     UITapGestureRecognizer *tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvatar)] autorelease];
     [self.headIcon addGestureRecognizer:tap];
+    
+    [self.addFriendButton addTarget:self action:@selector(addFriendAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)dealloc {
     [_headIcon release];
     [_nameLabel release];
-    [_xun_VImage release];
     [_ZDLabel release];
     [_preferLabel release];
     [_cityLabel release];
+    [_addFriendButton release];
+    [_haveAddLabel release];
     [super dealloc];
 }
 
@@ -86,6 +89,13 @@
         }
         
         self.preferLabel.text = self.contact.prefercontent;
+    }
+}
+
+- (void)addFriendAction:(UIButton *)sender
+{
+    if ([self.delegate respondsToSelector:@selector(contactCellAddFriend:atIndexPath:)]) {
+        [self.delegate performSelector:@selector(contactCellAddFriend:atIndexPath:) withObject:self.contact withObject:self.indexPath];
     }
 }
 

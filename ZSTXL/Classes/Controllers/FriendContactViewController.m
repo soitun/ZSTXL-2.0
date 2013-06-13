@@ -89,7 +89,7 @@
                 return [obj1 compare:obj2];
             }];
             
-            NSLog(@"section array %@", self.sectionArray);
+            DLog(@"section array %@", self.sectionArray);
             [self.tableView reloadData];
         }
         else{
@@ -148,6 +148,8 @@
                 return [obj1 compare:obj2];
             }];
             
+//            DLog(@"%@", self.contactDict);
+            
             [self.tableView reloadData];
             
             
@@ -197,7 +199,7 @@
     }
     
     NSString *sectionKey = [self.sectionArray objectAtIndex:indexPath.section];
-    Contact *contact = [[self.contactDict objectForKey:sectionKey] objectAtIndex:indexPath.row];
+    FriendContact *contact = [[self.contactDict objectForKey:sectionKey] objectAtIndex:indexPath.row];
     cell.contact = contact;
     cell.delegate = self;
     
