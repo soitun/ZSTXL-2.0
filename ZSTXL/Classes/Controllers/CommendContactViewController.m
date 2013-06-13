@@ -9,7 +9,7 @@
 #import "CommendContactViewController.h"
 #import "CommendContact.h"
 #import "ContactCell.h"
-#import "OtherHomepageViewController.h"
+#import "OtherProfileViewController.h"
 
 @interface CommendContactViewController ()
 
@@ -208,7 +208,7 @@
 
 - (void)contactCellTapAvatarOfContact:(Contact *)contact
 {
-    OtherHomepageViewController *otherProfileVC = [[[OtherHomepageViewController alloc] init] autorelease];
+    OtherProfileViewController *otherProfileVC = [[[OtherProfileViewController alloc] init] autorelease];
 
     otherProfileVC.contact = contact;
     if ([self.parentController respondsToSelector:@selector(pushViewController:)]) {

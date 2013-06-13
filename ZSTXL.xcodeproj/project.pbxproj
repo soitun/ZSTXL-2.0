@@ -479,8 +479,6 @@
 		359E9B59174B0D5D0018E87F /* SelectedUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359E9B57174B0D5D0018E87F /* SelectedUserViewController.xib */; };
 		359E9B63174B0E960018E87F /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9B61174B0E960018E87F /* ContactCell.m */; };
 		359E9B64174B0E960018E87F /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359E9B62174B0E960018E87F /* ContactCell.xib */; };
-		359E9B68174B0F1F0018E87F /* OtherHomepageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9B66174B0F1C0018E87F /* OtherHomepageViewController.m */; };
-		359E9B69174B0F1F0018E87F /* OtherHomepageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359E9B67174B0F1E0018E87F /* OtherHomepageViewController.xib */; };
 		359E9B73174B0F820018E87F /* SendMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9B71174B0F7F0018E87F /* SendMessageViewController.m */; };
 		359E9B74174B0F820018E87F /* SendMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359E9B72174B0F810018E87F /* SendMessageViewController.xib */; };
 		359E9B76174B100A0018E87F /* unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 359E9B75174B100A0018E87F /* unselected.png */; };
@@ -592,6 +590,12 @@
 		35A301941755DC12002A4F4B /* ZSDLCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A301931755DC10002A4F4B /* ZSDLCell.m */; };
 		35A301961755DC85002A4F4B /* ZSDLCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A301951755DC83002A4F4B /* ZSDLCell.xib */; };
 		35A301991756016A002A4F4B /* TimePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A3019817560167002A4F4B /* TimePicker.m */; };
+		35A3C76B1769635700C1C353 /* OtherProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A3C7691769635700C1C353 /* OtherProfileViewController.m */; };
+		35A3C76C1769635700C1C353 /* OtherProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A3C76A1769635700C1C353 /* OtherProfileViewController.xib */; };
+		35A3C76F176963AF00C1C353 /* OtherProfileHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A3C76E176963AF00C1C353 /* OtherProfileHeader.m */; };
+		35A3C771176963C000C1C353 /* OtherProfileHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A3C770176963C000C1C353 /* OtherProfileHeader.xib */; };
+		35A3C77417696B9900C1C353 /* OtherProfileContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A3C77317696B9900C1C353 /* OtherProfileContactCell.m */; };
+		35A3C77617696BA800C1C353 /* OtherProfileContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A3C77517696BA800C1C353 /* OtherProfileContactCell.xib */; };
 		35A99C8A174DAD9500C9DF69 /* addfriend_button_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A99C89174DAD9500C9DF69 /* addfriend_button_p.png */; };
 		35A99C94174DB23F00C9DF69 /* my_homepage_chat.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A99C8E174DB23F00C9DF69 /* my_homepage_chat.png */; };
 		35A99C95174DB23F00C9DF69 /* my_homepage_chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A99C8F174DB23F00C9DF69 /* my_homepage_chat@2x.png */; };
@@ -1359,9 +1363,6 @@
 		359E9B60174B0E960018E87F /* ContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactCell.h; sourceTree = "<group>"; };
 		359E9B61174B0E960018E87F /* ContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactCell.m; sourceTree = "<group>"; };
 		359E9B62174B0E960018E87F /* ContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
-		359E9B65174B0F1B0018E87F /* OtherHomepageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherHomepageViewController.h; sourceTree = "<group>"; };
-		359E9B66174B0F1C0018E87F /* OtherHomepageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherHomepageViewController.m; sourceTree = "<group>"; };
-		359E9B67174B0F1E0018E87F /* OtherHomepageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherHomepageViewController.xib; sourceTree = "<group>"; };
 		359E9B70174B0F7E0018E87F /* SendMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendMessageViewController.h; sourceTree = "<group>"; };
 		359E9B71174B0F7F0018E87F /* SendMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendMessageViewController.m; sourceTree = "<group>"; };
 		359E9B72174B0F810018E87F /* SendMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendMessageViewController.xib; sourceTree = "<group>"; };
@@ -1515,6 +1516,15 @@
 		35A301951755DC83002A4F4B /* ZSDLCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZSDLCell.xib; sourceTree = "<group>"; };
 		35A3019717560165002A4F4B /* TimePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePicker.h; sourceTree = "<group>"; };
 		35A3019817560167002A4F4B /* TimePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePicker.m; sourceTree = "<group>"; };
+		35A3C7681769635700C1C353 /* OtherProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherProfileViewController.h; sourceTree = "<group>"; };
+		35A3C7691769635700C1C353 /* OtherProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherProfileViewController.m; sourceTree = "<group>"; };
+		35A3C76A1769635700C1C353 /* OtherProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherProfileViewController.xib; sourceTree = "<group>"; };
+		35A3C76D176963AF00C1C353 /* OtherProfileHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherProfileHeader.h; sourceTree = "<group>"; };
+		35A3C76E176963AF00C1C353 /* OtherProfileHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherProfileHeader.m; sourceTree = "<group>"; };
+		35A3C770176963C000C1C353 /* OtherProfileHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherProfileHeader.xib; sourceTree = "<group>"; };
+		35A3C77217696B9900C1C353 /* OtherProfileContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherProfileContactCell.h; sourceTree = "<group>"; };
+		35A3C77317696B9900C1C353 /* OtherProfileContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherProfileContactCell.m; sourceTree = "<group>"; };
+		35A3C77517696BA800C1C353 /* OtherProfileContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherProfileContactCell.xib; sourceTree = "<group>"; };
 		35A99C89174DAD9500C9DF69 /* addfriend_button_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addfriend_button_p.png; sourceTree = "<group>"; };
 		35A99C8E174DB23F00C9DF69 /* my_homepage_chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_homepage_chat.png; sourceTree = "<group>"; };
 		35A99C8F174DB23F00C9DF69 /* my_homepage_chat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_homepage_chat@2x.png"; sourceTree = "<group>"; };
@@ -1809,6 +1819,9 @@
 				356D5DDB175EDFBE00498008 /* CopyrightViewController.xib */,
 				358C1B7B174A1F43006E5A8D /* CustomNavigationController.h */,
 				358C1B7C174A1F43006E5A8D /* CustomNavigationController.m */,
+				359A7D2B1761BBD100D453E8 /* FinanceInfoViewController.h */,
+				359A7D2C1761BBD200D453E8 /* FinanceInfoViewController.m */,
+				359A7D2D1761BBD300D453E8 /* FinanceInfoViewController.xib */,
 				359CA14A174F4D5B00803018 /* ForgotPasswdViewController.h */,
 				359CA14B174F4D5C00803018 /* ForgotPasswdViewController.m */,
 				359CA14C174F4D5E00803018 /* ForgotPasswdViewController.xib */,
@@ -1836,12 +1849,15 @@
 				356D5DEF175F096300498008 /* ModifyPasswdViewController.h */,
 				356D5DF0175F096400498008 /* ModifyPasswdViewController.m */,
 				356D5DF1175F096500498008 /* ModifyPasswdViewController.xib */,
+				3584597917686AE400538EDB /* MyProfileViewController.h */,
+				3584597A17686AE400538EDB /* MyProfileViewController.m */,
+				3584597B17686AE400538EDB /* MyProfileViewController.xib */,
 				359A7DB91763379F00D453E8 /* NewsDetailController.h */,
 				359A7DBA176337A800D453E8 /* NewsDetailController.m */,
 				359A7DBB176337B000D453E8 /* NewsDetailController.xib */,
-				359E9B65174B0F1B0018E87F /* OtherHomepageViewController.h */,
-				359E9B66174B0F1C0018E87F /* OtherHomepageViewController.m */,
-				359E9B67174B0F1E0018E87F /* OtherHomepageViewController.xib */,
+				35A3C7681769635700C1C353 /* OtherProfileViewController.h */,
+				35A3C7691769635700C1C353 /* OtherProfileViewController.m */,
+				35A3C76A1769635700C1C353 /* OtherProfileViewController.xib */,
 				359CA181174F6CDE00803018 /* PasswdViewController.h */,
 				359CA182174F6CDE00803018 /* PasswdViewController.m */,
 				359CA183174F6CDE00803018 /* PasswdViewController.xib */,
@@ -1902,6 +1918,9 @@
 				359E9B55174B0D5B0018E87F /* SelectedUserViewController.h */,
 				359E9B56174B0D5C0018E87F /* SelectedUserViewController.m */,
 				359E9B57174B0D5D0018E87F /* SelectedUserViewController.xib */,
+				356D5E27175F558F00498008 /* SelectPharViewController.h */,
+				356D5E28175F558F00498008 /* SelectPharViewController.m */,
+				356D5E29175F558F00498008 /* SelectPharViewController.xib */,
 				359CA145174F476600803018 /* SelectViewController.h */,
 				359CA146174F476600803018 /* SelectViewController.m */,
 				359CA147174F476700803018 /* SelectViewController.xib */,
@@ -1929,6 +1948,15 @@
 				35987E2E1754B20B004E2EF5 /* SettingWorkTimeViewController.h */,
 				35987E2F1754B20C004E2EF5 /* SettingWorkTimeViewController.m */,
 				35987E301754B20D004E2EF5 /* SettingWorkTimeViewController.xib */,
+				356D5E5F1760896100498008 /* ShaixuanPharViewController.h */,
+				356D5E601760896C00498008 /* ShaixuanPharViewController.m */,
+				356D5E611760897A00498008 /* ShaixuanPharViewController.xib */,
+				356D5E6617609FB700498008 /* ShowSelectViewController.h */,
+				356D5E6717609FC100498008 /* ShowSelectViewController.m */,
+				356D5E6817609FD600498008 /* ShowSelectViewController.xib */,
+				359A7E1C17638C4E00D453E8 /* StarNewsViewController.h */,
+				359A7E1D17638C5D00D453E8 /* StarNewsViewController.m */,
+				359A7E1E17638C6A00D453E8 /* StarNewsViewController.xib */,
 				359E9BAA174B17D30018E87F /* TalkViewController.h */,
 				359E9BAB174B17DA0018E87F /* TalkViewController.m */,
 				359E9BAC174B17EB0018E87F /* TalkViewController.xib */,
@@ -1950,24 +1978,6 @@
 				359EAC4B1752E885004D4356 /* ZhaoshangInfoViewController.h */,
 				359EAC4C1752E885004D4356 /* ZhaoshangInfoViewController.m */,
 				359EAC4D1752E885004D4356 /* ZhaoshangInfoViewController.xib */,
-				356D5E27175F558F00498008 /* SelectPharViewController.h */,
-				356D5E28175F558F00498008 /* SelectPharViewController.m */,
-				356D5E29175F558F00498008 /* SelectPharViewController.xib */,
-				356D5E5F1760896100498008 /* ShaixuanPharViewController.h */,
-				356D5E601760896C00498008 /* ShaixuanPharViewController.m */,
-				356D5E611760897A00498008 /* ShaixuanPharViewController.xib */,
-				356D5E6617609FB700498008 /* ShowSelectViewController.h */,
-				356D5E6717609FC100498008 /* ShowSelectViewController.m */,
-				356D5E6817609FD600498008 /* ShowSelectViewController.xib */,
-				359A7D2B1761BBD100D453E8 /* FinanceInfoViewController.h */,
-				359A7D2C1761BBD200D453E8 /* FinanceInfoViewController.m */,
-				359A7D2D1761BBD300D453E8 /* FinanceInfoViewController.xib */,
-				359A7E1C17638C4E00D453E8 /* StarNewsViewController.h */,
-				359A7E1D17638C5D00D453E8 /* StarNewsViewController.m */,
-				359A7E1E17638C6A00D453E8 /* StarNewsViewController.xib */,
-				3584597917686AE400538EDB /* MyProfileViewController.h */,
-				3584597A17686AE400538EDB /* MyProfileViewController.m */,
-				3584597B17686AE400538EDB /* MyProfileViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2208,6 +2218,12 @@
 				358459831768705900538EDB /* MyProfileContactCell.h */,
 				358459841768705900538EDB /* MyProfileContactCell.m */,
 				358459861768706B00538EDB /* MyProfileContactCell.xib */,
+				35A3C76D176963AF00C1C353 /* OtherProfileHeader.h */,
+				35A3C76E176963AF00C1C353 /* OtherProfileHeader.m */,
+				35A3C770176963C000C1C353 /* OtherProfileHeader.xib */,
+				35A3C77217696B9900C1C353 /* OtherProfileContactCell.h */,
+				35A3C77317696B9900C1C353 /* OtherProfileContactCell.m */,
+				35A3C77517696BA800C1C353 /* OtherProfileContactCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3135,7 +3151,6 @@
 				359E9AF3174B0BF60018E87F /* PharCell.xib in Resources */,
 				359E9B59174B0D5D0018E87F /* SelectedUserViewController.xib in Resources */,
 				359E9B64174B0E960018E87F /* ContactCell.xib in Resources */,
-				359E9B69174B0F1F0018E87F /* OtherHomepageViewController.xib in Resources */,
 				359E9B74174B0F820018E87F /* SendMessageViewController.xib in Resources */,
 				359E9B76174B100A0018E87F /* unselected.png in Resources */,
 				359E9B7F174B109E0018E87F /* GroupSendViewController.xib in Resources */,
@@ -3564,6 +3579,9 @@
 				3584597D17686AE400538EDB /* MyProfileViewController.xib in Resources */,
 				3584598217686C2600538EDB /* MyProfileHeader.xib in Resources */,
 				358459871768706B00538EDB /* MyProfileContactCell.xib in Resources */,
+				35A3C76C1769635700C1C353 /* OtherProfileViewController.xib in Resources */,
+				35A3C771176963C000C1C353 /* OtherProfileHeader.xib in Resources */,
+				35A3C77617696BA800C1C353 /* OtherProfileContactCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3642,7 +3660,6 @@
 				359E9B54174B0D300018E87F /* GTMBase64.m in Sources */,
 				359E9B58174B0D5D0018E87F /* SelectedUserViewController.m in Sources */,
 				359E9B63174B0E960018E87F /* ContactCell.m in Sources */,
-				359E9B68174B0F1F0018E87F /* OtherHomepageViewController.m in Sources */,
 				359E9B73174B0F820018E87F /* SendMessageViewController.m in Sources */,
 				359E9B7E174B109E0018E87F /* GroupSendViewController.m in Sources */,
 				359E9B87174B11D30018E87F /* MailInfo.m in Sources */,
@@ -3798,6 +3815,9 @@
 				358459851768705900538EDB /* MyProfileContactCell.m in Sources */,
 				3584598A1768B1AB00538EDB /* UserDetail.m in Sources */,
 				3584598D1768C4F900538EDB /* MyInfo.m in Sources */,
+				35A3C76B1769635700C1C353 /* OtherProfileViewController.m in Sources */,
+				35A3C76F176963AF00C1C353 /* OtherProfileHeader.m in Sources */,
+				35A3C77417696B9900C1C353 /* OtherProfileContactCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

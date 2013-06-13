@@ -9,7 +9,7 @@
 #import "FriendContactViewController.h"
 #import "ContactCell.h"
 #import "FriendContact.h"
-#import "OtherHomepageViewController.h"
+#import "OtherProfileViewController.h"
 
 @interface FriendContactViewController ()
 
@@ -268,7 +268,7 @@
 
 - (void)contactCellTapAvatarOfContact:(Contact *)contact
 {
-    OtherHomepageViewController *otherProfileVC = [[OtherHomepageViewController alloc] init];
+    OtherProfileViewController *otherProfileVC = [[OtherProfileViewController alloc] init];
     otherProfileVC.delegate = self;
     otherProfileVC.contact = contact;
     if ([self.parentController respondsToSelector:@selector(pushViewController:)]) {
@@ -310,7 +310,7 @@
 
 #pragma mark - friend delegate
 
-- (void)otherHPFriendRefresh    //从他的主页删除好友时 回调
+- (void)otherProfileFriendRefresh    //从他的主页删除好友时 回调
 {
     [self refreshAction];
 }

@@ -12,7 +12,7 @@
 #import "SearchContact.h"
 #import "LoadMoreFooter.h"
 #import "PopContactView.h"
-#import "OtherHomepageViewController.h"
+#import "OtherProfileViewController.h"
 
 @interface SearchContactViewController ()
 
@@ -274,7 +274,7 @@
 
 - (void)contactCellTapAvatarOfContact:(Contact *)contact
 {
-    OtherHomepageViewController *otherVC = [[[OtherHomepageViewController alloc] init] autorelease];
+    OtherProfileViewController *otherVC = [[[OtherProfileViewController alloc] init] autorelease];
     otherVC.contact = contact;
     [self.navigationController pushViewController:otherVC animated:YES];
 }

@@ -7,9 +7,10 @@
 //
 
 #import "AllContactViewController.h"
-#import "OtherHomepageViewController.h"
+#import "OtherProfileViewController.h"
 #import "ContactCell.h"
 #import "Contact.h"
+#import "AllContact.h"
 #import "SearchContactCell.h"
 #import "LoadMoreCell.h"
 #import "LoadMoreFooter.h"
@@ -229,7 +230,7 @@
 
 - (void)contactCellTapAvatarOfContact:(Contact *)contact
 {
-    OtherHomepageViewController *otherProfileVC = [[[OtherHomepageViewController alloc] init] autorelease];
+    OtherProfileViewController *otherProfileVC = [[[OtherProfileViewController alloc] init] autorelease];
     otherProfileVC.contact = contact;
     if ([self.parentController respondsToSelector:@selector(pushViewController:)]) {
         [self.parentController performSelector:@selector(pushViewController:) withObject:otherProfileVC];

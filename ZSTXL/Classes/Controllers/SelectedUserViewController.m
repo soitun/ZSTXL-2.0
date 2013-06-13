@@ -8,8 +8,9 @@
 
 #import "SelectedUserViewController.h"
 #import "Contact.h"
+#import "AllContact.h"
 #import "ContactCell.h"
-#import "OtherHomepageViewController.h"
+#import "OtherProfileViewController.h"
 
 @interface SelectedUserViewController ()
 
@@ -98,7 +99,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OtherHomepageViewController *homeVC = [[OtherHomepageViewController alloc] init];
+    OtherProfileViewController *homeVC = [[OtherProfileViewController alloc] init];
     homeVC.contact = [self.selectedArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:homeVC animated:YES];
     [homeVC release];

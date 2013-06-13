@@ -52,7 +52,6 @@
 
 - (void)dealloc {
     [_nameLabel release];
-    [_separatorImage release];
     [_detailLabel release];
     [super dealloc];
 }

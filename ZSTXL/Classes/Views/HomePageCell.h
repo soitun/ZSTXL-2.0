@@ -10,7 +10,7 @@
 
 @interface HomePageCell : UITableViewCell
 
-@property (retain, nonatomic) IBOutlet UIImageView *separatorImage;
 @property (retain, nonatomic) IBOutlet UILabel *nameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *detailLabel;
+
 @end

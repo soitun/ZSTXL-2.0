@@ -191,7 +191,6 @@ enum eAlertTag {
             break;
         case 3:
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.separatorImage.hidden = YES;
             CGRect frame = cell.nameLabel.frame;
             frame.size.width = 150;
             cell.nameLabel.frame = frame;
@@ -210,7 +209,7 @@ enum eAlertTag {
     cell.nameLabel.textColor = kContentBlueColor;
     
     if (indexPath.row == self.leftArray.count-1) {
-        cell.separatorImage.image = nil;
+//        cell.separatorImage.image = nil;
     }
     return cell;
 }

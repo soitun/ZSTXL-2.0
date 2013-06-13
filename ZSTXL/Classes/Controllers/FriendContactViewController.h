@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "PopContactView.h"
 #import "ContactCell.h"
-#import "OtherHomepageViewController.h"
+#import "OtherProfileViewController.h"
 
 @interface FriendContactViewController : UIViewController
-<UITableViewDataSource, UITableViewDelegate, PopContactViewDelegate, ContactCellDelegate, OtherHomepageVCDelegate>
+<UITableViewDataSource, UITableViewDelegate, PopContactViewDelegate, ContactCellDelegate, OtherProfileDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *dataSourceArray;
