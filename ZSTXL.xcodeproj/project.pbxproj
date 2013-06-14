@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		35098407176AD0C40077C639 /* SettingPersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35098405176AD0C40077C639 /* SettingPersonInfoViewController.m */; };
 		35098408176AD0C40077C639 /* SettingPersonInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35098406176AD0C40077C639 /* SettingPersonInfoViewController.xib */; };
+		3509840C176AD1620077C639 /* SettingPersonInfoHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3509840A176AD1620077C639 /* SettingPersonInfoHeader.m */; };
+		3509840D176AD1620077C639 /* SettingPersonInfoHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3509840B176AD1620077C639 /* SettingPersonInfoHeader.xib */; };
 		356D5DCB175EDE7900498008 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 356D5DC9175EDE7900498008 /* AboutViewController.m */; };
 		356D5DCC175EDE7900498008 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 356D5DCA175EDE7900498008 /* AboutViewController.xib */; };
 		356D5DCE175EDF2E00498008 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 356D5DCD175EDF2E00498008 /* logo.png */; };
@@ -740,6 +742,9 @@
 		35098404176AD0C40077C639 /* SettingPersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingPersonInfoViewController.h; sourceTree = "<group>"; };
 		35098405176AD0C40077C639 /* SettingPersonInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingPersonInfoViewController.m; sourceTree = "<group>"; };
 		35098406176AD0C40077C639 /* SettingPersonInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingPersonInfoViewController.xib; sourceTree = "<group>"; };
+		35098409176AD1620077C639 /* SettingPersonInfoHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingPersonInfoHeader.h; sourceTree = "<group>"; };
+		3509840A176AD1620077C639 /* SettingPersonInfoHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingPersonInfoHeader.m; sourceTree = "<group>"; };
+		3509840B176AD1620077C639 /* SettingPersonInfoHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingPersonInfoHeader.xib; sourceTree = "<group>"; };
 		356D5DC8175EDE7900498008 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		356D5DC9175EDE7900498008 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		356D5DCA175EDE7900498008 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
@@ -2264,6 +2269,9 @@
 				35BDD24C176AA9B900BFDDCB /* OtherProfileFooter.h */,
 				35BDD24D176AA9B900BFDDCB /* OtherProfileFooter.m */,
 				35BDD24F176AA9CE00BFDDCB /* OtherProfileFooter.xib */,
+				35098409176AD1620077C639 /* SettingPersonInfoHeader.h */,
+				3509840A176AD1620077C639 /* SettingPersonInfoHeader.m */,
+				3509840B176AD1620077C639 /* SettingPersonInfoHeader.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3641,6 +3649,7 @@
 				35A3C7A21769F13D00C1C353 /* BlacklistViewController.xib in Resources */,
 				35BDD250176AA9CE00BFDDCB /* OtherProfileFooter.xib in Resources */,
 				35098408176AD0C40077C639 /* SettingPersonInfoViewController.xib in Resources */,
+				3509840D176AD1620077C639 /* SettingPersonInfoHeader.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3880,6 +3889,7 @@
 				35A3C7A11769F13D00C1C353 /* BlacklistViewController.m in Sources */,
 				35BDD24E176AA9B900BFDDCB /* OtherProfileFooter.m in Sources */,
 				35098407176AD0C40077C639 /* SettingPersonInfoViewController.m in Sources */,
+				3509840C176AD1620077C639 /* SettingPersonInfoHeader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
