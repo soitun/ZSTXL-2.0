@@ -127,7 +127,18 @@
     self.tableHeader.nameLabel.text = self.myInfo.userDetail.username;
     self.tableHeader.userIdLabel.text = self.myInfo.userDetail.userid;
     self.tableHeader.telLabel.text = self.myInfo.userDetail.tel;
-    [self.tableHeader.headIcon setImageWithURL:[NSURL URLWithString:self.myInfo.userDetail.picturelinkurl] placeholderImage:[UIImage imageByName:@"home_icon"]];
+
+    //save avatar
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.myInfo.userDetail.picturelinkurl]];
+    [self.tableHeader.headIcon setImageWithURLRequest:urlRequest placeholderImage:[UIImage imageNamed:@"home_icon"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        self.tableHeader.headIcon.image = image;
+        NSString *localUrl = [[self.myInfo.userDetail.picturelinkurl componentsSeparatedByString:@"/"] lastObject];
+        [Utility saveImage:image toDiskWithName:localUrl];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        DLog(@"error %@", error);
+    }];
+    
+    
     if ([self.myInfo.userDetail.col2 isEqualToString:@"1"]) {
         self.tableHeader.xunVImage.hidden = NO;
     }else{
@@ -296,6 +307,10 @@
         phar.content = [pharDict objForKey:@"prefername"];
         [self.myInfo addPharListObject:phar];
     }
+    
+    //save image
+    
+    NSString *picUrl = [[self.myInfo.userDetail.picturelinkurl componentsSeparatedByString:@"/"] lastObject];
     
     DB_SAVE();
 }
@@ -753,7 +768,6 @@
     for (NSString *key in [self.zdDict allKeys]) {
         [self.zdDict setObject:[NSNumber numberWithInt:0] forKey:key];
     }
-    
     
     [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
     

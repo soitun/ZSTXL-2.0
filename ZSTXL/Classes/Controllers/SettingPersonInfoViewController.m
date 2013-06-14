@@ -6,18 +6,18 @@
 //  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
-#import "PersonBasicInfoSettingViewController.h"
+#import "SettingPersonInfoViewController.h"
 #import "CustomCellBackgroundView.h"
 #import "PersonBasicInfoCell.h"
 #import "SettingNameViewController.h"
 #import "SettingTelViewController.h"
 #import "TimePicker.h"
 
-@interface PersonBasicInfoSettingViewController ()
+@interface SettingPersonInfoViewController ()
 
 @end
 
-@implementation PersonBasicInfoSettingViewController
+@implementation SettingPersonInfoViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,18 +33,17 @@
     [super viewDidLoad];
     self.title = @"个人信息设置";
     self.view.backgroundColor = bgGreyColor;
-    self.userid = [PersistenceHelper dataForKey:kUserId];
     self.sex = @"";
-    
-    self.myInfo = [Utility getMyInfo];
-    self.useridLabel.text = self.userid;
-    self.telLabel.text = self.myInfo.userDetail.tel;
     
     [self initNavBar];
     [self initTableView];
+    [self initTableHeader];
     
-    self.tableView.backgroundView = nil;
-    self.tableView.backgroundColor = [UIColor clearColor];
+    self.myInfo = [Utility getMyInfo];
+    self.header.userIdLabel.text = kAppDelegate.userId;
+    self.header.telLabel.text = self.myInfo.userDetail.tel;
+    NSString *picUrl = [[self.myInfo.userDetail.picturelinkurl componentsSeparatedByString:@"/"] lastObject];
+    self.header.avatar.image = [Utility readImageFromDisk:picUrl];
     
     [self requestPersonInfo];
 }
@@ -58,17 +57,11 @@
 - (void)dealloc
 {
     [_tableView release];
-    [_useridLabel release];
-    [_telLabel release];
-    [_headIcon release];
     [super dealloc];
 }
 
 - (void)viewDidUnload
 {
-    [self setUseridLabel:nil];
-    [self setTelLabel:nil];
-    [self setHeadIcon:nil];
     [self setTableView:nil];
     [super viewDidUnload];
 }
@@ -92,17 +85,20 @@
 }
 
 
-#pragma mark - table view data
+#pragma mark - table view
+
+- (void)initTableHeader
+{
+    self.header = [[[NSBundle mainBundle] loadNibNamed:@"SettingPersonInfoHeader" owner:self options:nil] lastObject];
+    self.tableView.tableHeaderView = self.header;
+}
 
 - (void)initTableView
 {
-    NSArray *titleArr1 = @[@"姓名", @"手机号码"];
-    NSArray *titleArr2 = @[@"性别", @"生日"];
-    self.titleArray = [NSMutableArray arrayWithObjects:titleArr1, titleArr2, nil];
-    
-    NSArray *selArr1 = @[@"settingName", @"settingTel"];
-    NSArray *selArr2 = @[@"settingSex", @"settingBirth"];
-    self.selectorArray = [NSMutableArray arrayWithObjects:selArr1, selArr2, nil];
+    self.titleArray = @[@[@"姓名", @"手机号码"], @[@"性别", @"生日"], @[@"单位", @"职位"]];
+    self.selectorArray = @[@[@"settingName", @"settingTel"], @[@"settingSex", @"settingBirth"], @[@"settingCompany", @"settingJob"]];
+    self.tableView.backgroundView = nil;
+    self.tableView.backgroundColor = [UIColor clearColor];
     
     
     
@@ -175,6 +171,20 @@
 }
 
 #pragma mark - table view
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CGFloat height = 0.f;
+    
+    if (section == 0) {
+        height = 0.f;;
+    }
+    else{
+        height = 8.f;
+    }
+    
+    return height;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -288,6 +298,20 @@
     
     [self.timePicker showInView:self.view];
 }
+
+
+- (void)settingCompany
+{
+    
+}
+
+- (void)settingJob
+{
+    
+}
+
+
+#pragma mark - timer picker delegate
 
 - (void)timePickerConfirm:(TimePicker *)picker
 {

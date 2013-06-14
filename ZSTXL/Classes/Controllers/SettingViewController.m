@@ -9,7 +9,7 @@
 #import "SettingViewController.h"
 #import "SettingCell.h"
 #import "CustomCellBackgroundView.h"
-#import "PersonBasicInfoSettingViewController.h"
+#import "SettingPersonInfoViewController.h"
 #import "SettingWorkTimeViewController.h"
 #import "AboutViewController.h"
 #import "InviteFriendViewController.h"
@@ -258,9 +258,8 @@
 - (void)personInfoSetting
 {
     DLog(@"personInfoSetting");
-    PersonBasicInfoSettingViewController *personBasicInfoSettingVC = [[PersonBasicInfoSettingViewController alloc] init];
-    [self.navigationController pushViewController:personBasicInfoSettingVC animated:YES];
-    [personBasicInfoSettingVC release];
+    SettingPersonInfoViewController *settingPersonInfoVC = [[[SettingPersonInfoViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:settingPersonInfoVC animated:YES];
 }
 
 - (void)toneSwitch
