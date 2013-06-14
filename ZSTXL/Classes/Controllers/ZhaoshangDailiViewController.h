@@ -12,7 +12,8 @@
 #import "EGORefreshTableHeaderView.h"
 
 
-@interface ZhaoshangDailiViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, EGORefreshTableHeaderDelegate>
+@interface ZhaoshangDailiViewController : UIViewController
+<UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, EGORefreshTableHeaderDelegate, InfoAdvDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *dataSourceArray;
 @property (nonatomic, retain) UIButton *CateButton;

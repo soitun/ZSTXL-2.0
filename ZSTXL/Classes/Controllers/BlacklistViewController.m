@@ -60,7 +60,7 @@
     [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
     [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
-        DLog(@"%@", json);
+//        DLog(@"%@", json);
         if (RETURNCODE_ISVALID(json)) {
             
             NSArray *array = [json objForKey:@"DataList"];

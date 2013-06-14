@@ -22,6 +22,8 @@
 #import "StarNewsViewController.h"
 #import "AddMeViewController.h"
 #import "BlacklistViewController.h"
+#import "FriendInvAgencyViewController.h"
+#import "MyInvAgencyViewController.h"
 
 #import "SBTableAlert.h"
 #import "ZDCell.h"
@@ -310,7 +312,7 @@
     
     //save image
     
-    NSString *picUrl = [[self.myInfo.userDetail.picturelinkurl componentsSeparatedByString:@"/"] lastObject];
+//    NSString *picUrl = [[self.myInfo.userDetail.picturelinkurl componentsSeparatedByString:@"/"] lastObject];
     
     DB_SAVE();
 }
@@ -520,12 +522,14 @@
 
 - (void)myInvInfo
 {
-    
+    MyInvAgencyViewController *myInvAgencyVC = [[[MyInvAgencyViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:myInvAgencyVC animated:YES];
 }
 
 - (void)friendInvInfo
 {
-    
+    FriendInvAgencyViewController *friendInvAgencyVC = [[[FriendInvAgencyViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:friendInvAgencyVC animated:YES];
 }
 
 #pragma mark - contact cell delegate

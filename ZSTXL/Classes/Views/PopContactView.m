@@ -67,11 +67,42 @@
 }
 
 - (IBAction)telAction:(UIButton *)sender {
-    [self.bgControl removeFromSuperview];
-    if ([self.delegate respondsToSelector:@selector(popContactViewTel:)]) {
-        [self.delegate performSelector:@selector(popContactViewTel:) withObject:self.contact];
-    }
     
+    NSDictionary *para = @{@"path": @"getAllowtelStatus.json",
+                           @"userid": kAppDelegate.userId,
+                           @"peopleid": self.contact.userid};
+    
+    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        DLog(@"json %@", json);
+        if (RETURNCODE_ISVALID(json)) {
+            
+            //returnCode 为0时可以打电话
+            
+            NSString *userTel = [json objForKey:@"userTel"];
+            if (![userTel isEqual:[NSNull null]]) {
+                self.contact.tel = userTel;
+            }
+            
+            
+            [self.bgControl removeFromSuperview];
+            if ([self.delegate respondsToSelector:@selector(popContactViewTel:)]) {
+                [self.delegate performSelector:@selector(popContactViewTel:) withObject:self.contact];
+            }
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+    }];
+    
+    
+    
+
 }
 
 - (IBAction)chatAction:(UIButton *)sender {

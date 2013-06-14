@@ -45,6 +45,7 @@
     [self initTableHeader];
     [self initEgoHeader];
     [self requestData];
+    [self requestAdv];
 }
 
 - (void)didReceiveMemoryWarning
@@ -130,12 +131,10 @@
 
 - (void)requestAdv
 {
-    NSDictionary *paraDict = @{@"path": @"getInformationMore.json"};
+    NSDictionary *paraDict = @{@"path": @"getZsInformationTop.json"};
     
-    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
     [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
         
-        [MBProgressHUD hideHUDForView:kAppDelegate.window animated:YES];
         if ([[GET_RETURNCODE(json) stringValue] isEqualToString:@"0"]) {
             
             NSArray *array = [json objForKey:@"InformationTopList"];
@@ -149,7 +148,6 @@
         
         
     } failure:^(NSError *error) {
-        [MBProgressHUD hideHUDForView:kAppDelegate.window animated:YES];
         [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
     }];
     
@@ -237,6 +235,7 @@
 - (void)initTableHeader
 {
     InfoAdvHeaderView *header = [[[NSBundle mainBundle] loadNibNamed:@"InfoAdvHeaderView" owner:nil options:nil] lastObject];
+    header.delegate = self;
     self.tableView.tableHeaderView = header;
 }
 
@@ -297,6 +296,17 @@
     newsDetailVC.newsIndex = indexPath.row;
     newsDetailVC.newsId = infomationId;
     newsDetailVC.newsArray = self.dataSourceArray;
+    [self.navigationController pushViewController:newsDetailVC animated:YES];
+}
+
+#pragma mark - header delegate
+
+- (void)clickedInfoAdvDict:(NSDictionary *)advDict
+{
+    NSString *infomationId = [advDict objForKey:@"id"];
+    NewsDetailController *newsDetailVC = [[[NewsDetailController alloc] init] autorelease];
+    newsDetailVC.newsId = infomationId;
+//    newsDetailVC.newsArray = self.dataSourceArray;
     [self.navigationController pushViewController:newsDetailVC animated:YES];
 }
 

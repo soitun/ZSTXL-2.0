@@ -75,7 +75,7 @@ enum eAlertTag {
     [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
         [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
         if (RETURNCODE_ISVALID(json)) {
-            NSLog(@"friend json data: %@", json);
+//            DLog(@"friend json data: %@", json);
             
             
             NSMutableString *areaString = [[NSMutableString alloc] init];
