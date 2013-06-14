@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35098407176AD0C40077C639 /* SettingPersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35098405176AD0C40077C639 /* SettingPersonInfoViewController.m */; };
+		35098408176AD0C40077C639 /* SettingPersonInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35098406176AD0C40077C639 /* SettingPersonInfoViewController.xib */; };
 		356D5DCB175EDE7900498008 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 356D5DC9175EDE7900498008 /* AboutViewController.m */; };
 		356D5DCC175EDE7900498008 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 356D5DCA175EDE7900498008 /* AboutViewController.xib */; };
 		356D5DCE175EDF2E00498008 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 356D5DCD175EDF2E00498008 /* logo.png */; };
@@ -540,8 +542,6 @@
 		359EAC8717534232004D4356 /* SettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 359EAC8617534231004D4356 /* SettingCell.m */; };
 		359EAC8917534241004D4356 /* SettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359EAC8817534240004D4356 /* SettingCell.xib */; };
 		359EAC96175358AE004D4356 /* CustomCellBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 359EAC95175358AD004D4356 /* CustomCellBackgroundView.m */; };
-		359EAC9F17538187004D4356 /* PersonBasicInfoSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 359EAC9D17538182004D4356 /* PersonBasicInfoSettingViewController.m */; };
-		359EACA017538187004D4356 /* PersonBasicInfoSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359EAC9E17538185004D4356 /* PersonBasicInfoSettingViewController.xib */; };
 		359EACA3175382EE004D4356 /* avatar_edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 359EACA1175382EB004D4356 /* avatar_edit.png */; };
 		359EACA4175382EE004D4356 /* avatar_edit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 359EACA2175382EC004D4356 /* avatar_edit@2x.png */; };
 		359EACA717538634004D4356 /* PersonBasicInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 359EACA617538632004D4356 /* PersonBasicInfoCell.m */; };
@@ -737,6 +737,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		35098404176AD0C40077C639 /* SettingPersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingPersonInfoViewController.h; sourceTree = "<group>"; };
+		35098405176AD0C40077C639 /* SettingPersonInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingPersonInfoViewController.m; sourceTree = "<group>"; };
+		35098406176AD0C40077C639 /* SettingPersonInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingPersonInfoViewController.xib; sourceTree = "<group>"; };
 		356D5DC8175EDE7900498008 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		356D5DC9175EDE7900498008 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		356D5DCA175EDE7900498008 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
@@ -1470,9 +1473,6 @@
 		359EAC8817534240004D4356 /* SettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingCell.xib; sourceTree = "<group>"; };
 		359EAC94175358AC004D4356 /* CustomCellBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCellBackgroundView.h; sourceTree = "<group>"; };
 		359EAC95175358AD004D4356 /* CustomCellBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCellBackgroundView.m; sourceTree = "<group>"; };
-		359EAC9C17538180004D4356 /* PersonBasicInfoSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonBasicInfoSettingViewController.h; sourceTree = "<group>"; };
-		359EAC9D17538182004D4356 /* PersonBasicInfoSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonBasicInfoSettingViewController.m; sourceTree = "<group>"; };
-		359EAC9E17538185004D4356 /* PersonBasicInfoSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonBasicInfoSettingViewController.xib; sourceTree = "<group>"; };
 		359EACA1175382EB004D4356 /* avatar_edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_edit.png; sourceTree = "<group>"; };
 		359EACA2175382EC004D4356 /* avatar_edit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_edit@2x.png"; sourceTree = "<group>"; };
 		359EACA517538631004D4356 /* PersonBasicInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonBasicInfoCell.h; sourceTree = "<group>"; };
@@ -1892,9 +1892,9 @@
 				359CA181174F6CDE00803018 /* PasswdViewController.h */,
 				359CA182174F6CDE00803018 /* PasswdViewController.m */,
 				359CA183174F6CDE00803018 /* PasswdViewController.xib */,
-				359EAC9C17538180004D4356 /* PersonBasicInfoSettingViewController.h */,
-				359EAC9D17538182004D4356 /* PersonBasicInfoSettingViewController.m */,
-				359EAC9E17538185004D4356 /* PersonBasicInfoSettingViewController.xib */,
+				35098404176AD0C40077C639 /* SettingPersonInfoViewController.h */,
+				35098405176AD0C40077C639 /* SettingPersonInfoViewController.m */,
+				35098406176AD0C40077C639 /* SettingPersonInfoViewController.xib */,
 				359CA9801756F41A00DA00AC /* PharCategoryViewController.h */,
 				359CA9811756F41A00DA00AC /* PharCategoryViewController.m */,
 				359CA9821756F41A00DA00AC /* PharCategoryViewController.xib */,
@@ -3350,7 +3350,6 @@
 				359EAC8317533FAB004D4356 /* logoff.png in Resources */,
 				359EAC8417533FAB004D4356 /* logoff@2x.png in Resources */,
 				359EAC8917534241004D4356 /* SettingCell.xib in Resources */,
-				359EACA017538187004D4356 /* PersonBasicInfoSettingViewController.xib in Resources */,
 				359EACA3175382EE004D4356 /* avatar_edit.png in Resources */,
 				359EACA4175382EE004D4356 /* avatar_edit@2x.png in Resources */,
 				359EACA91753864E004D4356 /* PersonBasicInfoCell.xib in Resources */,
@@ -3641,6 +3640,7 @@
 				35A3C78B1769BA7800C1C353 /* btn_add_friend@2x.png in Resources */,
 				35A3C7A21769F13D00C1C353 /* BlacklistViewController.xib in Resources */,
 				35BDD250176AA9CE00BFDDCB /* OtherProfileFooter.xib in Resources */,
+				35098408176AD0C40077C639 /* SettingPersonInfoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3775,7 +3775,6 @@
 				359EAC7B1753345A004D4356 /* SettingViewController.m in Sources */,
 				359EAC8717534232004D4356 /* SettingCell.m in Sources */,
 				359EAC96175358AE004D4356 /* CustomCellBackgroundView.m in Sources */,
-				359EAC9F17538187004D4356 /* PersonBasicInfoSettingViewController.m in Sources */,
 				359EACA717538634004D4356 /* PersonBasicInfoCell.m in Sources */,
 				35987DB41754786A004E2EF5 /* SettingNameViewController.m in Sources */,
 				35987DCD175480C9004E2EF5 /* SettingTelViewController.m in Sources */,
@@ -3880,6 +3879,7 @@
 				35A3C7971769C7B400C1C353 /* Contact.m in Sources */,
 				35A3C7A11769F13D00C1C353 /* BlacklistViewController.m in Sources */,
 				35BDD24E176AA9B900BFDDCB /* OtherProfileFooter.m in Sources */,
+				35098407176AD0C40077C639 /* SettingPersonInfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
