@@ -240,7 +240,7 @@
     [DreamFactoryClient getWithURLParameters:dict success:^(NSDictionary *json) {
         
         DLog(@"news %@", [json objForKey:@"InformationDetail.content"]);
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (RETURNCODE_ISVALID(json)) {
 
             NSString *tempContent = [json objForKeyPath:@"InformationDetail.content"];
@@ -258,7 +258,7 @@
             self.btnClickReload = nil;
         } else {
             self.btnClickReload.hidden = NO;
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+
         }
     } failure:^(NSError *error) {
         self.btnClickReload.hidden = NO;

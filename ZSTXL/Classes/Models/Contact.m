@@ -33,6 +33,7 @@
 @dynamic username;
 @dynamic username_p;
 @dynamic areaname;
+@dynamic blacktype;
 
 - (void)initWithDict:(NSDictionary *)dict
 {

@@ -118,6 +118,7 @@ enum eAlertTag {
             self.contact.username = [userDetail objForKey:@"username"];
             self.contact.userid = [[userDetail objForKey:@"id"] stringValue];
             self.contact.isreal = [[userDetail objForKey:@"isreal"] stringValue];
+            self.contact.blacktype = [[userDetail objForKey:@"blacktype"] stringValue];
             
             NSString *zs = nil;
             switch (self.contact.invagency.intValue) {
@@ -155,11 +156,11 @@ enum eAlertTag {
 {
     if (self.contact.type.intValue == 0) {
         self.isFriend = NO;
-        [self.addFriendButton setTitle:@"加为好友" forState:UIControlStateNormal];
+        [self.tableFooter.addFriendButton setTitle:@"加为好友" forState:UIControlStateNormal];
     }
     else{
         self.isFriend = YES;
-        [self.addFriendButton setTitle:@"删除好友" forState:UIControlStateNormal];
+        [self.tableFooter.addFriendButton setTitle:@"删除好友" forState:UIControlStateNormal];
     }
     
     if ([self.contact.remark isValid]) {
@@ -180,128 +181,20 @@ enum eAlertTag {
         self.tableHeader.xunVImage.hidden = YES;
     }
     
+    if ([self.contact.blacktype isEqualToString:@"1"]) {
+        [self.tableFooter.addBlackButton setTitle:@"从黑名单中移除" forState:UIControlStateNormal];
+        self.isBlack = YES;
+    }
+    else{
+        [self.tableFooter.addBlackButton setTitle:@"加入黑名单" forState:UIControlStateNormal];
+        self.isBlack = NO;
+    }
+    
     [self.tableHeader.avatar setImageWithURL:[NSURL URLWithString:self.contact.picturelinkurl] placeholderImage:[UIImage imageNamed:@"home_icon"]];
     
 }
 
-- (void)addFriend:(UIButton *)sender
-{
-    
-    if ([self showLoginAlert]) {
-        return;
-    }
-    
-    if (!self.isFriend) {
-        NSLog(@"添加好友");
-        
-        //添加关注, addZsAttentionUser.json, userid, attentionid provinceid cityid
-        NSString *attentionid =  self.contact.userid;
-        NSString *userid = [kAppDelegate userId];
-        NSString *cityid = [PersistenceHelper dataForKey:kCityId];
-        NSString *provinceid = [[Utility getCityIdByCityName:[PersistenceHelper dataForKey:kCityName]] proId];
 
-        NSDictionary *paraDict = [NSDictionary dictionaryWithObjectsAndKeys:attentionid, @"attentionid",
-                                  userid, @"userid",
-                                  cityid, @"cityid",
-                                  provinceid, @"provinceid",
-                                  @"addZsAttentionUser.json", @"path", nil];
-        
-        //        NSLog(@"para Dict: %@", paraDict);
-        
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
-        hud.labelText = @"添加好友";
-        [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
-            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
-            
-            if (RETURNCODE_ISVALID(json)) {
-                
-                self.isFriend = YES;
-                [self.addFriendButton setTitle:@"删除好友" forState:UIControlStateNormal];
-                
-                [self updateIsFriend:self.isFriend];
-                
-            }
-            else{
-                [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:nil];
-            }
-        } failure:^(NSError *error) {
-            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
-            [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
-        }];
-    }
-    else{
-        NSLog(@"删除好友");
-        
-        //添加关注, delZsAttentionUser.json, userid, attentionid provinceid cityid
-        
-        NSString *attentionid = self.contact.userid;
-        NSString *userid = [kAppDelegate userId];
-        NSString *cityid = [PersistenceHelper dataForKey:kCityId];
-        NSString *provinceid = [PersistenceHelper dataForKey:kProvinceId];
-        NSDictionary *paraDict = [NSDictionary dictionaryWithObjectsAndKeys:attentionid, @"attentionid",
-                                  userid, @"userid",
-                                  cityid, @"cityid",
-                                  provinceid, @"provinceid",
-                                  @"delZsAttentionUser.json", @"path", nil];
-        
-        //        NSLog(@"para Dict: %@", paraDict);
-        
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
-        hud.labelText = @"删除好友";
-        [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
-            
-            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
-            if (RETURNCODE_ISVALID(json)) {
-                
-                self.isFriend = NO;
-                [self.addFriendButton setTitle:@"加为好友" forState:UIControlStateNormal];
-                [self updateIsFriend:self.isFriend];
-            }
-            else{
-                [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
-            }
-            
-        } failure:^(NSError *error) {
-            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
-            [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
-        }];
-    }
-}
-
-- (void)updateIsFriend:(BOOL)isFriend
-{
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"userid == %@ AND loginid == %@ AND cityid == %@", self.contact.userid, [kAppDelegate userId], [PersistenceHelper dataForKey:kCityId]];
-    FriendContact *friendContact = [FriendContact findFirstWithPredicate:pred];
-    if (friendContact == nil) {
-        friendContact = [FriendContact createEntity];
-        friendContact.autograph = self.contact.autograph;
-        friendContact.cityid = [PersistenceHelper dataForKey:kCityId];
-        friendContact.col1 = self.contact.col1;
-        friendContact.col2 = self.contact.col2;
-        friendContact.col3 = self.contact.col3;
-        friendContact.invagency = self.contact.invagency;
-        friendContact.loginid = kAppDelegate.userId;
-        friendContact.mailbox = self.contact.mailbox;
-        friendContact.picturelinkurl = self.contact.picturelinkurl;
-        //        friendContact.remark = self.commentTextField.text;
-        friendContact.sectionkey = self.contact.sectionkey;
-        friendContact.tel = self.contact.tel;
-        friendContact.userid = self.contact.userid;
-        friendContact.username = self.contact.username;
-        friendContact.username_p = self.contact.username_p;
-    }
-    
-    if (self.isFriend) {
-        friendContact.type = @"1";
-    }
-    else
-    {
-        friendContact.type = @"0";
-    }
-    
-    DB_SAVE();
-    
-}
 
 - (BOOL)showLoginAlert
 {
@@ -348,7 +241,7 @@ enum eAlertTag {
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.backgroundView = nil;
     self.tableView.separatorColor = kCellBorderColor;
-    self.tableView.scrollEnabled = NO;
+//    self.tableView.scrollEnabled = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
@@ -363,32 +256,34 @@ enum eAlertTag {
 
 - (void)initTableFooter
 {
-    CGFloat footerViewHeight = 0.f;
-    if (IS_IPHONE_5) {
-        footerViewHeight = 70.f;
-    }
-    else{
-        footerViewHeight = 55.f;
-    }
+//    CGFloat footerViewHeight = 0.f;
+//    if (IS_IPHONE_5) {
+//        footerViewHeight = 65.f;
+//    }
+//    else{
+//        footerViewHeight = 55.f;
+//    }
+//    
+//    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, footerViewHeight)];
+//    
+//    self.addFriendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [self.addFriendButton setTitle:@"加为好友" forState:UIControlStateNormal];
+//    [self.addFriendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [self.addFriendButton setBackgroundImage:[UIImage imageNamed:@"setting_confirm_l"] forState:UIControlStateNormal];
+//    [self.addFriendButton setBackgroundImage:[UIImage imageNamed:@"setting_confirm_l_p"] forState:UIControlStateHighlighted];
+//    if (IS_IPHONE_5) {
+//        self.addFriendButton.frame = CGRectMake(15, (footerViewHeight-45)/2.f, 289, 45);
+//    }
+//    else{
+//        self.addFriendButton.frame = CGRectMake(15, (footerViewHeight-45)/2.f, 289, 45);
+//    }
+//
+//    [self.addFriendButton addTarget:self action:@selector(addFriend:) forControlEvents:UIControlEventTouchUpInside];
+//    [footerView addSubview:self.addFriendButton];
     
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, footerViewHeight)];
-    
-    self.addFriendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.addFriendButton setTitle:@"加为好友" forState:UIControlStateNormal];
-    [self.addFriendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.addFriendButton setBackgroundImage:[UIImage imageNamed:@"addfriend_button"] forState:UIControlStateNormal];
-    [self.addFriendButton setBackgroundImage:[UIImage imageNamed:@"addfriend_button_p"] forState:UIControlStateHighlighted];
-    if (IS_IPHONE_5) {
-        self.addFriendButton.frame = CGRectMake(15, 10, 289, 48);
-    }
-    else{
-        self.addFriendButton.frame = CGRectMake(15, (footerViewHeight-48)/2, 289, 48);
-    }
-
-    [self.addFriendButton addTarget:self action:@selector(addFriend:) forControlEvents:UIControlEventTouchUpInside];
-    [footerView addSubview:self.addFriendButton];
-    
-    [self.tableView setTableFooterView:footerView];
+    self.tableFooter = [[[NSBundle mainBundle] loadNibNamed:@"OtherProfileFooter" owner:self options:nil] lastObject];
+    self.tableFooter.delegate = self;
+    [self.tableView setTableFooterView:self.tableFooter];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -708,6 +603,174 @@ enum eAlertTag {
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+#pragma mark - footer delegate
+
+- (void)otherProfileAddFriend
+{
+    if ([self showLoginAlert]) {
+        return;
+    }
+    
+    if (!self.isFriend) {
+        NSLog(@"添加好友");
+        
+        //添加关注, addZsAttentionUser.json, userid, attentionid provinceid cityid
+        NSString *attentionid =  self.contact.userid;
+        NSString *userid = [kAppDelegate userId];
+        NSString *cityid = [PersistenceHelper dataForKey:kCityId];
+        NSString *provinceid = [[Utility getCityIdByCityName:[PersistenceHelper dataForKey:kCityName]] proId];
+        
+        NSDictionary *paraDict = [NSDictionary dictionaryWithObjectsAndKeys:attentionid, @"attentionid",
+                                  userid, @"userid",
+                                  cityid, @"cityid",
+                                  provinceid, @"provinceid",
+                                  @"addZsAttentionUser.json", @"path", nil];
+        
+        //        NSLog(@"para Dict: %@", paraDict);
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
+        hud.labelText = @"添加好友";
+        [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
+            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+            
+            if (RETURNCODE_ISVALID(json)) {
+                
+                self.isFriend = YES;
+                [self.tableFooter.addFriendButton setTitle:@"删除好友" forState:UIControlStateNormal];
+                
+                [self updateIsFriend:self.isFriend];
+                
+            }
+            else{
+                [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:nil];
+            }
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+            [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+        }];
+    }
+    else{
+        NSLog(@"删除好友");
+        
+        //添加关注, delZsAttentionUser.json, userid, attentionid provinceid cityid
+        
+        NSString *attentionid = self.contact.userid;
+        NSString *userid = [kAppDelegate userId];
+        NSString *cityid = [PersistenceHelper dataForKey:kCityId];
+        NSString *provinceid = [PersistenceHelper dataForKey:kProvinceId];
+        NSDictionary *paraDict = [NSDictionary dictionaryWithObjectsAndKeys:attentionid, @"attentionid",
+                                  userid, @"userid",
+                                  cityid, @"cityid",
+                                  provinceid, @"provinceid",
+                                  @"delZsAttentionUser.json", @"path", nil];
+        
+        //        NSLog(@"para Dict: %@", paraDict);
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
+        hud.labelText = @"删除好友";
+        [DreamFactoryClient getWithURLParameters:paraDict success:^(NSDictionary *json) {
+            
+            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+            if (RETURNCODE_ISVALID(json)) {
+                
+                self.isFriend = NO;
+                [self.tableFooter.addFriendButton setTitle:@"加为好友" forState:UIControlStateNormal];
+                [self updateIsFriend:self.isFriend];
+            }
+            else{
+                [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+            }
+            
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+            [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+        }];
+    }
+}
+
+- (void)updateIsFriend:(BOOL)isFriend
+{
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"userid == %@ AND loginid == %@ AND cityid == %@", self.contact.userid, [kAppDelegate userId], [PersistenceHelper dataForKey:kCityId]];
+    FriendContact *friendContact = [FriendContact findFirstWithPredicate:pred];
+    if (friendContact == nil) {
+        friendContact = [FriendContact createEntity];
+        friendContact.autograph = self.contact.autograph;
+        friendContact.cityid = [PersistenceHelper dataForKey:kCityId];
+        friendContact.col1 = self.contact.col1;
+        friendContact.col2 = self.contact.col2;
+        friendContact.col3 = self.contact.col3;
+        friendContact.invagency = self.contact.invagency;
+        friendContact.loginid = kAppDelegate.userId;
+        friendContact.mailbox = self.contact.mailbox;
+        friendContact.picturelinkurl = self.contact.picturelinkurl;
+        //        friendContact.remark = self.commentTextField.text;
+        friendContact.sectionkey = self.contact.sectionkey;
+        friendContact.tel = self.contact.tel;
+        friendContact.userid = self.contact.userid;
+        friendContact.username = self.contact.username;
+        friendContact.username_p = self.contact.username_p;
+    }
+    
+    if (self.isFriend) {
+        friendContact.type = @"1";
+    }
+    else
+    {
+        friendContact.type = @"0";
+    }
+    
+    DB_SAVE();
+    
+}
+
+- (void)otherProfileAddBlack
+{
+    if (self.isBlack) {
+        NSDictionary *para = @{@"path": @"delBlackUser.json",
+                               @"userid": kAppDelegate.userId,
+                               @"blackuserid": self.contact.userid};
+        
+        [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+        [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+            [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+            if (RETURNCODE_ISVALID(json)) {
+                DLog(@"del black %@", json);
+                self.isBlack = NO;
+                [self.tableFooter.addBlackButton setTitle:@"加入黑名单" forState:UIControlStateNormal];
+            }
+            else{
+                [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+            }
+            
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+            [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+        }];
+    }
+    else{
+        NSDictionary *para = @{@"path": @"addBlackUser.json",
+                               @"userid": kAppDelegate.userId,
+                               @"blackuserid": self.contact.userid};
+        
+        [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+        [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+            [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+            if (RETURNCODE_ISVALID(json)) {
+                self.isBlack = YES;
+                [self.tableFooter.addBlackButton setTitle:@"从黑名单中移除" forState:UIControlStateNormal];
+                DLog(@"add black %@", json);
+            }
+            else{
+                [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+            }
+            
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+            [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+        }];
+    }
 }
 
 @end

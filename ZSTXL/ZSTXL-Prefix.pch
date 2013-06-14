@@ -30,6 +30,7 @@
 #import "NSNotificationCenter+MainThread.h"
 #import "NSString+MD5.h"
 #import "CustomBadge.h"
+#import "UILabel+dynamicSizeMe.h"
 
 #define MR_SHORTHAND
 #define MR_ENABLE_ACTIVE_RECORD_LOGGING 0

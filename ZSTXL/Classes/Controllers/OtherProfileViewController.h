@@ -10,6 +10,7 @@
 #import "OtherProfileContactCell.h"
 #import "OtherProfileHeader.h"
 #import "Contact.h"
+#import "OtherProfileFooter.h"
 
 @protocol OtherProfileDelegate <NSObject>
 
@@ -18,13 +19,15 @@
 @end
 
 @interface OtherProfileViewController : UIViewController
-<UITableViewDataSource, UITableViewDelegate, OtherProfileContactCellDelegate, OtherProfileHeaderDelegate, UIAlertViewDelegate, UITextFieldDelegate>
+<UITableViewDataSource, UITableViewDelegate, OtherProfileContactCellDelegate, OtherProfileHeaderDelegate, UIAlertViewDelegate, UITextFieldDelegate, OtherProfileFooterDelegate>
 
 @property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, retain) OtherProfileHeader *tableHeader;
+@property (nonatomic, retain) OtherProfileFooter *tableFooter;
 @property (nonatomic, retain) NSArray *titleArray;
 @property (nonatomic, retain) NSMutableArray *contentArray;
 @property (nonatomic, assign) BOOL isFriend;
+@property (nonatomic, assign) BOOL isBlack;
 @property (nonatomic, retain) Contact *contact;
 @property (nonatomic, copy) NSString *residentArea;
 @property (nonatomic, copy) NSString *pharmacologyCategory;

@@ -43,9 +43,7 @@
 
 - (void)touchAction
 {
-    if ([self.delegate respondsToSelector:@selector(pharCategotyCellTap)]) {
-        [self.delegate performSelector:@selector(pharCategotyCellTap)];
-    }
+    PERFORM_SELECTOR_WITH_OBJECT(self.delegate, @selector(pharCategotyCellTapAtIndexPath:), self.indexPath);
 }
 
 @end

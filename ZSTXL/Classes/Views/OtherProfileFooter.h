@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol OtherProfileFooterDelegate <NSObject>
+
+- (void)otherProfileAddFriend;
+- (void)otherProfileAddBlack;
+
+@end
+
 @interface OtherProfileFooter : UIView
+
+@property (retain, nonatomic) IBOutlet UIButton *addFriendButton;
+@property (retain, nonatomic) IBOutlet UIButton *addBlackButton;
+
+@property (assign, nonatomic) id<OtherProfileFooterDelegate> delegate;
 
 @end

@@ -28,4 +28,27 @@
 }
 */
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    [self.addFriendButton addTarget:self action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.addBlackButton addTarget:self action:@selector(addBlackAction) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)addFriendAction
+{
+    PERFORM_SELECTOR(self.delegate, @selector(otherProfileAddFriend));
+}
+
+- (void)addBlackAction
+{
+    PERFORM_SELECTOR(self.delegate, @selector(otherProfileAddBlack));
+}
+
+- (void)dealloc {
+    [_addFriendButton release];
+    [_addBlackButton release];
+    [super dealloc];
+}
 @end

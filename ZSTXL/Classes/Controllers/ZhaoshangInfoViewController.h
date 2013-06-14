@@ -12,13 +12,21 @@
 
 @interface ZhaoshangInfoViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ZSInfoHeaderDelegate, ZSInfoContactViewDelegate>
 
-@property (nonatomic, retain) NSMutableArray *titleArray;
-@property (nonatomic, retain) NSMutableArray *contentArray;
-@property (nonatomic, retain) NSDictionary *userInfo;
-@property (nonatomic, retain) NSDictionary *contactInfo;
+
+@property (nonatomic, copy) NSString *investmentId;
+@property (nonatomic, copy) NSString *userId;   //暂无用
+
+
+@property (nonatomic, retain) NSArray *titleArray;
+@property (nonatomic, retain) NSMutableArray *dataSourceArray;
+@property (nonatomic, retain) NSArray *keyArray;
+//@property (nonatomic, retain) NSDictionary *userInfo;
+//@property (nonatomic, retain) NSDictionary *contactInfo;
 
 @property (retain, nonatomic) UITableView *tableView;
 @property (nonatomic, retain) ZSInfoHeader *header;
 @property (nonatomic, retain) ZSInfoContactView *contactView;
+
+@property (nonatomic, assign) BOOL isStar;
 
 @end

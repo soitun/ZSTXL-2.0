@@ -10,7 +10,7 @@
 
 @protocol PharCategoryCellDelegate <NSObject>
 
-- (void)pharCategotyCellTap;
+- (void)pharCategotyCellTapAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -20,6 +20,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *detailLabel;
 @property (retain, nonatomic) IBOutlet UIImageView *theNewImage;
 @property (retain, nonatomic) IBOutlet UIButton *bottomButton;
+@property (retain, nonatomic) NSIndexPath *indexPath;
 
 @property (assign, nonatomic) id<PharCategoryCellDelegate> delegate;
 

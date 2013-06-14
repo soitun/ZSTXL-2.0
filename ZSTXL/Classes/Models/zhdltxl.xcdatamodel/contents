@@ -31,6 +31,7 @@
     <entity name="Contact" representedClassName="Contact" isAbstract="YES" syncable="YES">
         <attribute name="areaname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="autograph" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="blacktype" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cityid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="col1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="col2" optional="YES" attributeType="String" syncable="YES"/>
@@ -154,9 +155,10 @@
         <element name="ChatRecord" positionX="367" positionY="-441" width="128" height="103"/>
         <element name="CityInfo" positionX="90" positionY="-396" width="128" height="148"/>
         <element name="CommendContact" positionX="693" positionY="-117" width="128" height="43"/>
-        <element name="Contact" positionX="855" positionY="9" width="128" height="375"/>
+        <element name="Contact" positionX="855" positionY="9" width="128" height="390"/>
         <element name="FriendContact" positionX="693" positionY="92" width="128" height="45"/>
         <element name="InboxMail" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="InvestmentInfo" positionX="333" positionY="-225" width="128" height="133"/>
         <element name="MailInfo" positionX="297" positionY="126" width="128" height="240"/>
         <element name="MyInfo" positionX="-45" positionY="-151" width="128" height="150"/>
         <element name="NewsInfo" positionX="306" positionY="54" width="128" height="150"/>
@@ -167,6 +169,5 @@
         <element name="SMSRecord" positionX="369" positionY="-157" width="128" height="103"/>
         <element name="StarNewsInfo" positionX="160" positionY="192" width="128" height="45"/>
         <element name="UserDetail" positionX="117" positionY="122" width="128" height="300"/>
-        <element name="InvestmentInfo" positionX="333" positionY="-225" width="128" height="133"/>
     </elements>
 </model>

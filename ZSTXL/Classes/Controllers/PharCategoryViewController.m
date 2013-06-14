@@ -12,6 +12,7 @@
 #import "PublishDailiViewController.h"
 #import "PublishView.h"
 #import "ZhaoshangInfoViewController.h"
+#import "ZhaoshangPharListViewController.h"
 #import "InvestmentInfo.h"
 
 @interface PharCategoryViewController ()
@@ -220,12 +221,14 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"PharCategoryCell" owner:nil options:nil] lastObject];
     }
     [self configureCell:cell atIndexPath:indexPath];
-    cell.delegate = self;
+
     return cell;
 }
 
 - (void)configureCell:(PharCategoryCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    cell.delegate = self;
+    cell.indexPath = indexPath;
     InvestmentInfo *info = [self.dataSourceArray objectAtIndex:indexPath.row];
     cell.nameLabel.text = info.content;
     cell.detailLabel.text = info.investment;
@@ -237,10 +240,16 @@
     
 }
 
-- (void)pharCategotyCellTap
+- (void)pharCategotyCellTapAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZhaoshangInfoViewController *zhaoshangInfoVC = [[[ZhaoshangInfoViewController alloc] init] autorelease];
-    [self.navigationController pushViewController:zhaoshangInfoVC animated:YES];
+//    ZhaoshangInfoViewController *zhaoshangInfoVC = [[[ZhaoshangInfoViewController alloc] init] autorelease];
+//    [self.navigationController pushViewController:zhaoshangInfoVC animated:YES];
+    
+    InvestmentInfo *info = [self.dataSourceArray objectAtIndex:indexPath.row];
+    ZhaoshangPharListViewController *zsPharListVC = [[[ZhaoshangPharListViewController alloc] init] autorelease];
+    zsPharListVC.classifyId = info.infoid;
+    zsPharListVC.pharName = info.content;
+    [self.navigationController pushViewController:zsPharListVC animated:YES];
 }
 
 @end

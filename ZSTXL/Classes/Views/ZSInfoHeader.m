@@ -19,20 +19,16 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+    [Utility addRoundCornerToView:self.avatar radius:5 borderColor:[UIColor clearColor]];
 }
-*/
+
 
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapStar)];
-    [self.starImage addGestureRecognizer:tap];
+    [self.starButton addTarget:self action:@selector(tapStar) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)dealloc {
@@ -43,7 +39,7 @@
     [_xunVImage release];
     [_xunBImage release];
     [_bgImage release];
-    [_starImage release];
+    [_starButton release];
     [super dealloc];
 }
 

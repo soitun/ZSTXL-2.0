@@ -24,7 +24,7 @@
 @property (retain, nonatomic) IBOutlet UIImageView *xunVImage;
 @property (retain, nonatomic) IBOutlet UIImageView *xunBImage;
 @property (retain, nonatomic) IBOutlet UIImageView *bgImage;
-@property (retain, nonatomic) IBOutlet UIImageView *starImage;
+@property (retain, nonatomic) IBOutlet UIButton *starButton;
 
 @property (assign, nonatomic) id<ZSInfoHeaderDelegate> delegate;
 
