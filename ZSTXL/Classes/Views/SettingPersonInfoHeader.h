@@ -10,4 +10,8 @@
 
 @interface SettingPersonInfoHeader : UIView
 
+@property (retain, nonatomic) IBOutlet UIImageView *avatar;
+@property (retain, nonatomic) IBOutlet UILabel *userIdLabel;
+@property (retain, nonatomic) IBOutlet UILabel *telLabel;
+
 @end

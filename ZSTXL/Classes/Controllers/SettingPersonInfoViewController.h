@@ -11,20 +11,18 @@
 #import "TimePicker.h"
 #import "MyInfo.h"
 #import "UserDetail.h"
+#import "SettingPersonInfoHeader.h"
 
-@interface PersonBasicInfoSettingViewController : UIViewController
+@interface SettingPersonInfoViewController : UIViewController
 <UITableViewDataSource, UITableViewDelegate, PersonBasicInfoCellDelegate, UIActionSheetDelegate, TimePickerDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (retain, nonatomic) IBOutlet UILabel *useridLabel;
-@property (retain, nonatomic) IBOutlet UILabel *telLabel;
-@property (retain, nonatomic) IBOutlet UIImageView *headIcon;
 @property (retain, nonatomic) UIButton *saveButton;
-
+@property (retain, nonatomic) SettingPersonInfoHeader *header;
 
 @property (nonatomic, retain) TimePicker *timePicker;
 
-@property (nonatomic, retain) NSMutableArray *titleArray;
-@property (nonatomic, retain) NSMutableArray *selectorArray;
+@property (nonatomic, retain) NSArray *titleArray;
+@property (nonatomic, retain) NSArray *selectorArray;
 
 @property (nonatomic, copy) NSString *sex;
 @property (nonatomic, copy) NSString *userid;
