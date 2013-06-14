@@ -12,7 +12,7 @@
 
 @interface PharCategoryViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, PublishViewDelegate, PharCategoryCellDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) NSMutableArray *dataSource;
+@property (nonatomic, retain) NSMutableArray *dataSourceArray;
 @property (nonatomic, retain) UIControl *bgControl;
 
 @end

@@ -12,6 +12,7 @@
 #import "PublishDailiViewController.h"
 #import "PublishView.h"
 #import "ZhaoshangInfoViewController.h"
+#import "InvestmentInfo.h"
 
 @interface PharCategoryViewController ()
 
@@ -37,14 +38,13 @@
 {
     [super viewDidLoad];
     self.title = @"分类";
-//    self.navigationController.delegate = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.dataSourceArray = [NSMutableArray array];
     
     [self initNavBar];
-    SuspensionButton *susButton = [[SuspensionButton alloc] initWithFrame:CGRectMake(320-46, SCREEN_HEIGHT-64-50-20, 46, 50)];
-    [susButton setTitle:@"发布" forState:UIControlStateNormal];
-    [susButton addTarget:self action:@selector(publishAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:susButton];
+    [self initPublishButton];
+    [self requestData];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,6 +60,16 @@
 - (void)viewDidUnload {
     [self setTableView:nil];
     [super viewDidUnload];
+}
+
+#pragma mark - publis button
+
+- (void)initPublishButton
+{
+    SuspensionButton *susButton = [[SuspensionButton alloc] initWithFrame:CGRectMake(320-46, SCREEN_HEIGHT-64-50-20, 46, 50)];
+    [susButton setTitle:@"发布" forState:UIControlStateNormal];
+    [susButton addTarget:self action:@selector(publishAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:susButton];
 }
 
 #pragma mark - publish
@@ -136,6 +146,54 @@
     
 }
 
+#pragma mark - request Data
+
+- (void)requestData
+{
+    NSDictionary *para = @{@"path": @"getInvestmentClassify.json",
+                           @"userid": kAppDelegate.userId,
+                           @"provinceid": [PersistenceHelper dataForKey:kProvinceId],
+                           @"cityid": [PersistenceHelper dataForKey:kCityId]};
+    
+    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        DLog(@"%@", json);
+        if (RETURNCODE_ISVALID(json)) {
+            [self parseData:json];
+            [self.tableView reloadData];
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+    }];
+}
+
+- (void)parseData:(NSDictionary *)json
+{
+    NSArray *array = [json objForKey:@"InvestmentInfo"];
+    for (NSDictionary *dict in array) {
+        if ([dict isEqual:[NSNull null]]) {
+            continue;
+        }
+        
+        InvestmentInfo *investmentInfo = [InvestmentInfo createEntity];
+        investmentInfo.infoid = [[dict objForKey:@"id"] stringValue];
+        investmentInfo.content = [dict objForKey:@"content"];
+        investmentInfo.investment = [dict objForKey:@"investment"];
+        investmentInfo.picturelinkurl = [dict objForKey:@"picturelinkurl"];
+        investmentInfo.col4 = [[dict objForKey:@"col4"] stringValue];
+        investmentInfo.stime = [dict objForKey:@"stime"];
+        [self.dataSourceArray addObject:investmentInfo];
+    }
+    
+    DB_SAVE();
+}
+
 #pragma mark - table view
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -145,8 +203,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    return self.dataSource.count;
-    return 10;
+    return self.dataSourceArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -162,8 +219,17 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"PharCategoryCell" owner:nil options:nil] lastObject];
     }
+    [self configureCell:cell atIndexPath:indexPath];
     cell.delegate = self;
     return cell;
+}
+
+- (void)configureCell:(PharCategoryCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    InvestmentInfo *info = [self.dataSourceArray objectAtIndex:indexPath.row];
+    cell.nameLabel.text = info.content;
+    cell.detailLabel.text = info.investment;
+    [cell.pharImage setImageWithURL:[NSURL URLWithString:info.picturelinkurl] placeholderImage:[UIImage imageNamed:@""]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

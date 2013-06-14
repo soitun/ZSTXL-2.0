@@ -62,6 +62,14 @@
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="to" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="InvestmentInfo" representedClassName="InvestmentInfo" syncable="YES">
+        <attribute name="col4" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="infoid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="investment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picturelinkurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stime" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="MailInfo" representedClassName="MailInfo" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
@@ -159,5 +167,6 @@
         <element name="SMSRecord" positionX="369" positionY="-157" width="128" height="103"/>
         <element name="StarNewsInfo" positionX="160" positionY="192" width="128" height="45"/>
         <element name="UserDetail" positionX="117" positionY="122" width="128" height="300"/>
+        <element name="InvestmentInfo" positionX="333" positionY="-225" width="128" height="133"/>
     </elements>
 </model>

@@ -183,20 +183,15 @@
 - (void)menu:(MenuControlView *)menu clickedAtIndex:(NSInteger)index
 {
     [self.mScrollView setContentOffset:CGPointMake(index*320, 0) animated:YES];
+
+    [self switchTitleView:index];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger currPage = scrollView.contentOffset.x/320;
-    if (currPage == 0) {
-        if (self.titleView) {
-            [self.titleView removeFromSuperview];
-            self.titleView = nil;
-            self.navigationItem.titleView = nil;
-        }
-        self.title = @"通讯录";
-    }else{
-        [self initTitleView];
-    }
+    
+    [self switchTitleView:currPage];
+    
     [self.mSlideMenu slideBgToIndex:currPage];
     [self refreshPageAtIndex:currPage];
 }
@@ -205,6 +200,20 @@
     UIViewController *controller = [self.controllerArray objectAtIndex:pageIndex];
     if ([controller respondsToSelector:@selector(refreshAction)]) {
         [controller performSelector:@selector(refreshAction)];
+    }
+}
+
+- (void)switchTitleView:(NSInteger)index
+{
+    if (index == 0) {
+        if (self.titleView) {
+            [self.titleView removeFromSuperview];
+            self.titleView = nil;
+            self.navigationItem.titleView = nil;
+        }
+        self.title = @"通讯录";
+    }else{
+        [self initTitleView];
     }
 }
 

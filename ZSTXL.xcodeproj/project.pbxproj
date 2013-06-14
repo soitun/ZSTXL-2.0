@@ -11,6 +11,7 @@
 		35098408176AD0C40077C639 /* SettingPersonInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35098406176AD0C40077C639 /* SettingPersonInfoViewController.xib */; };
 		3509840C176AD1620077C639 /* SettingPersonInfoHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3509840A176AD1620077C639 /* SettingPersonInfoHeader.m */; };
 		3509840D176AD1620077C639 /* SettingPersonInfoHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3509840B176AD1620077C639 /* SettingPersonInfoHeader.xib */; };
+		35098410176AE5C60077C639 /* InvestmentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3509840F176AE5C60077C639 /* InvestmentInfo.m */; };
 		356D5DCB175EDE7900498008 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 356D5DC9175EDE7900498008 /* AboutViewController.m */; };
 		356D5DCC175EDE7900498008 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 356D5DCA175EDE7900498008 /* AboutViewController.xib */; };
 		356D5DCE175EDF2E00498008 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 356D5DCD175EDF2E00498008 /* logo.png */; };
@@ -435,8 +436,6 @@
 		359E9ABC174B03F30018E87F /* ProvinceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9ABB174B03F30018E87F /* ProvinceViewController.m */; };
 		359E9ABF174B040B0018E87F /* CityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9ABE174B040A0018E87F /* CityViewController.m */; };
 		359E9ACA174B05670018E87F /* CustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9AC9174B05670018E87F /* CustomAlertView.m */; };
-		359E9ACE174B05ED0018E87F /* ZhaoshangAndDailiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9ACC174B05EC0018E87F /* ZhaoshangAndDailiViewController.m */; };
-		359E9ACF174B05ED0018E87F /* ZhaoshangAndDailiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359E9ACD174B05EC0018E87F /* ZhaoshangAndDailiViewController.xib */; };
 		359E9AD6174B06580018E87F /* AddInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9AD4174B06580018E87F /* AddInfoCell.m */; };
 		359E9AD7174B06580018E87F /* AddInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 359E9AD5174B06580018E87F /* AddInfoCell.xib */; };
 		359E9ADA174B06870018E87F /* CityInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 359E9AD9174B06870018E87F /* CityInfo.m */; };
@@ -745,6 +744,8 @@
 		35098409176AD1620077C639 /* SettingPersonInfoHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingPersonInfoHeader.h; sourceTree = "<group>"; };
 		3509840A176AD1620077C639 /* SettingPersonInfoHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingPersonInfoHeader.m; sourceTree = "<group>"; };
 		3509840B176AD1620077C639 /* SettingPersonInfoHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingPersonInfoHeader.xib; sourceTree = "<group>"; };
+		3509840E176AE5C60077C639 /* InvestmentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvestmentInfo.h; sourceTree = "<group>"; };
+		3509840F176AE5C60077C639 /* InvestmentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvestmentInfo.m; sourceTree = "<group>"; };
 		356D5DC8175EDE7900498008 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		356D5DC9175EDE7900498008 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		356D5DCA175EDE7900498008 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
@@ -1293,9 +1294,6 @@
 		359E9ABE174B040A0018E87F /* CityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityViewController.m; sourceTree = "<group>"; };
 		359E9AC8174B05670018E87F /* CustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAlertView.h; sourceTree = "<group>"; };
 		359E9AC9174B05670018E87F /* CustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAlertView.m; sourceTree = "<group>"; };
-		359E9ACB174B05EC0018E87F /* ZhaoshangAndDailiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhaoshangAndDailiViewController.h; sourceTree = "<group>"; };
-		359E9ACC174B05EC0018E87F /* ZhaoshangAndDailiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhaoshangAndDailiViewController.m; sourceTree = "<group>"; };
-		359E9ACD174B05EC0018E87F /* ZhaoshangAndDailiViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZhaoshangAndDailiViewController.xib; sourceTree = "<group>"; };
 		359E9AD3174B06580018E87F /* AddInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddInfoCell.h; sourceTree = "<group>"; };
 		359E9AD4174B06580018E87F /* AddInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddInfoCell.m; sourceTree = "<group>"; };
 		359E9AD5174B06580018E87F /* AddInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddInfoCell.xib; sourceTree = "<group>"; };
@@ -2005,9 +2003,6 @@
 				3595D136175E02B10026FA74 /* WeekDayViewController.h */,
 				3595D137175E02B30026FA74 /* WeekDayViewController.m */,
 				3595D138175E02B60026FA74 /* WeekDayViewController.xib */,
-				359E9ACB174B05EC0018E87F /* ZhaoshangAndDailiViewController.h */,
-				359E9ACC174B05EC0018E87F /* ZhaoshangAndDailiViewController.m */,
-				359E9ACD174B05EC0018E87F /* ZhaoshangAndDailiViewController.xib */,
 				359CA9761756DE5E00DA00AC /* ZhaoshangDailiViewController.h */,
 				359CA9771756DE5E00DA00AC /* ZhaoshangDailiViewController.m */,
 				359CA9781756DE5E00DA00AC /* ZhaoshangDailiViewController.xib */,
@@ -2817,6 +2812,8 @@
 				35C2AC86176850BC004F84B0 /* InboxMail.h */,
 				35C2AC87176850BD004F84B0 /* InboxMail.m */,
 				3595A647174B7382000780FE /* zhdltxl.xcdatamodel */,
+				3509840E176AE5C60077C639 /* InvestmentInfo.h */,
+				3509840F176AE5C60077C639 /* InvestmentInfo.m */,
 				35A3C7951769C7B400C1C353 /* Contact.h */,
 				35A3C7961769C7B400C1C353 /* Contact.m */,
 				35A3C7921769C4B600C1C353 /* FriendContact.h */,
@@ -3201,7 +3198,6 @@
 				358C1BD4174A21A1006E5A8D /* ContactViewController.xib in Resources */,
 				358C1BEA174A28C7006E5A8D /* nav_bar.png in Resources */,
 				359E9AB1174B03170018E87F /* AddInfoViewController.xib in Resources */,
-				359E9ACF174B05ED0018E87F /* ZhaoshangAndDailiViewController.xib in Resources */,
 				359E9AD7174B06580018E87F /* AddInfoCell.xib in Resources */,
 				359E9AE2174B06C30018E87F /* ZDCell.xib in Resources */,
 				359E9AF3174B0BF60018E87F /* PharCell.xib in Resources */,
@@ -3689,7 +3685,6 @@
 				359E9ABC174B03F30018E87F /* ProvinceViewController.m in Sources */,
 				359E9ABF174B040B0018E87F /* CityViewController.m in Sources */,
 				359E9ACA174B05670018E87F /* CustomAlertView.m in Sources */,
-				359E9ACE174B05ED0018E87F /* ZhaoshangAndDailiViewController.m in Sources */,
 				359E9AD6174B06580018E87F /* AddInfoCell.m in Sources */,
 				359E9ADA174B06870018E87F /* CityInfo.m in Sources */,
 				359E9ADD174B069A0018E87F /* Pharmacology.m in Sources */,
@@ -3890,6 +3885,7 @@
 				35BDD24E176AA9B900BFDDCB /* OtherProfileFooter.m in Sources */,
 				35098407176AD0C40077C639 /* SettingPersonInfoViewController.m in Sources */,
 				3509840C176AD1620077C639 /* SettingPersonInfoHeader.m in Sources */,
+				35098410176AE5C60077C639 /* InvestmentInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
