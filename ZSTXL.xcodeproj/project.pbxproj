@@ -2185,6 +2185,9 @@
 				35A3C77217696B9900C1C353 /* OtherProfileContactCell.h */,
 				35A3C77317696B9900C1C353 /* OtherProfileContactCell.m */,
 				35A3C77517696BA800C1C353 /* OtherProfileContactCell.xib */,
+				35BDD24C176AA9B900BFDDCB /* OtherProfileFooter.h */,
+				35BDD24D176AA9B900BFDDCB /* OtherProfileFooter.m */,
+				35BDD24F176AA9CE00BFDDCB /* OtherProfileFooter.xib */,
 				35A3C76D176963AF00C1C353 /* OtherProfileHeader.h */,
 				35A3C76E176963AF00C1C353 /* OtherProfileHeader.m */,
 				35A3C770176963C000C1C353 /* OtherProfileHeader.xib */,
@@ -2226,6 +2229,9 @@
 				35A301831755C687002A4F4B /* SettingDupCell.h */,
 				35A301841755C687002A4F4B /* SettingDupCell.m */,
 				35A3018B1755C6AA002A4F4B /* SettingDupCell.xib */,
+				35098409176AD1620077C639 /* SettingPersonInfoHeader.h */,
+				3509840A176AD1620077C639 /* SettingPersonInfoHeader.m */,
+				3509840B176AD1620077C639 /* SettingPersonInfoHeader.xib */,
 				359E9C09174B50C20018E87F /* SlideMenuView.h */,
 				359E9C0A174B50C40018E87F /* SlideMenuView.m */,
 				359C97851758793B0068D6AE /* SuspensionButton.h */,
@@ -2266,12 +2272,6 @@
 				359EAC531752E92F004D4356 /* ZSInfoPersonInfoCell.h */,
 				359EAC541752E92F004D4356 /* ZSInfoPersonInfoCell.m */,
 				359EAC561752E942004D4356 /* ZSInfoPersonInfoCell.xib */,
-				35BDD24C176AA9B900BFDDCB /* OtherProfileFooter.h */,
-				35BDD24D176AA9B900BFDDCB /* OtherProfileFooter.m */,
-				35BDD24F176AA9CE00BFDDCB /* OtherProfileFooter.xib */,
-				35098409176AD1620077C639 /* SettingPersonInfoHeader.h */,
-				3509840A176AD1620077C639 /* SettingPersonInfoHeader.m */,
-				3509840B176AD1620077C639 /* SettingPersonInfoHeader.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
