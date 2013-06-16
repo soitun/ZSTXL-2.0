@@ -239,11 +239,11 @@
         
         [Utility groupTableView:tableView addBgViewForCell:textFieldCell withCellPos:CustomCellBackgroundViewPositionSingle];
         textFieldCell.accessoryType = UITableViewCellAccessoryNone;
-        
-        if ([self.productName isValid] && [self.producer isValid]) {
-            NSString *str = [NSString stringWithFormat:@"%@/%@", self.productName, self.producer];
-            textFieldCell.textField.text = str;
-        }
+        textFieldCell.textField.placeholder = @"请输入商品名或企业简称";
+//        if ([self.productName isValid] && [self.producer isValid]) {
+//            NSString *str = [NSString stringWithFormat:@"%@/%@", self.productName, self.producer];
+//            textFieldCell.textField.text = str;
+//        }
         
         
         return textFieldCell;

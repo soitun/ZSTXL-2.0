@@ -49,11 +49,12 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{16, 18}, {289, 45}}</string>
 								<reference key="NSSuperview" ref="129251500"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="164943263"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage">
+								<object class="NSCustomResource" key="IBUIImage" id="261029438">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">setting_textfield_bg.png</string>
 								</object>
@@ -63,6 +64,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{27, 29}, {64, 21}}</string>
 								<reference key="NSSuperview" ref="129251500"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="107571183"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -93,6 +95,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{87, 29}, {167, 21}}</string>
 								<reference key="NSSuperview" ref="129251500"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="49538107"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -124,6 +127,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{264, 25}, {31, 31}}</string>
 								<reference key="NSSuperview" ref="129251500"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="811590383"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -165,16 +169,19 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{16, 80}, {289, 45}}</string>
 								<reference key="NSSuperview" ref="129251500"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1009350425"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<reference key="IBUIImage" ref="261029438"/>
 							</object>
 							<object class="IBUITextField" id="1009350425">
 								<reference key="NSNextResponder" ref="129251500"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{27, 88}, {266, 30}}</string>
 								<reference key="NSSuperview" ref="129251500"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="106813146"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -203,6 +210,8 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{16, 143}, {289, 254}}</string>
 								<reference key="NSSuperview" ref="129251500"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="207618211"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -212,6 +221,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{16, 144}, {289, 252}}</string>
 								<reference key="NSSuperview" ref="129251500"/>
+								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
@@ -238,6 +248,7 @@
 						</array>
 						<string key="NSFrameSize">{320, 416}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="402203982"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -247,6 +258,7 @@
 				</array>
 				<string key="NSFrame">{{0, 64}, {320, 416}}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="129251500"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
@@ -440,9 +452,44 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">19</int>
+			<int key="maxID">21</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">MailWriteViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="mailWebView">UIWebView</string>
+						<string key="reveiverLabel">UILabel</string>
+						<string key="scrollView">UIScrollView</string>
+						<string key="subjectTextField">UITextField</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="mailWebView">
+							<string key="name">mailWebView</string>
+							<string key="candidateClassName">UIWebView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="reveiverLabel">
+							<string key="name">reveiverLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="scrollView">
+							<string key="name">scrollView</string>
+							<string key="candidateClassName">UIScrollView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="subjectTextField">
+							<string key="name">subjectTextField</string>
+							<string key="candidateClassName">UITextField</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MailWriteViewController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

@@ -668,6 +668,12 @@
 		35A3C7971769C7B400C1C353 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A3C7961769C7B400C1C353 /* Contact.m */; };
 		35A3C7A11769F13D00C1C353 /* BlacklistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A3C79F1769F13600C1C353 /* BlacklistViewController.m */; };
 		35A3C7A21769F13D00C1C353 /* BlacklistViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A3C7A01769F13A00C1C353 /* BlacklistViewController.xib */; };
+		35A7A155176D82C80005F750 /* OutboxMail.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A7A154176D82C80005F750 /* OutboxMail.m */; };
+		35A7A15B176D82C90005F750 /* InboxMail.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A7A15A176D82C90005F750 /* InboxMail.m */; };
+		35A7A15E176DB0750005F750 /* Mail.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A7A15D176DB0750005F750 /* Mail.m */; };
+		35A7A162176DC73F0005F750 /* MailTransmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A7A160176DC73D0005F750 /* MailTransmitViewController.m */; };
+		35A7A163176DC73F0005F750 /* MailTransmitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A7A161176DC73E0005F750 /* MailTransmitViewController.xib */; };
+		35A7A166176DDD250005F750 /* MessageBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A7A165176DDD250005F750 /* MessageBean.m */; };
 		35A99C8A174DAD9500C9DF69 /* addfriend_button_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A99C89174DAD9500C9DF69 /* addfriend_button_p.png */; };
 		35A99C94174DB23F00C9DF69 /* my_homepage_chat.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A99C8E174DB23F00C9DF69 /* my_homepage_chat.png */; };
 		35A99C95174DB23F00C9DF69 /* my_homepage_chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A99C8F174DB23F00C9DF69 /* my_homepage_chat@2x.png */; };
@@ -792,7 +798,6 @@
 		35BDD24E176AA9B900BFDDCB /* OtherProfileFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 35BDD24D176AA9B900BFDDCB /* OtherProfileFooter.m */; };
 		35BDD250176AA9CE00BFDDCB /* OtherProfileFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35BDD24F176AA9CE00BFDDCB /* OtherProfileFooter.xib */; };
 		35C2AC7C1768150F004F84B0 /* MailClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C2AC7B1768150F004F84B0 /* MailClient.m */; };
-		35C2AC88176850BD004F84B0 /* InboxMail.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C2AC87176850BD004F84B0 /* InboxMail.m */; };
 		35C2AC8B17685798004F84B0 /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C2AC8A17685797004F84B0 /* NSString+MD5Addition.m */; };
 /* End PBXBuildFile section */
 
@@ -1680,6 +1685,17 @@
 		35A3C79E1769F13400C1C353 /* BlacklistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlacklistViewController.h; sourceTree = "<group>"; };
 		35A3C79F1769F13600C1C353 /* BlacklistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlacklistViewController.m; sourceTree = "<group>"; };
 		35A3C7A01769F13A00C1C353 /* BlacklistViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlacklistViewController.xib; sourceTree = "<group>"; };
+		35A7A153176D82C80005F750 /* OutboxMail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutboxMail.h; sourceTree = "<group>"; };
+		35A7A154176D82C80005F750 /* OutboxMail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutboxMail.m; sourceTree = "<group>"; };
+		35A7A159176D82C90005F750 /* InboxMail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxMail.h; sourceTree = "<group>"; };
+		35A7A15A176D82C90005F750 /* InboxMail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxMail.m; sourceTree = "<group>"; };
+		35A7A15C176DB0750005F750 /* Mail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mail.h; sourceTree = "<group>"; };
+		35A7A15D176DB0750005F750 /* Mail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mail.m; sourceTree = "<group>"; };
+		35A7A15F176DC73D0005F750 /* MailTransmitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailTransmitViewController.h; sourceTree = "<group>"; };
+		35A7A160176DC73D0005F750 /* MailTransmitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailTransmitViewController.m; sourceTree = "<group>"; };
+		35A7A161176DC73E0005F750 /* MailTransmitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailTransmitViewController.xib; sourceTree = "<group>"; };
+		35A7A164176DDD250005F750 /* MessageBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBean.h; sourceTree = "<group>"; };
+		35A7A165176DDD250005F750 /* MessageBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBean.m; sourceTree = "<group>"; };
 		35A99C89174DAD9500C9DF69 /* addfriend_button_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addfriend_button_p.png; sourceTree = "<group>"; };
 		35A99C8E174DB23F00C9DF69 /* my_homepage_chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_homepage_chat.png; sourceTree = "<group>"; };
 		35A99C8F174DB23F00C9DF69 /* my_homepage_chat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_homepage_chat@2x.png"; sourceTree = "<group>"; };
@@ -1824,8 +1840,6 @@
 		35BDD24F176AA9CE00BFDDCB /* OtherProfileFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherProfileFooter.xib; sourceTree = "<group>"; };
 		35C2AC7A1768150F004F84B0 /* MailClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailClient.h; sourceTree = "<group>"; };
 		35C2AC7B1768150F004F84B0 /* MailClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailClient.m; sourceTree = "<group>"; };
-		35C2AC86176850BC004F84B0 /* InboxMail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxMail.h; sourceTree = "<group>"; };
-		35C2AC87176850BD004F84B0 /* InboxMail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxMail.m; sourceTree = "<group>"; };
 		35C2AC8917685797004F84B0 /* NSString+MD5Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5Addition.h"; sourceTree = "<group>"; };
 		35C2AC8A17685797004F84B0 /* NSString+MD5Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5Addition.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2187,6 +2201,9 @@
 				35098496176B78440077C639 /* MyInvAgencyViewController.h */,
 				35098497176B78440077C639 /* MyInvAgencyViewController.m */,
 				35098498176B78440077C639 /* MyInvAgencyViewController.xib */,
+				35A7A15F176DC73D0005F750 /* MailTransmitViewController.h */,
+				35A7A160176DC73D0005F750 /* MailTransmitViewController.m */,
+				35A7A161176DC73E0005F750 /* MailTransmitViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3006,9 +3023,13 @@
 				356D5E4A17607EC800498008 /* CommendContact.m */,
 				359A7E19176380A700D453E8 /* NewsInfo.h */,
 				359A7E1A176380A700D453E8 /* NewsInfo.m */,
-				35C2AC86176850BC004F84B0 /* InboxMail.h */,
-				35C2AC87176850BD004F84B0 /* InboxMail.m */,
 				3595A647174B7382000780FE /* zhdltxl.xcdatamodel */,
+				35A7A15C176DB0750005F750 /* Mail.h */,
+				35A7A15D176DB0750005F750 /* Mail.m */,
+				35A7A159176D82C90005F750 /* InboxMail.h */,
+				35A7A15A176D82C90005F750 /* InboxMail.m */,
+				35A7A153176D82C80005F750 /* OutboxMail.h */,
+				35A7A154176D82C80005F750 /* OutboxMail.m */,
 				3509840E176AE5C60077C639 /* InvestmentInfo.h */,
 				3509840F176AE5C60077C639 /* InvestmentInfo.m */,
 				35A3C7951769C7B400C1C353 /* Contact.h */,
@@ -3039,6 +3060,8 @@
 				359E9B86174B11D30018E87F /* MailInfo.m */,
 				3595A64B174B993E000780FE /* CityIdProId.h */,
 				3595A64C174B993E000780FE /* CityIdProId.m */,
+				35A7A164176DDD250005F750 /* MessageBean.h */,
+				35A7A165176DDD250005F750 /* MessageBean.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3896,6 +3919,7 @@
 				35098486176B705E0077C639 /* FriendInvAgencyViewController.xib in Resources */,
 				3509848B176B72AB0077C639 /* FriendInvAgencyCell.xib in Resources */,
 				3509849A176B78440077C639 /* MyInvAgencyViewController.xib in Resources */,
+				35A7A163176DC73F0005F750 /* MailTransmitViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4118,7 +4142,6 @@
 				35B89CDF17645FC600DB51C0 /* StarNewsInfo.m in Sources */,
 				35B89CE21764826A00DB51C0 /* NormalNewsInfo.m in Sources */,
 				35C2AC7C1768150F004F84B0 /* MailClient.m in Sources */,
-				35C2AC88176850BD004F84B0 /* InboxMail.m in Sources */,
 				35C2AC8B17685798004F84B0 /* NSString+MD5Addition.m in Sources */,
 				3584597C17686AE400538EDB /* MyProfileViewController.m in Sources */,
 				3584598017686C0900538EDB /* MyProfileHeader.m in Sources */,
@@ -4142,6 +4165,11 @@
 				35098485176B705E0077C639 /* FriendInvAgencyViewController.m in Sources */,
 				35098489176B72970077C639 /* FriendInvAgencyCell.m in Sources */,
 				35098499176B78440077C639 /* MyInvAgencyViewController.m in Sources */,
+				35A7A155176D82C80005F750 /* OutboxMail.m in Sources */,
+				35A7A15B176D82C90005F750 /* InboxMail.m in Sources */,
+				35A7A15E176DB0750005F750 /* Mail.m in Sources */,
+				35A7A162176DC73F0005F750 /* MailTransmitViewController.m in Sources */,
+				35A7A166176DDD250005F750 /* MessageBean.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

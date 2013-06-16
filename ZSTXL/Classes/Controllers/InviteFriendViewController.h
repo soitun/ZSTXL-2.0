@@ -17,6 +17,7 @@
 @property (retain, nonatomic) NSMutableArray *selectArray;
 @property (retain, nonatomic) NSMutableArray *sectionArray;
 @property (retain, nonatomic) NSMutableDictionary *contactDict;
+@property (assign, nonatomic) NSInteger selectMax;
 
 
 @end

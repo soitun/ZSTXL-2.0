@@ -67,6 +67,7 @@
     [self setAlpha:0.0f];
     [self.layer addAnimation:animation forKey:@"TSLocateView"];
     [self performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:kDuration];
+    PERFORM_SELECTOR(self.timePickerDelegate, @selector(timePickerCancel:));
 }
 
 - (IBAction)doneClick:(UIBarButtonItem *)sender

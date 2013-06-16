@@ -16,4 +16,8 @@
                      success:(void (^)(NSDictionary *json))successBlock
                      failure:(void (^)(NSError *error))failureBlock;
 
++ (void)postWithParameters:(NSDictionary *)parameters
+              successBlock:(void (^)(id))successBlock
+                   failure:(void (^)(void))failureBlock;
+
 @end

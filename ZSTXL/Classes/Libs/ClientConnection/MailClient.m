@@ -9,7 +9,7 @@
 #import "MailClient.h"
 #import "AFJSONRequestOperation.h"
 
-NSString * const kMailBaseURLString = @"http://192.168.1.99:8080/BLZTWeb/mail/";
+NSString * const kMailBaseURLString = @"http://192.168.1.199:8080/BLZTWeb/mail/";
 //NSString * const kMailBaseURLString = @"http://www.boracloud.com:9101/BLZTCloud";
 
 
@@ -44,7 +44,6 @@ NSString * const kMailBaseURLString = @"http://192.168.1.99:8080/BLZTWeb/mail/";
     NSString *password = [parameters objForKey:@"password"];
     if (![username isValid] ) {
         [kAppDelegate showWithCustomAlertViewWithText:@"邮件用户名为空" andImageName:kErrorIcon];
-        return;
     }
     else{
         [mutableParameters removeObjectForKey:@"username"];
@@ -52,7 +51,6 @@ NSString * const kMailBaseURLString = @"http://192.168.1.99:8080/BLZTWeb/mail/";
     
     if (![password isValid]) {
         [kAppDelegate showWithCustomAlertViewWithText:@"密码为空" andImageName:kErrorIcon];
-        return;
     }else{
         [mutableParameters removeObjectForKey:@"password"];
     }
@@ -78,6 +76,43 @@ NSString * const kMailBaseURLString = @"http://192.168.1.99:8080/BLZTWeb/mail/";
         if (failureBlock) {
             failureBlock(error);
         }
+    }];
+}
+
++ (void)postWithParameters:(NSDictionary *)parameters
+              successBlock:(void (^)(id))successBlock
+                   failure:(void (^)(void))failureBlock
+{
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    
+    NSString *username = [parameters objForKey:@"username"];
+    NSString *password = [parameters objForKey:@"password"];
+    if (![username isValid] ) {
+        [kAppDelegate showWithCustomAlertViewWithText:@"邮件用户名为空" andImageName:kErrorIcon];
+    }
+    else{
+        [mutableParameters removeObjectForKey:@"username"];
+    }
+    
+    if (![password isValid]) {
+        [kAppDelegate showWithCustomAlertViewWithText:@"密码为空" andImageName:kErrorIcon];
+    }else{
+        [mutableParameters removeObjectForKey:@"password"];
+    }
+    
+    [[MailClient sharedClient] clearAuthorizationHeader];
+    [[MailClient sharedClient] setAuthorizationHeaderWithUsername:username password:password];
+    
+    
+    NSString *path = [mutableParameters objForKey:@"path"];
+    if ([path isValid]) {
+        [mutableParameters removeObjectForKey:@"path"];
+    }
+    
+    [[MailClient sharedClient] postPath:path parameters:mutableParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        successBlock(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failureBlock();
     }];
 }
 

@@ -31,6 +31,8 @@
     
     [self initScrollView];
     [self initNavBar];
+    
+//    self.subjectTextField.text = self.mail.subject;
 }
 
 - (void)didReceiveMemoryWarning

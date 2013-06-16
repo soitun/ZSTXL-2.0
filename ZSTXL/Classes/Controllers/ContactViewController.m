@@ -43,15 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.cityName = @"北京";
-    
-    UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [searchButton setImage:[UIImage imageNamed:@"search_contact.png"] forState:UIControlStateNormal];
-    [searchButton addTarget:self action:@selector(searchContact:) forControlEvents:UIControlEventTouchUpInside];
-    searchButton.frame = CGRectMake(0, 0, 30, 30);
-    
-    UIBarButtonItem *rBarButton = [[[UIBarButtonItem alloc] initWithCustomView:searchButton] autorelease];
-    [self.navigationItem setRightBarButtonItem:rBarButton];
+    self.cityName = [PersistenceHelper dataForKey:kCityName];
     self.navigationController.delegate = self;
     
     self.title = @"通讯录";
@@ -157,6 +149,17 @@
     }
 }
 
+- (void)addSearchButton
+{
+    UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [searchButton setImage:[UIImage imageNamed:@"search_contact.png"] forState:UIControlStateNormal];
+    [searchButton addTarget:self action:@selector(searchContact:) forControlEvents:UIControlEventTouchUpInside];
+    searchButton.frame = CGRectMake(0, 0, 30, 30);
+    
+    UIBarButtonItem *rBarButton = [[[UIBarButtonItem alloc] initWithCustomView:searchButton] autorelease];
+    [self.navigationItem setRightBarButtonItem:rBarButton];
+}
+
 - (void)searchContact:(UIButton *)sender
 {
     SearchContactViewController *searchContactVC = [[[SearchContactViewController alloc] init] autorelease];
@@ -214,6 +217,13 @@
         self.title = @"通讯录";
     }else{
         [self initTitleView];
+    }
+    
+    if (index == 2) {
+        [self addSearchButton];
+    }
+    else{
+        self.navigationItem.rightBarButtonItem = nil;
     }
 }
 

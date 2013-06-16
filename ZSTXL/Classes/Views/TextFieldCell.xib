@@ -42,16 +42,16 @@
 							<object class="IBUITextField" id="571152707">
 								<reference key="NSNextResponder" ref="745165974"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{9, 7}, {269, 30}}</string>
+								<string key="NSFrame">{{9, 7}, {303, 30}}</string>
 								<reference key="NSSuperview" ref="745165974"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<string key="IBUIText"/>
-								<string key="IBUIPlaceholder">商品名称/企业名称</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MAA</bytes>

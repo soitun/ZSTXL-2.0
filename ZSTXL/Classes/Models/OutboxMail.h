@@ -1,5 +1,5 @@
 //
-//  InboxMail.h
+//  OutboxMail.h
 //  ZSTXL
 //
 //  Created by LiuYue on 13-6-16.
@@ -8,10 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "Mail.h"
 
 
-@interface InboxMail : Mail
+@interface OutboxMail : NSManagedObject
 
 
 @end

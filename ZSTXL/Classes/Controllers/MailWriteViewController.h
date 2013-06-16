@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Mail.h"
 
 @interface MailWriteViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate>
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;

@@ -31,7 +31,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"招商代理";
+    
+    NSString *title = [NSString stringWithFormat:@"招商代理（%@）", [PersistenceHelper dataForKey:kCityName]];
+    
+    self.title = title;
     self.navigationController.delegate = self;
     
     self.page = 0;
@@ -100,6 +103,7 @@
     self.reloading = YES;
 //    [self performSelector:@selector(doneLoading) withObject:nil afterDelay:3.0];
     [self requestData];
+    [self requestAdv];
 }
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
@@ -138,6 +142,8 @@
         if ([[GET_RETURNCODE(json) stringValue] isEqualToString:@"0"]) {
             
             NSArray *array = [json objForKey:@"InformationTopList"];
+            
+            DLog(@"header array %@", array);
             if (array && [array count] > 0) {
                 [(InfoAdvHeaderView *)self.tableView.tableHeaderView updateAdvData:array];
             }
@@ -150,8 +156,6 @@
     } failure:^(NSError *error) {
         [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
     }];
-    
-    
 }
 
 - (void)requestData
@@ -170,7 +174,12 @@
             if (self.dataSourceArray.count > 0) {
                 [self.dataSourceArray removeAllObjects];
             }
-            [self.dataSourceArray addObjectsFromArray:[json objForKey:@"InformationList"]];
+            
+            NSArray *array = [json objForKey:@"InformationList"];
+            
+            DLog(@"normal array %@", array);
+            
+            [self.dataSourceArray addObjectsFromArray:array];
             [self saveNews];
             [self.tableView reloadData];
         }

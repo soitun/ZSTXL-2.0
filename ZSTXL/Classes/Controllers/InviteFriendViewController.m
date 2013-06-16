@@ -32,7 +32,7 @@
     
     self.title = @"邀请";
     self.selectArray = [NSMutableArray array];
-    
+    self.selectMax = 50;
     
     [self initNavBar];
     [self initContactDict];
@@ -199,7 +199,7 @@
 - (void)inviteFriend
 {
     MFMessageComposeViewController *controller = [[[MFMessageComposeViewController alloc] init] autorelease];
-    controller.body = @"邀请您使用招商通讯录";
+    controller.body = [self messageBody];
     
     NSMutableArray *tmp = [NSMutableArray array];
     [self.selectArray enumerateObjectsUsingBlock:^(NSDictionary * dict, NSUInteger idx, BOOL *stop) {
@@ -210,6 +210,11 @@
     controller.messageComposeDelegate = self;
     [self presentModalViewController:controller animated:YES];
     
+}
+
+- (NSString *)messageBody
+{
+    return @"";
 }
 
 #pragma mark - message delegate
@@ -305,13 +310,27 @@
         [self.selectArray removeObject:dict];
     }
     else{
-        [self.selectArray addObject:dict];
+        
+        if ([self selectToMax]) {
+            [kAppDelegate showWithCustomAlertViewWithText:@"最多选择50人" andImageName:kErrorIcon];
+            return;
+        }
+        else{
+            [self.selectArray addObject:dict];
+        }
     }
     
     [self.tableView reloadData];
 }
 
-
+- (BOOL)selectToMax
+{
+    if (self.selectArray.count >= self.selectMax)
+    {
+        return YES;
+    }
+    return NO;
+}
 
 
 @end
