@@ -102,41 +102,6 @@
 {
     DLog(@"send mail");
     
-    
-    
-    //"answered": false,
-    //"content": {
-    //    "text": "好多图"
-    //},
-    //"deleted": false,
-    //"draft": false,
-    //"flagged": false,
-    //"hasAttachment": false,
-    //"messageNumber": 0,
-    //"recent": false,
-    //"seen": false,
-    //"sender": "109981@boramail.com",
-    //"subject": "转发:好多图",
-    //"to": [
-    //       "109981@boramail.com"
-    //       ]
-    
-//    MessageBean *message = [[[MessageBean alloc] init] autorelease];
-//    message.answered = @"0";
-//    message.content = @{@"text": self.mail.content};
-//    message.deleted = @"0";
-//    message.draft = @"0";
-//    message.flagged = @"0";
-//    message.hasAttachment = @"0";
-//    message.messageNumber = @"0";
-//    message.recent = @"0";
-//    message.seen = @"0";
-//    message.sender = @"109981@boramail.com";
-//    message.subject = self.mail.subject;
-//    message.to = @[@"109981@boramail.com"];
-    
-//    [NSNumber numberWithBool:NO];
-    
     NSDictionary *message = @{@"answered": [NSNumber numberWithBool:NO],
                               @"content": @{@"text": self.mail.content},
                               @"deleted": [NSNumber numberWithBool:NO],
@@ -151,21 +116,6 @@
                               @"to": @[@"109981@boramail.com"]};
     
     
-    
-//    NSString *sender = [NSString stringWithFormat:@"%@@boramail.com", @"109981"];
-//    NSString *to = [NSString stringWithFormat:@"109981@boramail"];
-//    
-//    NSDictionary *content = @{@"text": self.mail.content,
-//                              @"attachment": [NSNull null],
-//                              @"inline": [NSNull null]};
-//    
-//    NSDictionary *messageBean = @{@"sender": sender,
-//                                  @"to": to,
-//                                  @"cc": [NSNull null],
-//                                  @"bcc": [NSNull null],
-//                                  @"subject": self.mail.subject,
-//                                  @"content": content};
-    
     NSString *tmp = [[message JSONString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSDictionary *para = @{@"path": @"relayMail.json",
@@ -174,16 +124,6 @@
                            @"relayMessage": tmp};
     
     [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
-    
-//    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://192.168.1.199:8080/BLZTWeb/mail/"]];
-//    [client postPath:@"relayMail.json" parameters:para success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
-//        DLog(@"error %@", error);
-//    }];
-    
-    
     [MailClient postWithParameters:para successBlock:^(id json) {
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
         DLog(@"%@", json);
