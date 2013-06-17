@@ -19,7 +19,7 @@
 #import "SettingViewController.h"
 #import "MailBoxViewController.h"
 #import "FinanceInfoViewController.h"
-#import "StarNewsViewController.h"
+#import "StarInfoViewController.h"
 #import "AddMeViewController.h"
 #import "BlacklistViewController.h"
 #import "FriendInvAgencyViewController.h"
@@ -214,7 +214,7 @@
                               userid, @"userid",
                               self.myInfo.userDetail.picturelinkurl, @"imageurl", nil];
     
-    NSLog(@"smallImage width: %f, height: %f", smallImage.size.width, smallImage.size.height);
+    DLog(@"smallImage width: %f, height: %f", smallImage.size.width, smallImage.size.height);
     
     [DreamFactoryClient postWithParameters:paraDict image:smallImage success:^(id obj) {
         [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
@@ -561,7 +561,7 @@
 - (void)myProfileStar
 {
     NSArray *array = [StarNewsInfo findAll];
-    StarNewsViewController *starNewsVC = [[[StarNewsViewController alloc] init] autorelease];
+    StarInfoViewController *starNewsVC = [[[StarInfoViewController alloc] init] autorelease];
     starNewsVC.dataSourceArray = array;
     [self.navigationController pushViewController:starNewsVC animated:YES];
 }

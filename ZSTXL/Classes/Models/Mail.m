@@ -2,7 +2,7 @@
 //  Mail.m
 //  ZSTXL
 //
-//  Created by LiuYue on 13-6-16.
+//  Created by LiuYue on 13-6-17.
 //  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
@@ -19,6 +19,7 @@
 @dynamic draft;
 @dynamic flagged;
 @dynamic hasAttachment;
+@dynamic localDeleted;
 @dynamic messageId;
 @dynamic messageNumber;
 @dynamic recent;
@@ -28,6 +29,6 @@
 @dynamic sentDateStr;
 @dynamic subject;
 @dynamic to;
-@dynamic localDeleted;
+@dynamic folderName;
 
 @end

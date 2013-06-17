@@ -71,6 +71,7 @@
         <attribute name="deleted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="draft" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="flagged" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="folderName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hasAttachment" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="localDeleted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
@@ -127,7 +128,33 @@
         <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="StarNewsInfo" representedClassName="StarNewsInfo" parentEntity="NewsInfo" syncable="YES"/>
+    <entity name="StarInvest" representedClassName="StarInvest" syncable="YES">
+        <attribute name="companyname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createtime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creditlevel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="investmentid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="investmentimgurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ismember" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isvip" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="placename" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="StarNews" representedClassName="StarNews" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="count" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="groupid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="informationtitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="informationtitle2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="newsid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pictureurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publishedtime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sort" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="source" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="UserDetail" representedClassName="UserDetail" syncable="YES">
         <attribute name="autograph" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="col1" optional="YES" attributeType="String" syncable="YES"/>
@@ -157,16 +184,17 @@
         <element name="FriendContact" positionX="693" positionY="92" width="128" height="45"/>
         <element name="InboxMail" positionX="160" positionY="228" width="128" height="43"/>
         <element name="InvestmentInfo" positionX="333" positionY="-225" width="128" height="133"/>
+        <element name="Mail" positionX="385" positionY="225" width="128" height="330"/>
         <element name="MyInfo" positionX="-45" positionY="-151" width="128" height="150"/>
         <element name="NewsInfo" positionX="306" positionY="54" width="128" height="150"/>
         <element name="NormalNewsInfo" positionX="169" positionY="27" width="128" height="45"/>
+        <element name="OutboxMail" positionX="351" positionY="108" width="128" height="43"/>
         <element name="Pharmacology" positionX="189" positionY="-108" width="128" height="103"/>
         <element name="SearchContact" positionX="700" positionY="234" width="128" height="45"/>
         <element name="SMSList" positionX="531" positionY="-160" width="128" height="178"/>
         <element name="SMSRecord" positionX="673" positionY="-441" width="128" height="103"/>
-        <element name="StarNewsInfo" positionX="475" positionY="90" width="128" height="45"/>
         <element name="UserDetail" positionX="-72" positionY="117" width="128" height="300"/>
-        <element name="Mail" positionX="385" positionY="225" width="128" height="313"/>
-        <element name="OutboxMail" positionX="351" positionY="108" width="128" height="43"/>
+        <element name="StarNews" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="StarInvest" positionX="160" positionY="192" width="128" height="210"/>
     </elements>
 </model>

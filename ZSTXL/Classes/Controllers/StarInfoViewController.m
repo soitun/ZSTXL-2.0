@@ -6,16 +6,16 @@
 //  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
-#import "StarNewsViewController.h"
+#import "StarInfoViewController.h"
 #import "InformationCell.h"
 #import "StarNewsInfo.h"
 #import "NewsDetailController.h"
 
-@interface StarNewsViewController ()
+@interface StarInfoViewController ()
 
 @end
 
-@implementation StarNewsViewController
+@implementation StarInfoViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,10 +29,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"收藏";
+//    self.title = @"收藏";
+    self.dataSourceArray = [NSMutableArray array];
     self.view.backgroundColor = bgGreyColor;
     self.tableView.backgroundColor = [UIColor clearColor];
     
+    self.newsPage = 0;
+    self.invPage = 0;
+    self.maxrow = @"20";
+    
+    [self requestInvStar];
     [self initNavBar];
 }
 
@@ -62,6 +68,13 @@
     
     UIBarButtonItem *lBarButton = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
     [self.navigationItem setLeftBarButtonItem:lBarButton];
+    
+    //segment control
+    UISegmentedControl * navSeg = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"招商", @"资讯", nil]] autorelease];
+    [navSeg addTarget:self action:@selector(segAction:) forControlEvents:UIControlEventValueChanged];
+    [navSeg setSegmentedControlStyle:UISegmentedControlStyleBar];
+    self.navigationItem.titleView = navSeg;
+    
 }
 
 - (void)popVC:(UIButton *)sender
@@ -69,7 +82,67 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)segAction:(UISegmentedControl *)sender
+{
+    if (sender.selectedSegmentIndex == 0) {
+        [self requestNewsStar];
+    }
+    else{
+        [self requestInvStar];
+    }
+}
+
+#pragma mark - request Data
+
+- (void)requestNewsStar
+{
+    
+}
+
+- (void)requestInvStar
+{
+    
+    NSString *page = [NSString stringWithFormat:@"%d", self.invPage];
+    NSDictionary *para = @{@"path": @"getInvestmentCollectList.json",
+                           @"userid": kAppDelegate.userId,
+                           @"page": page,
+                           @"maxrow": self.maxrow};
+    
+    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        if (RETURNCODE_ISVALID(json)) {
+            
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+    }];
+}
+
+- (void)parseNewsStar:(NSDictionary *)json
+{
+    
+}
+
+- (void)parseInvStar:(NSDictionary *)json
+{
+    
+}
+
 #pragma mark - table view
+
+- (void)initTableFooter
+{
+    self.footer = [[[NSBundle mainBundle] loadNibNamed:@"LoadMoreFooter" owner:self options:nil] lastObject];
+    self.footer.delegate = self;
+    self.tableView.tableFooterView = self.footer;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -117,6 +190,13 @@
     newsDetailVC.newsId = chooseNewsInfo.newsid;
     newsDetailVC.newsArray = newsArray;
     [self.navigationController pushViewController:newsDetailVC animated:YES];
+    
+}
+
+#pragma mark - footer delegate
+
+- (void)LoadMoreFooterTap:(LoadMoreFooter *)footer
+{
     
 }
 
