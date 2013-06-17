@@ -11,10 +11,12 @@
 #import "MailSelectorView.h"
 #import "MailInfoViewController.h"
 
-@interface MailBoxViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TitleViewDelegate, MailSelectorViewDelegate, MailInfoViewControllerDelegate>
+@interface MailBoxViewController : UIViewController
+<UITableViewDataSource, UITableViewDelegate, TitleViewDelegate, MailSelectorViewDelegate, MailInfoViewControllerDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *dataSourceArray;
+@property (nonatomic, retain) NSMutableDictionary *deleteDict;
 @property (nonatomic, retain) NSArray *mailSelectorArray;
 @property (nonatomic, retain) UIButton *mailSentButton;
 

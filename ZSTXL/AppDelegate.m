@@ -126,11 +126,11 @@
     {
         [self getCurrentCity];
         DLog(@"new city %@", self.theNewCity);
-        NSLog(@"网络可行");
+        DLog(@"网络可行");
     }
     else
     {
-        NSLog(@"网络不可行");
+        DLog(@"网络不可行");
         [self showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
     }
 }
@@ -192,7 +192,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-    NSLog(@"location manager AuthorizationStatus: %d", status);
+    DLog(@"location manager AuthorizationStatus: %d", status);
 }
 
 - (NSString *)userId

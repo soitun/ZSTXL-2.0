@@ -10,6 +10,7 @@
 #import "MailCell.h"
 #import "MailSelectorView.h"
 #import "MailInfoViewController.h"
+#import "MailWriteViewController.h"
 #import "InboxMail.h"
 
 @interface MailBoxViewController ()
@@ -37,9 +38,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = bgGreyColor;
     self.mailSelectorArray = @[@"MailSelectorSent", @"MailSelectorDraft", @"MailSelectorDelete", @"MailSelectorTrash"];
     self.dataSourceArray = [NSMutableArray array];
+    self.deleteDict = [NSMutableDictionary dictionary];
     self.isInbox = YES;
+    
+//    self.tableView.allowsSelectionDuringEditing = YES;
     [self requestInboxMail];
     [self initNavBar];
 }
@@ -152,26 +157,28 @@
 
         for (NSDictionary *mailDict in obj) {
             
+//            DLog(@"mailDict %@", mailDict);
+            
             //若本地删除，则不显示
 
             NSPredicate *pred = [NSPredicate predicateWithFormat:@"messageId == %@", [mailDict objForKey:@"messageId"]];
             Mail *mail = [InboxMail findFirstWithPredicate:pred];
-//            DLog(@"subject %@, localDeleted %@", mail.subject, mail.localDeleted);
+
             
             if (mail == nil) {
                 InboxMail *inboxMail = [InboxMail createEntity];
                 
-                NSArray *keys = [[[inboxMail entity] attributesByName] allKeys];
+                NSArray *keys = [mailDict allKeys];
                 for (NSString *key in keys) {
                     id obj = [mailDict objForKey:key];
                     NSString *value = nil;
                     if ([obj isKindOfClass:NSClassFromString(@"NSNumber")]) {
-                        value = [obj stringValue];
+                        value = [NSString stringWithFormat:@"%d", [obj intValue]];
                     }
                     else if([obj isKindOfClass:NSClassFromString(@"NSString")]){
                         value = obj;
-                    }else if([obj isKindOfClass:[NSArray class]]){
-                        
+                    }
+                    else if([obj isKindOfClass:NSClassFromString(@"NSArray")]){
                         NSMutableString *tmp = [NSMutableString string];
                         for (NSString *str in obj) {
                             [tmp appendFormat:@"%@,", str];
@@ -183,6 +190,7 @@
                     
                     [inboxMail setValue:value forKey:key];
                 }
+                inboxMail.content = @"";
                 inboxMail.localDeleted = @"0";
                 [self.dataSourceArray addObject:inboxMail];
             }
@@ -191,17 +199,16 @@
                     [self.dataSourceArray addObject:mail];
                 }
             }
-            
-            
         }
         
-        [self.dataSourceArray sortUsingComparator:^NSComparisonResult(InboxMail * obj1, InboxMail * obj2) {
-            return [obj2.sentDate compare:obj1.sentDate];   //降序
-        }];
-        
-        DB_SAVE();
-        [self.tableView reloadData];
     }];
+    
+    [self.dataSourceArray sortUsingComparator:^NSComparisonResult(InboxMail * obj1, InboxMail * obj2) {
+        return [obj2.sentDate compare:obj1.sentDate options:NSNumericSearch];   //降序, the fucking options
+    }];
+    
+    DB_SAVE();
+    [self.tableView reloadData];
     
 }
 
@@ -227,7 +234,7 @@
     static NSString *cellId = @"MailCell";
     MailCell *cell = (MailCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"MailCell" owner:nil options:nil] lastObject];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"MailCell" owner:self options:nil] lastObject];
     }
     
     [self configureCell:cell atIndexPath:indexPath];
@@ -243,6 +250,7 @@
         cell.mailIcon.image = [UIImage imageNamed:@"mail_icon_on"];
     }
     
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.titleLabel.text = mail.sender;
     cell.dateLabel.text = mail.sentDateStr;
     cell.detailLabel.text = mail.subject;
@@ -250,13 +258,63 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MailInfoViewController *mailInfoVC = [[[MailInfoViewController alloc] init] autorelease];
-    mailInfoVC.mail = [self.dataSourceArray objectAtIndex:indexPath.row];
-    mailInfoVC.isInbox = self.isInbox;
-    mailInfoVC.mailArray = self.dataSourceArray;
-    mailInfoVC.delegate = self;
-    [self.navigationController pushViewController:mailInfoVC animated:YES];
+//    MailCell *cell = (MailCell *)[tableView cellForRowAtIndexPath:indexPath];
+    
+    if (self.tableView.editing) {
+        Mail *mail = [self.dataSourceArray objectAtIndex:indexPath.row];
+        DLog(@"indexpath %@, subject %@", indexPath, mail.subject);
+        [self.deleteDict setObject:mail forKey:indexPath];
+    }
+    else{
+        MailInfoViewController *mailInfoVC = [[[MailInfoViewController alloc] init] autorelease];
+        mailInfoVC.mail = [self.dataSourceArray objectAtIndex:indexPath.row];
+        mailInfoVC.isInbox = self.isInbox;
+        mailInfoVC.mailArray = self.dataSourceArray;
+        mailInfoVC.delegate = self;
+        [self.navigationController pushViewController:mailInfoVC animated:YES];
+    }
 }
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //多选取消
+    if (self.tableView.editing) {
+        [self.deleteDict removeObjectForKey:indexPath];
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.tableView.editing) {
+        return UITableViewCellEditingStyleInsert | UITableViewCellEditingStyleDelete;
+    }
+    else{
+        return UITableViewCellEditingStyleDelete;
+    }
+
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Mail *mail = [self.dataSourceArray objectAtIndex:indexPath.row];
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.dataSourceArray removeObject:mail];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        mail.localDeleted = @"1";
+        DB_SAVE();
+    }
+    else{
+        
+    }
+}
+
+
 
 #pragma mark - mail selector view delegate
 
@@ -298,12 +356,40 @@
 
 - (IBAction)mailDelete:(UIButton *)sender
 {
+    if (self.tableView.editing == NO) {
+        [self.tableView setEditing:YES animated:YES];
+        
+    }
+    else{
+        
+        [self.dataSourceArray removeObjectsInArray:[self.deleteDict allValues]];
+
     
+        [self.tableView deleteRowsAtIndexPaths:[self.deleteDict allKeys] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        //捕捉动画介绍，直接reloadData会取消掉动画
+        [CATransaction begin];
+        [CATransaction setCompletionBlock: ^{
+            [self.tableView reloadData];
+        }];
+        [self.tableView setEditing:NO animated:YES];
+        [CATransaction commit];
+        //clear DB
+        
+        for (Mail *mail in [self.deleteDict allValues]) {
+            mail.localDeleted = @"1";
+        }
+        DB_SAVE();
+        
+        [self.deleteDict removeAllObjects];
+
+    }
 }
 
 - (IBAction)mailWrite:(UIButton *)sender
 {
-    
+    MailWriteViewController *mailWriteVC = [[[MailWriteViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:mailWriteVC animated:YES];
 }
 
 #pragma mark - mail info delegate

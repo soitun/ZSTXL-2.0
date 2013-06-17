@@ -21,10 +21,25 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
+    if (self.editing) {
+        self.selectionStyle = UITableViewCellSelectionStyleBlue;
+    }
+    else{
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
+
+//- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+//{
+//    if (editing == YES) {
+//        self.selectionStyle = UITableViewCellSelectionStyleBlue;
+//    }
+//    else{
+//        self.selectionStyle = UITableViewCellSelectionStyleNone;
+//    }
+//}
 
 - (void)dealloc {
     [_mailIcon release];

@@ -43,9 +43,10 @@
 							<object class="IBUIImageView" id="657358658">
 								<reference key="NSNextResponder" ref="554465615"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{13, 20}, {23, 17}}</string>
+								<string key="NSFrame">{{14, 20}, {23, 17}}</string>
 								<reference key="NSSuperview" ref="554465615"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="109024629"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -119,7 +120,7 @@
 							<object class="IBUILabel" id="154248012">
 								<reference key="NSNextResponder" ref="554465615"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{227, 6}, {80, 21}}</string>
+								<string key="NSFrame">{{211, 6}, {80, 21}}</string>
 								<reference key="NSSuperview" ref="554465615"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1014826521"/>
@@ -142,7 +143,7 @@
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 59}</string>
+						<string key="NSFrameSize">{300, 59}</string>
 						<reference key="NSSuperview" ref="547927699"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="657358658"/>
@@ -163,13 +164,11 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="554465615"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC45NTI5NDExNzY1IDAuOTU2ODYyNzQ1MSAwLjk2MDc4NDMxMzcAA</bytes>
-				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISelectionStyle">0</int>
+				<int key="IBUIAccessoryType">1</int>
 				<reference key="IBUIContentView" ref="554465615"/>
+				<bool key="IBUIShouldIndentWhileEditing">NO</bool>
 				<string key="IBUIReuseIdentifier">MailCell</string>
 				<real value="58" key="IBUIRowHeight"/>
 			</object>
