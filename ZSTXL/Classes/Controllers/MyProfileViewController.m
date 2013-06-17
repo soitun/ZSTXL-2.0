@@ -560,9 +560,9 @@
 
 - (void)myProfileStar
 {
-    NSArray *array = [StarNewsInfo findAll];
+//    NSArray *array = [StarNewsInfo findAll];
     StarInfoViewController *starNewsVC = [[[StarInfoViewController alloc] init] autorelease];
-    starNewsVC.dataSourceArray = array;
+//    starNewsVC.dataSourceArray = array;
     [self.navigationController pushViewController:starNewsVC animated:YES];
 }
 

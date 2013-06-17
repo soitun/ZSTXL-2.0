@@ -12,11 +12,12 @@
 @interface StarInfoViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, LoadMoreFooterDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (retain, nonatomic) NSArray *dataSourceArray;
+@property (retain, nonatomic) NSMutableArray *dataSourceArray;
 
 @property (assign, nonatomic) NSInteger newsPage;
 @property (assign, nonatomic) NSInteger invPage;
 @property (copy, nonatomic) NSString *maxrow;
 @property (retain, nonatomic) LoadMoreFooter *footer;
+@property (assign, nonatomic) BOOL isNewsInfoOn;
 
 @end

@@ -10,6 +10,8 @@
 #import "InformationCell.h"
 #import "StarNewsInfo.h"
 #import "NewsDetailController.h"
+#import "StarNews.h"
+#import "StarInvest.h"
 
 @interface StarInfoViewController ()
 
@@ -37,6 +39,7 @@
     self.newsPage = 0;
     self.invPage = 0;
     self.maxrow = @"20";
+    self.isNewsInfoOn = NO;
     
     [self requestInvStar];
     [self initNavBar];
@@ -101,10 +104,9 @@
 
 - (void)requestInvStar
 {
-    
     NSString *page = [NSString stringWithFormat:@"%d", self.invPage];
     NSDictionary *para = @{@"path": @"getInvestmentCollectList.json",
-                           @"userid": kAppDelegate.userId,
+                           @"userid": @"109971",
                            @"page": page,
                            @"maxrow": self.maxrow};
     
@@ -113,7 +115,36 @@
         
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
         if (RETURNCODE_ISVALID(json)) {
+            NSArray *array = [json objForKey:@"InvestmentList"];
+            for (NSDictionary *dict in array) {
+                
+                StarInvest *starInvest = [StarInvest createEntity];
+                
+                [dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                    if ([obj isKindOfClass:[NSNumber class]]) {
+                        [starInvest setValue:[obj stringValue] forKey:key];
+                    }
+                    else if ([obj isKindOfClass:[NSString class]]){
+                        [starInvest setValue:obj forKey:key];
+                    }
+                }];
+                [self.dataSourceArray addObject:starInvest];
+            }
             
+            self.invPage++;
+            
+            if (self.invPage == 1) {
+                [self initTableFooter];
+            }
+            
+            if ([self requestFinished]) {
+                self.footer.titleLabel.text = @"加载完成";
+            }
+            else{
+                self.footer.titleLabel.text = @"加载更多";
+            }
+            
+            [self.tableView reloadData];
         }
         else{
             [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
@@ -133,6 +164,14 @@
 - (void)parseInvStar:(NSDictionary *)json
 {
     
+}
+
+- (BOOL)requestFinished
+{
+    if (self.dataSourceArray.count == 0 || self.dataSourceArray.count % self.maxrow.integerValue != 0) {
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark - table view
@@ -168,10 +207,16 @@
     }
     infoCell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    StarNewsInfo *newsInfo = [self.dataSourceArray objectAtIndex:indexPath.row];
-    infoCell.labTitle.text = newsInfo.title;
-    infoCell.labSubTitle.text = newsInfo.subtitle;
-    infoCell.avatar.image = [Utility readImageFromDisk:newsInfo.pictureurl];
+    if (self.isNewsInfoOn) {
+        
+    }
+    else{
+        StarInvest *starInvest = [self.dataSourceArray objectAtIndex:indexPath.row];
+        infoCell.labTitle.text = starInvest.username;
+        infoCell.labSubTitle.text = starInvest.productname;
+        [infoCell.avatar setImageWithURL:[NSURL URLWithString:starInvest.investmentimgurl] placeholderImage:[UIImage imageNamed:@"agency_default.png"]];
+    }
+    
     
     return infoCell;
 }
@@ -197,7 +242,17 @@
 
 - (void)LoadMoreFooterTap:(LoadMoreFooter *)footer
 {
-    
+    if ([self requestFinished]) {
+        return;
+    }
+    else{
+        if (self.isNewsInfoOn) {
+            [self requestNewsStar];
+        }
+        else{
+            [self requestInvStar];
+        }
+    }
 }
 
 @end
