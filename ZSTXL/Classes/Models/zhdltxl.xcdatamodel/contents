@@ -193,8 +193,8 @@
         <element name="SearchContact" positionX="700" positionY="234" width="128" height="45"/>
         <element name="SMSList" positionX="531" positionY="-160" width="128" height="178"/>
         <element name="SMSRecord" positionX="673" positionY="-441" width="128" height="103"/>
-        <element name="UserDetail" positionX="-72" positionY="117" width="128" height="300"/>
-        <element name="StarNews" positionX="160" positionY="192" width="128" height="225"/>
         <element name="StarInvest" positionX="160" positionY="192" width="128" height="210"/>
+        <element name="StarNews" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="UserDetail" positionX="-72" positionY="117" width="128" height="300"/>
     </elements>
 </model>

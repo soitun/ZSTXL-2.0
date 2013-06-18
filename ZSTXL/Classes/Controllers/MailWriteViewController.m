@@ -8,6 +8,7 @@
 
 #import "MailWriteViewController.h"
 #import "MailAddFriendViewController.h"
+#import "OutboxMail.h"
 
 #define kTextGrayColor [UIColor colorWithWhite:0.70 alpha:1]
 
@@ -184,6 +185,32 @@
         DLog(@"json %@", json);
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
         if (RETURNCODE_ISVALID(json)) {
+            
+//            @dynamic answered;
+//            @dynamic bcc;
+//            @dynamic cc;
+//            @dynamic content;
+//            @dynamic deleted;
+//            @dynamic draft;
+//            @dynamic flagged;
+//            @dynamic hasAttachment;
+//            @dynamic localDeleted;
+//            @dynamic messageId;
+//            @dynamic messageNumber;
+//            @dynamic recent;
+//            @dynamic seen;
+//            @dynamic sender;
+//            @dynamic sentDate;
+//            @dynamic sentDateStr;
+//            @dynamic subject;
+//            @dynamic to;
+//            @dynamic folderName;
+            
+            
+            
+            //save db
+            OutboxMail *outboxMail = [OutboxMail createEntity];
+            
             
         }
         else{
