@@ -436,12 +436,12 @@ enum eAlertTag {
     }
     
     
-    TalkViewController *talk = [[[TalkViewController alloc] initWithNibName:@"TalkViewController" bundle:nil] autorelease];
-    talk.username = self.contact.username;
-    talk.fid = self.contact.userid;
-    talk.fAvatarUrl = self.contact.picturelinkurl;
-    NSLog(@"talk.fid %@", talk.fid);
-    [self.navigationController pushViewController:talk animated:YES];
+//    TalkViewController *talk = [[[TalkViewController alloc] initWithNibName:@"TalkViewController" bundle:nil] autorelease];
+//    talk.username = self.contact.username;
+//    talk.fid = self.contact.userid;
+//    talk.fAvatarUrl = self.contact.picturelinkurl;
+//    NSLog(@"talk.fid %@", talk.fid);
+//    [self.navigationController pushViewController:talk animated:YES];
 }
 
 #pragma mark - heade delegate

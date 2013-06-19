@@ -1,5 +1,5 @@
 //
-//  ChatRecord.h
+//  SMSRecord.h
 //  ZSTXL
 //
 //  Created by LiuYue on 13-6-19.
@@ -11,7 +11,7 @@
 #import "MessageRecord.h"
 
 
-@interface ChatRecord : MessageRecord
+@interface SMSRecord : MessageRecord
 
 
 @end

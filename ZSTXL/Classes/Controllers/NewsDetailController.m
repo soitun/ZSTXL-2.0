@@ -13,6 +13,7 @@
 #import "WebViewManager.h"
 #import "NewsInfo.h"
 #import "StarNewsInfo.h"
+#import "StarNews.h"
 
 #define kContentFont [UIFont systemFontOfSize:16]
 #define kTagRegex    @"(<_image>[^\\s]+</_image>)|(<_link>[^\\s]+</_link>)"
@@ -236,7 +237,7 @@
     self.btnClickReload.hidden = YES;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"getInformationDetail.json", @"path", newsId, @"informationid", nil];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"getZsInformationDetail.json", @"path", newsId, @"informationid", kAppDelegate.userId, @"userid", nil];
     [DreamFactoryClient getWithURLParameters:dict success:^(NSDictionary *json) {
         
         DLog(@"news %@", [json objForKey:@"InformationDetail.content"]);
@@ -279,7 +280,7 @@
                 isNewsCollect = YES;
             }
             
-            [self updateNewsStarInDB];
+//            [self updateNewsStarInDB];
             
         } else {
             [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
@@ -293,22 +294,38 @@
 - (void)updateNewsStarInDB
 {
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"newsid == %@", self.newsId];
-    StarNewsInfo *starNewsInfo = [StarNewsInfo findFirstWithPredicate:pred];
+    StarNews *starNews = [StarNews findFirstWithPredicate:pred];
     if (isNewsCollect) {
-        if (starNewsInfo == nil) {
-            starNewsInfo = [StarNewsInfo createEntity];
+        if (starNews == nil) {
+            starNews = [StarNewsInfo createEntity];
             NSDictionary *dict = [self.newsArray objectAtIndex:self.newsIndex];
-            [starNewsInfo initWithDict:dict];
+//            [StarNews initWithDict:dict];
+            
+            starNews.createid = [[dict objForKey:@"createid"] stringValue];
+            starNews.newsid = [[dict objForKey:@"id"] stringValue];
+            starNews.informationtitle = [dict objForKey:@"informationtitle"];
+            starNews.informationtitle2 = [dict objForKey:@"informationtitle2"];
+            
+            NSString *pic = [dict objForKey:@"toppictureurl"];
+            if ([pic isValid]) {
+                starNews.pictureurl = pic;
+            }
+            else{
+                starNews.pictureurl = [dict objForKey:@"pictureurl"];
+            }
+            
+            starNews.publishedtime = [dict objForKey:@"publishedtime"];
+            starNews.type = [[dict objForKey:@"type"] stringValue];
+            starNews.content = self.newsContent;
         }
         
-        starNewsInfo.type = @"1";
         DB_SAVE();
         
         DLog(@"star news count %d", [NewsInfo findAll].count);
     }
     else{
-        if (starNewsInfo) {
-            [starNewsInfo deleteEntity];
+        if (starNews) {
+            [starNews deleteEntity];
             DB_SAVE();
         }
     }

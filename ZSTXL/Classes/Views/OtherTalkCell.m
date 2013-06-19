@@ -24,7 +24,7 @@
 }
 
 - (void)awakeFromNib {
-    self.bgImageView.image = [UIImage stretchableImage:@"bg_OtherTalk" leftCap:16 topCap:13];
+    self.bgImageView.image = [UIImage stretchableImage:@"d_pop_left" leftCap:16 topCap:13];
 }
 
 - (void)layoutSubviews {
@@ -45,7 +45,7 @@
 	[super willMoveToSuperview:newSuperview];
 	
 	if(!newSuperview) {
-		[avatar cancelImageLoad];
+//		[avatar cancelImageLoad];
 	}
 }
 

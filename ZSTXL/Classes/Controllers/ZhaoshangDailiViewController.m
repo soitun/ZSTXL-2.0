@@ -45,7 +45,7 @@
     self.view.backgroundColor = bgGreyColor;
     
     [self initCateButton];
-    [self initTableHeader];
+//    [self initTableHeader];
     [self initEgoHeader];
     [self requestData];
     [self requestAdv];
@@ -102,6 +102,9 @@
 {
     self.reloading = YES;
 //    [self performSelector:@selector(doneLoading) withObject:nil afterDelay:3.0];
+    
+    [self.dataSourceArray removeAllObjects];
+    
     [self requestData];
     [self requestAdv];
 }
@@ -141,12 +144,16 @@
         
         if ([[GET_RETURNCODE(json) stringValue] isEqualToString:@"0"]) {
             
+            [self initTableHeader];
+            
             NSArray *array = [json objForKey:@"InformationTopList"];
             
             DLog(@"header array %@", array);
             if (array && [array count] > 0) {
+                [self.dataSourceArray addObjectsFromArray:array];
                 [(InfoAdvHeaderView *)self.tableView.tableHeaderView updateAdvData:array];
             }
+            
         }
         else{
             [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
@@ -160,7 +167,7 @@
 
 - (void)requestData
 {
-    NSDictionary *paraDict = @{@"path": @"getInformation.json",
+    NSDictionary *paraDict = @{@"path": @"getZsInformation.json",
                                @"groupid": @"0",
                                @"page": [NSString stringWithFormat:@"%d", self.page],
                                @"maxrow": self.maxrow};
@@ -171,9 +178,9 @@
         [MBProgressHUD hideHUDForView:kAppDelegate.window animated:YES];
         if (RETURNCODE_ISVALID(json)) {
             [self doneLoading];
-            if (self.dataSourceArray.count > 0) {
-                [self.dataSourceArray removeAllObjects];
-            }
+//            if (self.dataSourceArray.count > 0) {
+//                [self.dataSourceArray removeAllObjects];
+//            }
             
             NSArray *array = [json objForKey:@"InformationList"];
             

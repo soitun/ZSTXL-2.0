@@ -8,16 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "LoadMoreFooter.h"
+#import "SlideMenuView.h"
+#import "StarNewsViewController.h"
+#import "StarInvAgencyViewController.h"
+#import "StarOtherInfoViewController.h"
 
-@interface StarInfoViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, LoadMoreFooterDelegate>
 
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (retain, nonatomic) NSMutableArray *dataSourceArray;
+@interface StarInfoViewController : UIViewController<MenuDelegate, UIScrollViewDelegate>
 
-@property (assign, nonatomic) NSInteger newsPage;
-@property (assign, nonatomic) NSInteger invPage;
-@property (copy, nonatomic) NSString *maxrow;
-@property (retain, nonatomic) LoadMoreFooter *footer;
-@property (assign, nonatomic) BOOL isNewsInfoOn;
+@property (retain, nonatomic) NSArray *menuItems;
+
+@property (retain, nonatomic) SlideMenuView *mSlideMenu;
+@property (retain, nonatomic) IBOutlet UIScrollView *mScrollView;
+@property (retain, nonatomic) NSMutableArray *controllerArray;
+
+- (void)pushViewController:(UIViewController *)controller;
+
 
 @end

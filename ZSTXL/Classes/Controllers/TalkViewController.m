@@ -16,6 +16,8 @@
 #import "TimeSplitCell.h"
 #import "UIImage+RoundedCorner.h"
 #import "ChatRecord.h"
+#import "SMSRecord.h"
+#import "UserDetail.h"
 
 @interface TalkViewController ()
 
@@ -26,8 +28,6 @@
 @synthesize mTableView;
 @synthesize dataSourceArray;
 @synthesize containerView;
-@synthesize fid;
-@synthesize fAvatarUrl;
 @synthesize timer;
 @synthesize lastTime;
 @synthesize doneButton;
@@ -46,15 +46,14 @@
 {
     [super viewDidLoad];
     
-    [self initGrowTextView];
-    [self initNavigationBar];
-    
+    self.mTableView.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = bgGreyColor;
     self.dataSourceArray = [NSMutableArray array];
     
     NSString *title = nil;
     
-    if (self.chatList) {
-        title = [NSString stringWithFormat:@"与%@留言", self.chatList.username];
+    if (self.messageList) {
+        title = [NSString stringWithFormat:@"与%@留言", self.messageList.username];
     }
     else{
         title = [NSString stringWithFormat:@"与%@留言", self.username];
@@ -62,7 +61,11 @@
 
     
     self.title = title;
+    self.page = 0;
+    self.maxrow = @"5";
     
+    [self initGrowTextView];
+    [self initNavigationBar];
     [self talkHistory];
     [self initTimer];
 }
@@ -81,6 +84,24 @@
     if ([[self lastTalkTime] isValid]) {
         NSString *userid = [PersistenceHelper dataForKey:kUserId];
         NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"getMessageloop.json", @"path", userid, @"userid", fid, @"destuserid", [self lastTalkTime], @"time", nil];
+        NSDictionary *para = nil;
+        if (self.isSMS) {
+            para = @{@"path": @"getSmsMessageloop.json",
+                     @"userid": kAppDelegate.userId,
+                     @"destuserid": self.messageList.userid,
+                     @"time": [self lastTalkTime]};
+            [para retain];
+        }
+        else{
+            para = @{@"path": @"getMessageloop.json",
+                     @"userid": kAppDelegate.userId,
+                     @"destuserid": self.messageList.userid,
+                     @"time": [self lastTalkTime]};
+            [para retain];
+        }
+        
+        
+        
         [DreamFactoryClient getWithURLParameters:dict success:^(NSDictionary *json) {
             NSArray *array = [json objForKey:@"MessageList"];
             if (array && [array count] > 0) {
@@ -105,6 +126,8 @@
         } failure:^(NSError *error) {
             
         }];
+        
+        [para release];
     }    
 }
                   
@@ -162,25 +185,52 @@
     [self.dataSourceArray removeAllObjects];
     [self.mTableView reloadData];
     
-    NSString *pageSize = @"5";
-    NSString *myUid = [PersistenceHelper dataForKey:kUserId];
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"getMessage.json", @"path", myUid, @"userid", fid, @"destuserid", [NSString stringWithFormat:@"%d", currentPage], @"page", pageSize, @"maxrow", nil];
-    [DreamFactoryClient getWithURLParameters:dict success:^(NSDictionary *json) {
+    NSString *page = [NSString stringWithFormat:@"%d", self.page];
+    
+    
+    NSDictionary *para = nil;
+    if (self.isSMS) {
+        para = @{@"path": @"getSmsMessage.json",
+                 @"page": page,
+                 @"maxrow": self.maxrow,
+                 @"userid": kAppDelegate.userId,
+                 @"destuserid": self.messageList.userid};
+    }
+    else{
+        para = @{@"path": @"getMessage.json",
+                 @"page": page,
+                 @"maxrow": self.maxrow,
+                 @"userid": kAppDelegate.userId,
+                 @"destuserid": self.messageList.userid};
+    }
+    
+    
+    
+    
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
 
 //        NSLog(@"talk history %@", json);
         @try {
-            if ([[[json objForKey:@"returnCode"] stringValue] isEqualToString:@"0"]) {
+            if (RETURNCODE_ISVALID(json)) {
                 self.lastTime = [[json objForKey:@"LastTime"] stringValue];
                 NSArray *array = [json objForKey:@"MessageList"];
                 for (NSDictionary *dict in array) {
-//                    [self.dataSourceArray insertObject:dict atIndex:0];
-                    ChatRecord *chatRecord = [ChatRecord createEntity];
-                    chatRecord.content = [dict objForKey:@"content"];
-                    chatRecord.time = [[dict objForKey:@"time"] stringValue];
-                    NSLog(@"server time %@", chatRecord.time);
-                    chatRecord.userid = [[dict objForKey:@"userid"] stringValue];
-                    chatRecord.loginid = kAppDelegate.userId;
-                    [self.dataSourceArray insertObject:chatRecord atIndex:0];
+                    
+                    MessageRecord *messageRecord = nil;
+                    if (self.isSMS) {
+                        messageRecord = [SMSRecord createEntity];
+                    }
+                    else{
+                        messageRecord = [ChatRecord createEntity];
+                    }
+                    
+                    
+                    messageRecord.content = [dict objForKey:@"content"];
+                    messageRecord.time = [[dict objForKey:@"time"] stringValue];
+//                    NSLog(@"server time %@", chatRecord.time);
+                    messageRecord.userid = [[dict objForKey:@"userid"] stringValue];
+                    messageRecord.loginid = kAppDelegate.userId;
+                    [self.dataSourceArray insertObject:messageRecord atIndex:0];
                     DB_SAVE();
                     
                     
@@ -210,23 +260,56 @@
     [textView resignFirstResponder];
     
     self.doneButton.enabled = NO;
-    NSString *myUid = [PersistenceHelper dataForKey:kUserId];
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"addMessage.json", @"path", myUid, @"userid", fid, @"destuserid", content, @"content",nil];
     
-    NSLog(@"add message dict %@", dict);
-    [DreamFactoryClient getWithURLParameters:dict success:^(NSDictionary *json) {
+    
+    NSDictionary *para = nil;
+    if (self.isSMS) {
+        
+        MyInfo *myInfo = [Utility getMyInfo];
+        
+        NSDictionary *contentJson = @{@"content": content,
+                                      @"count": [NSNumber numberWithInt:1],
+                                      @"peoplelist": @[@{@"id": self.messageList.userid, @"telphone": [self.messageList.tel removeSpace]}],
+                                      @"tel": myInfo.userDetail.tel};
+        
+        para = @{@"userid": kAppDelegate.userId,
+                 @"jsondata": [contentJson JSONString],
+                 @"path": @"sendSMSforPeople.json"};
+        
+        [para retain];
+        
+    }
+    else{
+        para = @{@"path": @"addMessage.json",
+                 @"userid": kAppDelegate.userId,
+                 @"destuserid": self.messageList.userid,
+                 @"content": content};
+        
+        [para retain];
+    }
+    
+    
+    NSLog(@"add message dict %@", para);
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
         if ([GET_RETURNCODE(json) isEqualToString:@"0"]) {
             self.doneButton.enabled = YES;
             [textView clearText];
-//            NSString *myUid = [PersistenceHelper dataForKey:kUserId];
-//            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:myUid, kUserId, content, @"content", @"", @"time",nil];
             
-            ChatRecord *chatRecord = [ChatRecord createEntity];
-            chatRecord.content = content;
-            chatRecord.time = [NSString stringWithFormat:@"%.lf", [[NSDate date] timeIntervalSince1970]*1000];
-            chatRecord.userid = kAppDelegate.userId;
-            chatRecord.loginid = kAppDelegate.userId;
-            [self.dataSourceArray addObject:chatRecord];
+            
+            MessageRecord *messageRecord = nil;
+            
+            if (self.isSMS) {
+                messageRecord = [SMSRecord createEntity];
+            }
+            else{
+                messageRecord = [ChatRecord createEntity];
+            }
+            
+            messageRecord.content = content;
+            messageRecord.time = [NSString stringWithFormat:@"%.lf", [[NSDate date] timeIntervalSince1970]*1000];
+            messageRecord.userid = kAppDelegate.userId;
+            messageRecord.loginid = kAppDelegate.userId;
+            [self.dataSourceArray addObject:messageRecord];
             DB_SAVE();
 
             [self.mTableView reloadData];
@@ -234,12 +317,15 @@
                 [self.mTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([self.dataSourceArray count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
             }
         } else {
+            self.doneButton.enabled = YES;
             [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:nil];
         }
     } failure:^(NSError *error) {
         self.doneButton.enabled = YES;
         [kAppDelegate showWithCustomAlertViewWithText:@"发送失败，请重试" andImageName:kErrorIcon];
     }];
+    
+    [para release];
 }
 
 - (void)addFace
@@ -265,10 +351,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)refreshAction {
-    
-}
-
 - (void)initNavigationBar {
 
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -284,10 +366,8 @@
     containerView = [[[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 49, 320, 49)] autorelease];
     
 
-    
-    
     textView = [[[HPGrowingTextView alloc] initWithFrame:CGRectMake(57, 7, 204, 35) placeHolder:@"请输入要发送的消息" placeholderColor:PLACEHOLDER_COLOR] autorelease];
-    textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
+    textView.contentInset = UIEdgeInsetsMake(0, 1, 0, 1);
 	textView.minNumberOfLines = 1;
 	textView.maxNumberOfLines = 4;
 	textView.returnKeyType = UIReturnKeyDefault;
@@ -305,7 +385,6 @@
     entryImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
     UIImage *rawBackground = [UIImage imageByName:@"d_inputbar_bg"];
-//    UIImage *background = [rawBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
     UIImageView *imageView = [[[UIImageView alloc] initWithImage:rawBackground] autorelease];
     imageView.frame = CGRectMake(0, 0, containerView.frame.size.width, containerView.frame.size.height);
     imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -356,12 +435,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
-    ChatRecord *chatRecord = [self.dataSourceArray objectAtIndex:indexPath.row];
-//    NSString *uid = [[dict objForKey:@"userid"] stringValue];
-//    NSString *content = [dict objForKey:@"content"];
-    NSString *uid = chatRecord.userid;
-    NSString *content = chatRecord.content;
+    MessageRecord *messageRecord = [self.dataSourceArray objectAtIndex:indexPath.row];
+
+    NSString *uid = messageRecord.userid;
+    NSString *content = messageRecord.content;
     if ([uid isEqualToString:fid]) {
         return [OtherTalkCell heightForCellWithContent:content];    
     } else if ([uid isEqualToString:TIME_SPLIT_CELL_TAG]) {
@@ -383,22 +460,18 @@
     static NSString *kTimeCell   = @"TimeSplitCell";
     
     UITableViewCell *cell = nil;
-//    NSDictionary *dict = nil;
-//
-//    dict = [self.dataSourceArray objectAtIndex:indexPath.row];
-    ChatRecord *chatRecord = [self.dataSourceArray objectAtIndex:indexPath.row];
 
-//    NSLog(@"message dict %@", dict);
-//    NSString *uid = [[dict objForKey:kUserId] stringValue];
-    NSString *uid = chatRecord.userid;
+    MessageRecord *messageRecord = [self.dataSourceArray objectAtIndex:indexPath.row];
+
+
+    NSString *uid = messageRecord.userid;
     
     if ([uid isEqualToString:fid]) {
         cell = (OtherTalkCell *)[_tableView dequeueReusableCellWithIdentifier:kOtherCell];
         if (cell == nil) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"OtherTalkCell" owner:self options:nil];
             cell = (OtherTalkCell *)[nib objectAtIndex:0];
-            ((OtherTalkCell *)cell).avatar.placeholderImage = [UIImage imageByName:@"AC_talk_icon.png"];
-            ((OtherTalkCell *)cell).avatar.delegate = self;
+
         }
     } else if ([uid isEqualToString:TIME_SPLIT_CELL_TAG]) {
         cell = (TimeSplitCell *)[_tableView dequeueReusableCellWithIdentifier:kTimeCell];
@@ -421,12 +494,9 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-//    NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
-//    NSString *content = [dict objForKey:@"content"];
-//    NSString *time    = [dict objForKey:@"time"];
+
     ChatRecord *chatRecord = [self.dataSourceArray objectAtIndex:indexPath.row];
     NSString *content = chatRecord.content;
-//    NSString *time    = chatRecord.time;
     NSLog(@"chatRecord.time %@", chatRecord.time);
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:chatRecord.time.doubleValue/1000];
@@ -438,7 +508,7 @@
     if ([cell isKindOfClass:[OtherTalkCell class]]) {
         [[(OtherTalkCell *)cell labContent] setText:content];
         [[(OtherTalkCell *)cell labTime] setText:time];
-        ((OtherTalkCell *)cell).avatar.imageURL = [fAvatarUrl isValid] ? [NSURL URLWithString:fAvatarUrl] : nil;
+        [((OtherTalkCell *)cell).avatar setImageWithURL:[NSURL URLWithString:self.messageList.picturelinkurl] placeholderImage:[UIImage imageByName:@"avatar"]];
     } else if ([cell isKindOfClass:[TimeSplitCell class]]) {
         [[(TimeSplitCell *)cell labTime] setText:content];
     } else{
@@ -446,6 +516,25 @@
         [[(MyTalkCell *)cell labTime] setText:time];
     }
 }
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if ([textView isFirstResponder]) {
+        [textView resignFirstResponder];
+    }
+}
+
+- (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
+{
+    float diff = (growingTextView.frame.size.height - height);
+    
+	CGRect r = containerView.frame;
+    r.size.height -= diff;
+    r.origin.y += diff;
+	containerView.frame = r;
+}
+
+
+#pragma mark - keyboard
 
 -(void)keyboardWillShow:(NSNotification *)note{
     // get keyboard size and loctaion
@@ -461,16 +550,10 @@
 	CGRect containerFrame = containerView.frame;
     containerFrame.origin.y = self.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height);
     CGRect tableViewFrame = self.mTableView.frame;
-    CGFloat viewHeight = 0.f;
-    if (IS_IPHONE_5) {
-        viewHeight = 504.f;
-    }
-    else{
-        viewHeight = 416.f;
-    }
+    CGFloat viewHeight = SCREEN_HEIGHT-64;
     
     
-    tableViewFrame.size.height = viewHeight - keyboardBounds.size.height - 40;
+    tableViewFrame.size.height = viewHeight - keyboardBounds.size.height - 49;
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationBeginsFromCurrentState:YES];
@@ -478,7 +561,7 @@
     [UIView setAnimationCurve:[curve intValue]];
 	
 	// set views with new info
-//    NSLog(@"containerView : %@", containerView);
+    //    NSLog(@"containerView : %@", containerView);
 	containerView.frame = containerFrame;
 	self.mTableView.frame = tableViewFrame;
 	// commit animations
@@ -506,7 +589,7 @@
         viewHeight = 460;
     }
     
-    tableViewFrame.size.height = viewHeight - 44 - 40;
+    tableViewFrame.size.height = viewHeight - 44 - 49;
     
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
@@ -519,26 +602,6 @@
 	self.mTableView.frame = tableViewFrame;
 	// commit animations
 	[UIView commitAnimations];
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if ([textView isFirstResponder]) {
-        [textView resignFirstResponder];
-    }
-}
-
-- (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
-{
-    float diff = (growingTextView.frame.size.height - height);
-    
-	CGRect r = containerView.frame;
-    r.size.height -= diff;
-    r.origin.y += diff;
-	containerView.frame = r;
-}
-
-- (void)imageViewLoadedImage:(EGOImageView*)imageView {
-    imageView.image = [imageView.image roundedCornerImage:10 borderSize:2];
 }
 
 @end

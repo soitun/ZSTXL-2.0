@@ -25,6 +25,9 @@
 #import "FriendInvAgencyViewController.h"
 #import "MyInvAgencyViewController.h"
 
+#import "MessageListViewController.h"
+#import "ChatListViewController.h"
+
 #import "SBTableAlert.h"
 #import "ZDCell.h"
 
@@ -536,7 +539,8 @@
 
 - (void)myProfileMessage
 {
-    
+    MessageListViewController *messageListVC = [[[MessageListViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:messageListVC animated:YES];
 }
 
 - (void)myProfileMail
@@ -547,7 +551,8 @@
 
 - (void)myProfileChat
 {
-    
+    ChatListViewController *chatListVC = [[[ChatListViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:chatListVC animated:YES];
 }
 
 #pragma mark - contact header delegate
@@ -560,9 +565,7 @@
 
 - (void)myProfileStar
 {
-//    NSArray *array = [StarNewsInfo findAll];
     StarInfoViewController *starNewsVC = [[[StarInfoViewController alloc] init] autorelease];
-//    starNewsVC.dataSourceArray = array;
     [self.navigationController pushViewController:starNewsVC animated:YES];
 }
 

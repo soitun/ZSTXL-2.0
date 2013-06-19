@@ -149,12 +149,9 @@
 {
     //发送邮件	sendMail	get/post	username	用户名	password	密码	sendMessage	发送的消息(MessageBean)											"returnCode:String returnMessage:String"
     
-    
-    
     if (([self.contentTextView.text isEqualToString:@"内容"]) && (self.contentTextView.textColor == kTextGrayColor)) {
         self.content = @"";
     }
-    
     
     //注意 目前为测试状态，只能用109981发和接
     NSDictionary *message = @{@"answered": [NSNumber numberWithBool:NO],
@@ -186,31 +183,32 @@
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
         if (RETURNCODE_ISVALID(json)) {
             
-//            @dynamic answered;
-//            @dynamic bcc;
-//            @dynamic cc;
-//            @dynamic content;
-//            @dynamic deleted;
-//            @dynamic draft;
-//            @dynamic flagged;
-//            @dynamic hasAttachment;
-//            @dynamic localDeleted;
-//            @dynamic messageId;
-//            @dynamic messageNumber;
-//            @dynamic recent;
-//            @dynamic seen;
-//            @dynamic sender;
-//            @dynamic sentDate;
-//            @dynamic sentDateStr;
-//            @dynamic subject;
-//            @dynamic to;
-//            @dynamic folderName;
+            [kAppDelegate showWithCustomAlertViewWithText:@"发送成功" andImageName:nil];
             
+            OutboxMail *mail = [OutboxMail createEntity];
+            mail.subject = self.subject;
+            mail.content = self.content;
+            mail.sender = [NSString stringWithFormat:@"%@@boramail.com", kAppDelegate.userId];
             
+            NSMutableString *to = [NSMutableString string];
+            [to appendFormat:@"%@,", self.to];
             
-            //save db
-            OutboxMail *outboxMail = [OutboxMail createEntity];
+            if ([to isValid]) {
+                mail.to  = [to substringToIndex:to.length-1];
+            }
             
+            mail.sentDate = [NSNumber numberWithLong:[[NSDate date] timeIntervalSince1970]];
+        
+            NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+            [formatter setDateFormat:@"MM月dd日"];
+            
+            mail.sentDateStr = [formatter stringFromDate:[NSDate date]];
+            mail.seen = [NSNumber numberWithBool:false];
+            mail.localDeleted = @"0";
+            
+            DB_SAVE();
+            
+
             
         }
         else{

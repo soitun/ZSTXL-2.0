@@ -9,7 +9,7 @@
 #import "MailClient.h"
 #import "AFJSONRequestOperation.h"
 
-NSString * const kMailBaseURLString = @"http://192.168.1.99:8080/BLZTWeb/mail/";
+NSString * const kMailBaseURLString = @"http://192.168.1.199:8080/BLZTWeb/mail/";
 //NSString * const kMailBaseURLString = @"http://www.boracloud.com:9101/BLZTCloud";
 
 

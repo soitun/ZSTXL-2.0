@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "HPGrowingTextView.h"
-#import "ChatList.h"
+#import "MessageList.h"
 
 @class OtherTalkCell;
 @class MyTalkCell;
 @class TimeSplitCell;
 
-@interface TalkViewController : UIViewController<HPGrowingTextViewDelegate, EGOImageViewDelegate> {
+@interface TalkViewController : UIViewController<HPGrowingTextViewDelegate> {
     UIView *containerView;
     HPGrowingTextView *textView;
     NSMutableArray *dataSourceArray;
@@ -32,8 +32,11 @@
 @property (retain, nonatomic) UIView *containerView;
 @property (retain, nonatomic) IBOutlet UITableView *mTableView;
 @property (retain, nonatomic) NSMutableArray *dataSourceArray;
-@property (copy,   nonatomic) NSString *fid;
-@property (copy,   nonatomic) NSString *fAvatarUrl;
-@property (nonatomic, retain) ChatList *chatList;
-@property (nonatomic, copy)   NSString *username;
+@property (retain, nonatomic) MessageList *messageList;
+@property (copy, nonatomic) NSString *username;
+
+@property (assign, nonatomic) BOOL isSMS;
+@property (assign, nonatomic) NSInteger page;
+@property (copy, nonatomic) NSString *maxrow;
+
 @end

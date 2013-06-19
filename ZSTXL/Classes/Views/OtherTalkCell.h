@@ -8,14 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OtherTalkCell : UITableViewCell {
-    EGOImageView *avatar;
-    UILabel *labTime;
-    UILabel *labContent;
-    UIImageView *bgImageView;
-}
+@interface OtherTalkCell : UITableViewCell
 
-@property (retain, nonatomic) IBOutlet EGOImageView *avatar;
+
+@property (retain, nonatomic) IBOutlet UIImageView *avatar;
 @property (retain, nonatomic) IBOutlet UILabel *labTime;
 @property (retain, nonatomic) IBOutlet UILabel *labContent;
 @property (retain, nonatomic) IBOutlet UIImageView *bgImageView;

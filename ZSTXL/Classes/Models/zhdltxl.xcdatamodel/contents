@@ -1,23 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AllContact" representedClassName="AllContact" parentEntity="Contact" syncable="YES"/>
-    <entity name="ChatList" representedClassName="ChatList" syncable="YES">
-        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="count" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="createtime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="loginid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="picturelinkurl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tel" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="ChatRecord" representedClassName="ChatRecord" syncable="YES">
-        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="loginid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
+    <entity name="ChatList" representedClassName="ChatList" parentEntity="MessageList" syncable="YES"/>
+    <entity name="ChatRecord" representedClassName="ChatRecord" parentEntity="MessageRecord" syncable="YES"/>
     <entity name="CityInfo" representedClassName="CityInfo" syncable="YES">
         <attribute name="centerlat" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="centerlon" optional="YES" attributeType="String" syncable="YES"/>
@@ -64,25 +49,42 @@
         <attribute name="stime" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Mail" representedClassName="Mail" isAbstract="YES" syncable="YES">
-        <attribute name="answered" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="answered" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="bcc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="deleted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="draft" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="flagged" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deleted" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="draft" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="flagged" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="folderName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="hasAttachment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hasAttachment" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="localDeleted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="messageNumber" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="recent" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="seen" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="recent" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="seen" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="sender" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sentDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sentDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sentDateStr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="to" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="MessageList" representedClassName="MessageList" isAbstract="YES" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="count" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createtime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loginid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picturelinkurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="MessageRecord" representedClassName="MessageRecord" isAbstract="YES" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loginid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="MyInfo" representedClassName="MyInfo" syncable="YES">
         <attribute name="account" optional="YES" attributeType="String" syncable="YES"/>
@@ -111,23 +113,8 @@
         <attribute name="picturelinkurl" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="SearchContact" representedClassName="SearchContact" isAbstract="YES" parentEntity="Contact" syncable="YES"/>
-    <entity name="SMSList" representedClassName="SMSList" syncable="YES">
-        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="count" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="createtime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="loginid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="picturelinkurl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tel" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="SMSRecord" representedClassName="SMSRecord" syncable="YES">
-        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="loginid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
+    <entity name="SMSList" representedClassName="SMSList" parentEntity="MessageList" syncable="YES"/>
+    <entity name="SMSRecord" representedClassName="SMSRecord" parentEntity="MessageRecord" syncable="YES"/>
     <entity name="StarInvest" representedClassName="StarInvest" syncable="YES">
         <attribute name="companyname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createtime" optional="YES" attributeType="String" syncable="YES"/>
@@ -176,25 +163,27 @@
     </entity>
     <elements>
         <element name="AllContact" positionX="837" positionY="-142" width="128" height="43"/>
-        <element name="ChatList" positionX="529" positionY="-441" width="128" height="178"/>
-        <element name="ChatRecord" positionX="367" positionY="-441" width="128" height="103"/>
+        <element name="ChatList" positionX="529" positionY="-331" width="128" height="43"/>
+        <element name="ChatRecord" positionX="367" positionY="-441" width="128" height="43"/>
         <element name="CityInfo" positionX="90" positionY="-396" width="128" height="148"/>
         <element name="CommendContact" positionX="693" positionY="-117" width="128" height="43"/>
         <element name="Contact" positionX="855" positionY="9" width="128" height="390"/>
         <element name="FriendContact" positionX="693" positionY="92" width="128" height="45"/>
-        <element name="InboxMail" positionX="160" positionY="228" width="128" height="43"/>
+        <element name="InboxMail" positionX="538" positionY="218" width="128" height="43"/>
         <element name="InvestmentInfo" positionX="333" positionY="-225" width="128" height="133"/>
         <element name="Mail" positionX="385" positionY="225" width="128" height="330"/>
         <element name="MyInfo" positionX="-45" positionY="-151" width="128" height="150"/>
         <element name="NewsInfo" positionX="306" positionY="54" width="128" height="150"/>
         <element name="NormalNewsInfo" positionX="169" positionY="27" width="128" height="45"/>
-        <element name="OutboxMail" positionX="351" positionY="108" width="128" height="43"/>
+        <element name="OutboxMail" positionX="547" positionY="344" width="128" height="43"/>
         <element name="Pharmacology" positionX="189" positionY="-108" width="128" height="103"/>
         <element name="SearchContact" positionX="700" positionY="234" width="128" height="45"/>
-        <element name="SMSList" positionX="531" positionY="-160" width="128" height="178"/>
-        <element name="SMSRecord" positionX="673" positionY="-441" width="128" height="103"/>
-        <element name="StarInvest" positionX="160" positionY="192" width="128" height="210"/>
-        <element name="StarNews" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="SMSList" positionX="682" positionY="-331" width="128" height="43"/>
+        <element name="SMSRecord" positionX="855" positionY="-441" width="128" height="43"/>
+        <element name="StarInvest" positionX="234" positionY="270" width="128" height="210"/>
+        <element name="StarNews" positionX="81" positionY="279" width="128" height="225"/>
         <element name="UserDetail" positionX="-72" positionY="117" width="128" height="300"/>
+        <element name="MessageList" positionX="522" positionY="-207" width="128" height="178"/>
+        <element name="MessageRecord" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>

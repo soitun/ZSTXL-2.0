@@ -1,17 +1,19 @@
 //
-//  ChatRecord.h
+//  MessageRecord.m
 //  ZSTXL
 //
 //  Created by LiuYue on 13-6-19.
 //  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 #import "MessageRecord.h"
 
 
-@interface ChatRecord : MessageRecord
+@implementation MessageRecord
 
+@dynamic content;
+@dynamic loginid;
+@dynamic userid;
+@dynamic time;
 
 @end

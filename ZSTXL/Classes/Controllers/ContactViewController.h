@@ -13,7 +13,7 @@
 #import "SelectCityViewController.h"
 
 @interface ContactViewController : UIViewController
-<UIScrollViewDelegate, MenuDelegate, TitleViewDelegate, UINavigationControllerDelegate, SelectCityViewControllerDelegate>
+<UIScrollViewDelegate, MenuDelegate, TitleViewDelegate, UINavigationControllerDelegate, SelectCityViewControllerDelegate, MenuDelegate>
 
 @property (retain, nonatomic) IBOutlet UIScrollView *mScrollView;
 @property (retain, nonatomic) SlideMenuView *mSlideMenu;

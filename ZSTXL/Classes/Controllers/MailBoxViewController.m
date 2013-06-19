@@ -11,7 +11,9 @@
 #import "MailSelectorView.h"
 #import "MailInfoViewController.h"
 #import "MailWriteViewController.h"
+#import "Mail.h"
 #import "InboxMail.h"
+#import "OutboxMail.h"
 
 @interface MailBoxViewController ()
 
@@ -77,10 +79,10 @@
     UIBarButtonItem *lBarButton = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
     [self.navigationItem setLeftBarButtonItem:lBarButton];
     
-    TitleView *titleView = [[[NSBundle mainBundle] loadNibNamed:@"TitleView" owner:nil options:nil] lastObject];
-    titleView.title = @"收件箱";
-    titleView.delegate = self;
-    self.navigationItem.titleView = titleView;
+    self.titleView = [[[NSBundle mainBundle] loadNibNamed:@"TitleView" owner:nil options:nil] lastObject];
+    self.titleView.title = @"收件箱";
+    self.titleView.delegate = self;
+    self.navigationItem.titleView = self.titleView;
 }
 
 - (void)popVC:(UIButton *)sender
@@ -92,14 +94,28 @@
 {
 //    DLog(@"tap title view");
     if (!self.mailSentButton) {
+        
+
+        
+        
         self.mailSentButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.mailSentButton.frame = CGRectMake(180, 50, 88, 48);
         [self.mailSentButton setBackgroundImage:[UIImage imageNamed:@"mail_sent_texture"] forState:UIControlStateNormal];
         [self.mailSentButton setBackgroundImage:[UIImage imageNamed:@"mail_sent_texture_p"] forState:UIControlStateHighlighted];
-        [self.mailSentButton setTitle:@"已发送" forState:UIControlStateNormal];
+        
+        if (self.isInbox) {
+                [self.mailSentButton setTitle:@"已发送" forState:UIControlStateNormal];
+                [self.mailSentButton addTarget:self action:@selector(mailSent) forControlEvents:UIControlEventTouchUpInside];
+        }
+        else{
+            [self.mailSentButton setTitle:@"收件箱" forState:UIControlStateNormal];
+            [self.mailSentButton addTarget:self action:@selector(requestInboxMail) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+
         [self.mailSentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.mailSentButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-        [self.mailSentButton addTarget:self action:@selector(mailSent) forControlEvents:UIControlEventTouchUpInside];
+
         [kAppDelegate.window addSubview:self.mailSentButton];
     }
 }
@@ -109,12 +125,66 @@
     [self.mailSentButton removeFromSuperview];
     self.mailSentButton = nil;
     self.isInbox = NO;
+    self.titleView.title = @"发件箱";
+    [self.titleView setNeedsDisplay];
+    
+    //测试id
+//    NSDictionary *para = @{@"path": @"increFecth.json",
+//                           @"username": @"109981",
+//                           @"password": @"123456",
+//                           @"messageNumber": @"-1",
+//                           @"folderName": @"Sent"};
+//    
+//    if (self.dataSourceArray.count > 0) {
+//        [self.dataSourceArray removeAllObjects];
+//    }
+//    
+//    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+//    self.isLoading = YES;
+//    [MailClient getWithURLParameters:para success:^(NSDictionary *json) {
+//        DLog(@"%@", json);
+//        self.isLoading = NO;
+//        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+//        if (RETURNCODE_ISVALID(json)) {
+//            [self parseMail:json];
+//        }
+//        else{
+//            [kAppDelegate showWithCustomAlertViewWithText:[json objForKey:@"returnMessage"] andImageName:kErrorIcon];
+//        }
+//    } failure:^(NSError *error) {
+//        self.isLoading = NO;
+//        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+//        DLog(@"%@", error);
+//    }];
+    
+    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"localDeleted == 0"];
+    NSArray *mails = [OutboxMail findAllWithPredicate:pred];
+    [self.dataSourceArray removeAllObjects];
+    [self.dataSourceArray addObjectsFromArray:mails];
+    [self.dataSourceArray sortUsingComparator:^NSComparisonResult(InboxMail * obj1, InboxMail * obj2) {
+        return [[obj2.sentDate stringValue] compare:[obj1.sentDate stringValue] options:NSNumericSearch];   //降序, the fucking options
+    }];
+    
+    
+    [self.tableView reloadData];
+    
 }
 
 #pragma mark - request mail
 
 - (void)requestInboxMail
 {
+    self.isInbox = YES;
+    if (self.mailSentButton) {
+        [self.mailSentButton removeFromSuperview];
+        self.mailSentButton = nil;
+    }
+    
+    self.titleView.title = @"收件箱";
+    [self.titleView setNeedsDisplay];
+    
+    
     //测试id
     NSDictionary *para = @{@"path": @"increFecth.json",
                            @"username": @"109981",
@@ -152,7 +222,14 @@
 
 - (void)parseMail:(NSDictionary *)json
 {
-    NSDictionary *dict = [json objForKeyPath:@"mailBox.messageFolders.INBOX.intervalMessages"];
+    NSDictionary *dict = nil;
+    if (self.isInbox) {
+        dict = [json objForKeyPath:@"mailBox.messageFolders.INBOX.intervalMessages"];
+    }
+    else{
+        dict = [json objForKeyPath:@"mailBox.messageFolders.Sent.intervalMessages"];
+    }
+    
     [dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
         for (NSDictionary *mailDict in obj) {
@@ -166,19 +243,39 @@
 
             
             if (mail == nil) {
-                InboxMail *inboxMail = [InboxMail createEntity];
+                
+                if (self.isInbox) {
+                    mail = [InboxMail createEntity];
+                }
+                else{
+                    mail = [OutboxMail createEntity];
+                }
+                
+//                InboxMail *inboxMail = [InboxMail createEntity];
                 
                 NSArray *keys = [mailDict allKeys];
                 for (NSString *key in keys) {
+//                    id obj = [mailDict objForKey:key];
+//                    NSString *value = nil;
+//                    if ([obj isKindOfClass:NSClassFromString(@"NSNumber")]) {
+//                        value = [NSString stringWithFormat:@"%d", [obj intValue]];
+//                    }
+//                    else if([obj isKindOfClass:NSClassFromString(@"NSString")]){
+//                        value = obj;
+//                    }
+//                    else if([obj isKindOfClass:NSClassFromString(@"NSArray")]){
+//                        NSMutableString *tmp = [NSMutableString string];
+//                        for (NSString *str in obj) {
+//                            [tmp appendFormat:@"%@,", str];
+//                        }
+//                        if ([tmp isValid]) {
+//                            value = [tmp substringToIndex:tmp.length-1];
+//                        }
+//                    }
+                    
                     id obj = [mailDict objForKey:key];
                     NSString *value = nil;
-                    if ([obj isKindOfClass:NSClassFromString(@"NSNumber")]) {
-                        value = [NSString stringWithFormat:@"%d", [obj intValue]];
-                    }
-                    else if([obj isKindOfClass:NSClassFromString(@"NSString")]){
-                        value = obj;
-                    }
-                    else if([obj isKindOfClass:NSClassFromString(@"NSArray")]){
+                    if([obj isKindOfClass:NSClassFromString(@"NSArray")]){
                         NSMutableString *tmp = [NSMutableString string];
                         for (NSString *str in obj) {
                             [tmp appendFormat:@"%@,", str];
@@ -187,12 +284,15 @@
                             value = [tmp substringToIndex:tmp.length-1];
                         }
                     }
+                    else{
+                        value = obj;
+                    }
                     
-                    [inboxMail setValue:value forKey:key];
+                    [mail setValue:value forKey:key];
                 }
-                inboxMail.content = @"";
-                inboxMail.localDeleted = @"0";
-                [self.dataSourceArray addObject:inboxMail];
+                mail.content = @"";
+                mail.localDeleted = @"0";
+                [self.dataSourceArray addObject:mail];
             }
             else{
                 if ([mail.localDeleted isEqualToString:@"0"]) {
@@ -204,7 +304,7 @@
     }];
     
     [self.dataSourceArray sortUsingComparator:^NSComparisonResult(InboxMail * obj1, InboxMail * obj2) {
-        return [obj2.sentDate compare:obj1.sentDate options:NSNumericSearch];   //降序, the fucking options
+        return [[obj2.sentDate stringValue] compare:[obj1.sentDate stringValue] options:NSNumericSearch];   //降序, the fucking options
     }];
     
     DB_SAVE();
@@ -244,7 +344,7 @@
 - (void)configureCell:(MailCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Mail *mail = [self.dataSourceArray objectAtIndex:indexPath.row];
-    if ([mail.seen isEqualToString:@"1"]) {
+    if ([[mail.seen stringValue] isEqualToString:@"1"]) {
         cell.mailIcon.image = [UIImage imageNamed:@"mail_icon_off"];
     }else{
         cell.mailIcon.image = [UIImage imageNamed:@"mail_icon_on"];
@@ -396,7 +496,7 @@
 
 - (void)mailInfoHasRead:(Mail *)mail
 {
-    mail.seen = @"1";
+    mail.seen = [NSNumber numberWithBool:YES];
     DB_SAVE();
     [self.tableView reloadData];
 }

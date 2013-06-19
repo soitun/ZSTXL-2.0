@@ -1,5 +1,5 @@
 //
-//  ChatRecord.h
+//  SMSList.h
 //  ZSTXL
 //
 //  Created by LiuYue on 13-6-19.
@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "MessageRecord.h"
+#import "MessageList.h"
 
 
-@interface ChatRecord : MessageRecord
+@interface SMSList : MessageList
 
 
 @end

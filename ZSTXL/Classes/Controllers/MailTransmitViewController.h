@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Mail.h"
+#import "MailAddFriendViewController.h"
 
-@interface MailTransmitViewController : UIViewController
+@interface MailTransmitViewController : UIViewController <MailAddFriendViewControllerDelegate>
 @property (retain, nonatomic) IBOutlet UILabel *receiverLabel;
 @property (retain, nonatomic) IBOutlet UIButton *addFriendButton;
 @property (retain, nonatomic) IBOutlet UITextField *subjectTextField;
 @property (retain, nonatomic) IBOutlet UIWebView *contentWebView;
 
 @property (retain, nonatomic) Mail *mail;
+@property (copy, nonatomic) NSString *to;
 
 @end

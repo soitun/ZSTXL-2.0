@@ -22,6 +22,7 @@
 
 @property (nonatomic, assign) BOOL isLoading;
 @property (nonatomic, assign) BOOL isInbox;
+@property (nonatomic, retain) TitleView *titleView;
 
 - (IBAction)mailRefresh:(UIButton *)sender;
 - (IBAction)mailDelete:(UIButton *)sender;

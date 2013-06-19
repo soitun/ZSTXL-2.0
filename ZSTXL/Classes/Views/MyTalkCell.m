@@ -23,16 +23,19 @@
 }
 
 - (void)awakeFromNib {
-    self.bgImageView.image = [UIImage stretchableImage:@"bg_MyTalk" leftCap:12 topCap:13];
+    self.bgImageView.image = [UIImage stretchableImage:@"d_pop_right" leftCap:20 topCap:20];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.labContent.frame = CGRectMake(90, 22, 200, 0);
+    self.labContent.frame = CGRectMake(90, 22, 190, 0);
     [self.labContent sizeToFit];
-    CGSize contentSize = [labContent.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(200, CGFLOAT_MAX) lineBreakMode:UILineBreakModeCharacterWrap];
-    self.bgImageView.frame = CGRectMake(300 - (contentSize.width+20), bgImageView.frame.origin.y, contentSize.width+20, contentSize.height + 20);
-    self.labContent.center = CGPointMake(self.bgImageView.center.x, self.bgImageView.center.y-2) ;
+    CGSize contentSize = [labContent.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(190, CGFLOAT_MAX) lineBreakMode:UILineBreakModeCharacterWrap];
+    
+    CGFloat imgWidth = MAX(48, contentSize.width+30);
+    
+    self.bgImageView.frame = CGRectMake(300 - imgWidth, bgImageView.frame.origin.y, imgWidth, contentSize.height + 20);
+    self.labContent.center = CGPointMake(self.bgImageView.center.x-5, self.bgImageView.center.y-1);
 }
 
 + (CGFloat)heightForCellWithContent:(NSString *)content {

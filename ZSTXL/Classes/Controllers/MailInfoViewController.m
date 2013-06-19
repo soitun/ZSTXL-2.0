@@ -103,7 +103,7 @@
 {
     if ([self.mail.content isValid]) {
         [self.mailWebView loadHTMLString:self.mail.content baseURL:nil];
-        self.mail.seen = @"1";
+        self.mail.seen = [NSNumber numberWithBool:YES];
         PERFORM_SELECTOR_WITH_OBJECT(self.delegate, @selector(mailInfoHasRead:), self.mail);
     }
     else{
@@ -146,7 +146,7 @@
 {
     NSString *content = [json objForKeyPath:@"messageBean.content.text"];
     self.mail.content = content;
-    self.mail.seen = @"1";
+    self.mail.seen = [NSNumber numberWithBool:YES];
     DB_SAVE();
     
     [self.mailWebView loadHTMLString:content baseURL:nil];

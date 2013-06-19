@@ -9,6 +9,7 @@
 #import "MailTransmitViewController.h"
 #import "UserDetail.h"
 #import "MessageBean.h"
+#import "OutboxMail.h"
 
 @interface MailTransmitViewController ()
 
@@ -40,7 +41,7 @@
     self.receiverLabel.text = self.mail.to;
     [self.contentWebView loadHTMLString:self.mail.content baseURL:nil];
     
-
+    [self.addFriendButton addTarget:self action:@selector(addFriendAction:) forControlEvents:UIControlEventTouchUpInside];
     
     [self initNavBar];
 }
@@ -64,6 +65,15 @@
     [self setSubjectTextField:nil];
     [self setContentWebView:nil];
     [super viewDidUnload];
+}
+
+#pragma mark - button method
+
+- (void)addFriendAction:(UIButton *)sender
+{
+    MailAddFriendViewController *mailAddFriendVC = [[[MailAddFriendViewController alloc] init] autorelease];
+    mailAddFriendVC.delegate = self;
+    [self.navigationController pushViewController:mailAddFriendVC animated:YES];
 }
 
 #pragma mark - nav bar
@@ -129,6 +139,28 @@
         DLog(@"%@", json);
         if (RETURNCODE_ISVALID(json)) {
             [kAppDelegate showWithCustomAlertViewWithText:@"转发成功" andImageName:nil];
+            OutboxMail *mail = [OutboxMail createEntity];
+            mail.subject = self.mail.subject;
+            mail.content = self.mail.content;
+            mail.sender = [NSString stringWithFormat:@"%@@boramail.com", kAppDelegate.userId];
+            
+            NSMutableString *to = [NSMutableString string];
+            [to appendFormat:@"%@,", self.to];
+            
+            if ([to isValid]) {
+                mail.to  = [to substringToIndex:to.length-1];
+            }
+            
+            mail.sentDate = [NSNumber numberWithLong:[[NSData data] timeIntervalSince1970]];
+            
+            NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+            [formatter setDateFormat:@"MM月dd日"];
+            
+            mail.sentDateStr = [formatter stringFromDate:[NSDate date]];
+            mail.seen = [NSNumber numberWithBool:false];
+            mail.localDeleted = @"0";
+            
+            DB_SAVE();
         }
         else{
             [kAppDelegate showWithCustomAlertViewWithText:[json objForKey:@"returnMessage"] andImageName:kErrorIcon];
@@ -138,6 +170,15 @@
         [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
     }];
     
+}
+
+#pragma mark - mail add friend delegate
+
+- (void)mailAddFriend:(Contact *)contact
+{
+    NSString *tmp = [NSString stringWithFormat:@"%@@boramail.com", contact.userid];
+    self.to = tmp;
+    self.receiverLabel.text = contact.username;
 }
 
 
