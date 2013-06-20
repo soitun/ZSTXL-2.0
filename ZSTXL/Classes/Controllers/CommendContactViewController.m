@@ -224,10 +224,20 @@
     
 }
 
-- (void)popContactViewTel:(Contact *)contact
+- (void)popContactViewTel:(NSString *)tel
 {
-    NSString *tel = [Utility deCryptTel:contact.tel withUserId:contact.userid];
+//    NSString *tel = [Utility deCryptTel:contact.tel withUserId:contact.userid];
     [Utility callContact:tel];
+}
+
+- (void)popContactViewTapAvatar:(Contact *)contact
+{
+    OtherProfileViewController *otherProfileVC = [[[OtherProfileViewController alloc] init] autorelease];
+    
+    otherProfileVC.contact = contact;
+    if ([self.parentController respondsToSelector:@selector(pushViewController:)]) {
+        [self.parentController performSelector:@selector(pushViewController:) withObject:otherProfileVC];
+    }
 }
 
 #pragma mark - refresh data

@@ -40,12 +40,13 @@
     self.page = 0;
     self.maxrow = @"20";
     self.dataSourceArray = [NSMutableArray array];
+    self.newsIdArry = [NSMutableArray array];
     self.tableView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-49);
     self.tableView.backgroundColor = [UIColor clearColor];
     self.view.backgroundColor = bgGreyColor;
+    self.hasTopAdv = NO;
     
     [self initCateButton];
-//    [self initTableHeader];
     [self initEgoHeader];
     [self requestData];
     [self requestAdv];
@@ -101,12 +102,15 @@
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
 {
     self.reloading = YES;
+    self.hasTopAdv = NO;
 //    [self performSelector:@selector(doneLoading) withObject:nil afterDelay:3.0];
     
     [self.dataSourceArray removeAllObjects];
+    [self.tableView reloadData];
+    [self.newsIdArry removeAllObjects];
     
-    [self requestData];
     [self requestAdv];
+    [self requestData];
 }
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
@@ -144,14 +148,19 @@
         
         if ([[GET_RETURNCODE(json) stringValue] isEqualToString:@"0"]) {
             
+            self.hasTopAdv = YES;
             [self initTableHeader];
             
             NSArray *array = [json objForKey:@"InformationTopList"];
             
             DLog(@"header array %@", array);
             if (array && [array count] > 0) {
-                [self.dataSourceArray addObjectsFromArray:array];
+//                [self.dataSourceArray addObjectsFromArray:array];
                 [(InfoAdvHeaderView *)self.tableView.tableHeaderView updateAdvData:array];
+                
+                for (NSDictionary *dict in array) {
+                    [self.newsIdArry addObject:[dict objForKey:@"id"]];
+                }
             }
             
         }
@@ -178,11 +187,15 @@
         [MBProgressHUD hideHUDForView:kAppDelegate.window animated:YES];
         if (RETURNCODE_ISVALID(json)) {
             [self doneLoading];
-//            if (self.dataSourceArray.count > 0) {
-//                [self.dataSourceArray removeAllObjects];
-//            }
+            if (self.dataSourceArray.count > 0) {
+                [self.dataSourceArray removeAllObjects];
+            }
             
             NSArray *array = [json objForKey:@"InformationList"];
+            
+            for (NSDictionary *dict in array) {
+                [self.newsIdArry addObject:[dict objForKey:@"id"]];
+            }
             
             DLog(@"normal array %@", array);
             
@@ -309,20 +322,28 @@
     NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
     NSString *infomationId = [dict objForKey:@"id"];
     NewsDetailController *newsDetailVC = [[[NewsDetailController alloc] init] autorelease];
-    newsDetailVC.newsIndex = indexPath.row;
+    
+    if (self.hasTopAdv) {
+        newsDetailVC.newsIndex = indexPath.row + 3;
+    }
+    else{
+        newsDetailVC.newsIndex = indexPath.row;
+    }
+    
     newsDetailVC.newsId = infomationId;
-    newsDetailVC.newsArray = self.dataSourceArray;
+    newsDetailVC.newsArray = self.newsIdArry;
     [self.navigationController pushViewController:newsDetailVC animated:YES];
 }
 
 #pragma mark - header delegate
 
-- (void)clickedInfoAdvDict:(NSDictionary *)advDict
+- (void)clickedInfoAdvDict:(NSDictionary *)advDict atIndex:(NSNumber *)index
 {
     NSString *infomationId = [advDict objForKey:@"id"];
     NewsDetailController *newsDetailVC = [[[NewsDetailController alloc] init] autorelease];
     newsDetailVC.newsId = infomationId;
-//    newsDetailVC.newsArray = self.dataSourceArray;
+    newsDetailVC.newsIndex = index.intValue;
+    newsDetailVC.newsArray = self.newsIdArry;
     [self.navigationController pushViewController:newsDetailVC animated:YES];
 }
 

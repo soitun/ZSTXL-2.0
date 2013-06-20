@@ -11,8 +11,9 @@
 
 @protocol PopContactViewDelegate <NSObject>
 
-- (void)popContactViewTel:(Contact *)contact;
+- (void)popContactViewTel:(NSString *)tel;
 - (void)popContactViewChat:(Contact *)contact;
+- (void)popContactViewTapAvatar:(Contact *)contact;
 
 @end
 

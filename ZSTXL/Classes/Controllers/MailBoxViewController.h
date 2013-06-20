@@ -24,9 +24,11 @@
 @property (nonatomic, assign) BOOL isInbox;
 @property (nonatomic, retain) TitleView *titleView;
 
-- (IBAction)mailRefresh:(UIButton *)sender;
-- (IBAction)mailDelete:(UIButton *)sender;
-- (IBAction)mailWrite:(UIButton *)sender;
+@property (retain, nonatomic) IBOutlet UIButton *mailWriteButton;
+@property (retain, nonatomic) IBOutlet UIButton *mailDeleteButton;
+@property (retain, nonatomic) IBOutlet UIButton *mailRefreshButton;
+
+@property (retain, nonatomic) UIControl *bgControl;
 
 
 @end

@@ -29,9 +29,13 @@
 {
     [super viewDidLoad];
     self.title = @"筛选";
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = bgGreyColor;
     self.dataSourceArray = [NSMutableArray array];
     self.eachArray = [NSMutableArray array];
-    self.maxrow = @"50";
+    self.maxrow = @"20";
     
     [self initNavBar];
     [self requestData];
@@ -84,7 +88,7 @@
                 [jsonArray enumerateObjectsUsingBlock:^(NSDictionary *contactDict, NSUInteger idx, BOOL *stop) {
                     //                NSLog(@"contact Dict: %@", contactDict);
                     
-                    SearchContact *contact = [SearchContact createEntity];
+                    Contact *contact = [Contact createEntity];
                     
                     contact.userid = [[contactDict objForKey:@"id"] stringValue];
                     contact.username = [contactDict objForKey:@"username"];
@@ -219,7 +223,7 @@
 
 - (void)configureCell:(ContactCell *)cell atIndexPath:(NSIndexPath *)indexPath OfTableView:(UITableView *)tableView
 {
-    SearchContact *userDetail = [self.dataSourceArray objectAtIndex:indexPath.row];
+    Contact *userDetail = [self.dataSourceArray objectAtIndex:indexPath.row];
     cell.selectionStyle = UITableViewCellEditingStyleNone;
     cell.contact = userDetail;
     cell.delegate = self;
@@ -262,7 +266,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.callContact = [self.dataSourceArray objectAtIndex:indexPath.row];
+    self.contact = [self.dataSourceArray objectAtIndex:indexPath.row];
     [self showContactView];
 }
 
@@ -277,35 +281,27 @@
 
 - (void)showContactView
 {
-    PopContactView *contactView = [[[NSBundle mainBundle] loadNibNamed:@"PopContactView" owner:nil options:nil] lastObject];
-    contactView.frame = CGRectMake(34, 150, 252, 170);
+    PopContactView *contactView = [[PopContactView alloc] initWithNib:@"PopContactView"];
     contactView.delegate = self;
-    
-    self.bgControl = [[[UIControl alloc] initWithFrame:CGRectMake(0, 0, 320, SCREEN_HEIGHT)] autorelease];
-    self.bgControl.backgroundColor = RGBACOLOR(0, 0, 0, 0.6);
-    [self.bgControl addTarget:self action:@selector(removeBg) forControlEvents:UIControlEventTouchDown];
-    [self.bgControl addSubview:contactView];
-    
-    [kAppDelegate.window addSubview:self.bgControl];
+    contactView.contact = self.contact;
+    [contactView showInView:kAppDelegate.window];
+}
+
+- (void)popContactViewChat:(Contact *)contact
+{
     
 }
 
-- (void)popContactViewChat
+- (void)popContactViewTel:(NSString *)tel
 {
-    [self.bgControl removeFromSuperview];
-}
-
-- (void)popContactViewTel
-{
-    [self.bgControl removeFromSuperview];
-    NSString *tel = [Utility deCryptTel:self.callContact.tel withUserId:self.callContact.userid];
     [Utility callContact:tel];
 }
 
-- (void)removeBg
+- (void)popContactViewTapAvatar:(Contact *)contact
 {
-    [self.bgControl removeFromSuperview];
+    OtherProfileViewController *otherProfileVC = [[[OtherProfileViewController alloc] init] autorelease];
+    otherProfileVC.contact = contact;
+    [self.navigationController pushViewController:otherProfileVC animated:YES];
 }
-
 
 @end

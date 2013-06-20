@@ -27,6 +27,10 @@
         self.useridLabel.text = self.contact.userid;
         [self.avatar setImageWithURL:[NSURL URLWithString:self.contact.picturelinkurl] placeholderImage:[UIImage imageByName:@"pop_avatar.png"]];
         
+        UITapGestureRecognizer *tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvatar:)] autorelease];
+        [self.avatar addGestureRecognizer:tap];
+        
+        
         self.xunImage.hidden = self.contact.ismember.intValue ? YES : NO;
         self.xunVImage.hidden = self.contact.col2.intValue ? YES : NO;
         
@@ -58,6 +62,13 @@
     [_xunBImage release];
     [super dealloc];
 }
+
+- (void)tapAvatar:(UITapGestureRecognizer *)tap
+{
+    [self dismiss];
+    PERFORM_SELECTOR_WITH_OBJECT(self.delegate, @selector(popContactViewTapAvatar:), self.contact);
+}
+
 - (IBAction)closeAction:(UIButton *)sender
 {
     if (self.bgControl) {
@@ -80,7 +91,7 @@
             
             //returnCode 为0时可以打电话
             
-            NSString *userTel = [json objForKey:@"userTel"];
+            NSString *userTel = [[json objForKey:@"userTel"] removeSpace];
             if (![userTel isEqual:[NSNull null]]) {
                 self.contact.tel = userTel;
             }
@@ -88,7 +99,7 @@
             
             [self.bgControl removeFromSuperview];
             if ([self.delegate respondsToSelector:@selector(popContactViewTel:)]) {
-                [self.delegate performSelector:@selector(popContactViewTel:) withObject:self.contact];
+                [self.delegate performSelector:@selector(popContactViewTel:) withObject:userTel];
             }
         }
         else{
@@ -100,15 +111,20 @@
         [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
     }];
     
-    
-    
-
 }
 
 - (IBAction)chatAction:(UIButton *)sender {
     [self.bgControl removeFromSuperview];
     if ([self.delegate respondsToSelector:@selector(popContactViewChat:)]) {
         [self.delegate performSelector:@selector(popContactViewChat:) withObject:self.contact];
+    }
+}
+
+- (void)dismiss
+{
+    if (self.bgControl.superview) {
+        [self.bgControl removeFromSuperview];
+        self.bgControl = nil;
     }
 }
 

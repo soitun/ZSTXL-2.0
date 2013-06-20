@@ -388,7 +388,7 @@
     }else{
         [self refreshContent];
         self.newsIndex--;
-        self.newsId = [[self.newsArray objectAtIndex:self.newsIndex] objForKey:@"id"];
+        self.newsId = [self.newsArray objectAtIndex:self.newsIndex];
         [self sendRequest];
     }
 }
@@ -401,7 +401,7 @@
     }else{
         [self refreshContent];
         self.newsIndex++;
-        self.newsId = [[self.newsArray objectAtIndex:self.newsIndex] objForKey:@"id"];
+        self.newsId = [self.newsArray objectAtIndex:self.newsIndex];
         [self sendRequest];
     }
 }

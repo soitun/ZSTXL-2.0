@@ -91,15 +91,22 @@
     [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
     [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
         
-        [self doneLoading];
+        if (self.reloading) {
+            [self.dataSourceArray removeAllObjects];
+        }
+        
+
         
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
         if (RETURNCODE_ISVALID(json)) {
             
 //            DLog(@"json %@", json);
+            if (self.reloading) {
+                [self.dataSourceArray removeAllObjects];
+            }
             
             [self parseData:json];
-
+            
             if (self.page == 0) {
                 [self initTableFooter];
             }
@@ -121,6 +128,7 @@
             [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
         }
         
+        [self doneLoading];
         
     } failure:^(NSError *error) {
         
@@ -193,7 +201,6 @@
 {
     self.page = 0;
     self.reloading = YES;
-    [self.dataSourceArray removeAllObjects];
     [self requestData];
 }
 

@@ -65,8 +65,6 @@
 		3509847F176B61680077C639 /* btn_addblack_p@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3509847B176B61680077C639 /* btn_addblack_p@2x.png */; };
 		35098480176B61680077C639 /* btn_addblack.png in Resources */ = {isa = PBXBuildFile; fileRef = 3509847C176B61680077C639 /* btn_addblack.png */; };
 		35098481176B61680077C639 /* btn_addblack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3509847D176B61680077C639 /* btn_addblack@2x.png */; };
-		35098485176B705E0077C639 /* FriendInvAgencyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35098483176B705B0077C639 /* FriendInvAgencyViewController.m */; };
-		35098486176B705E0077C639 /* FriendInvAgencyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35098484176B705C0077C639 /* FriendInvAgencyViewController.xib */; };
 		35098489176B72970077C639 /* FriendInvAgencyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35098488176B72960077C639 /* FriendInvAgencyCell.m */; };
 		3509848B176B72AB0077C639 /* FriendInvAgencyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3509848A176B72AA0077C639 /* FriendInvAgencyCell.xib */; };
 		35098499176B78440077C639 /* MyInvAgencyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35098497176B78440077C639 /* MyInvAgencyViewController.m */; };
@@ -88,6 +86,7 @@
 		35268C041771A431001AF353 /* d_pop_left_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 35268C001771A42D001AF353 /* d_pop_left_p.png */; };
 		35268C051771A431001AF353 /* d_pop_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 35268C011771A42F001AF353 /* d_pop_left.png */; };
 		35268C081771AA28001AF353 /* ChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35268C071771AA27001AF353 /* ChatListViewController.m */; };
+		35268C0B1771E3CE001AF353 /* OtherInvAgencyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35268C0A1771E3CB001AF353 /* OtherInvAgencyViewController.m */; };
 		356D5DCB175EDE7900498008 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 356D5DC9175EDE7900498008 /* AboutViewController.m */; };
 		356D5DCC175EDE7900498008 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 356D5DCA175EDE7900498008 /* AboutViewController.xib */; };
 		356D5DCE175EDF2E00498008 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 356D5DCD175EDF2E00498008 /* logo.png */; };
@@ -877,9 +876,6 @@
 		3509847B176B61680077C639 /* btn_addblack_p@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_addblack_p@2x.png"; sourceTree = "<group>"; };
 		3509847C176B61680077C639 /* btn_addblack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_addblack.png; sourceTree = "<group>"; };
 		3509847D176B61680077C639 /* btn_addblack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_addblack@2x.png"; sourceTree = "<group>"; };
-		35098482176B70590077C639 /* FriendInvAgencyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendInvAgencyViewController.h; sourceTree = "<group>"; };
-		35098483176B705B0077C639 /* FriendInvAgencyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendInvAgencyViewController.m; sourceTree = "<group>"; };
-		35098484176B705C0077C639 /* FriendInvAgencyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendInvAgencyViewController.xib; sourceTree = "<group>"; };
 		35098487176B72950077C639 /* FriendInvAgencyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendInvAgencyCell.h; sourceTree = "<group>"; };
 		35098488176B72960077C639 /* FriendInvAgencyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendInvAgencyCell.m; sourceTree = "<group>"; };
 		3509848A176B72AA0077C639 /* FriendInvAgencyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendInvAgencyCell.xib; sourceTree = "<group>"; };
@@ -913,6 +909,8 @@
 		35268C011771A42F001AF353 /* d_pop_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = d_pop_left.png; sourceTree = "<group>"; };
 		35268C061771AA27001AF353 /* ChatListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatListViewController.h; sourceTree = "<group>"; };
 		35268C071771AA27001AF353 /* ChatListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatListViewController.m; sourceTree = "<group>"; };
+		35268C091771E3C8001AF353 /* OtherInvAgencyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherInvAgencyViewController.h; sourceTree = "<group>"; };
+		35268C0A1771E3CB001AF353 /* OtherInvAgencyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherInvAgencyViewController.m; sourceTree = "<group>"; };
 		356D5DC8175EDE7900498008 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		356D5DC9175EDE7900498008 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		356D5DCA175EDE7900498008 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
@@ -2076,9 +2074,6 @@
 				3595A62E174B6428000780FE /* FriendContactViewController.h */,
 				3595A62F174B6428000780FE /* FriendContactViewController.m */,
 				3595A630174B6428000780FE /* FriendContactViewController.xib */,
-				35098482176B70590077C639 /* FriendInvAgencyViewController.h */,
-				35098483176B705B0077C639 /* FriendInvAgencyViewController.m */,
-				35098484176B705C0077C639 /* FriendInvAgencyViewController.xib */,
 				359E9B7B174B10790018E87F /* GroupSendViewController.h */,
 				359E9B7C174B107F0018E87F /* GroupSendViewController.m */,
 				359E9B7D174B108C0018E87F /* GroupSendViewController.xib */,
@@ -2248,6 +2243,8 @@
 				35268BFB177193AD001AF353 /* TalkViewController.xib */,
 				35268C061771AA27001AF353 /* ChatListViewController.h */,
 				35268C071771AA27001AF353 /* ChatListViewController.m */,
+				35268C091771E3C8001AF353 /* OtherInvAgencyViewController.h */,
+				35268C0A1771E3CB001AF353 /* OtherInvAgencyViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3965,7 +3962,6 @@
 				3509847F176B61680077C639 /* btn_addblack_p@2x.png in Resources */,
 				35098480176B61680077C639 /* btn_addblack.png in Resources */,
 				35098481176B61680077C639 /* btn_addblack@2x.png in Resources */,
-				35098486176B705E0077C639 /* FriendInvAgencyViewController.xib in Resources */,
 				3509848B176B72AB0077C639 /* FriendInvAgencyCell.xib in Resources */,
 				3509849A176B78440077C639 /* MyInvAgencyViewController.xib in Resources */,
 				35A7A163176DC73F0005F750 /* MailTransmitViewController.xib in Resources */,
@@ -4214,7 +4210,6 @@
 				35098414176AF1A60077C639 /* ZhaoshangPharListViewController.m in Sources */,
 				35098418176AF27D0077C639 /* ZhaoshangPharListCell.m in Sources */,
 				35098479176B21C50077C639 /* UILabel+dynamicSizeMe.m in Sources */,
-				35098485176B705E0077C639 /* FriendInvAgencyViewController.m in Sources */,
 				35098489176B72970077C639 /* FriendInvAgencyCell.m in Sources */,
 				35098499176B78440077C639 /* MyInvAgencyViewController.m in Sources */,
 				35A7A15B176D82C90005F750 /* InboxMail.m in Sources */,
@@ -4240,6 +4235,7 @@
 				35268BF817718D73001AF353 /* ChatRecord.m in Sources */,
 				35268BFC177193AE001AF353 /* TalkViewController.m in Sources */,
 				35268C081771AA28001AF353 /* ChatListViewController.m in Sources */,
+				35268C0B1771E3CE001AF353 /* OtherInvAgencyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

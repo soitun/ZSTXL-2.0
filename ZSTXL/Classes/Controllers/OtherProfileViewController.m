@@ -12,6 +12,7 @@
 #import "LoginViewController.h"
 #import "TalkViewController.h"
 #import "CustomCellBackgroundView.h"
+#import "OtherInvAgencyViewController.h"
 
 enum eAlertTag {
     commentAlert = 0,
@@ -222,9 +223,9 @@ enum eAlertTag {
     [self.navigationItem setLeftBarButtonItem:lBarButton];
     
     
-    UIBarButtonItem *addBlackBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addBlacklist)];
-    UIBarButtonItem *delBlackBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemUndo target:self action:@selector(delBlacklist)];
-    self.navigationItem.rightBarButtonItems = @[addBlackBarButton, delBlackBarButton];
+//    UIBarButtonItem *addBlackBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addBlacklist)];
+//    UIBarButtonItem *delBlackBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemUndo target:self action:@selector(delBlacklist)];
+//    self.navigationItem.rightBarButtonItems = @[addBlackBarButton, delBlackBarButton];
 }
 
 - (void)popVC:(UIButton *)sender
@@ -396,19 +397,40 @@ enum eAlertTag {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (indexPath.section == 1 && indexPath.row == 3) {
+        OtherInvAgencyViewController *friendIAVC = [[[OtherInvAgencyViewController alloc] init] autorelease];
+        friendIAVC.contact = self.contact;
+        [self.navigationController pushViewController:friendIAVC animated:YES];
+    }
 }
 
 #pragma mark - contact cell delegate
 
 - (void)OtherProfileTel
 {
-    NSString *userTel = [Utility deCryptTel:self.contact.tel withUserId:self.contact.userid];
+    NSDictionary *para = @{@"path": @"getAllowtelStatus.json",
+                           @"userid": kAppDelegate.userId,
+                           @"peopleid": self.contact.userid};
     
-    NSString *telStr = [NSString stringWithFormat:@"tel://%@", userTel];
-    UIWebView *callPhoneWebVw = [[UIWebView alloc] init];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:telStr]];
-    [callPhoneWebVw loadRequest:request];
+    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        if (RETURNCODE_ISVALID(json)) {
+            NSString *tel = [[json objForKey:@"userTel"] removeSpace];
+            [Utility callContact:tel];
+            
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+        
+    }];
 }
 
 - (void)OtherProfileMessage
@@ -488,15 +510,20 @@ enum eAlertTag {
     }else if (alertView.tag == commentAlert){
         if (buttonIndex == 1) {
             NSString *comment = [[alertView textFieldAtIndex:0] text];
+            
             if ([comment isValid]) {
                 NSString *name = [NSString stringWithFormat:@"%@(%@)", self.contact.username, comment];
                 self.contact.remark = comment;
                 self.tableHeader.nameLabel.text = name;
                 DB_SAVE();
             }
+            else{
+                self.contact.remark = @"";
+                self.tableHeader.nameLabel.text = self.contact.username;
+            }
+            
         }
     }
-    
 }
 
 #pragma mark - blacklist

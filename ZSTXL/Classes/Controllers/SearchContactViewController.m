@@ -262,9 +262,9 @@
     
 }
 
-- (void)popContactViewTel:(Contact *)contact
+- (void)popContactViewTel:(NSString *)tel
 {
-    NSString *tel = [Utility deCryptTel:contact.tel withUserId:contact.userid];
+//    NSString *tel = [Utility deCryptTel:contact.tel withUserId:contact.userid];
     [Utility callContact:tel];
 }
 

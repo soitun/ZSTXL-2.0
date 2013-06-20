@@ -114,8 +114,8 @@
 - (void)clickAdv:(EGOImageButton *)sender {
     NSInteger index = sender.tag;
     NSDictionary *dict = [self.advDatasourceArray objectAtIndex:index];
-    if ([delegate respondsToSelector:@selector(clickedInfoAdvDict:)]) {
-        [delegate clickedInfoAdvDict:dict];
+    if ([delegate respondsToSelector:@selector(clickedInfoAdvDict:atIndex:)]) {
+        [delegate performSelector:@selector(clickedInfoAdvDict:atIndex:) withObject:dict withObject:[NSNumber numberWithInt:index]];
     }
 }
 

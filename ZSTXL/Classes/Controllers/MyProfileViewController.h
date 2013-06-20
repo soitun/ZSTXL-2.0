@@ -41,4 +41,6 @@ SBTableAlertDelegate
 @property (nonatomic, retain) NSNumber *zdValue;
 @property (nonatomic, retain) NSString *zdName;
 
+@property (nonatomic, assign) BOOL updating;
+
 @end

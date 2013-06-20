@@ -22,7 +22,7 @@
 #import "StarInfoViewController.h"
 #import "AddMeViewController.h"
 #import "BlacklistViewController.h"
-#import "FriendInvAgencyViewController.h"
+#import "OtherInvAgencyViewController.h"
 #import "MyInvAgencyViewController.h"
 
 #import "MessageListViewController.h"
@@ -133,15 +133,24 @@
     self.tableHeader.userIdLabel.text = self.myInfo.userDetail.userid;
     self.tableHeader.telLabel.text = self.myInfo.userDetail.tel;
 
+    
     //save avatar
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.myInfo.userDetail.picturelinkurl]];
-    [self.tableHeader.headIcon setImageWithURLRequest:urlRequest placeholderImage:[UIImage imageNamed:@"home_icon"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        self.tableHeader.headIcon.image = image;
-        NSString *localUrl = [[self.myInfo.userDetail.picturelinkurl componentsSeparatedByString:@"/"] lastObject];
-        [Utility saveImage:image toDiskWithName:localUrl];
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        DLog(@"error %@", error);
-    }];
+    NSString *avatarName = [NSString stringWithFormat:@"%@.jpg", kAppDelegate.userId];
+    
+    UIImage *avatar = [Utility readImageFromDisk:avatarName];
+    if (avatar) {
+        self.tableHeader.headIcon.image = avatar;
+    }
+    else{
+        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.myInfo.userDetail.picturelinkurl]];
+        [self.tableHeader.headIcon setImageWithURLRequest:urlRequest placeholderImage:[UIImage imageNamed:@"home_icon"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            self.tableHeader.headIcon.image = image;
+            NSString *localUrl = [NSString stringWithFormat:@"%@.jpg", kAppDelegate.userId];
+            [Utility saveImage:image toDiskWithName:localUrl];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            DLog(@"error %@", error);
+        }];
+    }
     
     
     if ([self.myInfo.userDetail.col2 isEqualToString:@"1"]) {
@@ -206,38 +215,48 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    self.tableHeader.headIcon.image=[info valueForKey:UIImagePickerControllerEditedImage];
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
-    hud.labelText = @"上传头像";
+//    if (self.updating == NO) {
+//        self.updating = YES;
     
-    UIImage *smallImage = [self.tableHeader.headIcon.image scaleToFillSize:CGSizeMake(180.f, 180.f)];
-    //addAndUpdateUserPic.json image userid imageurl
-    NSString *userid = self.myInfo.userDetail.userid;
-    NSDictionary *paraDict = [NSDictionary dictionaryWithObjectsAndKeys:@"addAndUpdateUserPic.json", @"path",
-                              userid, @"userid",
-                              self.myInfo.userDetail.picturelinkurl, @"imageurl", nil];
-    
-    DLog(@"smallImage width: %f, height: %f", smallImage.size.width, smallImage.size.height);
-    
-    [DreamFactoryClient postWithParameters:paraDict image:smallImage success:^(id obj) {
-        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
-        [kAppDelegate showWithCustomAlertViewWithText:@"上传成功" andImageName:nil];
+
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+        hud.labelText = @"上传头像";
+        
+        self.tableHeader.headIcon.image=[info valueForKey:UIImagePickerControllerEditedImage];
+        UIImage *smallImage = [self.tableHeader.headIcon.image scaleToFillSize:CGSizeMake(180.f, 180.f)];
+        
+        NSString *avatar = [NSString stringWithFormat:@"%@.jpg", kAppDelegate.userId];
+
         
         
-        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        path = [path stringByAppendingFormat:@"/%@.png", self.myInfo.userDetail.username];
+        NSString *userid = self.myInfo.userDetail.userid;
+        NSDictionary *paraDict = [NSDictionary dictionaryWithObjectsAndKeys:@"addAndUpdateUserPic.json", @"path",
+                                  userid, @"userid",
+                                  self.myInfo.userDetail.picturelinkurl, @"imageurl", nil];
         
-        self.myInfo.userDetail.headiconlocalurl = path;
-        [Utility saveImage:smallImage toDiskWithName:path];
+        DLog(@"smallImage width: %f, height: %f", smallImage.size.width, smallImage.size.height);
         
-        DB_SAVE();
+        [DreamFactoryClient postWithParameters:paraDict image:smallImage success:^(id obj) {
+            [hud  hide:YES];
+            [kAppDelegate showWithCustomAlertViewWithText:@"上传成功" andImageName:nil];
+            [Utility saveImage:smallImage toDiskWithName:avatar];
+            self.tableHeader.headIcon.image = smallImage;
+        } failure:^{
+            
+            
+            [hud hide:YES];
+            [kAppDelegate showWithCustomAlertViewWithText:@"上传失败" andImageName:kErrorIcon];
+        }];
         
-    } failure:^{
-        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
-        [kAppDelegate showWithCustomAlertViewWithText:@"上传失败" andImageName:nil];
-    }];
-    
+        [picker dismissModalViewControllerAnimated:YES];
+        [kAppDelegate.tabController hidesTabBar:NO animated:NO];
+//    }
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
     [picker dismissModalViewControllerAnimated:YES];
+    [kAppDelegate.tabController hidesTabBar:NO animated:NO];
 }
 
 #pragma mark - get my info
@@ -255,8 +274,10 @@
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[kAppDelegate window] animated:YES];
     hud.labelText = @"获取个人信息";
+    [hud hide:YES];
     [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
-        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+//        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+
         if (RETURNCODE_ISVALID(json)) {
 //            DLog(@"my info json %@", json);
             [self updateMyInfo:json];
@@ -265,11 +286,12 @@
 //            DLog(@"myinfo %@", self.myInfo);
 
         } else{
-            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+//            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
             [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:nil];
         }
     } failure:^(NSError *error) {
-        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+//        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
+        [hud hide:YES];
         [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
     }];
 }
@@ -531,7 +553,7 @@
 
 - (void)friendInvInfo
 {
-    FriendInvAgencyViewController *friendInvAgencyVC = [[[FriendInvAgencyViewController alloc] init] autorelease];
+    OtherInvAgencyViewController *friendInvAgencyVC = [[[OtherInvAgencyViewController alloc] init] autorelease];
     [self.navigationController pushViewController:friendInvAgencyVC animated:YES];
 }
 
@@ -597,7 +619,7 @@
         cityId = [tmp substringToIndex:tmp.length-1];
     }
     
-    NSDictionary *para = @{@"path": @"/=changezsarea.json",
+    NSDictionary *para = @{@"path": @"changezsarea.json",
                            @"provcityid": cityId,
                            @"userid": kAppDelegate.userId};
     

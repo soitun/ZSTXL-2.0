@@ -16,11 +16,14 @@
 <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, EGORefreshTableHeaderDelegate, InfoAdvDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *dataSourceArray;
+@property (nonatomic, retain) NSMutableArray *newsIdArry;
 @property (nonatomic, retain) UIButton *CateButton;
 
 @property (nonatomic, assign) NSInteger page;
 @property (nonatomic, copy) NSString *maxrow;
 @property (nonatomic, retain) EGORefreshTableHeaderView *egoView;
 @property (nonatomic, assign) BOOL reloading;
+@property (nonatomic, assign) BOOL hasTopAdv;
+
 
 @end

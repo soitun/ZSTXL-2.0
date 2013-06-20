@@ -38,7 +38,6 @@
 @property (nonatomic, assign) NSInteger newsIndex;
 @property (nonatomic, retain) EGOImageView *imageView;
 
-
 @end
 
 @protocol NewsDetailDelegate <NSObject>

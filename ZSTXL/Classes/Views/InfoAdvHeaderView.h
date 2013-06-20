@@ -33,7 +33,7 @@
 
 @protocol InfoAdvDelegate <NSObject>
 @optional
-- (void)clickedInfoAdvDict:(NSDictionary *)advDict;
+- (void)clickedInfoAdvDict:(NSDictionary *)advDict atIndex:(NSNumber *)index;
 - (void)infoAdvDidUpdateWithArray:(NSArray *)array;
 
 @end

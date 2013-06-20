@@ -32,8 +32,10 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    if (self.mailSentButton.superview) {
-        [self.mailSentButton removeFromSuperview];
+    if (self.bgControl) {
+        [self.bgControl removeFromSuperview];
+        [self.bgControl release];
+        self.bgControl = nil;
     }
 }
 
@@ -45,6 +47,11 @@
     self.dataSourceArray = [NSMutableArray array];
     self.deleteDict = [NSMutableDictionary dictionary];
     self.isInbox = YES;
+    
+    
+    [self.mailWriteButton addTarget:self action:@selector(mailWrite:) forControlEvents:UIControlEventTouchUpInside];
+    [self.mailDeleteButton addTarget:self action:@selector(mailDelete:) forControlEvents:UIControlEventTouchUpInside];
+    [self.mailRefreshButton addTarget:self action:@selector(mailRefresh:) forControlEvents:UIControlEventTouchUpInside];
     
 //    self.tableView.allowsSelectionDuringEditing = YES;
     [self requestInboxMail];
@@ -59,10 +66,16 @@
 
 - (void)dealloc {
     [_tableView release];
+    [_mailWriteButton release];
+    [_mailDeleteButton release];
+    [_mailRefreshButton release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setTableView:nil];
+    [self setMailWriteButton:nil];
+    [self setMailDeleteButton:nil];
+    [self setMailRefreshButton:nil];
     [super viewDidUnload];
 }
 
@@ -93,10 +106,10 @@
 - (void)titleViewTap
 {
 //    DLog(@"tap title view");
-    if (!self.mailSentButton) {
+    if (!self.bgControl) {
         
-
-        
+        self.bgControl = [[UIControl alloc] initWithFrame:CGRectMake(0, 0, 320, SCREEN_HEIGHT)];
+        [self.bgControl addTarget:self action:@selector(tapControl:) forControlEvents:UIControlEventTouchUpInside];
         
         self.mailSentButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.mailSentButton.frame = CGRectMake(180, 50, 88, 48);
@@ -115,15 +128,34 @@
 
         [self.mailSentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.mailSentButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+        [self.bgControl addSubview:self.mailSentButton];
+        
+        
+        [kAppDelegate.window addSubview:self.bgControl];
+    }
+}
 
-        [kAppDelegate.window addSubview:self.mailSentButton];
+- (void)tapControl:(UIControl *)sender
+{
+    if (self.bgControl) {
+        [self.bgControl removeFromSuperview];
+        [self.bgControl release];
+        self.bgControl = nil;
     }
 }
 
 - (void)mailSent
 {
-    [self.mailSentButton removeFromSuperview];
-    self.mailSentButton = nil;
+//    [self.mailSentButton removeFromSuperview];
+//    self.mailSentButton = nil;
+    
+    if (self.bgControl) {
+        [self.bgControl removeFromSuperview];
+        [self.bgControl release];
+        self.bgControl = nil;
+    }
+    
+    
     self.isInbox = NO;
     self.titleView.title = @"发件箱";
     [self.titleView setNeedsDisplay];
@@ -176,20 +208,30 @@
 - (void)requestInboxMail
 {
     self.isInbox = YES;
-    if (self.mailSentButton) {
-        [self.mailSentButton removeFromSuperview];
-        self.mailSentButton = nil;
+    if (self.bgControl) {
+        [self.bgControl removeFromSuperview];
+        [self.bgControl release];
+        self.bgControl = nil;
     }
     
     self.titleView.title = @"收件箱";
     [self.titleView setNeedsDisplay];
     
+    //找到最大的messageNum
+    NSArray *array = [InboxMail findAll];
+    int maxNum = 0;
+    
+    for (InboxMail *inboxMail in array) {
+        if (inboxMail.messageNumber.intValue > maxNum) {
+            maxNum = inboxMail.messageNumber.intValue;
+        }
+    }
     
     //测试id
     NSDictionary *para = @{@"path": @"increFecth.json",
                            @"username": @"109981",
                            @"password": @"123456",
-                           @"messageNumber": @"-1",
+                           @"messageNumber": [NSString stringWithFormat:@"%d", maxNum+1],
                            @"forceUpdate": @"true"};
     
     if (self.dataSourceArray.count > 0) {
@@ -251,27 +293,9 @@
                     mail = [OutboxMail createEntity];
                 }
                 
-//                InboxMail *inboxMail = [InboxMail createEntity];
                 
                 NSArray *keys = [mailDict allKeys];
                 for (NSString *key in keys) {
-//                    id obj = [mailDict objForKey:key];
-//                    NSString *value = nil;
-//                    if ([obj isKindOfClass:NSClassFromString(@"NSNumber")]) {
-//                        value = [NSString stringWithFormat:@"%d", [obj intValue]];
-//                    }
-//                    else if([obj isKindOfClass:NSClassFromString(@"NSString")]){
-//                        value = obj;
-//                    }
-//                    else if([obj isKindOfClass:NSClassFromString(@"NSArray")]){
-//                        NSMutableString *tmp = [NSMutableString string];
-//                        for (NSString *str in obj) {
-//                            [tmp appendFormat:@"%@,", str];
-//                        }
-//                        if ([tmp isValid]) {
-//                            value = [tmp substringToIndex:tmp.length-1];
-//                        }
-//                    }
                     
                     id obj = [mailDict objForKey:key];
                     NSString *value = nil;
@@ -292,7 +316,7 @@
                 }
                 mail.content = @"";
                 mail.localDeleted = @"0";
-                [self.dataSourceArray addObject:mail];
+//                [self.dataSourceArray addObject:mail];
             }
             else{
                 if ([mail.localDeleted isEqualToString:@"0"]) {
@@ -303,11 +327,17 @@
         
     }];
     
+    DB_SAVE();
+    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"localDeleted == 0"];
+    NSArray *array = [InboxMail findAllWithPredicate:pred];
+    [self.dataSourceArray addObjectsFromArray:array];
+    
     [self.dataSourceArray sortUsingComparator:^NSComparisonResult(InboxMail * obj1, InboxMail * obj2) {
         return [[obj2.sentDate stringValue] compare:[obj1.sentDate stringValue] options:NSNumericSearch];   //降序, the fucking options
     }];
     
-    DB_SAVE();
+
     [self.tableView reloadData];
     
 }
@@ -447,24 +477,31 @@
 
 #pragma mark - button method
 
-- (IBAction)mailRefresh:(UIButton *)sender
+- (void)mailRefresh:(UIButton *)sender
 {
     if (!self.isLoading) {
         [self requestInboxMail];
     }
 }
 
-- (IBAction)mailDelete:(UIButton *)sender
+- (void)mailDelete:(UIButton *)sender
 {
     if (self.tableView.editing == NO) {
         [self.tableView setEditing:YES animated:YES];
         
+        self.mailRefreshButton.hidden = YES;
+        self.mailWriteButton.hidden = YES;
+        self.titleView.userInteractionEnabled = NO;
+        
     }
     else{
         
+        self.mailRefreshButton.hidden = NO;
+        self.mailWriteButton.hidden = NO;
+        self.titleView.userInteractionEnabled = YES;
+        
+        
         [self.dataSourceArray removeObjectsInArray:[self.deleteDict allValues]];
-
-    
         [self.tableView deleteRowsAtIndexPaths:[self.deleteDict allKeys] withRowAnimation:UITableViewRowAnimationAutomatic];
         
         //捕捉动画介绍，直接reloadData会取消掉动画
@@ -482,11 +519,10 @@
         DB_SAVE();
         
         [self.deleteDict removeAllObjects];
-
     }
 }
 
-- (IBAction)mailWrite:(UIButton *)sender
+- (void)mailWrite:(UIButton *)sender
 {
     MailWriteViewController *mailWriteVC = [[[MailWriteViewController alloc] init] autorelease];
     [self.navigationController pushViewController:mailWriteVC animated:YES];
