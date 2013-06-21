@@ -45,7 +45,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrameSize">{320, 106}</string>
 								<reference key="NSSuperview" ref="228359138"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="624185925"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -60,7 +59,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{12, 13}, {80, 80}}</string>
 								<reference key="NSSuperview" ref="228359138"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="337528767"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -75,7 +73,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{104, 19}, {193, 21}}</string>
 								<reference key="NSSuperview" ref="228359138"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="60783423"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -106,7 +103,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{104, 43}, {57, 21}}</string>
 								<reference key="NSSuperview" ref="228359138"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="465837044"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -134,7 +130,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{156, 42}, {144, 21}}</string>
 								<reference key="NSSuperview" ref="228359138"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="727044955"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -155,7 +150,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{104, 68}, {18, 21}}</string>
 								<reference key="NSSuperview" ref="228359138"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="851547303"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -170,7 +164,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{125, 70}, {19, 18}}</string>
 								<reference key="NSSuperview" ref="228359138"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="50505575"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -185,7 +178,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{148, 69}, {19, 19}}</string>
 								<reference key="NSSuperview" ref="228359138"/>
-								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -197,7 +189,6 @@
 						</array>
 						<string key="NSFrameSize">{320, 105}</string>
 						<reference key="NSSuperview" ref="255346848"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="26447596"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -213,7 +204,6 @@
 				</array>
 				<string key="NSFrameSize">{320, 106}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="228359138"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -372,52 +362,7 @@
 			<nil key="sourceID"/>
 			<int key="maxID">16</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">ZSInfoPersonInfoCell</string>
-					<string key="superclassName">UITableViewCell</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="headIcon">UIImageView</string>
-						<string key="nameLabel">UILabel</string>
-						<string key="useridLabel">UILabel</string>
-						<string key="xunBImage">UIImageView</string>
-						<string key="xunImage">UIImageView</string>
-						<string key="xunVImage">UIImageView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="headIcon">
-							<string key="name">headIcon</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="nameLabel">
-							<string key="name">nameLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="useridLabel">
-							<string key="name">useridLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="xunBImage">
-							<string key="name">xunBImage</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="xunImage">
-							<string key="name">xunImage</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="xunVImage">
-							<string key="name">xunVImage</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/ZSInfoPersonInfoCell.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

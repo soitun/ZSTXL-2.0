@@ -1,20 +1,21 @@
 //
-//  MyInvAgencyViewController.m
+//  SearchInvAgencyViewController.m
 //  ZSTXL
 //
-//  Created by LiuYue on 13-6-15.
+//  Created by LiuYue on 13-6-21.
 //  Copyright (c) 2013年 com.zxcxco. All rights reserved.
 //
 
-#import "MyInvAgencyViewController.h"
+#import "SearchInvAgencyViewController.h"
 #import "ZhaoshangPharListCell.h"
 #import "ZhaoshangInfoViewController.h"
+#import "LoadMoreFooter.h"
 
-@interface MyInvAgencyViewController ()
+@interface SearchInvAgencyViewController ()
 
 @end
 
-@implementation MyInvAgencyViewController
+@implementation SearchInvAgencyViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,16 +29,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"我的招商代理信息";
-    self.view.backgroundColor = bgGreyColor;
-    self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableView.backgroundView = nil;
-    
+    self.title = @"搜索招商代理信息";
+    self.dataSourceArray = [NSMutableArray array];
     self.page = 0;
     self.maxrow = @"20";
-    self.dataSourceArray = [NSMutableArray array];
+    
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundView = nil;
+    self.view.backgroundColor = bgGreyColor;
+    
+    [self initSearchBar];
     [self initNavBar];
-    [self requestData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,14 +50,22 @@
 
 - (void)dealloc {
     [_tableView release];
+    [_searchBar release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setTableView:nil];
+    [self setSearchBar:nil];
     [super viewDidUnload];
 }
 
+#pragma mark - search bar
 
+- (void)initSearchBar
+{
+    [self.searchBar setBackgroundImage:[UIImage imageNamed:@"search_bar_texture"]];
+    [self.searchBar setTranslucent:YES];
+}
 
 #pragma mark - nav bar
 
@@ -75,34 +85,42 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - request data
+#pragma mark - request Data
 
 - (void)requestData
 {
     NSString *page = [NSString stringWithFormat:@"%d", self.page];
-    NSDictionary *para = @{@"path": @"getZsMyInvestAgencyList.json",
-                           @"myuserid": @"109971",
+    NSDictionary *para = @{@"path": @"getZsSerchInvestAgencyList.json",
+                           @"key": self.searchKey,
                            @"page": page,
-                           @"maxrow": self.maxrow};
+                           @"maxrow": self.maxrow,
+                           @"proviceid": [PersistenceHelper dataForKey:kProvinceId],
+                           @"cityid": [PersistenceHelper dataForKey:kCityId]};
     
     [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
     [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+        DLog(@"json %@", json);
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
-        
         if (RETURNCODE_ISVALID(json)) {
             NSArray *array = [json objForKey:@"DataList"];
-            [self.dataSourceArray addObjectsFromArray:array];
-            self.page++;
-            if (self.page == 1) {
+            
+            if (self.page == 0) {
                 [self initTableFooter];
             }
             
-            if ([self requestFinish]) {
+            if ([self requestFinished]) {
+                if (self.page == 0) {
+                    self.page++;
+                }
                 self.footer.titleLabel.text = @"加载完成";
             }
             else{
+                self.page++;
                 self.footer.titleLabel.text = @"加载更多";
             }
+            
+            
+            [self.dataSourceArray addObjectsFromArray:array];
             [self.tableView reloadData];
         }
         else{
@@ -115,6 +133,38 @@
     }];
 }
 
+- (BOOL)requestFinished
+{
+    if (self.dataSourceArray.count == 0 || self.dataSourceArray.count % self.maxrow.intValue != 0) {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - searchbar delegate
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.searchKey = searchBar.text;
+    [searchBar resignFirstResponder];
+    [self requestData];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    if ([searchBar.text isEqualToString:@""]) {
+        [self resetDataSource];
+    }
+}
+
+- (void)resetDataSource
+{
+    [self.dataSourceArray removeAllObjects];
+    [self.tableView reloadData];
+    self.tableView.tableFooterView = nil;
+    self.page = 0;
+}
+
 #pragma mark - table view
 
 - (void)initTableFooter
@@ -124,19 +174,18 @@
     self.tableView.tableFooterView = self.footer;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.dataSourceArray.count;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //还没定
     return 100.f;
 }
 
@@ -170,8 +219,14 @@
     cell.companyNameLabel.text = [dict objForKey:@"companyname"];
     cell.areaLabel.text = [dict objForKey:@"placename"];
     cell.usernameLabel.text = [dict objForKey:@"username"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[dict objForKey:@"investmentimgurl"]]];
     
-    [cell.pharImage setImageWithURL:[NSURL URLWithString:@"investmentimgurl"] placeholderImage:[UIImage imageNamed:@"img_zs"]];
+    [cell.pharImage setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"img_zs"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        cell.pharImage.image = image;
+        [Utility addBorderView:cell.pharImage withColor:RGBCOLOR(189, 190, 190) width:1];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        DLog(@"error %@", error);
+    }];
     
     NSString *isMember = [[dict objForKey:@"ismember"] stringValue];
     if ([isMember isEqualToString:@"1"]) {
@@ -216,23 +271,15 @@
 
 - (void)LoadMoreFooterTap:(LoadMoreFooter *)footer
 {
-    if ([self requestFinish]) {
-        self.footer.titleLabel.text = @"加载完成";
-        return;
-    }
-    [footer.indicator startAnimating];
     [self requestData];
 }
 
-- (BOOL)requestFinish
+#pragma mark - scrollview delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (self.dataSourceArray.count == 0) {
-        return YES;
-    }else if(self.dataSourceArray.count % self.maxrow.intValue != 0){
-        return YES;
-    }
-    
-    return NO;
+    [self.searchBar resignFirstResponder];
 }
+
 
 @end

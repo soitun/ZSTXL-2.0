@@ -8,6 +8,7 @@
 
 #import "TheNewMessageViewController.h"
 #import "TheNewMessageCell.h"
+#import "TalkViewController.h"
 
 @interface TheNewMessageViewController ()
 
@@ -39,6 +40,7 @@
         self.navigationItem.rightBarButtonItem = item;
     }
     else{
+        [self requestData];
         self.navigationItem.rightBarButtonItem = nil;
     }
 }
@@ -48,8 +50,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self initNavBar];
-
+    
     self.tableView.frame = CGRectMake(0, 0, 320, SCREEN_HEIGHT-64-49);
+    self.tableView.backgroundView = nil;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = bgGreyColor;
+    
+    
     self.dataSourceArray = [NSMutableArray array];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
@@ -87,6 +94,46 @@
     [self.navigationController presentModalViewController:nav animated:YES];
 }
 
+#pragma mark - request Data
+
+- (void)requestData
+{
+//    getNewMessageList.json
+    NSDictionary *para = @{@"path": @"getNewMessageList.json",
+                           @"page": @"0",
+                           @"maxrow": @"2000",
+                           @"userid": kAppDelegate.userId};
+    
+    [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+    [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
+       
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        
+        DLog(@"json %@", json);
+        
+        if (RETURNCODE_ISVALID(json)) {
+            
+            if (self.dataSourceArray.count > 0) {
+                [self.dataSourceArray removeAllObjects];
+            }
+            
+            
+            NSArray *array = [json objForKey:@"MessagePeoperList"];
+            [self.dataSourceArray addObjectsFromArray:array];
+            [self.tableView reloadData];
+        }
+        else{
+            [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
+        }
+        
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
+        [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
+    }];
+    
+    
+}
+
 #pragma mark - login delegate
 
 - (void)loginFinished
@@ -102,8 +149,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    return  self.dataSourceArray.count;
-    return 10;
+    return self.dataSourceArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,7 +170,11 @@
 
 - (void)configureCell:(TheNewMessageCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
+    [cell.avatar setImageWithURL:[NSURL URLWithString:[dict objForKey:@"picturelinkurl"]] placeholderImage:[UIImage imageNamed:@"avatar"]];
+    cell.nameLabel.text = [dict objForKey:@"username"];
+    cell.contentLabel.text = [dict objForKey:@"content"];
+    cell.dateLabel.text = [dict objForKey:@"createtime"];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -133,6 +183,9 @@
     cell.chatIcon.image = [UIImage imageNamed:@"chat_icon"];
     cell.messageIcon.image = [UIImage imageNamed:@"message"];
     cell.mailIcon.image = [UIImage imageNamed:@"mail"];
+    
+    
+    
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -13,6 +13,12 @@
 #import "SettingTelViewController.h"
 #import "TimePicker.h"
 
+
+enum EnumAlert {
+    companyAlert = 0,
+    positionAlert = 1
+    };
+
 @interface SettingPersonInfoViewController ()
 
 @end
@@ -42,7 +48,8 @@
     self.myInfo = [Utility getMyInfo];
     self.header.userIdLabel.text = kAppDelegate.userId;
     self.header.telLabel.text = self.myInfo.userDetail.tel;
-    NSString *picUrl = [[self.myInfo.userDetail.picturelinkurl componentsSeparatedByString:@"/"] lastObject];
+    
+    NSString *picUrl = [NSString stringWithFormat:@"%@.jpg", kAppDelegate.userId];
     self.header.avatar.image = [Utility readImageFromDisk:picUrl];
     
     [self requestPersonInfo];
@@ -133,6 +140,8 @@
             DLog(@"json %@", json);
             self.birth = [json objForKey:@"userBirthdate"];
             self.sex = [[json objForKey:@"userSex"] removeSpace];
+            self.company = [json objForKey:@"CompanyName"];
+            self.position = [json objForKey:@"Position"];
             [self.tableView reloadData];
             
         }
@@ -151,7 +160,9 @@
     NSDictionary *para = @{@"path": @"changeZsUserBirthdate.json",
                            @"userid": [PersistenceHelper dataForKey:kUserId],
                            @"sex": self.sex,
-                           @"birthdate": self.birth};
+                           @"birthdate": self.birth,
+                           @"companyname": self.company,
+                           @"position": self.position};
     
     [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
     [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
@@ -248,6 +259,10 @@
         cell.detailLabel.text = self.myInfo.userDetail.username;
     } else if (indexPath.section == 1 && indexPath.row == 1){
         cell.detailLabel.text = self.birth;
+    } else if (indexPath.section == 2 && indexPath.row == 0){
+        cell.detailLabel.text = self.company;
+    } else if (indexPath.section == 2 && indexPath.row == 1){
+        cell.detailLabel.text = self.position;
     }
     return cell;
 }
@@ -302,12 +317,30 @@
 
 - (void)settingCompany
 {
-    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"修改单位名称" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UITextField *textField = [alert textFieldAtIndex:0];
+    textField.delegate = self;
+    textField.placeholder = @"单位";
+    textField.tag = companyAlert;
+    textField.clearsOnBeginEditing = YES;
+    alert.tag = companyAlert;
+    [alert show];
+    [alert release];
 }
 
 - (void)settingJob
 {
-    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"修改职位名称" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UITextField *textField = [alert textFieldAtIndex:0];
+    textField.delegate = self;
+    textField.placeholder = @"职位";
+    textField.clearsOnBeginEditing = YES;
+    textField.tag = positionAlert;
+    alert.tag = positionAlert;
+    [alert show];
+    [alert release];
 }
 
 
@@ -347,6 +380,47 @@
     self.sex = @"女";
     [cell.maleButton setImage:[UIImage imageNamed:@"login_noselect"] forState:UIControlStateNormal];
     [cell.femaleButton setImage:[UIImage imageNamed:@"login_select"] forState:UIControlStateNormal];
+}
+
+#pragma mark - alert delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == companyAlert) {
+        if (buttonIndex == 0) {
+            
+        }
+        else{
+            self.company = [[alertView textFieldAtIndex:0] text];
+        }
+    }
+    else{
+        if (buttonIndex == 0) {
+            
+        }
+        else{
+            self.position = [[alertView textFieldAtIndex:0] text];
+        }
+    }
+    
+    [self.tableView reloadData];
+}
+
+#pragma mark - textfield delegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField.tag == companyAlert) {
+        self.company = textField.text;
+    }
+    else{
+        self.position = textField.text;
+    }
 }
 
 @end

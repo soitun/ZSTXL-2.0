@@ -12,6 +12,8 @@
 
 @interface OtherInvAgencyViewController : CustomBaseTableViewController
 
-@property (nonatomic, retain) Contact *contact;
+//@property (nonatomic, retain) Contact *contact;
+@property (nonatomic, copy) NSString *userId;
+@property (nonatomic, copy) NSString *username;
 
 @end

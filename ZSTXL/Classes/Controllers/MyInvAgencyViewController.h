@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LoadMoreFooter.h"
 
-@interface MyInvAgencyViewController : UIViewController <UITableViewDataSource, UITabBarDelegate, LoadMoreFooterDelegate>
+@interface MyInvAgencyViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, LoadMoreFooterDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) NSMutableArray *dataSourceArray;
 @property (retain, nonatomic) LoadMoreFooter *footer;

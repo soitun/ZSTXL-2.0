@@ -88,6 +88,10 @@
     </entity>
     <entity name="MyInfo" representedClassName="MyInfo" syncable="YES">
         <attribute name="account" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="attentionMyCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="myBlackListCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="myCollectCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="newAttentInvestCount" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unreadCount" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unreadMailCount" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unreadSMSCount" optional="YES" attributeType="String" syncable="YES"/>
@@ -172,7 +176,9 @@
         <element name="InboxMail" positionX="538" positionY="218" width="128" height="43"/>
         <element name="InvestmentInfo" positionX="333" positionY="-225" width="128" height="133"/>
         <element name="Mail" positionX="385" positionY="225" width="128" height="330"/>
-        <element name="MyInfo" positionX="-45" positionY="-151" width="128" height="150"/>
+        <element name="MessageList" positionX="522" positionY="-207" width="128" height="178"/>
+        <element name="MessageRecord" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="MyInfo" positionX="-45" positionY="-151" width="128" height="210"/>
         <element name="NewsInfo" positionX="306" positionY="54" width="128" height="150"/>
         <element name="NormalNewsInfo" positionX="169" positionY="27" width="128" height="45"/>
         <element name="OutboxMail" positionX="547" positionY="344" width="128" height="43"/>
@@ -183,7 +189,5 @@
         <element name="StarInvest" positionX="234" positionY="270" width="128" height="210"/>
         <element name="StarNews" positionX="81" positionY="279" width="128" height="225"/>
         <element name="UserDetail" positionX="-72" positionY="117" width="128" height="300"/>
-        <element name="MessageList" positionX="522" positionY="-207" width="128" height="178"/>
-        <element name="MessageRecord" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>

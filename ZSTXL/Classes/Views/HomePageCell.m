@@ -34,6 +34,21 @@
     nameLabFrame.origin.y = (self.frame.size.height - nameLabSize.height)/2;
     self.nameLabel.frame = nameLabFrame;
     
+    if ([self.badgeValue isValid]) {
+        
+        self.theBadge = [CustomBadge customBadgeWithString:self.badgeValue];
+        self.theBadge.badgeShining = YES;
+        self.theBadge.frame = CGRectMake(CGRectGetMaxX(self.nameLabel.frame)+4, CGRectGetMinY(self.nameLabel.frame)-10, 25, 25);
+        [self addSubview:self.theBadge];
+    }
+    else if (![self.badgeValue isValid]){
+        if (self.theBadge) {
+            [self.theBadge removeFromSuperview];
+            self.theBadge = nil;
+        }
+    }
+    
+    
     CGRect detailLabFrame = self.detailLabel.frame;
     detailLabFrame.origin.x = nameLabFrame.origin.x + nameLabSize.width + 5;
     CGSize detailLabSize = [self.detailLabel.text sizeWithFont:[UIFont boldSystemFontOfSize:16] constrainedToSize:CGSizeMake(300-detailLabFrame.origin.x+5, 35)];

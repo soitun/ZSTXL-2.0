@@ -68,7 +68,9 @@
             
             NSArray *array = [json objForKey:@"DataList"];
             for (NSDictionary *dict in array) {
-                [self.dataSourceArray addObject:dict];
+                
+                Contact *contact = [self makeContactWithDict:dict];
+                [self.dataSourceArray addObject:contact];
             }
             
             [self.tableView reloadData];
@@ -133,14 +135,14 @@
 
 - (void)configureCell:(ContactCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
+    Contact *contact = [self.dataSourceArray objectAtIndex:indexPath.row];
     
     cell.delegate = self;
-    cell.contact = [self makeContactWithDict:dict];
+    cell.contact = contact;
     cell.indexPath = indexPath;
     cell.selectionStyle = UITableViewCellEditingStyleNone;
     
-    switch ([[dict objForKey:@"invagency"] intValue]) {
+    switch ([contact.invagency intValue]) {
         case 1:
             cell.ZDLabel.text = @"招商";
             break;
@@ -158,12 +160,12 @@
     
     cell.headIcon.layer.cornerRadius = 4;
     cell.headIcon.layer.masksToBounds = YES;
-    [cell.headIcon setImageWithURL:[NSURL URLWithString:[dict objForKey:@"picturelinkurl"]] placeholderImage:[UIImage imageByName:@"avatar"]];
+    [cell.headIcon setImageWithURL:[NSURL URLWithString:contact.picturelinkurl] placeholderImage:[UIImage imageByName:@"avatar"]];
     
-    cell.nameLabel.text = [dict objForKey:@"username"];
-    cell.cityLabel.text = [dict objForKey:@"areaname"];
+    cell.nameLabel.text = contact.username;
+    cell.cityLabel.text = contact.areaname;
     
-    NSInteger type = [[dict objForKey:@"type"] intValue];
+    NSInteger type = contact.type.integerValue;
     if (type == 1) {
         cell.addFriendButton.hidden = NO;
     }
@@ -175,12 +177,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
-    
-    OtherProfileViewController *otherProfileVC =[[[OtherProfileViewController alloc] init] autorelease];
-    otherProfileVC.contact = [self makeContactWithDict:dict];
-    [self.navigationController pushViewController:otherProfileVC animated:YES];
-    
+    PopContactView *contactView = [[PopContactView alloc] initWithNib:@"PopContactView"];
+    contactView.contact = [self.dataSourceArray objectAtIndex:indexPath.row];
+    contactView.delegate = self;
+    [contactView showInView:kAppDelegate.window];
 }
 
 - (Contact *)makeContactWithDict:(NSDictionary *)dict
@@ -199,14 +199,6 @@
 }
 
 #pragma mark - cell delegate
-
-//- (void)contactCellTapAvatarOfContact:(Contact *)contact
-//{
-//    OtherProfileViewController *otherProfileVC = [[[OtherProfileViewController alloc] init] autorelease];
-//    
-//    otherProfileVC.contact = contact;
-//    [self.navigationController pushViewController:otherProfileVC animated:YES];
-//}
 
 - (void)contactCellAddFriend:(Contact *)contact atIndexPath:(NSIndexPath *)indexPath
 {
@@ -236,19 +228,32 @@
     }];
 }
 
+- (void)contactCellTapAvatarOfContact:(Contact *)contact
+{
+    OtherProfileViewController *otherProfileVC =[[[OtherProfileViewController alloc] init] autorelease];
+    otherProfileVC.contact = contact;
+    [self.navigationController pushViewController:otherProfileVC animated:YES];
+}
 
-//#pragma mark - contact view
-//
-//- (void)popContactViewChat:(Contact *)contact
-//{
-//    
-//}
-//
-//- (void)popContactViewTel:(Contact *)contact
-//{
-//    NSString *tel = [Utility deCryptTel:contact.tel withUserId:contact.userid];
-//    [Utility callContact:tel];
-//}
+
+#pragma mark - contact view
+
+- (void)popContactViewChat:(Contact *)contact
+{
+    
+}
+
+- (void)popContactViewTel:(NSString *)tel
+{
+    [Utility callContact:tel];
+}
+
+- (void)popContactViewTapAvatar:(Contact *)contact
+{
+    OtherProfileViewController *otherProfileVC =[[[OtherProfileViewController alloc] init] autorelease];
+    otherProfileVC.contact = contact;
+    [self.navigationController pushViewController:otherProfileVC animated:YES];
+}
 
 #pragma mark - add friend
 

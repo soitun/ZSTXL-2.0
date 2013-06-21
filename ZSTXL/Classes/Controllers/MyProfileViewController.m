@@ -22,7 +22,7 @@
 #import "StarInfoViewController.h"
 #import "AddMeViewController.h"
 #import "BlacklistViewController.h"
-#import "OtherInvAgencyViewController.h"
+#import "FriendInvAgencyViewController.h"
 #import "MyInvAgencyViewController.h"
 
 #import "MessageListViewController.h"
@@ -276,21 +276,18 @@
     hud.labelText = @"获取个人信息";
     [hud hide:YES];
     [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
-//        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
-
+        
+        
         if (RETURNCODE_ISVALID(json)) {
 //            DLog(@"my info json %@", json);
             [self updateMyInfo:json];
             [self showHeaderInfo];
             [self.tableView reloadData];
-//            DLog(@"myinfo %@", self.myInfo);
 
         } else{
-//            [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
             [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:nil];
         }
     } failure:^(NSError *error) {
-//        [MBProgressHUD hideHUDForView:[kAppDelegate window] animated:YES];
         [hud hide:YES];
         [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
     }];
@@ -315,6 +312,11 @@
     self.myInfo.userDetail.col1 = [dict objForKey:@"col1"];
     self.myInfo.userDetail.col2 = [dict objForKey:@"col2"];
     self.myInfo.userDetail.col3 = [dict objForKey:@"col3"];
+    self.myInfo.attentionMyCount = [[json objForKey:@"AttentionMyCount"] stringValue];
+    self.myInfo.myBlackListCount = [[json objForKey:@"MyBaclListCount"] stringValue];
+    self.myInfo.myCollectCount = [[json objForKey:@"MyCollectCount"] stringValue];
+    self.myInfo.newAttentInvestCount = [[json objForKey:@"NewAttenInvestCount"] stringValue];
+    
     
     [self.myInfo removeAreaList:self.myInfo.areaList];
     NSArray *areaArray = [json objForKey:@"AreaList"];
@@ -335,11 +337,13 @@
         [self.myInfo addPharListObject:phar];
     }
     
-    //save image
-    
-//    NSString *picUrl = [[self.myInfo.userDetail.picturelinkurl componentsSeparatedByString:@"/"] lastObject];
-    
     DB_SAVE();
+    
+    self.tableHeader.attentNumLabel.text = [[json objForKey:@"AttentionMyCount"] stringValue];
+    self.tableHeader.starNumLabel.text = [[json objForKey:@"MyCollectCount"] stringValue];
+    self.tableHeader.blacklistNumLabel.text = [[json objForKey:@"MyBaclListCount"] stringValue];
+    
+    
 }
 
 
@@ -499,6 +503,9 @@
     else if (indexPath.section == 1 && indexPath.row == 3){
         cell.detailLabel.text = nil;
     }
+    else if (indexPath.section == 2 && indexPath.row == 1){
+        cell.badgeValue = self.myInfo.newAttentInvestCount;
+    }
     
     [cell setNeedsDisplay];
 }
@@ -553,7 +560,7 @@
 
 - (void)friendInvInfo
 {
-    OtherInvAgencyViewController *friendInvAgencyVC = [[[OtherInvAgencyViewController alloc] init] autorelease];
+    FriendInvAgencyViewController *friendInvAgencyVC = [[[FriendInvAgencyViewController alloc] init] autorelease];
     [self.navigationController pushViewController:friendInvAgencyVC animated:YES];
 }
 
@@ -625,8 +632,11 @@
     
     [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
     [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
-        [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
         if (RETURNCODE_ISVALID(json)) {
+            
+            [self.myInfo removeAreaList:self.myInfo.areaList];
+            
             for (NSDictionary *city in array) {
                 CityInfo *cityInfo = [CityInfo createEntity];
                 cityInfo.cityname = [city objForKey:@"cityname"];
@@ -643,7 +653,7 @@
         }
         
     } failure:^(NSError *error) {
-        [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
+        [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
         [kAppDelegate showWithCustomAlertViewWithText:kNetworkError andImageName:kErrorIcon];
     }];
 }

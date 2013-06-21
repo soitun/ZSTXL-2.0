@@ -13,4 +13,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *nameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *detailLabel;
 
+@property (copy, nonatomic) NSString *badgeValue;
+@property (retain, nonatomic) CustomBadge *theBadge;
+
 @end

@@ -28,13 +28,19 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSString *title = [NSString stringWithFormat:@"招商代理（%@）", [PersistenceHelper dataForKey:kCityName]];
+    
+    self.title = title;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    NSString *title = [NSString stringWithFormat:@"招商代理（%@）", [PersistenceHelper dataForKey:kCityName]];
-    
-    self.title = title;
+
     self.navigationController.delegate = self;
     
     self.page = 0;

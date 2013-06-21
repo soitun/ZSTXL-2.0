@@ -22,4 +22,9 @@
 @dynamic pharList;
 @dynamic userDetail;
 
+@dynamic attentionMyCount;
+@dynamic myBlackListCount;
+@dynamic myCollectCount;
+@dynamic newAttentInvestCount;
+
 @end

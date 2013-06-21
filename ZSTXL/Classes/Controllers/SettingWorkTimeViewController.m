@@ -8,7 +8,7 @@
 
 #import "SettingWorkTimeViewController.h"
 #import "SettingDupCell.h"
-#import "SettingCell.h"
+#import "SettingTimeCell.h"
 #import "CustomCellBackgroundView.h"
 #import "UIPopoverListView.h"
 #import "TimePicker.h"
@@ -43,7 +43,7 @@
     self.tableView.backgroundView = nil;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.dupArray = [[NSMutableArray alloc] initWithObjects:@"星期一", @"星期二", @"星期三", @"星期四", @"星期五", @"星期六", @"星期日", nil];
-    
+    self.timeInfoArray = [NSMutableArray arrayWithObjects:@"", @"", @"", nil];
     [self requestWorkTime];
 }
 
@@ -66,26 +66,29 @@
 
 - (void)saveAction
 {
-    if (![self.weekDate isValid]) {
+    NSString *weekDate = [self.timeInfoArray objectAtIndex:0];
+    if (![weekDate isValid]) {
         [kAppDelegate showWithCustomAlertViewWithText:@"请选择工作日" andImageName:kErrorIcon];
         return;
     }
     
-    if (![self.startTime isValid]) {
+    NSString *startTime = [self.timeInfoArray objectAtIndex:1];
+    if (![startTime isValid]) {
         [kAppDelegate showWithCustomAlertViewWithText:@"请选择上班时间" andImageName:kErrorIcon];
         return;
     }
     
-    if (![self.endTime isValid]) {
+    NSString *endTime = [self.timeInfoArray objectAtIndex:2];
+    if (![endTime isValid]) {
         [kAppDelegate showWithCustomAlertViewWithText:@"请选择下班时间" andImageName:kErrorIcon];
         return;
     }
     
     NSDictionary *para = @{@"path": @"changeWorkTime.json",
                            @"userid": [PersistenceHelper dataForKey:kUserId],
-                           @"weekdate": self.weekDate,
-                           @"starttime": self.startTime,
-                           @"endtime": self.endTime};
+                           @"weekdate": weekDate,
+                           @"starttime": startTime,
+                           @"endtime": endTime};
     
     [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
     [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
@@ -113,6 +116,12 @@
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
         if (RETURNCODE_ISVALID(json)) {
             DLog(@"json %@",json);
+            
+            [self.timeInfoArray replaceObjectAtIndex:0 withObject:[json objForKey:@"userWeek"]];
+            [self.timeInfoArray replaceObjectAtIndex:1 withObject:[json objForKey:@"userStartTime"]];
+            [self.timeInfoArray replaceObjectAtIndex:2 withObject:[json objForKey:@"userEndTime"]];
+            
+            [self.tableView reloadData];
         }
         else{
             [kAppDelegate showWithCustomAlertViewWithText:GET_RETURNMESSAGE(json) andImageName:kErrorIcon];
@@ -155,7 +164,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SettingCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"SettingCell" owner:nil options:nil] lastObject];
+    static NSString *cellId = @"SettingTimeCell";
+    
+    SettingTimeCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"SettingTimeCell" owner:self options:nil] lastObject];
+    }
     cell.frame = CGRectMake(0, 0, 320, 44);
     CustomCellBackgroundViewPosition pos;
     
@@ -174,12 +188,13 @@
     cellBgView.borderColor = kCellBorderColor;
     cellBgView.cornerRadius = 5.f;
     cellBgView.position = pos;
-    cell.selectImage.hidden = YES;
     
     cell.backgroundView = cellBgView;
-    cell.textLabel.text = [self.titleArray objectAtIndex:indexPath.row];
+    cell.nameLabel.text = [self.titleArray objectAtIndex:indexPath.row];
     [cell.textLabel setFont:[UIFont systemFontOfSize:16]];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    cell.detailLabel.text = [self.timeInfoArray objectAtIndex:indexPath.row];
+    
     return cell;
     
 }
@@ -191,7 +206,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SettingCell *cell = (SettingCell *)[tableView cellForRowAtIndexPath:indexPath];
+    SettingTimeCell *cell = (SettingTimeCell *)[tableView cellForRowAtIndexPath:indexPath];
     ((CustomCellBackgroundView *)(cell.backgroundView)).backgroundColor = kCellSelectColor;
     
     SEL sel = NSSelectorFromString([self.selectorArray objectAtIndex:indexPath.row]);
@@ -211,13 +226,6 @@
 - (void)duplicate
 {
     DLog(@"设置重复");
-//    UIPopoverListView *list = [[UIPopoverListView alloc] initWithFrame:CGRectMake(10, 20, 280, 340+44)];
-//    [list setTitle:@"重复"];
-//    list.listView.scrollEnabled = NO;
-//    list.datasource = self;
-//    list.delegate = self;
-//    [list show];
-//    [list release];
     
     WeekDayViewController *weekDayVC = [[[WeekDayViewController alloc] init] autorelease];
     weekDayVC.delegate = self;
@@ -310,30 +318,25 @@
     self.isPickerOn = NO;
     if (picker == self.onDutyTimePicker) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"HH:mm:ss"];
+        [dateFormatter setDateFormat:@"HH:mm:00"];
         dateFormatter.timeZone = [NSTimeZone localTimeZone];
-        self.startTime = [dateFormatter stringFromDate:picker.datePicker.date];
+        NSString *startTime = [dateFormatter stringFromDate:picker.datePicker.date];
+        [self.timeInfoArray replaceObjectAtIndex:1 withObject:startTime];
     }else if (picker == self.offDutyTimePicker){
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"HH:mm:ss"];
+        [dateFormatter setDateFormat:@"HH:mm:00"];
         dateFormatter.timeZone = [NSTimeZone localTimeZone];
-        self.endTime = [dateFormatter stringFromDate:picker.datePicker.date];
+        NSString *endTime = [dateFormatter stringFromDate:picker.datePicker.date];
+        [self.timeInfoArray replaceObjectAtIndex:2 withObject:endTime];
     }
+    
+    [self.tableView reloadData];
 }
 
 - (void)timePickerCancel:(TimePicker *)picker
 {
     self.isPickerOn = NO;
 }
-
-//- (void)updateTime:(NSString *)time withDatePicker:(TimePicker *)picker
-//{
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"HH:mm:ss"];
-//    dateFormatter.timeZone = [NSTimeZone localTimeZone];
-//    time = [[NSString alloc] initWithString:[dateFormatter stringFromDate:picker.datePicker.date]];
-//    DLog(@"time %@", time);
-//}
 
 #pragma mark - weekdat delegate
 
@@ -344,11 +347,12 @@
         [tmp appendFormat:@"%@,", str];
     }
     
+    NSString *weekDate = nil;
     if ([tmp isValid]) {
-        self.weekDate = [tmp substringToIndex:tmp.length-1];
+        weekDate = [tmp substringToIndex:tmp.length-1];
+        [self.timeInfoArray replaceObjectAtIndex:0 withObject:weekDate];
+        [self.tableView reloadData];
     }
-    
-//    DLog(@"week day %@", self.weekDate);
 }
 
 

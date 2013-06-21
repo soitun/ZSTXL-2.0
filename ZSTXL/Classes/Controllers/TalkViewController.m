@@ -139,48 +139,6 @@
     [super viewDidUnload];
 }
 
-//- (void)moreAction {
-//    NSString *myUid = [PersistenceHelper dataForKey:kUserId];
-//    
-//    NSString *pageSize = @"5";
-//    currentPage++;
-//    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"getMessage.json", @"path", myUid, @"userid", fid, @"destuserid", [NSString stringWithFormat:@"%d", currentPage], @"page", pageSize, @"maxrow", nil];
-//    NSLog(@"dict %@", dict);
-//    [DreamFactoryClient getWithURLParameters:dict success:^(NSDictionary *json) {
-//
-//        @try {
-//            if ([[[json objForKey:@"returnCode"] stringValue] isEqualToString:@"0"]) {
-//                NSArray *array = [json objForKey:@"MessageList"];
-//
-//                for (NSDictionary *dict in array) {
-//                    ChatRecord *chatRecord = [ChatRecord createEntity];
-//                    chatRecord.content = [dict objForKey:@"content"];
-//                    chatRecord.time = [[dict objForKey:@"time"] stringValue];
-//                    chatRecord.userid = [[dict objForKey:@"userid"] stringValue];
-//                    chatRecord.loginid = kAppDelegate.userId;
-//                    [self.dataSourceArray insertObject:chatRecord atIndex:0];
-//                    DB_SAVE();
-//
-//                    
-////                    [self.dataSourceArray insertObject:dict atIndex:0];
-//                }
-//
-//                [self.mTableView reloadData];
-//            } else {
-//                //将当前页减一
-//                if (currentPage > 0) {
-//                    currentPage--;
-//                }
-//            }            
-//        }
-//        @catch (NSException *exception) {
-//            
-//        }
-//    } failure:^(NSError *error) {
-//        NSLog(@"error : %@", error);
-//    }];    
-//}
-
 - (void)talkHistory {
     [self.dataSourceArray removeAllObjects];
     [self.mTableView reloadData];
@@ -203,9 +161,6 @@
                  @"userid": kAppDelegate.userId,
                  @"destuserid": self.messageList.userid};
     }
-    
-    
-    
     
     [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
 

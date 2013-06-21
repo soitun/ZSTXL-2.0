@@ -25,6 +25,9 @@
 @property (nonatomic, retain) NSDate *onDutyTime;
 @property (nonatomic, retain) NSDate *offDutyTime;
 
+@property (nonatomic, retain) NSMutableArray *timeInfoArray;
+
+
 @property (nonatomic, copy) NSString *weekDate;
 @property (nonatomic, copy) NSString *startTime;
 @property (nonatomic, copy) NSString *endTime;

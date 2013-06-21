@@ -17,6 +17,14 @@
 @property (nonatomic, retain) NSString * unreadCount;
 @property (nonatomic, retain) NSString * unreadMailCount;
 @property (nonatomic, retain) NSString * unreadSMSCount;
+@property (nonatomic, retain) NSString * attentionMyCount;
+@property (nonatomic, retain) NSString * myBlackListCount;
+@property (nonatomic, retain) NSString * myCollectCount;
+@property (nonatomic, retain) NSString * newAttentInvestCount;
+
+
+
+
 @property (nonatomic, retain) NSSet *areaList;
 @property (nonatomic, retain) NSSet *pharList;
 @property (nonatomic, retain) UserDetail *userDetail;

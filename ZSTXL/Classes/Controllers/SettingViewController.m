@@ -84,14 +84,14 @@
 
 - (void)requestAllowTel
 {
-    NSDictionary *para = @{@"path": @"getAllowtelStatus.json",
+    NSDictionary *para = @{@"path": @"getMyAllowtelStatus.json",
                            @"userid": kAppDelegate.userId};
     
     [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];
     [DreamFactoryClient getWithURLParameters:para success:^(NSDictionary *json) {
         [MBProgressHUD hideAllHUDsForView:kAppDelegate.window animated:YES];
         if (RETURNCODE_ISVALID(json)) {
-            self.allowFriendContact = [[json objForKey:@"userAllowtel"] intValue];
+            self.allowFriendContact = [[json objForKey:@"allowTel"] intValue];
             [self.tableView reloadData];
             DLog(@"json %@", json);
         }
@@ -131,13 +131,13 @@
 {
     NSArray *nameArr1 = @[@"个人信息设置"];
     NSArray *nameArr2 = @[@"提示音", @"修改密码", @"工作时间"];
-    NSArray *nameArr3 = @[@"让附近的好友查看我", @"手机通讯录匹配", @"删除所有聊天记录", @"邀请好友加入通讯录", @"是否让您的好友、客户电话联系您！"];
+    NSArray *nameArr3 = @[@"手机通讯录匹配", @"清除缓存", @"邀请好友加入通讯录", @"是否让您的好友、客户电话联系您！"];
     NSArray *nameArr4 = @[@"功能介绍", @"帮助反馈", @"版本信息"];
     self.settingInfo = [NSMutableArray arrayWithObjects:nameArr1, nameArr2, nameArr3, nameArr4, nil];
     
     NSArray *selArr1 = @[@"personInfoSetting"];
     NSArray *selArr2 = @[@"toneSwitch", @"changePasswd", @"workTime"];
-    NSArray *selArr3 = @[@"findMe", @"addresssBookMatch", @"deleteChatRecord", @"inviteFriend", @"telConnect"];
+    NSArray *selArr3 = @[@"addresssBookMatch", @"clearCache", @"inviteFriend", @"telConnect"];
     NSArray *selArr4 = @[@"functionIntro", @"feedBack", @"version"];
     
     self.selectorArray = [NSMutableArray arrayWithObjects:selArr1, selArr2, selArr3, selArr4, nil];
@@ -200,7 +200,7 @@
     [cell.textLabel setBackgroundColor:[UIColor clearColor]];
     [cell.textLabel setFont:[UIFont boldSystemFontOfSize:16]];
     
-    if (indexPath.section == 2 && indexPath.row == 4) {
+    if (indexPath.section == 2 && indexPath.row == 3) {
         cell.selectImage.hidden = NO;
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.delegate = self;
@@ -215,8 +215,7 @@
         }
         
     } else if ((indexPath.section == 1 && indexPath.row == 0) ||
-               (indexPath.section == 2 && indexPath.row == 0) ||
-               (indexPath.section == 2 && indexPath.row == 1)) {
+               (indexPath.section == 2 && indexPath.row == 0) ) {
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.selectImage.hidden = YES;
         cell.switchImage.hidden = NO;
@@ -281,22 +280,49 @@
     [self.navigationController pushViewController:settingWorkTimeVC animated:YES];
 }
 
+//暂无
 - (void)findMe
 {
     DLog(@"findMe");
 }
 
-- (void)addressBookMatch
+- (void)addresssBookMatch
 {
     
 }
 
-- (void)deleteChatRecord
+- (void)clearCache
 {
-    DLog(@"deleteChatRecord");
-    DeleteChatView *deleteChatView = [[DeleteChatView alloc] init];
-    deleteChatView.delegate = self;
-    [deleteChatView showInView:kAppDelegate.window];
+//    DLog(@"deleteChatRecord");
+//    DeleteChatView *deleteChatView = [[DeleteChatView alloc] init];
+//    deleteChatView.delegate = self;
+//    [deleteChatView showInView:kAppDelegate.window];
+    
+    
+    [UIActionSheet actionSheetWithTitle:@"清除缓存" message:nil destructiveButtonTitle:@"清除所有缓存" buttons:nil showInView:self.view onDismiss:^(int buttonIndex) {
+        
+        NSFileManager *fileMgr = [[[NSFileManager alloc] init] autorelease];
+        NSError *error = nil;
+        NSString *documentsDirectory = [NSString stringWithFormat:@"%@/Documents/",NSHomeDirectory()];
+        NSArray *directoryContents = [fileMgr contentsOfDirectoryAtPath:documentsDirectory error:&error];
+        if (error == nil) {
+            for (NSString *path in directoryContents) {
+                NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:path];
+                BOOL removeSuccess = [fileMgr removeItemAtPath:fullPath error:&error];
+                if (!removeSuccess) {
+                    // Error handling
+                    
+                }
+            }
+        } else {
+            // Error handling
+
+        }
+        
+        
+    } onCancel:^{
+        
+    }];
 }
 
 - (void)inviteFriend
@@ -311,7 +337,7 @@
     DLog(@"telConnect");
     
     NSDictionary *para = @{@"path": @"changeAllowtelStatus.json",
-                           @"allowtelStatus": [NSString stringWithFormat:@"%d", self.allowFriendContact],
+                           @"allowtelStatus": [NSString stringWithFormat:@"%d", 1-self.allowFriendContact],
                            @"userid": kAppDelegate.userId};
     
     [MBProgressHUD showHUDAddedTo:kAppDelegate.window animated:YES];

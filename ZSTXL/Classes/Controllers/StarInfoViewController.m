@@ -68,25 +68,26 @@
     [self.mScrollView addSubview:starInvAgencyVC.view];
     [self.controllerArray addObject:starInvAgencyVC];
     
+    StarOtherInfoViewController *starOtherInfoVC = [[[StarOtherInfoViewController alloc] init] autorelease];
+    starOtherInfoVC.parentController = self;
+    starOtherInfoVC.view.frame = CGRectMake(320, 0, 320, self.mScrollView.frame.size.height);
+    [self.mScrollView addSubview:starOtherInfoVC.view];
+    [self.controllerArray addObject:starOtherInfoVC];
     
     StarNewsViewController *starNewsVC = [[[StarNewsViewController alloc] init] autorelease];
     starNewsVC.parentController = self;
-    starNewsVC.view.frame = CGRectMake(320, 0, 320, self.mScrollView.frame.size.height);
+    starNewsVC.view.frame = CGRectMake(320*2, 0, 320, self.mScrollView.frame.size.height);
     [self.mScrollView addSubview:starNewsVC.view];
     [self.controllerArray addObject:starNewsVC];
 
-    StarOtherInfoViewController *starOtherInfoVC = [[[StarOtherInfoViewController alloc] init] autorelease];
-    starOtherInfoVC.parentController = self;
-    starOtherInfoVC.view.frame = CGRectMake(320*2, 0, 320, self.mScrollView.frame.size.height);
-    [self.mScrollView addSubview:starOtherInfoVC.view];
-    [self.controllerArray addObject:starOtherInfoVC];
+
 }
 
 #pragma mark - slide bar
 
 - (void)initSlideView
 {
-    self.menuItems = [NSArray arrayWithObjects:@"招商/代理", @"资讯", @"其他", nil];
+    self.menuItems = [NSArray arrayWithObjects: @"资讯广告", @"产品广告", @"其他资讯", nil];
     self.mSlideMenu = [[[SlideMenuView alloc] initWithItemsArray:self.menuItems] autorelease];
     self.mSlideMenu.frame = CGRectMake(0, 0, 320, 34);
     self.mSlideMenu.delegate = self;

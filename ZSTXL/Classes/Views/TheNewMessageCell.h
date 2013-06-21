@@ -15,5 +15,8 @@
 @property (retain, nonatomic) IBOutlet UIImageView *mailIcon;
 @property (retain, nonatomic) IBOutlet UIImageView *messageIcon;
 
+@property (retain, nonatomic) IBOutlet UILabel *nameLabel;
+@property (retain, nonatomic) IBOutlet UILabel *contentLabel;
+@property (retain, nonatomic) IBOutlet UILabel *dateLabel;
 
 @end

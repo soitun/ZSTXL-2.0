@@ -399,7 +399,8 @@ enum eAlertTag {
 {
     if (indexPath.section == 1 && indexPath.row == 3) {
         OtherInvAgencyViewController *friendIAVC = [[[OtherInvAgencyViewController alloc] init] autorelease];
-        friendIAVC.contact = self.contact;
+        friendIAVC.username = self.contact.username;
+        friendIAVC.userId = self.contact.userid;
         [self.navigationController pushViewController:friendIAVC animated:YES];
     }
 }

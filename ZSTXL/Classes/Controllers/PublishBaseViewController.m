@@ -197,5 +197,22 @@
     [self popVC:nil];
 }
 
+#pragma mark - helper
+
+- (NSDictionary *)para
+{
+    return nil;
+}
+
+- (void)analyseData:(NSDictionary *)json
+{
+    return;
+}
+
+- (NSString *)titleNameOfDict:(NSDictionary *)dict
+{
+    return nil;
+}
+
 
 @end

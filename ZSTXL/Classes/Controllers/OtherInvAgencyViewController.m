@@ -7,7 +7,8 @@
 //
 
 #import "OtherInvAgencyViewController.h"
-#import "InformationCell.h"
+#import "ZhaoshangPharListCell.h"
+#import "ZhaoshangInfoViewController.h"
 
 @interface OtherInvAgencyViewController ()
 
@@ -31,7 +32,7 @@
     
     [self initNavBar];
     
-    NSString *title = [NSString stringWithFormat:@"%@的招商代理信息", self.contact.username];
+    NSString *title = [NSString stringWithFormat:@"%@的招商代理信息", self.username];
     self.title = title;
 }
 
@@ -67,7 +68,7 @@
     
     NSDictionary *para = @{@"path": @"getZsFrienInvestAgencyList.json",
                            @"userid": kAppDelegate.userId,
-                           @"otheruserid": self.contact.userid,
+                           @"otheruserid": self.userId,
                            @"proviceid": [PersistenceHelper dataForKey:kProvinceId],
                            @"cityid": [PersistenceHelper dataForKey:kCityId],
                            @"page": page,
@@ -85,33 +86,81 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80.f;
+    return 100.f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellId = @"InformationCell";
-    InformationCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    static NSString *cellId = @"ZhaoshangPharListCell";
+    ZhaoshangPharListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     
     if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"InformationCell" owner:self options:nil] lastObject];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"ZhaoshangPharListCell" owner:self options:nil] lastObject];
     }
     
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
 
-- (void)configureCell:(InformationCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(ZhaoshangPharListCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
-    [cell.avatar setImageWithURL:[NSURL URLWithString:[dict objForKey:@"investmentimgurl"]] placeholderImage:[UIImage imageNamed:@"agency_default.png"]];
-    cell.labTitle.text = [dict objForKey:@"productname"];
-    cell.labSubTitle.text = [dict objForKey:@"companyname"];
+    NSString *type = [[dict objForKey:@"type"] stringValue];
+    
+    if ([type isEqualToString:@"1"]) {
+        cell.zsdlBaseImage.image = [UIImage imageNamed:@"img_zhaoshang"];
+        cell.zsdlLabel.text = @"招商";
+        
+    }
+    else{
+        cell.zsdlBaseImage.image = [UIImage imageNamed:@"img_daili"];
+        cell.zsdlLabel.text = @"代理";
+    }
+    
+    cell.pharNameLabel.text = [dict objForKey:@"productname"];
+    cell.companyNameLabel.text = [dict objForKey:@"companyname"];
+    cell.areaLabel.text = [dict objForKey:@"placename"];
+    cell.usernameLabel.text = [dict objForKey:@"username"];
+    
+    [cell.pharImage setImageWithURL:[NSURL URLWithString:[dict objForKey:@"investmentimgurl"]] placeholderImage:[UIImage imageNamed:@"img_zs"]];
+    
+    NSString *isMember = [[dict objForKey:@"ismember"] stringValue];
+    if ([isMember isEqualToString:@"1"]) {
+        cell.xunImage.hidden = NO;
+    }
+    else{
+        cell.xunImage.hidden = YES;
+    }
+    
+    NSString *isVip = [[dict objForKey:@"isVip"] stringValue];
+    if ([isVip isEqualToString:@"1"]) {
+        cell.xunVImage.hidden = NO;
+    }
+    else{
+        cell.xunImage.hidden = YES;
+    }
+    
+    NSString *creditlevel = [dict objForKey:@"creditlevel"];
+    
+    if ([creditlevel isEqualToString:@"无信用评级"]) {
+        cell.xunBImage.hidden = YES;
+    }
+    else{
+        cell.xunBImage.hidden = NO;
+        cell.xunBImage.image = [UIImage imageNamed:@"creditlevel"];
+    }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    DLog(@"grage %@", [dict objForKey:@"creditlevel"]);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *dict = [self.dataSourceArray objectAtIndex:indexPath.row];
     
+    ZhaoshangInfoViewController *zhaoshangInfoVC = [[[ZhaoshangInfoViewController alloc] init] autorelease];
+    zhaoshangInfoVC.investmentId = [dict objForKey:@"investmentid"];
+    [self.navigationController pushViewController:zhaoshangInfoVC animated:YES];
 }
 
 

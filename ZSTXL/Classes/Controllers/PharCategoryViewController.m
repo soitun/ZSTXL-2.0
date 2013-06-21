@@ -13,6 +13,7 @@
 #import "PublishView.h"
 #import "ZhaoshangInfoViewController.h"
 #import "ZhaoshangPharListViewController.h"
+#import "SearchInvAgencyViewController.h"
 #import "InvestmentInfo.h"
 
 @interface PharCategoryViewController ()
@@ -129,7 +130,7 @@
     
     UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [searchButton setImage:[UIImage imageNamed:@"search_contact.png"] forState:UIControlStateNormal];
-    [searchButton addTarget:self action:@selector(searchContact:) forControlEvents:UIControlEventTouchUpInside];
+    [searchButton addTarget:self action:@selector(searchInvAgency:) forControlEvents:UIControlEventTouchUpInside];
     searchButton.frame = CGRectMake(0, 0, 30, 30);
     
     UIBarButtonItem *rBarButton = [[[UIBarButtonItem alloc] initWithCustomView:searchButton] autorelease];
@@ -142,9 +143,10 @@
 //    [kAppDelegate.tabController hidesTabBar:NO animated:YES];
 }
 
-- (void)searchContact:(UIButton *)sender
+- (void)searchInvAgency:(UIButton *)sender
 {
-    
+    SearchInvAgencyViewController *searchInvAgencyVC = [[[SearchInvAgencyViewController alloc] init] autorelease];
+    [self.navigationController pushViewController:searchInvAgencyVC animated:YES];
 }
 
 #pragma mark - request Data

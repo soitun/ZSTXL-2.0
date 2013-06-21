@@ -14,7 +14,7 @@
 #import "SettingPersonInfoHeader.h"
 
 @interface SettingPersonInfoViewController : UIViewController
-<UITableViewDataSource, UITableViewDelegate, PersonBasicInfoCellDelegate, UIActionSheetDelegate, TimePickerDelegate>
+<UITableViewDataSource, UITableViewDelegate, PersonBasicInfoCellDelegate, UIActionSheetDelegate, TimePickerDelegate, UIAlertViewDelegate, UITextFieldDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) UIButton *saveButton;
 @property (retain, nonatomic) SettingPersonInfoHeader *header;
@@ -27,6 +27,8 @@
 @property (nonatomic, copy) NSString *sex;
 @property (nonatomic, copy) NSString *userid;
 @property (nonatomic, copy) NSString *birth;
+@property (nonatomic, copy) NSString *company;
+@property (nonatomic, copy) NSString *position;
 
 @property (nonatomic, retain) NSDate *birthDate;
 @property (nonatomic, retain) MyInfo *myInfo;

@@ -678,6 +678,7 @@
 		35A3C7971769C7B400C1C353 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A3C7961769C7B400C1C353 /* Contact.m */; };
 		35A3C7A11769F13D00C1C353 /* BlacklistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A3C79F1769F13600C1C353 /* BlacklistViewController.m */; };
 		35A3C7A21769F13D00C1C353 /* BlacklistViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A3C7A01769F13A00C1C353 /* BlacklistViewController.xib */; };
+		35A467A51772EAA800220ED8 /* FriendInvAgencyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A467A41772EAA800220ED8 /* FriendInvAgencyViewController.m */; };
 		35A7A15B176D82C90005F750 /* InboxMail.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A7A15A176D82C90005F750 /* InboxMail.m */; };
 		35A7A162176DC73F0005F750 /* MailTransmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A7A160176DC73D0005F750 /* MailTransmitViewController.m */; };
 		35A7A163176DC73F0005F750 /* MailTransmitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A7A161176DC73E0005F750 /* MailTransmitViewController.xib */; };
@@ -809,6 +810,15 @@
 		35C2AC8B17685798004F84B0 /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C2AC8A17685797004F84B0 /* NSString+MD5Addition.m */; };
 		35E83A4A176F3B510073630A /* StarNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E83A49176F3B510073630A /* StarNews.m */; };
 		35E83A4D176F3B510073630A /* StarInvest.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E83A4C176F3B510073630A /* StarInvest.m */; };
+		35FD7EDB17742A4E0051D8B6 /* SettingTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FD7EDA17742A4E0051D8B6 /* SettingTimeCell.m */; };
+		35FD7EDD17742A5E0051D8B6 /* SettingTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35FD7EDC17742A5E0051D8B6 /* SettingTimeCell.xib */; };
+		35FD7EE6177431850051D8B6 /* NSObject+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FD7EE1177431850051D8B6 /* NSObject+MKBlockAdditions.m */; };
+		35FD7EE7177431850051D8B6 /* UIActionSheet+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FD7EE3177431850051D8B6 /* UIActionSheet+MKBlockAdditions.m */; };
+		35FD7EE8177431850051D8B6 /* UIAlertView+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FD7EE5177431850051D8B6 /* UIAlertView+MKBlockAdditions.m */; };
+		35FD7EF917743DCF0051D8B6 /* SearchInvAgencyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FD7EF717743DCE0051D8B6 /* SearchInvAgencyViewController.m */; };
+		35FD7EFA17743DCF0051D8B6 /* SearchInvAgencyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35FD7EF817743DCF0051D8B6 /* SearchInvAgencyViewController.xib */; };
+		35FD7EFE1774557B0051D8B6 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FD7EFC177455790051D8B6 /* MessageViewController.m */; };
+		35FD7EFF1774557B0051D8B6 /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35FD7EFD1774557A0051D8B6 /* MessageViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1718,6 +1728,8 @@
 		35A3C79E1769F13400C1C353 /* BlacklistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlacklistViewController.h; sourceTree = "<group>"; };
 		35A3C79F1769F13600C1C353 /* BlacklistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlacklistViewController.m; sourceTree = "<group>"; };
 		35A3C7A01769F13A00C1C353 /* BlacklistViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlacklistViewController.xib; sourceTree = "<group>"; };
+		35A467A31772EAA700220ED8 /* FriendInvAgencyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendInvAgencyViewController.h; sourceTree = "<group>"; };
+		35A467A41772EAA800220ED8 /* FriendInvAgencyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendInvAgencyViewController.m; sourceTree = "<group>"; };
 		35A7A159176D82C90005F750 /* InboxMail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxMail.h; sourceTree = "<group>"; };
 		35A7A15A176D82C90005F750 /* InboxMail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxMail.m; sourceTree = "<group>"; };
 		35A7A15F176DC73D0005F750 /* MailTransmitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailTransmitViewController.h; sourceTree = "<group>"; };
@@ -1875,6 +1887,22 @@
 		35E83A49176F3B510073630A /* StarNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarNews.m; sourceTree = "<group>"; };
 		35E83A4B176F3B510073630A /* StarInvest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarInvest.h; sourceTree = "<group>"; };
 		35E83A4C176F3B510073630A /* StarInvest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarInvest.m; sourceTree = "<group>"; };
+		35FD7ED917742A4E0051D8B6 /* SettingTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTimeCell.h; sourceTree = "<group>"; };
+		35FD7EDA17742A4E0051D8B6 /* SettingTimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTimeCell.m; sourceTree = "<group>"; };
+		35FD7EDC17742A5E0051D8B6 /* SettingTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingTimeCell.xib; sourceTree = "<group>"; };
+		35FD7EDF177431850051D8B6 /* MKBlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKBlockAdditions.h; sourceTree = "<group>"; };
+		35FD7EE0177431850051D8B6 /* NSObject+MKBlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MKBlockAdditions.h"; sourceTree = "<group>"; };
+		35FD7EE1177431850051D8B6 /* NSObject+MKBlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MKBlockAdditions.m"; sourceTree = "<group>"; };
+		35FD7EE2177431850051D8B6 /* UIActionSheet+MKBlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+MKBlockAdditions.h"; sourceTree = "<group>"; };
+		35FD7EE3177431850051D8B6 /* UIActionSheet+MKBlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+MKBlockAdditions.m"; sourceTree = "<group>"; };
+		35FD7EE4177431850051D8B6 /* UIAlertView+MKBlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+MKBlockAdditions.h"; sourceTree = "<group>"; };
+		35FD7EE5177431850051D8B6 /* UIAlertView+MKBlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+MKBlockAdditions.m"; sourceTree = "<group>"; };
+		35FD7EF617743DCE0051D8B6 /* SearchInvAgencyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInvAgencyViewController.h; sourceTree = "<group>"; };
+		35FD7EF717743DCE0051D8B6 /* SearchInvAgencyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInvAgencyViewController.m; sourceTree = "<group>"; };
+		35FD7EF817743DCF0051D8B6 /* SearchInvAgencyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchInvAgencyViewController.xib; sourceTree = "<group>"; };
+		35FD7EFB177455780051D8B6 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
+		35FD7EFC177455790051D8B6 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
+		35FD7EFD1774557A0051D8B6 /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2241,10 +2269,18 @@
 				35268BF9177193AD001AF353 /* TalkViewController.h */,
 				35268BFA177193AD001AF353 /* TalkViewController.m */,
 				35268BFB177193AD001AF353 /* TalkViewController.xib */,
+				35FD7EFB177455780051D8B6 /* MessageViewController.h */,
+				35FD7EFC177455790051D8B6 /* MessageViewController.m */,
+				35FD7EFD1774557A0051D8B6 /* MessageViewController.xib */,
 				35268C061771AA27001AF353 /* ChatListViewController.h */,
 				35268C071771AA27001AF353 /* ChatListViewController.m */,
 				35268C091771E3C8001AF353 /* OtherInvAgencyViewController.h */,
 				35268C0A1771E3CB001AF353 /* OtherInvAgencyViewController.m */,
+				35A467A31772EAA700220ED8 /* FriendInvAgencyViewController.h */,
+				35A467A41772EAA800220ED8 /* FriendInvAgencyViewController.m */,
+				35FD7EF617743DCE0051D8B6 /* SearchInvAgencyViewController.h */,
+				35FD7EF717743DCE0051D8B6 /* SearchInvAgencyViewController.m */,
+				35FD7EF817743DCF0051D8B6 /* SearchInvAgencyViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2252,6 +2288,7 @@
 		358C1B65174A1BF9006E5A8D /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				35FD7EDE177431850051D8B6 /* MKAdditions */,
 				359E9A75174B01360018E87F /* AFNetworking */,
 				359A7DCC1763389500D453E8 /* AttributedLabel */,
 				359E9A92174B014D0018E87F /* ClientConnection */,
@@ -2508,6 +2545,9 @@
 				35098487176B72950077C639 /* FriendInvAgencyCell.h */,
 				35098488176B72960077C639 /* FriendInvAgencyCell.m */,
 				3509848A176B72AA0077C639 /* FriendInvAgencyCell.xib */,
+				35FD7ED917742A4E0051D8B6 /* SettingTimeCell.h */,
+				35FD7EDA17742A4E0051D8B6 /* SettingTimeCell.m */,
+				35FD7EDC17742A5E0051D8B6 /* SettingTimeCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3387,6 +3427,20 @@
 			path = tel_feedback;
 			sourceTree = "<group>";
 		};
+		35FD7EDE177431850051D8B6 /* MKAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				35FD7EDF177431850051D8B6 /* MKBlockAdditions.h */,
+				35FD7EE0177431850051D8B6 /* NSObject+MKBlockAdditions.h */,
+				35FD7EE1177431850051D8B6 /* NSObject+MKBlockAdditions.m */,
+				35FD7EE2177431850051D8B6 /* UIActionSheet+MKBlockAdditions.h */,
+				35FD7EE3177431850051D8B6 /* UIActionSheet+MKBlockAdditions.m */,
+				35FD7EE4177431850051D8B6 /* UIAlertView+MKBlockAdditions.h */,
+				35FD7EE5177431850051D8B6 /* UIAlertView+MKBlockAdditions.m */,
+			);
+			path = MKAdditions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3973,6 +4027,9 @@
 				35268C031771A431001AF353 /* d_pop_right.png in Resources */,
 				35268C041771A431001AF353 /* d_pop_left_p.png in Resources */,
 				35268C051771A431001AF353 /* d_pop_left.png in Resources */,
+				35FD7EDD17742A5E0051D8B6 /* SettingTimeCell.xib in Resources */,
+				35FD7EFA17743DCF0051D8B6 /* SearchInvAgencyViewController.xib in Resources */,
+				35FD7EFF1774557B0051D8B6 /* MessageViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4236,6 +4293,13 @@
 				35268BFC177193AE001AF353 /* TalkViewController.m in Sources */,
 				35268C081771AA28001AF353 /* ChatListViewController.m in Sources */,
 				35268C0B1771E3CE001AF353 /* OtherInvAgencyViewController.m in Sources */,
+				35A467A51772EAA800220ED8 /* FriendInvAgencyViewController.m in Sources */,
+				35FD7EDB17742A4E0051D8B6 /* SettingTimeCell.m in Sources */,
+				35FD7EE6177431850051D8B6 /* NSObject+MKBlockAdditions.m in Sources */,
+				35FD7EE7177431850051D8B6 /* UIActionSheet+MKBlockAdditions.m in Sources */,
+				35FD7EE8177431850051D8B6 /* UIAlertView+MKBlockAdditions.m in Sources */,
+				35FD7EF917743DCF0051D8B6 /* SearchInvAgencyViewController.m in Sources */,
+				35FD7EFE1774557B0051D8B6 /* MessageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
